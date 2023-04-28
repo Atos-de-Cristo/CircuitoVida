@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Permission;
+use Illuminate\Support\Facades\Cache;
 
 class User extends Authenticatable
 {
@@ -41,4 +43,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function permissions() {
+        return $this->belongsToMany(Permission::class);
+    }
+
+    public function givePermissionTo(string $permission): void {
+        $p = Permission::getPermission($permission);
+        $this->permission()->attach($p);
+        Cache::forget('permissions::of::user::'.$this->id);
+    }
+
+    public function hasPermissionTo(string $permission): bool {
+        $permissionOfUser = Cache::rememberForever('permissions::of::user::'.$this->id, function() {
+            return $this->permissions()->get();
+        });
+
+        return $permissionOfUser->where('permission', $permission)->isNotEmpty();
+    }
 }
