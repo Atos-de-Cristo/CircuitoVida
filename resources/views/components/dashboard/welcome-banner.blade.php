@@ -45,16 +45,18 @@
     <!-- Content -->
     <div class="relative">
         <h1 class="text-2xl md:text-3xl text-slate-800 font-bold mb-1">Seja bem-vindo, {{ Auth::user()->name }} 👋</h1>
-        <p>Sua permissão atual é: {{ Auth::user()->permissions()->first()->permission }}</p>
-        @can('admin')
-        admin
-        @endcan
-        @can('monitor')
-        monitor
-        @endcan
-        @can('user')
-        user
-        @endcan
+        <p>
+            Sua permissão atual é:
+            @can('admin')
+            admin
+            @endcan
+            @can('monitor')
+            monitor
+            @endcan
+            @can('user')
+            user
+            @endcan
+        </p>
     </div>
 
 </div>
