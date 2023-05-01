@@ -25,7 +25,7 @@ class Permission extends Model
         return $permissions;
     }
 
-    public function getPermission(string $permission): Permission {
+    public static function getPermission(string $permission): Permission {
         $p = self::getAllFromCache()->where('permission', $permission)->first();
         if (!$p) {
             $p = Permission::query()->create(['permission' => $permission]);
