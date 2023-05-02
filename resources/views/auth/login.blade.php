@@ -1,61 +1,53 @@
 <x-authentication-layout>
-    <h1 class="text-3xl text-slate-800 font-bold mb-6">{{ __('Welcome back!') }} ✨</h1>
-    @if (session('status'))
-        <div class="mb-4 font-medium text-sm text-green-600">
-            {{ session('status') }}
-        </div>
-    @endif
-    <!-- Form -->
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-        <div class="space-y-4">
-            <!-- Email Address -->
-            <div>
-                <x-input-label for="email" :value="__('Email')" />
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-                <x-input-error :messages="$errors->get('email')" class="mt-2" />
-            </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-input-label for="password" :value="__('Password')" />
-
-                <x-text-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password" />
-
-                <x-input-error :messages="$errors->get('password')" class="mt-2" />
-            </div>
-        </div>
-        <div class="flex items-center justify-between mt-6">
-            @if (Route::has('password.request'))
-                <div class="mr-1">
-                    <a class="text-sm underline hover:no-underline" href="{{ route('password.request') }}">
-                        {{ __('Forgot Password?') }}
-                    </a>
+    <section class="bg-gray-900 h-screen">
+        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+                <img src="{{ asset('images/logo.png') }}" alt="logo" class="w-40"/>
+            </a>
+            <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                    @if (session('status'))
+                        <div class="mb-4 font-medium text-sm text-green-600">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+                    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                        Entre com sua conta
+                    </h1>
+                    <form class="space-y-4 md:space-y-6" method="POST" action="{{ route('login') }}">
+                        @csrf
+                        <div>
+                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seu email</label>
+                            <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
+                        </div>
+                        <div>
+                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Senha</label>
+                            <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-start">
+                                <div class="flex items-center h-5">
+                                    <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="">
+                                </div>
+                                <div class="ml-3 text-sm">
+                                    <label for="remember" class="text-gray-500 dark:text-gray-300">Lembrar-me</label>
+                                </div>
+                            </div>
+                            @if (Route::has('password.request'))
+                                <a class="text-sm underline hover:no-underline" href="{{ route('password.request') }}">
+                                    {{ __('Forgot Password?') }}
+                                </a>
+                            @endif
+                        </div>
+                        <button type="submit" class="w-full text-white bg-gray-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                            Logar
+                        </button>
+                        <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                            Não está cadastro? <a href="{{ route('register') }}" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
+                        </p>
+                    </form>
                 </div>
-            @endif
-            <x-secondary-button class="ml-3" type="submit">
-                {{ __('Sign in') }}
-            </x-secondary-button>
-        </div>
-    </form>
-    <!-- Footer -->
-    <div class="pt-5 mt-6 border-t border-slate-200">
-        <div class="text-sm">
-            {{ __('Don\'t you have an account?') }} <a class="font-medium text-indigo-500 hover:text-indigo-600" href="{{ route('register') }}">{{ __('Sign Up') }}</a>
-        </div>
-        <!-- Warning -->
-        <div class="mt-5">
-            <div class="bg-amber-100 text-amber-600 px-3 py-2 rounded">
-                <svg class="inline w-3 h-3 shrink-0 fill-current" viewBox="0 0 12 12">
-                    <path d="M10.28 1.28L3.989 7.575 1.695 5.28A1 1 0 00.28 6.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 1.28z" />
-                </svg>
-                <span class="text-sm">
-                    To support you during the pandemic super pro features are free until March 31st.
-                </span>
             </div>
         </div>
-    </div>
+    </section>
 </x-authentication-layout>
