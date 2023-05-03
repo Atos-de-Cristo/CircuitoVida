@@ -20,10 +20,8 @@ return new class extends Migration
         });
 
         Schema::create('permission_user', function (Blueprint $table) {
-            $table->id();
             $table->foreignIdFor(Permission::class);
             $table->foreignIdFor(User::class);
-            $table->timestamps();
         });
     }
 

@@ -51,7 +51,7 @@ class User extends Authenticatable
 
     public function givePermissionTo(string $permission): void {
         $p = Permission::getPermission($permission);
-        $this->permission()->attach($p);
+        $this->permissions()->attach($p);
         Cache::forget('permissions::of::user::'.$this->id);
     }
 
