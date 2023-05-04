@@ -1,6 +1,8 @@
 <?php
 namespace Database\Seeders;
 
+use App\Models\Permission;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
@@ -21,5 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call([ UsersTableSeeder::class, PermissionSeeder::class]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
+
+        User::factory(55)->hasAttached(Permission::find(3))->create();
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +18,10 @@ class Permission extends Model
     protected $table = 'permissions';
 
     protected $guarded = [];
+
+    public function users(): BelongsToMany {
+        return $this->belongsToMany(User::class);
+    }
 
     public static function getAllFromCache(): Collection {
         $permissions = Cache::rememberForever('permissions', function () {
