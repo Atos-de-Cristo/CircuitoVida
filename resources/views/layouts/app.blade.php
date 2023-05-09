@@ -17,25 +17,37 @@
         <!-- Styles -->
         @livewireStyles
     </head>
-    <body class="font-sans antialiased">
-        <x-banner />
+    <body
+        class="font-inter antialiased bg-slate-100 text-slate-600"
+        :class="{ 'sidebar-expanded': sidebarExpanded }"
+        x-data="{ sidebarOpen: false, sidebarExpanded: localStorage.getItem('sidebar-expanded') == 'true' }"
+        x-init="$watch('sidebarExpanded', value => localStorage.setItem('sidebar-expanded', value))"
+    >
+        <script>
+            if (localStorage.getItem('sidebar-expanded') == 'true') {
+                document.querySelector('body').classList.add('sidebar-expanded');
+            } else {
+                document.querySelector('body').classList.remove('sidebar-expanded');
+            }
+        </script>
 
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @livewire('navigation-menu')
+        <!-- Page wrapper -->
+        <div class="flex h-screen overflow-hidden">
+            <x-app.sidebar />
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+            <!-- Content area -->
+            <div class="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden @if($attributes['background']){{ $attributes['background'] }}@endif" x-ref="contentarea">
+
+                <x-app.header />
+
+                <main>
+                    <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+                        {{ $slot }}
                     </div>
-                </header>
-            @endif
+                </main>
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+            </div>
+
         </div>
 
         @stack('modals')
