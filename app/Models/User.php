@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Cache;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
@@ -58,4 +60,22 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function permissions(): BelongsToMany {
+        return $this->belongsToMany(Permission::class);
+    }
+
+    public function givePermissionTo(string $permission): void {
+        $p = Permission::getPermission($permission);
+        $this->permissions()->attach($p);
+        Cache::forget('permissions::of::user::'.$this->id);
+    }
+
+    public function hasPermissionTo(string $permission): bool {
+        $permissionOfUser = Cache::rememberForever('permissions::of::user::'.$this->id, function() {
+            return $this->permissions()->get();
+        });
+
+        return $permissionOfUser->where('permission', $permission)->isNotEmpty();
+    }
 }
