@@ -19,9 +19,14 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->truncate();
         DB::table('permissions')->truncate();
 
-        $this->call([ UsersTableSeeder::class, PermissionSeeder::class]);
+        $this->call([
+            UsersTableSeeder::class,
+            PermissionSeeder::class,
+            EventSeeder::class
+        ]);
 
         User::factory(55)->hasAttached(Permission::find(3))->create();
+        User::find(1)->givePermissionTo('admin');
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
     }
