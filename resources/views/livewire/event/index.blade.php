@@ -11,16 +11,13 @@
         @endif
         <h1 class="float-left py-4 font-bold text-xl">Lista de Eventos</h1>
         <button wire:click="create()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-3 float-right">Novo Evento</button>
-        @if($isOpen)
-            @include('livewire.event.create')
-        @endif
         <table class="table-fixed w-full">
             <thead>
                 <tr class="bg-gray-100">
                     <th class="text-left px-2 w-32">Tipo</th>
                     <th class="text-left px-2">Nome</th>
                     <th class="text-left px-2">Status</th>
-                    <th class="text-left px-2 w-48"></th>
+                    <th class="text-left px-2"></th>
                 </tr>
             </thead>
             <tbody>
@@ -38,4 +35,7 @@
             </tbody>
         </table>
     </div>
+    @if($isOpen)
+        @include('livewire.event.create')
+    @endif
 </div>

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->enum('type', array_column(EventType::cases(), 'name'));
             $table->string('name');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->string('local');

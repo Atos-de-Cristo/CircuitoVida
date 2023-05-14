@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class Event extends Component
 {
-    public $type, $name, $image, $start_date, $end_date, $local, $description, $tickets_limit, $value, $status;
+    public $_id, $type, $name, $image, $start_date, $end_date, $local, $description, $tickets_limit, $value, $status;
     public $isOpen = false;
     protected $service;
 
@@ -37,6 +37,7 @@ class Event extends Component
     }
 
     private function resetInputFields(){
+        $this->_id = '';
         $this->type = EventType::P;
         $this->name = '';
         $this->image = '';
@@ -49,37 +50,57 @@ class Event extends Component
         $this->status = EventStatus::P;
     }
 
-    public function store()
+    public function store(EventService $service)
     {
         $this->validate([
-            'title' => 'required',
-            'body' => 'required',
+            'name' => 'required',
         ]);
 
-        // Post::updateOrCreate(['id' => $this->post_id], [
-        //     'title' => $this->title,
-        //     'body' => $this->body
-        // ]);
+        $request = [
+            'type' => $this->type,
+            'name' => $this->name,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
+            'local' => $this->local,
+            'description' => $this->description,
+            'tickets_limit' => $this->tickets_limit,
+            'value' => $this->value,
+            'status' => $this->status
+        ];
+
+        if ($this->_id) {
+            $service->update($request, $this->_id);
+        }else{
+            $service->create($request);
+        }
 
         session()->flash('message',
-            $this->post_id ? 'Post Updated Successfully.' : 'Post Created Successfully.');
+            $this->_id ? 'Evento editado com sucesso.' : 'Evento cadastrado com sucesso.');
 
         $this->closeModal();
         $this->resetInputFields();
     }
 
-    public function edit($id)
+    public function edit($id, EventService $service)
     {
-        $event = $this->service->find($id);
+        $event = $service->find($id);
+        $this->_id = $event->id;
         $this->name = $event->name;
         $this->description = $event->description;
+        $this->type = $event->type;
+        $this->start_date = $event->start_date;
+        $this->end_date = $event->end_date;
+        $this->local = $event->local;
+        $this->tickets_limit = $event->tickets_limit;
+        $this->value = $event->value;
+        $this->status = $event->status;
 
         $this->openModal();
     }
 
-    public function delete($id)
+    public function delete($id, EventService $service)
     {
-        // Post::find($id)->delete();
-        session()->flash('message', 'Post Deleted Successfully.');
+        $service->delete($id);
+        session()->flash('message', 'Evento deletado com sucesso.');
     }
 }
