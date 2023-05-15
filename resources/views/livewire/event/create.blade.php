@@ -46,6 +46,11 @@
                             @error('type') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
                         <div class="mb-4">
+                            <label for="campImg" class="block text-gray-700 text-sm font-bold mb-2">Imagem</label>
+                            <input type="file" wire:model="image">
+                            @error('image') <span class="text-red-500">{{ $message }}</span>@enderror
+                        </div>
+                        <div class="mb-4">
                             <label for="campName" class="block text-gray-700 text-sm font-bold mb-2">Nome:</label>
                             <input
                                 type="text"

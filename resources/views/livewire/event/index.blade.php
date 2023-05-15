@@ -14,6 +14,7 @@
         <table class="table-fixed w-full">
             <thead>
                 <tr class="bg-gray-100">
+                    <th>Imagem</th>
                     <th class="text-left px-2 w-32">Tipo</th>
                     <th class="text-left px-2">Nome</th>
                     <th class="text-left px-2">Status</th>
@@ -23,6 +24,11 @@
             <tbody>
                 @foreach($dataAll as $data)
                 <tr>
+                    <td>
+                        @isset($data->image)
+                            <img src="{{asset($data->image)}}" alt="Logo Evento {{$data->name}}">
+                        @endisset
+                    </td>
                     <td class="border px-2 py-2">{{ getTypeEvent($data->type) }}</td>
                     <td class="border px-2 py-2">{{ $data->name }}</td>
                     <td class="border px-2 py-2">{{ getStatusEvent($data->status) }}</td>

@@ -4,10 +4,14 @@ namespace App\Http\Livewire;
 
 use App\Enums\{EventStatus, EventType};
 use App\Services\EventService;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Event extends Component
 {
+    use WithFileUploads;
+
     public $_id, $type, $name, $image, $start_date, $end_date, $local, $description, $tickets_limit, $value, $status;
     public $isOpen = false;
     protected $service;
@@ -54,11 +58,15 @@ class Event extends Component
     {
         $this->validate([
             'name' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:5120'
         ]);
+
+        $imgName = $this->image->store('files', 'public');
 
         $request = [
             'type' => $this->type,
             'name' => $this->name,
+            'image' =>  Storage::url($imgName),
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'local' => $this->local,
