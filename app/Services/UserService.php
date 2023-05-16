@@ -3,7 +3,7 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
-
+use Illuminate\Pagination\LengthAwarePaginator;
 class UserService
 {
     protected $repository;
@@ -16,6 +16,10 @@ class UserService
     public function getAll(): Collection
     {
         return $this->repository->all();
+    }
+    public function paginate(): LengthAwarePaginator
+    {
+        return $this->repository->paginate(10);
     }
 
     public function find(string $id): User

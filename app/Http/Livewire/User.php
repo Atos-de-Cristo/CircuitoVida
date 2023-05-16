@@ -5,16 +5,17 @@ namespace App\Http\Livewire;
 use App\Services\UserService;
 use Laravel\Fortify\Rules\Password;
 use Livewire\Component;
-
+use Livewire\WithPagination;
 class User extends Component
 {
+    use WithPagination;
     public $_id, $name, $email, $password, $confirmed;
     public $isOpen = false;
     protected $service;
 
     public function render(UserService $service)
     {
-        $dataAll = $service->getAll();
+        $dataAll = $service->paginate();
         return view('livewire.user.index', compact('dataAll'));
     }
 

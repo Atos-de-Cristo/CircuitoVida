@@ -94,6 +94,7 @@ class Event extends Component
         $event = $service->find($id);
         $this->_id = $event->id;
         $this->name = $event->name;
+        $this->image = $event->image;
         $this->description = $event->description;
         $this->type = $event->type;
         $this->start_date = $event->start_date;
