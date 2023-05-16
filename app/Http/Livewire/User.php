@@ -9,13 +9,29 @@ use Livewire\WithPagination;
 class User extends Component
 {
     use WithPagination;
+
     public $_id, $name, $email, $password, $confirmed;
     public $isOpen = false;
     protected $service;
 
+    public $search = '';
+    public $sortBy = 'name';
+    public $sortDirection = 'asc';
+
+
+    public function sortBy($field)
+    {
+        if ($this->sortBy === $field) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortBy = $field;
+            $this->sortDirection = 'asc';
+        }
+    }
+
     public function render(UserService $service)
     {
-        $dataAll = $service->paginate();
+        $dataAll = $service->paginate($this->search,$this->sortBy, $this->sortDirection);
         return view('livewire.user.index', compact('dataAll'));
     }
 

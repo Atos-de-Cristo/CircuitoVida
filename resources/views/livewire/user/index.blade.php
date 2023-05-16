@@ -20,10 +20,48 @@
             <table class="table-fixed w-full">
                 <thead>
                     <tr class="bg-gray-100">
-                        <th class="px-4 py-2 w-10">#</th>
-                        <th class="px-4 py-2">Nome</th>
-                        <th class="px-4 py-2">Email</th>
-                        <th class="px-4 py-2">Tipo</th>
+
+                        <th wire:click="sortBy('id')" class="px-4 py-2 w-10">
+                            #
+                            @if ($sortBy === 'id')
+                                @if ($sortDirection === 'asc')
+                                    &#9650;
+                                @else
+                                    &#9660;
+                                @endif
+                            @endif
+                        </th>
+                        <th wire:click="sortBy('name')" class="px-4 py-2 ">
+                            Nome
+                            @if ($sortBy === 'name')
+                                @if ($sortDirection === 'asc')
+                                    &#9650;
+                                @else
+                                    &#9660;
+                                @endif
+                            @endif
+                        </th>
+                        <th wire:click="sortBy('email')" class="px-4 py-2 ">
+                            Email
+                            @if ($sortBy === 'email')
+                                @if ($sortDirection === 'asc')
+                                    &#9650;
+                                @else
+                                    &#9660;
+                                @endif
+                            @endif
+                        </th>
+                        <th wire:click="sortBy('tipo')" class=" px-4 py-2 ">
+                            Tipo
+                            @if ($sortBy === 'tipo')
+                                @if ($sortDirection === 'asc')
+                                    &#9650;
+                                @else
+                                    &#9660;
+                                @endif
+                            @endif
+                        </th>
+
                         <th class="px-4 py-2 w-48"></th>
                     </tr>
                 </thead>
