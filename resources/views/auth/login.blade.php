@@ -43,6 +43,11 @@
                     {{ __('Logar') }}
                 </x-button>
             </div>
+            <div>
+                <x-button class="mt-8 w-full text-center align-middle justify-center">
+                    <a href="{{route("register")}}">{{ __('Novo Usuário') }}</a>
+                </x-button>
+            </div>
         </form>
     </x-authentication-card>
 </x-guest-layout>
