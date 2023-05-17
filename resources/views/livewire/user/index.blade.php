@@ -17,7 +17,7 @@
             <input wire:model.debounce.300ms="search" type="text" class="w-full sm:w-64 border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring focus:border-blue-500" placeholder="Buscar usuários...">
         </div>
         <div class="overflow-x-auto">
-            <table class="table-fixed w-full">
+            <table class="min-w-full divide-y divide-gray-200">
                 <thead>
                     <tr class="bg-gray-100">
 
@@ -65,10 +65,10 @@
                         <th class="px-4 py-2 w-48"></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-900 dark:divide-gray-700">
                     @foreach($dataAll as $data)
                         <tr>
-                            <td class="border px-4 py-2">{{ $data->id }}</td>
+                            <td class="border px-4 py-2 ">{{ $data->id }}</td>
                             <td class="border px-4 py-2">{{ $data->name }}</td>
                             <td class="border px-4 py-2">{{ $data->email }}</td>
                             <td class="border px-4 py-2">{{ $data->permissions()->implode('permission', ',') }}</td>

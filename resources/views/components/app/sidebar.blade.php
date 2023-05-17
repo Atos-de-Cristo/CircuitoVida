@@ -21,7 +21,7 @@
                 </svg>
             </button>
             <a class="block" href="{{route('dashboard')}}">
-                <img src="{{ asset('images/logo.png') }}" />
+                <img src="{{ asset('images/logo.png') }}" class="w-25" />
             </a>
         </div>
 
@@ -205,7 +205,7 @@
                 </ul>
             </div>
         </div>
-        <div class="pt-3 hidden lg:inline-flex 2xl:hidden justify-end mt-auto">
+<div class="pt-3 hidden lg:inline-flex 2xl:hidden justify-end mt-auto">
             <div class="px-3 py-2">
                 <button @click="sidebarExpanded = !sidebarExpanded">
                     <span class="sr-only">Expand / collapse sidebar</span>
