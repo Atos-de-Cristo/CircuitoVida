@@ -40,26 +40,19 @@
                         @error('email') <span class="text-red-500">{{ $message }}</span>@enderror
                     </div>
                     <div class="mb-4">
-                        <label for="campPassword" class="block text-gray-700 text-sm font-bold mb-2">Senha:</label>
-                        <input
-                            type="password"
+                        <label for="campPermission" class="block text-gray-700 text-sm font-bold mb-2">Permissão</label>
+                        <select
+                            id="campPermission"
+                            wire:model="optPermission"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="campPassword"
-                            placeholder="Entre com uma senha"
-                            wire:model="password"
                         >
-                        @error('password') <span class="text-red-500">{{ $message }}</span>@enderror
-                    </div>
-                    <div class="mb-4">
-                        <label for="campconfirmed" class="block text-gray-700 text-sm font-bold mb-2">Confirme a senha:</label>
-                        <input
-                            type="password"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="campconfirmed"
-                            placeholder="Entre com uma senha"
-                            wire:model="confirmed"
-                        >
-                        @error('confirmed') <span class="text-red-500">{{ $message }}</span>@enderror
+                            @foreach ($permissions as $opt)
+                                <option value="{{ $opt->id }}">{{ $opt->permission }}</option>
+                            @endforeach
+                        </select>
+                        @error('type')
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
             </div>

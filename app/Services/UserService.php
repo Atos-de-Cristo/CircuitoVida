@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+
 class UserService
 {
     protected $repository;
@@ -17,9 +18,11 @@ class UserService
     {
         return $this->repository->all();
     }
+
     public function paginate( $search,$sortBy,$sortDirection): LengthAwarePaginator
     {
         return $this->repository
+        // ->with('permissions')
         ->where('name', 'LIKE', '%' . $search . '%')
         ->orderBy($sortBy, $sortDirection)
         ->paginate(10);

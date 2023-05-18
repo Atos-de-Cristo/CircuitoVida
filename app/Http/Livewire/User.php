@@ -2,15 +2,15 @@
 
 namespace App\Http\Livewire;
 
+use App\Services\PermissionService;
 use App\Services\UserService;
-use Laravel\Fortify\Rules\Password;
 use Livewire\Component;
 use Livewire\WithPagination;
 class User extends Component
 {
     use WithPagination;
 
-    public $_id, $name, $email, $password, $confirmed;
+    public $_id, $name, $email, $password, $confirmed, $permissions, $optPermission;
     public $isOpen = false;
     protected $service;
 
@@ -63,14 +63,12 @@ class User extends Component
     {
         $this->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', new Password, 'confirmed'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users']
         ]);
 
         $request = [
             'name' => $this->name,
-            'email' => $this->email,
-            'password' => $this->password
+            'email' => $this->email
         ];
 
         if ($this->_id) {
@@ -86,14 +84,15 @@ class User extends Component
         $this->resetInputFields();
     }
 
-    public function edit($id, UserService $service)
+    public function edit($id, UserService $service, PermissionService $permissionService)
     {
+        $this->permissions = $permissionService->getAll();
         $event = $service->find($id);
+
         $this->_id = $event->id;
         $this->name = $event->name;
         $this->email = $event->email;
-        $this->password = $event->password;
-        $this->confirmed = $event->confirmed;
+        $this->optPermission = $event->permissions->first()->id;
 
         $this->openModal();
     }

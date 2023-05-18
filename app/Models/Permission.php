@@ -17,11 +17,7 @@ class Permission extends Model
 
     protected $table = 'permissions';
 
-    protected $guarded = [];
-
-    public function users(): BelongsToMany {
-        return $this->belongsToMany(User::class);
-    }
+    protected $fillable = [ 'permission' ];
 
     public static function getAllFromCache(): Collection {
         $permissions = Cache::rememberForever('permissions', function () {
