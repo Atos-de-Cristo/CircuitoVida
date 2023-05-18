@@ -11,7 +11,7 @@ class User extends Component
 {
     use WithPagination;
 
-    public $_id, $name, $email, $permissionData, $permissions;
+    public $_id, $name, $email, $password, $permissionData, $permissions;
     public $isOpen = false;
     protected $service;
 
@@ -91,6 +91,7 @@ class User extends Component
         if ($this->_id) {
             $service->update($request, $this->_id);
         }else{
+            $request['password'] = $this->password;
             $service->create($request);
         }
 

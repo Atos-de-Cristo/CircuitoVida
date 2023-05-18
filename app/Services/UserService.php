@@ -35,7 +35,9 @@ class UserService
 
     public function create(array $data): User
     {
-        return $this->repository->create($data);
+        $user = $this->repository->create($data);
+        $user->permissions()->sync($data['permissions']);
+        return $user;
     }
 
     public function update(array $data, int $id): void
