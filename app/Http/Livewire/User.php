@@ -6,18 +6,37 @@ use App\Services\PermissionService;
 use App\Services\UserService;
 use Livewire\Component;
 use Livewire\WithPagination;
+
 class User extends Component
 {
     use WithPagination;
 
-    public $_id, $name, $email, $password, $confirmed, $permissions, $optPermission;
+    public $_id, $name, $email, $permissionData, $permissions;
     public $isOpen = false;
     protected $service;
 
     public $search = '';
-    public $sortBy = 'name';
-    public $sortDirection = 'asc';
+    public $sortBy = 'id';
+    public $sortDirection = 'desc';
 
+    protected $rules = [
+        'name' => 'required|min:5',
+        'email' => 'required|email',
+    ];
+
+    protected $messages = [
+        'name.required' => 'Nome é obrigatório.',
+        'name.min' => 'Nome precisa ter no mínimo :min caracteres',
+        'email.required' => 'E-mail é obrigatório.',
+        'email.email' => 'E-mail não é um campo valido',
+    ];
+
+    public function mount(PermissionService $permissionService)
+    {
+        $this->fill([
+            'permissionData' => $permissionService->getAll()
+        ]);
+    }
 
     public function sortBy($field)
     {
@@ -48,6 +67,7 @@ class User extends Component
 
     public function closeModal()
     {
+        $this->resetInputFields();
         $this->isOpen = false;
     }
 
@@ -55,20 +75,17 @@ class User extends Component
         $this->_id = '';
         $this->name = '';
         $this->email = '';
-        $this->password = '';
-        $this->confirmed = '';
+        $this->permissions = [];
     }
 
     public function store(UserService $service)
     {
-        $this->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users']
-        ]);
+        $this->validate();
 
         $request = [
             'name' => $this->name,
-            'email' => $this->email
+            'email' => $this->email,
+            'permissions' => $this->permissions
         ];
 
         if ($this->_id) {
@@ -78,21 +95,21 @@ class User extends Component
         }
 
         session()->flash('message',
-            $this->_id ? 'Evento editado com sucesso.' : 'Evento cadastrado com sucesso.');
+            $this->_id ? 'Usuário editado com sucesso.' : 'Usuário cadastrado com sucesso.');
 
         $this->closeModal();
         $this->resetInputFields();
     }
 
-    public function edit($id, UserService $service, PermissionService $permissionService)
+    public function edit($id, UserService $service)
     {
-        $this->permissions = $permissionService->getAll();
-        $event = $service->find($id);
+        $user = $service->find($id);
 
-        $this->_id = $event->id;
-        $this->name = $event->name;
-        $this->email = $event->email;
-        $this->optPermission = $event->permissions->first()->id;
+        $this->_id = $user->id;
+        $this->name = $user->name;
+        $this->email = $user->email;
+        //TODO: melhorar consulta relacionamentos
+        $this->permissions = explode(',', $user->permissions()->implode('id', ','));
 
         $this->openModal();
     }

@@ -41,15 +41,18 @@
                     </div>
                     <div class="mb-4">
                         <label for="campPermission" class="block text-gray-700 text-sm font-bold mb-2">Permissão</label>
-                        <select
-                            id="campPermission"
-                            wire:model="optPermission"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        >
-                            @foreach ($permissions as $opt)
-                                <option value="{{ $opt->id }}">{{ $opt->permission }}</option>
-                            @endforeach
-                        </select>
+                        @forelse($permissionData as $opt)
+                            <div class="block">
+                                <div class="mt-2">
+                                    <label class="inline-flex items-center">
+                                    <input type="checkbox" wire:model="permissions" value="{{$opt['id']}}" />
+                                    <span class="ml-2">{{$opt['permission']}}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        @empty
+                            <p>Nenhuma permissao encontrada</p>
+                        @endforelse
                         @error('type')
                             <span class="text-red-500">{{ $message }}</span>
                         @enderror

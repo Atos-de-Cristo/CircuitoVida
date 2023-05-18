@@ -21,7 +21,7 @@
                 <thead>
                     <tr class="bg-gray-100">
 
-                        <th wire:click="sortBy('id')" class="px-4 py-2 w-10">
+                        <th wire:click="sortBy('id')" class="px-4 py-2 w-16">
                             #
                             @if ($sortBy === 'id')
                                 @if ($sortDirection === 'asc')

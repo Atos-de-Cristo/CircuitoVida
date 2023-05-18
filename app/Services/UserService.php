@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Models\User;
@@ -19,13 +20,12 @@ class UserService
         return $this->repository->all();
     }
 
-    public function paginate( $search,$sortBy,$sortDirection): LengthAwarePaginator
+    public function paginate($search, $sortBy, $sortDirection): LengthAwarePaginator
     {
         return $this->repository
-        // ->with('permissions')
-        ->where('name', 'LIKE', '%' . $search . '%')
-        ->orderBy($sortBy, $sortDirection)
-        ->paginate(10);
+            ->where('name', 'LIKE', '%' . $search . '%')
+            ->orderBy($sortBy, $sortDirection)
+            ->paginate(10);
     }
 
     public function find(string $id): User
@@ -38,10 +38,11 @@ class UserService
         return $this->repository->create($data);
     }
 
-    public function update(array $data, int $id): bool
+    public function update(array $data, int $id): void
     {
         $repo = $this->find($id);
-        return $repo->update($data);
+        $repo->update($data);
+        $repo->permissions()->sync($data['permissions']);
     }
 
     public function delete(string $id): void
