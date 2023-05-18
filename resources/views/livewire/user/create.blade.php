@@ -53,14 +53,33 @@
                     <div class="mb-4">
                         <label for="campPermission" class="block text-gray-700 text-sm font-bold mb-2">Permissão</label>
                         @forelse($permissionData as $opt)
-                            <div class="block">
-                                <div class="mt-2">
-                                    <label class="inline-flex items-center">
-                                    <input type="checkbox" wire:model="permissions" value="{{$opt['id']}}" />
-                                    <span class="ml-2">{{$opt['permission']}}</span>
-                                    </label>
+                            @can('admin')
+                                <div class="block">
+                                    <div class="mt-2">
+                                        <label class="inline-flex items-center">
+                                        <input type="checkbox" wire:model="permissions" value="{{$opt['id']}}"/>
+                                        <span class="ml-2">{{$opt['permission']}}</span>
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
+                            @endcan
+                            @can('monitor')
+                                <div class="block">
+                                    <div class="mt-2">
+                                        <label class="inline-flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            wire:model="permissions"
+                                            value="{{$opt['id']}}"
+                                            @if ($opt['permission'] != "user")
+                                                disabled
+                                            @endif
+                                        />
+                                        <span class="ml-2">{{$opt['permission']}}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            @endcan
                         @empty
                             <p>Nenhuma permissao encontrada</p>
                         @endforelse

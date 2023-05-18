@@ -32,7 +32,7 @@
     >
         <div class="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200">
             <div class="font-medium text-slate-800">{{ Auth::user()->name }}</div>
-            <div class="text-xs text-slate-500 italic">{{ Auth::user()->permissions->first()->permission }}</div>
+            <div class="text-xs text-slate-500 italic">{{ Auth::user()->permissions()->implode('permission', ',') }}</div>
         </div>
         <ul>
             <li>

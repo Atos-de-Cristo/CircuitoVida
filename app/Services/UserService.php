@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
@@ -35,6 +36,7 @@ class UserService
 
     public function create(array $data): User
     {
+        $data['password'] = Hash::make($data['password']);
         $user = $this->repository->create($data);
         $user->permissions()->sync($data['permissions']);
         return $user;
@@ -42,6 +44,7 @@ class UserService
 
     public function update(array $data, int $id): void
     {
+        $data['password'] = Hash::make($data['password']);
         $repo = $this->find($id);
         $repo->update($data);
         $repo->permissions()->sync($data['permissions']);

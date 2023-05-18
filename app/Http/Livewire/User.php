@@ -85,13 +85,13 @@ class User extends Component
         $request = [
             'name' => $this->name,
             'email' => $this->email,
-            'permissions' => $this->permissions
+            'permissions' => $this->permissions,
+            'password' => $this->password
         ];
 
         if ($this->_id) {
             $service->update($request, $this->_id);
         }else{
-            $request['password'] = $this->password;
             $service->create($request);
         }
 
@@ -105,7 +105,6 @@ class User extends Component
     public function edit($id, UserService $service)
     {
         $user = $service->find($id);
-
         $this->_id = $user->id;
         $this->name = $user->name;
         $this->email = $user->email;

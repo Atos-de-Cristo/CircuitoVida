@@ -74,9 +74,9 @@ class User extends Authenticatable
 
     public function hasPermissionTo(string $permission): bool {
         $permissionOfUser = Cache::rememberForever('permissions::of::user::'.$this->id, function() {
-            return $this->permissions()->get();
+            return explode(',', $this->permissions()->implode('permission', ','));
         });
 
-        return $permissionOfUser->where('permission', $permission)->isNotEmpty();
+        return in_array($permission, $permissionOfUser);
     }
 }
