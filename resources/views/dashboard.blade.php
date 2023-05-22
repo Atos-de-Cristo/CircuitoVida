@@ -6,6 +6,11 @@
     </x-slot>
 
     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
-        <x-welcome />
+        @can('user')
+            <livewire:dashboard-user />
+        @endcan
+        @cannot('user')
+            <x-welcome />
+        @endcannot
     </div>
 </x-app-layout>
