@@ -3,7 +3,7 @@ namespace App\Services;
 
 use App\Models\Event;
 use Illuminate\Database\Eloquent\Collection;
-
+use Illuminate\Pagination\LengthAwarePaginator;
 class EventService
 {
     protected $repository;
@@ -16,6 +16,13 @@ class EventService
     public function getAll(): Collection
     {
         return $this->repository->with('inscriptions')->get();
+    }
+    public function paginate($search, $sortBy, $sortDirection): LengthAwarePaginator
+    {
+        return $this->repository
+            ->where('name', 'LIKE', '%' . $search . '%')
+            ->orderBy($sortBy, $sortDirection)
+            ->paginate(10);
     }
 
     public function find(string $id): Event

@@ -7,18 +7,25 @@ use App\Services\EventService;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-
+use Livewire\WithPagination;
 class Event extends Component
 {
+    use WithPagination;
     use WithFileUploads;
 
-    public $_id, $type, $name, $image, $start_date, $end_date, $local, $description, $tickets_limit, $value, $status;
+
+
+    public $_id, $type, $name, $image, $start_date, $end_date, $local, $description, $tickets_limit, $value, $status, $newImage;
     public $isOpen = false;
     protected $service;
 
+    public $search = '';
+    public $sortBy = 'id';
+    public $sortDirection = 'desc';
+
     public function render(EventService $service)
     {
-        $dataAll = $service->getAll();
+        $dataAll = $service->paginate($this->search,$this->sortBy, $this->sortDirection);
         $typesList = EventType::cases();
         $statusList = EventStatus::cases();
         return view('livewire.event.index', compact('dataAll', 'typesList', 'statusList'));
@@ -45,6 +52,7 @@ class Event extends Component
         $this->type = EventType::P;
         $this->name = '';
         $this->image = '';
+        $this->newImage = '';
         $this->start_date = '';
         $this->end_date = '';
         $this->local = '';
@@ -58,15 +66,17 @@ class Event extends Component
     {
         $this->validate([
             'name' => 'required',
+            'local' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:5120'
         ]);
 
-        $imgName = $this->image->store('files', 'public');
+
+
+
 
         $request = [
             'type' => $this->type,
             'name' => $this->name,
-            'image' =>  Storage::url($imgName),
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
             'local' => $this->local,
@@ -75,6 +85,11 @@ class Event extends Component
             'value' => $this->value,
             'status' => $this->status
         ];
+
+        if ($this->newImage) {
+            $imgName = $this->newImage->store('files', 'public');
+            $request['image'] = Storage::url($imgName);
+        }
 
         if ($this->_id) {
             $service->update($request, $this->_id);
@@ -95,6 +110,7 @@ class Event extends Component
         $this->_id = $event->id;
         $this->name = $event->name;
         $this->image = $event->image;
+        $this->newImage = null;
         $this->description = $event->description;
         $this->type = $event->type;
         $this->start_date = $event->start_date;

@@ -65,7 +65,7 @@
                         <th class="px-4 py-2 w-48"></th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-900 dark:divide-gray-700">
+                <tbody class="bg-white divide-y divide-gray-200">
                     @foreach($dataAll as $data)
                         <tr>
                             <td class="border px-4 py-2 ">{{ $data->id }}</td>

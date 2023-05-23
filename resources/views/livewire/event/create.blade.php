@@ -40,13 +40,7 @@
                                     <span class="text-red-500">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="mb-4">
-                                <label for="campImg" class="block text-gray-700 text-sm font-bold mb-2">Imagem</label>
-                                <input type="file" wire:model="image">
-                                @error('image')
-                                    <span class="text-red-500">{{ $message }}</span>
-                                @enderror
-                            </div>
+
                             <div class="mb-4">
                                 <label for="campName" class="block text-gray-700 text-sm font-bold mb-2">Nome:</label>
                                 <input type="text"
@@ -84,6 +78,20 @@
                                 @error('local')
                                     <span class="text-red-500">{{ $message }}</span>
                                 @enderror
+                            </div>
+                            <div class="mb-4">
+                                <label for="campImg" class="block text-gray-700 text-sm font-bold mb-2">Imagem</label>
+                                <input type="file" wire:model="newImage">
+                                @error('newImage')
+                                    <span class="text-red-500">{{ $message }}</span>
+                                @enderror
+
+                                @if ($newImage)
+                                    <img src="{{ $newImage->temporaryUrl() }}" alt="Nova Imagem Selecionada" class="mt-2 w-32 h-auto">
+                                @elseif ($image!='')
+                                    <img src="{{ asset($image) }}" alt="Imagem Atual" class="mt-2 w-32 h-auto">
+
+                                @endif
                             </div>
                         </div>
                         <div class="md:w-1/2 p-1">
@@ -125,6 +133,7 @@
                                     @endforeach
                                 </select>
                             </div>
+
                         </div>
                     </div>
                 </div>

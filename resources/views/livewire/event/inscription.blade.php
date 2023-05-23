@@ -32,7 +32,7 @@
                             <img
                                 src="{{asset($data->image)}}"
                                 alt="Logo Evento {{$data->name}}"
-                                class="h-auto max-w-full transition-all duration-300 rounded-lg blur-sm hover:blur-none"
+                                class="hover:scale-125 transition-all duration-500 cursor-pointer"
                             >
                         @endisset
                     </td>
