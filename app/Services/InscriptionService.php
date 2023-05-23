@@ -3,7 +3,6 @@ namespace App\Services;
 
 use App\Models\Inscription;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 
 class InscriptionService
 {
@@ -14,9 +13,9 @@ class InscriptionService
         $this->repository = $repository;
     }
 
-    public function getAll(): Collection
+    public function getAll(array $filter = []): Collection
     {
-        return $this->repository->where('user_id', Auth::user()->id)->with('event', 'user')->get();
+        return $this->repository->where($filter)->with('event', 'user')->get();
     }
 
     public function find(string $id): Inscription

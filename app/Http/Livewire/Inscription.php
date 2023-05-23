@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Enums\InscriptionStatus;
 use App\Services\InscriptionService;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Inscription extends Component
@@ -12,7 +13,7 @@ class Inscription extends Component
 
     public function render(InscriptionService $service)
     {
-        $dataAll = $service->getAll();
+        $dataAll = $service->getAll(['user_id' => Auth::user()->id]);
         return view('livewire.inscription.index', compact('dataAll'));
     }
 

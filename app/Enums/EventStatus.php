@@ -4,7 +4,7 @@ namespace App\Enums;
 enum EventStatus: string {
     case P = "Pendente";
     case A = "Aberto";
-    case E = "Esgotada";
+    case E = "Encerrado";
     case F = "Finalizada";
 
     public static function fromValue(string $status): string {
