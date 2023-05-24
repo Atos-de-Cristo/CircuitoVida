@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Enums\EventStatus;
+use App\Enums\InscriptionStatus;
 use App\Services\EventService;
 use App\Services\InscriptionService;
 use Livewire\Component;
@@ -43,5 +44,21 @@ class EventInscription extends Component
     public function closeModal(){
         $this->isUser = false;
         $this->userInscription = '';
+    }
+
+    public function approveInscription(string $id, InscriptionService $inscriptionService){
+        $inscriptionService->update([
+            'status' => InscriptionStatus::L->name,
+        ], $id);
+
+        $this->userInscription = $inscriptionService->getAll(['event_id' => $id]);
+    }
+
+    public function disapproveInscription(string $id, InscriptionService $inscriptionService){
+        $inscriptionService->update([
+            'status' => InscriptionStatus::C->name,
+        ], $id);
+
+        $this->userInscription = $inscriptionService->getAll(['event_id' => $id]);
     }
 }

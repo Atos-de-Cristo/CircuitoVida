@@ -30,6 +30,8 @@
                         <th class="text-left px-2 w-40">#</th>
                         <th class="text-left px-2">Nome</th>
                         <th class="text-left px-2">Email</th>
+                        <td class="text-left px-2">Status</td>
+                        <td></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,6 +40,18 @@
                         <td class="border px-2 py-2">{{ $item->user->id }}</td>
                         <td class="border px-2 py-2">{{ $item->user->name }}</td>
                         <td class="border px-2 py-2">{{ $item->user->email }}</td>
+                        <td class="border px-2 py-2">{{ getStatusInscription($item->status) }}</td>
+                        <td class="border px-2 py-2">
+                            @if ($item->status == 'P')
+                                <button wire:click="approveInscription({{ $item->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Aprovar</button>
+                            @endif
+                            @if ($item->status == 'L')
+                                <button wire:click="disapproveInscription({{ $item->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Cancelar</button>
+                            @endif
+                            @if ($item->status == 'C')
+                                <button wire:click="approveInscription({{ $item->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Aprovar</button>
+                            @endif
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
