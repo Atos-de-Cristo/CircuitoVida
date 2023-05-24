@@ -8,9 +8,9 @@ class PermissionService
 {
     protected $repository;
 
-    public function __construct(Permission $repository)
+    public function __construct()
     {
-        $this->repository = $repository;
+        $this->repository = new Permission;
     }
 
     public function getAll()

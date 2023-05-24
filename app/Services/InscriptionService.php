@@ -2,15 +2,16 @@
 namespace App\Services;
 
 use App\Models\Inscription;
+use Error;
 use Illuminate\Database\Eloquent\Collection;
 
 class InscriptionService
 {
     protected $repository;
 
-    public function __construct(Inscription $repository)
+    public function __construct()
     {
-        $this->repository = $repository;
+        $this->repository = new Inscription();
     }
 
     public function getAll(array $filter = []): Collection
@@ -25,6 +26,23 @@ class InscriptionService
 
     public function create(array $data): Inscription
     {
+        $getInsc = $this->repository
+            ->where('user_id', $data['user_id'])
+            ->where('event_id', $data['event_id'])
+            ->count();
+        if ($getInsc > 0) {
+            throw new Error('Usuário já inscrito!');
+        }
+
+        $getInscTotal = $this->repository
+            ->where('event_id', $data['event_id'])
+            ->count();
+        $eventService = new EventService;
+        $limitInsc = $eventService->find($data['event_id'])->tickets_limit;
+        if ($getInscTotal >= $limitInsc) {
+            throw new Error('Vagas esgotadas!');
+        }
+
         return $this->repository->create($data);
     }
 

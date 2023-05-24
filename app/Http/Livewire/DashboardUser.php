@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Enums\InscriptionStatus;
+use App\Enums\EventStatus;
 use App\Services\EventService;
 use App\Services\InscriptionService;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +12,9 @@ class DashboardUser extends Component
 {
     public function render(EventService $service)
     {
-        $eventAll = $service->getAll();
+        $eventAll = $service->getAll([
+            'status' => EventStatus::A->name
+        ]);
         return view('livewire.dashboard.user', compact('eventAll'));
     }
 

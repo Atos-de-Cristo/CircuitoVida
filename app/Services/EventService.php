@@ -8,14 +8,14 @@ class EventService
 {
     protected $repository;
 
-    public function __construct(Event $repository)
+    public function __construct()
     {
-        $this->repository = $repository;
+        $this->repository = new Event();
     }
 
-    public function getAll(): Collection
+    public function getAll(array $filter = []): Collection
     {
-        return $this->repository->with('inscriptions')->get();
+        return $this->repository->with('inscriptions')->where($filter)->get();
     }
     public function paginate($search, $sortBy, $sortDirection): LengthAwarePaginator
     {

@@ -11,9 +11,9 @@ class UserService
 {
     protected $repository;
 
-    public function __construct(User $repository)
+    public function __construct()
     {
-        $this->repository = $repository;
+        $this->repository = new User;
     }
 
     public function getAll(): Collection
