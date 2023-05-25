@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+    <div class="bg-white  overflow-hidden shadow-xl sm:rounded-lg">
         @can('user')
             <livewire:dashboard-user />
         @endcan
