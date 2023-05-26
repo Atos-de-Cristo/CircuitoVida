@@ -26,4 +26,12 @@ class Event extends Model
     public function inscriptions(): HasMany {
         return $this->hasMany(Inscription::class);
     }
+
+    public function modules(): HasMany{
+        return $this->hasMany(Module::class);
+    }
+
+    public function lessons(): HasMany{
+        return $this->hasMany(Lesson::class);
+    }
 }

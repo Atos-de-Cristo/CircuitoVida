@@ -54,10 +54,18 @@
                             <td class="border px-2 py-2">{{ $data->name }}</td>
                             <td class="border px-2 py-2">{{ getStatusEvent($data->status) }}</td>
                             <td class="border px-2 py-2">
-                                <button wire:click="edit({{ $data->id }})"
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</button>
-                                <button wire:click="delete({{ $data->id }})"
-                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                                <button
+                                    wire:click="manager({{ $data->id }})"
+                                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                                >Gerenciar</button>
+                                <button
+                                    wire:click="edit({{ $data->id }})"
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                >Edit</button>
+                                <button
+                                    wire:click="delete({{ $data->id }})"
+                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                >Delete</button>
                             </td>
                         </tr>
                     @endforeach
