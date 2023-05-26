@@ -45,11 +45,12 @@ class Event extends Component
     public function closeModal()
     {
         $this->isOpen = false;
+
     }
 
     private function resetInputFields(){
         $this->_id = '';
-        $this->type = EventType::P;
+        $this->type = '';
         $this->name = '';
         $this->image = '';
         $this->newImage = '';
@@ -59,19 +60,23 @@ class Event extends Component
         $this->description = '';
         $this->tickets_limit = '';
         $this->value = '';
-        $this->status = EventStatus::P;
+        $this->status = '';
     }
 
     public function store(EventService $service)
     {
+       
+
         $this->validate([
             'name' => 'required',
+            'type' => 'required',
             'local' => 'required',
+            'status' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:5120'
         ]);
 
 
-
+        dd( $this->name);
 
 
         $request = [
@@ -93,6 +98,7 @@ class Event extends Component
 
         if ($this->_id) {
             $service->update($request, $this->_id);
+            dd('cuida');
         }else{
             $service->create($request);
         }
