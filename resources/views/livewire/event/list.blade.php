@@ -44,20 +44,17 @@
                             <td class="border px-2 py-2 flex items-center justify-center">
                                 @if ($data->image)
                                     <img src="{{ asset($data->image) }}" alt="Logo Evento {{ $data->name }}"
-                                        class="hover:scale-125 w-48 object-contain rounded-lg cursor-pointer">
+                                        class="hover:scale-125 w-48 object-contain rounded-lg cursor-pointer" wire:click="manager({{ $data->id }})">
                                 @else
                                     <img src="{{ asset('images/logo.png') }}" alt="Logo"
-                                        class=" hover:scale-125 w-48  bg-slate-500 rounded-lg cursor-pointer">
+                                        class=" hover:scale-125 w-48  bg-slate-500 rounded-lg cursor-pointer" wire:click="manager({{ $data->id }})">
                                 @endif
                             </td>
                             <td class="border px-2 py-2">{{ getTypeEvent($data->type) }}</td>
                             <td class="border px-2 py-2">{{ $data->name }}</td>
                             <td class="border px-2 py-2">{{ getStatusEvent($data->status) }}</td>
                             <td class="border px-2 py-2">
-                                <button
-                                    wire:click="manager({{ $data->id }})"
-                                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                                >Gerenciar</button>
+
                                 <button
                                     wire:click="edit({{ $data->id }})"
                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
