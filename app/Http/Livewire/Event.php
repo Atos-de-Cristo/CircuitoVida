@@ -13,8 +13,6 @@ class Event extends Component
     use WithPagination;
     use WithFileUploads;
 
-
-
     public $_id, $type, $name, $image, $start_date, $end_date, $local, $description, $tickets_limit, $value, $status, $newImage;
     public $isOpen = false;
     protected $service;
@@ -28,7 +26,7 @@ class Event extends Component
         $dataAll = $service->paginate($this->search,$this->sortBy, $this->sortDirection);
         $typesList = EventType::cases();
         $statusList = EventStatus::cases();
-        return view('livewire.event.index', compact('dataAll', 'typesList', 'statusList'));
+        return view('livewire.event.list', compact('dataAll', 'typesList', 'statusList'));
     }
 
     public function create()
@@ -65,7 +63,7 @@ class Event extends Component
 
     public function store(EventService $service)
     {
-       
+
 
         $this->validate([
             'name' => 'required',
@@ -76,7 +74,7 @@ class Event extends Component
         ]);
 
 
-        dd( $this->name);
+
 
 
         $request = [
@@ -133,5 +131,9 @@ class Event extends Component
     {
         $service->delete($id);
         session()->flash('message', 'Evento deletado com sucesso.');
+    }
+
+    public function manager($id){
+        redirect(route('eventManager', ['id' => $id]));
     }
 }
