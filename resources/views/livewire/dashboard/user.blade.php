@@ -1,15 +1,19 @@
 
-
-
 <div class="p-5">
     <h1 class="text-3xl font-bold text-gray-900 dark:text-black">Cursos</h1>
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-4">
+    <div class="flex flex-wrap gap-4 sm:flex-row lg:flex-row mt-4">
         @forelse ($eventAll as $item)
-            <div class="max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div class="max-w-xs w-full sm:w-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                @if ($item->image)
                 <a href="#">
-                    <img class="rounded-t-lg object-cover w-full h-48 sm:h-64" src="{{$item->image}}" alt="" />
+                    <img class="rounded-t-lg object-contain  w-full h-48 sm:h-64" src="{{$item->image}}" alt="" />
                 </a>
-                <div class="p-5">
+                @else
+                <a href="#">
+                    <img class="rounded-t-lg object-contain  w-full h-48 sm:h-64" src="{{asset('images/logo.png')}}" alt="" />
+                </a>
+                @endif
+                <div class="p-3">
                     <a href="#">
                         <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{$item->name}}</h5>
                     </a>
