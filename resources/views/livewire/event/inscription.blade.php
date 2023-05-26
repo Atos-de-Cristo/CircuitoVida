@@ -49,7 +49,8 @@
                     <td class="border px-2 py-2">{{ getStatusEvent($data->status) }}</td>
                     <td class="border px-2 py-2">{{ $data->tickets_limit }}</td>
                     <td class="border px-2 py-2">{{ count($data->inscriptions) }}</td>
-                    <td class="border px-2 py-2">R$ {{ number_format($data->value, 2, ",", ".") }}</td>
+                    <td class="border px-2 py-2">R$ {{ number_format(floatval($data->value), 2, ",", ".") }}</td>
+
                     <td class="border px-2 py-2">
                         {{-- TODO: usar enums --}}
                         @if ($data->status == 'P')
