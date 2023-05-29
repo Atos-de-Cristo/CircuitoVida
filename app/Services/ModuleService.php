@@ -15,7 +15,7 @@ class ModuleService
 
     public function getAll(array $filter = []): Collection
     {
-        return $this->repository->with('event')->where($filter)->get();
+        return $this->repository->with('event')->with('lessons')->where($filter)->get();
     }
 
     public function find(string $id): Module

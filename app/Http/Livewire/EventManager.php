@@ -26,6 +26,7 @@ class EventManager extends Component
     public $eventId, $nameModule;
     public $user_id, $event_id, $module_id, $title, $description, $video, $slide, $date;
     public $lessonId;
+
     public $isOpenModule = false;
     public $isOpenLesson = false;
     public $isOpenFrequency = false;
@@ -40,7 +41,9 @@ class EventManager extends Component
     {
         $event = $eventService->find($this->eventId);
         $modules = $moduleService->getAll(['event_id' => $this->eventId]);
+
         return view('livewire.event.manager', compact('event', 'modules'));
+
     }
 
     public function approveInscription(string $id, InscriptionService $inscriptionService)

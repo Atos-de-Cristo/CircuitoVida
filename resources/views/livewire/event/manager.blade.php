@@ -53,7 +53,7 @@
             </table>
         </div>
         <div>
-            <h1>Inscricoes</h1>
+            <h1>Inscritos</h1>
             <table class="table-fixed w-full">
                 <thead>
                     <tr class="bg-gray-100">
