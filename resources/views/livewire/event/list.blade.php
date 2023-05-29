@@ -27,48 +27,50 @@
                 class="w-full sm:w-64 border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring focus:border-blue-500"
                 placeholder="Buscar usuários...">
         </div>
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead>
-                    <tr class="bg-gray-100">
-                        <th class="px-4 py-2 ">Imagem</th>
-                        <th class="text-left px-2">Tipo</th>
-                        <th class="text-left px-2">Nome</th>
-                        <th class="text-left px-2">Status</th>
-                        <th class="px-4 py-2 w-48"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($dataAll as $data)
-                        <tr>
-                            <td class="border px-2 py-2 flex items-center justify-center">
-                                @if ($data->image)
-                                    <img src="{{ asset($data->image) }}" alt="Logo Evento {{ $data->name }}"
-                                        class="hover:scale-125 w-48 object-contain rounded-lg cursor-pointer" wire:click="manager({{ $data->id }})">
-                                @else
-                                    <img src="{{ asset('images/logo.png') }}" alt="Logo"
-                                        class=" hover:scale-125 w-48  bg-slate-500 rounded-lg cursor-pointer" wire:click="manager({{ $data->id }})">
-                                @endif
-                            </td>
-                            <td class="border px-2 py-2">{{ getTypeEvent($data->type) }}</td>
-                            <td class="border px-2 py-2">{{ $data->name }}</td>
-                            <td class="border px-2 py-2">{{ getStatusEvent($data->status) }}</td>
-                            <td class="border px-2 py-2">
+        <div class="flex flex-wrap -m-4">
+            @foreach ($dataAll as $data)
+                <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4">
+                    <div class="bg-white overflow-hidden shadow rounded-lg flex flex-col h-full">
+                        <div class="flex-shrink-0">
+                            @if ($data->image)
+                                <img src="{{ asset($data->image) }}" alt="Logo Evento {{ $data->name }}"
+                                    class="hover:scale-125 h-52 w-full object-cover rounded-t-lg cursor-pointer" wire:click="manager({{ $data->id }})">
+                            @else
+                                <img src="{{ asset('images/curso.png') }}" alt="Logo"
+                                    class="hover:scale-125 h-52 w-full bg-slate-500 rounded-t-lg cursor-pointer" wire:click="manager({{ $data->id }})">
+                            @endif
+                        </div>
+                        <div class="flex-grow p-4 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-900">{{ getTypeEvent($data->type) }}</h3>
+                                <p class="text-sm text-gray-500">{{ $data->name }}</p>
+                                <p class="text-sm text-gray-500">{{ getStatusEvent($data->status) }}</p>
+                            </div>
+                            <div class="mt-4">
+                                <hr class="my-2 border-gray-300">
+                                <div class="flex justify-center space-x-4">
+                                    <button wire:click="edit({{ $data->id }})"
+                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                      View
+                                    </button>
+                                    <button wire:click="edit({{ $data->id }})"
+                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                      Edit
+                                    </button>
+                                    <button wire:click="delete({{ $data->id }})"
+                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                                </div>
+                            </div>
 
-                                <button
-                                    wire:click="edit({{ $data->id }})"
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                >Edit</button>
-                                <button
-                                    wire:click="delete({{ $data->id }})"
-                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                >Delete</button>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
+
+
+
+
 
         <div class="mt-4">
             {{ $dataAll->links() }}
