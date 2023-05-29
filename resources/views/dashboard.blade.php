@@ -10,7 +10,7 @@
             <livewire:dashboard-user />
         @endcan
         @cannot('user')
-            <x-welcome />
+            DashBoard Admin
         @endcannot
     </div>
 </x-app-layout>
