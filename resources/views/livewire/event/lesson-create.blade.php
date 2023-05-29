@@ -30,8 +30,12 @@
                         <div class="md:w-1/2 p-1">
                             <div class="mb-4">
                                 <label for="campModulo" class="block text-gray-700 text-sm font-bold mb-2">Modulo</label>
-                                <select id="campModulo" wire:model="module_id"
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                <select
+                                    id="campModulo"
+                                    wire:model="module_id"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                >
+                                    <option value="">Selecione</option>
                                     @foreach ($modules as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
@@ -43,7 +47,8 @@
 
                             <div class="mb-4">
                                 <label for="campTitle" class="block text-gray-700 text-sm font-bold mb-2">Tema:</label>
-                                <input type="text"
+                                <input
+                                    type="text"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     id="campTitle"
                                     placeholder="Entre com um nome"

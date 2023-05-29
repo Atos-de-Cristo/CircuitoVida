@@ -43,7 +43,7 @@
                             <button wire:click="approveInscription({{ $item->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 Frequencia
                             </button>
-                            <button wire:click="approveInscription({{ $item->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            <button wire:click="openModalActivity({{ $item->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 Atividade
                             </button>
                         </td>
@@ -93,5 +93,8 @@
     @endif
     @if ($isOpenLesson)
         @include('livewire.event.lesson-create')
+    @endif
+    @if ($isOpenActivity)
+        @livewire('event-activity', [$eventId, $activityId])
     @endif
 </div>

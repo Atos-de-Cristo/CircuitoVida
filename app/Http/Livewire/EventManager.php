@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Enums\InscriptionStatus;
+use App\Services\ActivityService;
 use App\Services\EventService;
 use App\Services\InscriptionService;
 use App\Services\LessonService;
@@ -16,15 +17,21 @@ class EventManager extends Component
 {
     use WithFileUploads;
 
-
-    protected $listeners = ['refreshComponent' => '$refresh'];
+    protected $listeners = [
+        'refreshComponent' => '$refresh',
+        'closeModalActivity' => 'closeModalActivity'
+    ];
 
     public $eventId, $nameModule;
     public $user_id, $event_id, $module_id, $title, $description, $video, $slide, $date;
+    public $activityId, $titleActivity, $type, $option;
     public $isOpenModule = false;
     public $isOpenLesson = false;
+    public $isOpenFrequency = false;
+    public $isOpenActivity = false;
 
-    public function boot(Request $request){
+    public function boot(Request $request)
+    {
         $this->eventId = $request->id;
     }
 
@@ -149,5 +156,16 @@ class EventManager extends Component
 
         $this->closeModalLesson();
         $this->resetInputLesson();
+    }
+
+    public function openModalActivity(string $activityId)
+    {
+        $this->activityId = $activityId;
+        $this->isOpenActivity = true;
+    }
+
+    public function closeModalActivity()
+    {
+        $this->isOpenActivity = false;
     }
 }
