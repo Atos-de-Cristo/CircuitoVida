@@ -52,20 +52,21 @@
                             <div>
                                 <hr class="my-2 border-gray-300">
                                 <div class="flex justify-center space-x-4">
-                                    <button wire:click="edit({{ $data->id }})"
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                    <button wire:click="manager({{ $data->id }})"
+                                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">
                                         View
                                     </button>
                                     <button wire:click="edit({{ $data->id }})"
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                        class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded w-full">
                                         Edit
                                     </button>
                                     <button wire:click="delete({{ $data->id }})"
-                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full">
                                         Delete
                                     </button>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

@@ -26,7 +26,7 @@ class UserService
         return $this->repository
             ->where('name', 'LIKE', '%' . $search . '%')
             ->orderBy($sortBy, $sortDirection)
-            ->paginate(10);
+            ->paginate(12);
     }
 
     public function find(string $id): User
