@@ -12,22 +12,20 @@ class EventActivity extends Component
 {
     use WithFileUploads;
 
-    protected $listeners = ['refreshComponent' => '$refresh'];
-
-    public $eventId, $activityId;
+    public $eventId, $lessonId;
     public $titleActivity, $type, $option;
 
-    public function mount($eventId, $activityId)
+    public function mount($eventId, $lessonId)
     {
         $this->eventId = $eventId;
-        $this->activityId = $activityId;
+        $this->lessonId = $lessonId;
     }
 
     public function render(ActivityService $activityService)
     {
         $activities = $activityService->getAll([
             'event_id' => $this->eventId,
-            'lesson_id' => $this->activityId
+            'lesson_id' => $this->lessonId
         ]);
         return view('livewire.event.activity.create', compact('activities'));
     }
@@ -54,7 +52,7 @@ class EventActivity extends Component
 
         $request = [
             'event_id' => $this->eventId,
-            'lesson_id' => $this->activityId,
+            'lesson_id' => $this->lessonId,
             'title' => $this->titleActivity,
             'type' => $this->type,
             'option' => $this->option

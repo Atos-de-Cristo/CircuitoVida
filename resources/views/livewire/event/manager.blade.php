@@ -40,7 +40,7 @@
                         <td class="border px-2 py-2">{{ $item->title }}</td>
                         <td class="border px-2 py-2">{{ $item->module->name }}</td>
                         <td class="border px-2 py-2">
-                            <button wire:click="approveInscription({{ $item->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            <button wire:click="openModalFrequency({{ $item->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 Frequencia
                             </button>
                             <button wire:click="openModalActivity({{ $item->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -95,6 +95,9 @@
         @include('livewire.event.lesson-create')
     @endif
     @if ($isOpenActivity)
-        @livewire('event-activity', [$eventId, $activityId])
+        @livewire('event-activity', [$eventId, $lessonId])
+    @endif
+    @if ($isOpenFrequency)
+        @livewire('event-frequency', [$eventId, $lessonId])
     @endif
 </div>

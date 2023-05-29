@@ -19,12 +19,13 @@ class EventManager extends Component
 
     protected $listeners = [
         'refreshComponent' => '$refresh',
-        'closeModalActivity' => 'closeModalActivity'
+        'closeModalActivity' => 'closeModalActivity',
+        'closeModalFrequency' => 'closeModalFrequency'
     ];
 
     public $eventId, $nameModule;
     public $user_id, $event_id, $module_id, $title, $description, $video, $slide, $date;
-    public $activityId, $titleActivity, $type, $option;
+    public $lessonId;
     public $isOpenModule = false;
     public $isOpenLesson = false;
     public $isOpenFrequency = false;
@@ -158,14 +159,25 @@ class EventManager extends Component
         $this->resetInputLesson();
     }
 
-    public function openModalActivity(string $activityId)
+    public function openModalActivity(string $lessonId)
     {
-        $this->activityId = $activityId;
+        $this->lessonId = $lessonId;
         $this->isOpenActivity = true;
     }
 
     public function closeModalActivity()
     {
         $this->isOpenActivity = false;
+    }
+
+    public function openModalFrequency(string $lessonId)
+    {
+        $this->lessonId = $lessonId;
+        $this->isOpenFrequency = true;
+    }
+
+    public function closeModalFrequency()
+    {
+        $this->isOpenFrequency = false;
     }
 }
