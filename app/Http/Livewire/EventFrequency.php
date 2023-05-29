@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Services\EventService;
+use App\Services\FrequencyService;
 use Livewire\Component;
 
 class EventFrequency extends Component
@@ -28,26 +29,19 @@ class EventFrequency extends Component
         $this->emit('closeModalFrequency');
     }
 
-    private function resetInputActivity()
+    public function storeFrequency(FrequencyService $frequencyService)
     {
-        // $this->titleActivity = '';
-        // $this->type = '';
-        // $this->option = '';
-    }
+        $request = [];
+        foreach ($this->users as $key => $data) {
+            $dataConvert = json_decode($data);
+            $request[$key]['user_id'] = $dataConvert->user_id;
+            $request[$key]['inscription_id'] = $dataConvert->id;
+            $request[$key]['event_id'] = $this->eventId;
+            $request[$key]['lesson_id'] = $this->lessonId;
+        }
 
-    public function storeFrequency()
-    {
-        dd($this->users);
-        // $request = [
-        //     'event_id' => $this->eventId,
-        //     'lesson_id' => $this->lessonId,
-        //     'title' => $this->titleActivity,
-        //     'type' => $this->type,
-        //     'option' => $this->option
-        // ];
+        $frequencyService->create($request);
 
-        // $service->create($request);
-
-        $this->resetInputActivity();
+        $this->emit('closeModalFrequency');
     }
 }

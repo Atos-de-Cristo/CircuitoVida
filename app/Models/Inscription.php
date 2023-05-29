@@ -19,11 +19,18 @@ class Inscription extends Model
         'status'
     ];
 
-    public function event(): BelongsTo{
+    public function event(): BelongsTo
+    {
         return $this->belongsTo(Event::class);
     }
 
-    public function user(): BelongsTo{
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
+    }
+
+    public function frequencies(): HasMany
+    {
+        return $this->hasMany(Frequency::class);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Event;
+use App\Models\Inscription;
 use App\Models\Lesson;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -19,6 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(Event::class);
             $table->foreignIdFor(Lesson::class);
             $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Inscription::class);
             $table->timestamps();
         });
     }

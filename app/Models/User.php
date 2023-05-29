@@ -65,6 +65,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Permission::class, 'permission_user', 'user_id', 'permission_id');
     }
 
+    public function frequencies(): BelongsToMany {
+        return $this->belongsToMany(Frequency::class);
+    }
+
     public function inscriptions(): HasMany {
         return $this->hasMany(Inscription::class);
     }
