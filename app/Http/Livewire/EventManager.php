@@ -42,6 +42,7 @@ class EventManager extends Component
         $event = $eventService->find($this->eventId);
         $modules = $moduleService->getAll(['event_id' => $this->eventId]);
 
+
         return view('livewire.event.manager', compact('event', 'modules'));
 
     }
@@ -49,7 +50,7 @@ class EventManager extends Component
     public function approveInscription(string $id, InscriptionService $inscriptionService)
     {
         $inscriptionService->update([
-            'status' => InscriptionStatus::L->name,
+            'status' => InscriptionStatus::G->name,
         ], $id);
 
         $this->emit('refreshComponent');
