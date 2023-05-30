@@ -11,11 +11,15 @@ use Illuminate\Support\Facades\Route;
 Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified' ])->group(function () {
     Route::get('/', function () { return view('dashboard'); })->name('dashboard');
 
-    Route::get('/event', Event::class)->name('event');
-    Route::get('/users', User::class)->name('users');
+    Route::middleware('can:admin,monitor')->group(function () {
+        Route::get('/event', Event::class)->name('event');
+        Route::get('/users', User::class)->name('users');
+        Route::get('/event/inscription', EventInscription::class)->name('eventInscription');
+        Route::get('/event/manager/{id}', EventManager::class)->name('eventManager');
+    });
 
-    Route::get('/inscription', Inscription::class)->name('inscription');
-    Route::get('/event/inscription', EventInscription::class)->name('eventInscription');
-    Route::get('/event/manager/{id}', EventManager::class)->name('eventManager');
-    Route::get('/event/student/{id}', EventStudent::class)->name('eventStudent');
+    Route::middleware('can:user')->group(function () {
+        Route::get('/inscription', Inscription::class)->name('inscription');
+        Route::get('/event/student/{id}', EventStudent::class)->name('eventStudent');
+    });
 });
