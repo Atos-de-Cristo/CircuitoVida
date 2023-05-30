@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Enums\InscriptionStatus;
-use App\Services\ActivityService;
 use App\Services\EventService;
 use App\Services\InscriptionService;
 use App\Services\LessonService;

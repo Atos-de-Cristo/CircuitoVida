@@ -17,11 +17,18 @@ class Inscription extends Component
         return view('livewire.inscription.index', compact('dataAll'));
     }
 
-    public function ticket(string $id){
+    public function ticket(string $id)
+    {
 
     }
 
-    public function cancel(string $id, InscriptionService $service){
+    public function view(string $id)
+    {
+        redirect(route('eventStudent', ['id' => $id]));
+    }
+
+    public function cancel(string $id, InscriptionService $service)
+    {
         $service->update([
             'status' => InscriptionStatus::C->name,
         ], $id);
