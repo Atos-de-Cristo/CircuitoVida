@@ -11,7 +11,7 @@ class Module extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 'name', 'event_id' ];
+    protected $fillable = [ 'name', 'event_id' ,];
 
     public function event(): BelongsTo{
         return $this->belongsTo(Event::class);

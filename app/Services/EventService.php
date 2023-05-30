@@ -27,7 +27,7 @@ class EventService
 
     public function find(string $id): Event
     {
-        return $this->repository->with('inscriptions')->find($id);
+        return $this->repository->with('inscriptions')->with('modules')->with('lessons')->find($id);
     }
 
     public function create(array $data): Event
