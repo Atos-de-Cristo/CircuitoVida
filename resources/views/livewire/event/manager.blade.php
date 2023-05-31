@@ -31,20 +31,20 @@
             <div>
                 <div class="font-bold mb-4 flex items-center">
                     <svg height="20px" width="20px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"
-                    fill="#000000">
+                        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"
+                        fill="#000000">
 
-                    <path class="st0"
-                        d="M81.44,116.972c23.206,0,42.007-18.817,42.007-42.008c0-23.215-18.801-42.016-42.007-42.016 c-23.216,0-42.016,18.801-42.016,42.016C39.424,98.155,58.224,116.972,81.44,116.972z">
-                    </path>
-                    <path class="st0"
-                        d="M224.166,245.037c0-0.856-0.142-1.673-0.251-2.498l62.748-45.541c3.942-2.867,4.83-8.411,1.963-12.362 c-1.664-2.285-4.342-3.652-7.17-3.652c-1.877,0-3.667,0.589-5.191,1.689l-62.874,45.636c-2.341-1.068-4.909-1.704-7.65-1.704 h-34.178l-8.294-47.222c-4.555-23.811-14.112-42.51-34.468-42.51h-86.3C22.146,136.873,0,159.019,0,179.383v141.203 c0,10.178,8.246,18.432,18.424,18.432c5.011,0,0,0,12.864,0l7.005,120.424c0,10.83,8.788,19.61,19.618,19.61 c8.12,0,28.398,0,39.227,0c10.83,0,19.61-8.78,19.61-19.61l9.204-238.53h0.463l5.27,23.269c1.744,11.097,11.293,19.28,22.524,19.28 h51.534C215.92,263.461,224.166,255.215,224.166,245.037z M68.026,218.861v-67.123h24.126v67.123l-12.817,15.118L68.026,218.861z">
-                    </path>
-                    <polygon class="st0"
-                        points="190.326,47.47 190.326,200.869 214.452,200.869 214.452,71.595 487.874,71.595 487.874,302.131 214.452,302.131 214.452,273.113 190.326,273.113 190.326,326.256 512,326.256 512,47.47 ">
-                    </polygon>
+                        <path class="st0"
+                            d="M81.44,116.972c23.206,0,42.007-18.817,42.007-42.008c0-23.215-18.801-42.016-42.007-42.016 c-23.216,0-42.016,18.801-42.016,42.016C39.424,98.155,58.224,116.972,81.44,116.972z">
+                        </path>
+                        <path class="st0"
+                            d="M224.166,245.037c0-0.856-0.142-1.673-0.251-2.498l62.748-45.541c3.942-2.867,4.83-8.411,1.963-12.362 c-1.664-2.285-4.342-3.652-7.17-3.652c-1.877,0-3.667,0.589-5.191,1.689l-62.874,45.636c-2.341-1.068-4.909-1.704-7.65-1.704 h-34.178l-8.294-47.222c-4.555-23.811-14.112-42.51-34.468-42.51h-86.3C22.146,136.873,0,159.019,0,179.383v141.203 c0,10.178,8.246,18.432,18.424,18.432c5.011,0,0,0,12.864,0l7.005,120.424c0,10.83,8.788,19.61,19.618,19.61 c8.12,0,28.398,0,39.227,0c10.83,0,19.61-8.78,19.61-19.61l9.204-238.53h0.463l5.27,23.269c1.744,11.097,11.293,19.28,22.524,19.28 h51.534C215.92,263.461,224.166,255.215,224.166,245.037z M68.026,218.861v-67.123h24.126v67.123l-12.817,15.118L68.026,218.861z">
+                        </path>
+                        <polygon class="st0"
+                            points="190.326,47.47 190.326,200.869 214.452,200.869 214.452,71.595 487.874,71.595 487.874,302.131 214.452,302.131 214.452,273.113 190.326,273.113 190.326,326.256 512,326.256 512,47.47 ">
+                        </polygon>
 
-                </svg>
+                    </svg>
                     <span class="ml-2 font-bold">Monitores</span>
                 </div>
                 <div class="flex flex-col items-center sm:flex-row">
@@ -60,36 +60,39 @@
                     </div>
                 </div>
             </div>
+            {{--Botões--}}
+
+
+
             <div class="mt-2 sm:mt-0 flex space-x-2">
                 <button wire:click="createModule()"
-                    class="flex items-center justify-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    class="inline-flex items-center justify-center bg-indigo-900 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full">
                     <svg width="22px" height="22px" viewBox="0 0 24 24" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
+                        xmlns="http://www.w3.org/2000/svg">
 
-                    <path d="M12 11L12 16" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round"></path>
-                    <path d="M14.5 13.5L9.5 13.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round"></path>
-                    <path
-                        d="M3 9.312C3 4.93757 3.93757 4 8.312 4H9.92963C10.5983 4 11.2228 4.3342 11.5937 4.8906L12.4063 6.1094C12.7772 6.6658 13.4017 7 14.0704 7C15.9647 7 17.8145 7 19.1258 7C20.1807 7 21.0128 7.82095 21.0029 8.8758C21.0013 9.05376 21 9.20638 21 9.312V14.688C21 19.0624 20.0624 20 15.688 20H8.312C3.93757 20 3 19.0624 3 14.688V9.312Z"
-                        stroke="#ffffff" stroke-width="2"></path>
+                        <path d="M12 11L12 16" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                        <path d="M14.5 13.5L9.5 13.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                        <path
+                            d="M3 9.312C3 4.93757 3.93757 4 8.312 4H9.92963C10.5983 4 11.2228 4.3342 11.5937 4.8906L12.4063 6.1094C12.7772 6.6658 13.4017 7 14.0704 7C15.9647 7 17.8145 7 19.1258 7C20.1807 7 21.0128 7.82095 21.0029 8.8758C21.0013 9.05376 21 9.20638 21 9.312V14.688C21 19.0624 20.0624 20 15.688 20H8.312C3.93757 20 3 19.0624 3 14.688V9.312Z"
+                            stroke="#ffffff" stroke-width="2"></path>
 
-                </svg>
+                    </svg>
                     <span class="ml-2">Módulos</span>
                 </button>
                 <button wire:click="createLesson()"
-                    class="flex items-center justify-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    class="inline-flex items-center justify-center bg-indigo-900 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full">
                     <svg width="22px" height="22px" viewBox="0 0 24 24" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
+                        xmlns="http://www.w3.org/2000/svg">
 
-                                <path
-                                    d="M3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12Z"
-                                    stroke="#ffffff" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"></path>
-                                <path d="M10 15V9L15 12L10 15Z" stroke="#ffffff" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path
+                            d="M3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12Z"
+                            stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M10 15V9L15 12L10 15Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round"></path>
 
-                </svg>
+                    </svg>
                     <span class="ml-2">Aulas</span>
                 </button>
             </div>
@@ -131,21 +134,42 @@
                         </div>
                     </div>
                     <div x-show="open" class="transition-all mt-4 duration-300 ease-in-out">
-
                         <h3 class="font-bold">Título da Aula</h3>
-                        <div class="border-t border-gray-200 pb-2 ">
-
+                        <div class="border-t border-gray-200 pb-2">
                             @foreach ($module->lessons as $lesson)
-                                <div class="border-t border-gray-200 pb-2 ">
-                                    <p>{{ $lesson->title }}</p>
+                                <div class="border-t border-gray-200 pb-2 py-2 flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                               <path
+                                                    d="M3 12C3 4.5885 4.5885 3 12 3C19.4115 3 21 4.5885 21 12C21 19.4115 19.4115 21 12 21C4.5885 21 3 19.4115 3 12Z"
+                                                    stroke="#312e81" stroke-width="2"></path>
+                                                <path
+                                                    d="M10.9 8.8L10.6577 8.66152C10.1418 8.36676 9.5 8.73922 9.5 9.33333L9.5 14.6667C9.5 15.2608 10.1418 15.6332 10.6577 15.3385L10.9 15.2L15.1 12.8C15.719 12.4463 15.719 11.5537 15.1 11.2L10.9 8.8Z"
+                                                    stroke="#312e81" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round"></path>
+                                        </svg>
+                                        <a href="{{ $lesson->url }}"
+                                            class="text-blue-500 hover:text-blue-700 ml-1">{{ $lesson->title }}</a>
+                                    </div>
+                                    @if($event->status != 'E' )
+                                    <button wire:click="openModalFrequency({{ $lesson->id }})"
+                                        class="inline-flex items-center justify-center bg-indigo-900 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full">
+                                        Frequencia
+                                    </button>
+                                    @endif
+
                                 </div>
                             @endforeach
                         </div>
                     </div>
+
                 </div>
             @endforeach
 
         </div>
+
+        {{-- Alunos --}}
         <div class="sm:col-span-2 md:col-span-1">
             <div class="text-xl font-bold mb-4 flex items-center">
                 <svg height="30px" width="30px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
