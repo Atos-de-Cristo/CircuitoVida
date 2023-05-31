@@ -149,7 +149,7 @@
                                                     stroke="#312e81" stroke-width="2" stroke-linecap="round"
                                                     stroke-linejoin="round"></path>
                                         </svg>
-                                        <a href="{{ $lesson->url }}"
+                                        <a href="{{ route('classroom') }}"
                                             class="text-blue-500 hover:text-blue-700 ml-1">{{ $lesson->title }}</a>
                                     </div>
                                     @if($event->status != 'E' )

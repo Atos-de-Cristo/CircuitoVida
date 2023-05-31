@@ -5,6 +5,7 @@ use App\Http\Livewire\EventInscription;
 use App\Http\Livewire\EventManager;
 use App\Http\Livewire\Inscription;
 use App\Http\Livewire\User;
+use App\Http\Livewire\Classroom;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified' ])->group(function () {
@@ -16,4 +17,5 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
     Route::get('/inscription', Inscription::class)->name('inscription');
     Route::get('/event/inscription', EventInscription::class)->name('eventInscription');
     Route::get('/event/manager/{id}', EventManager::class)->name('eventManager');
+    Route::get('/classroom', Classroom::class)->name('classroom');
 });
