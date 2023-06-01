@@ -3,11 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Enums\InscriptionStatus;
-use App\Services\ActivityService;
-use App\Services\EventService;
-use App\Services\InscriptionService;
-use App\Services\LessonService;
-use App\Services\ModuleService;
+use App\Services\{EventService, InscriptionService, LessonService, ModuleService};
 use Livewire\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -41,10 +37,7 @@ class EventManager extends Component
     {
         $event = $eventService->find($this->eventId);
         $modules = $moduleService->getAll(['event_id' => $this->eventId]);
-
-
         return view('livewire.event.manager', compact('event', 'modules'));
-
     }
 
     public function approveInscription(string $id, InscriptionService $inscriptionService)
@@ -94,7 +87,8 @@ class EventManager extends Component
 
         $request = [
             'name' => $this->nameModule,
-            'event_id' => $this->eventId
+            'event_id' => $this->eventId,
+            'monitors'
         ];
 
         $service->create($request);

@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserService
 {
@@ -19,6 +20,13 @@ class UserService
     public function getAll(): Collection
     {
         return $this->repository->all();
+    }
+
+    public function getMonitors(): Collection
+    {
+        return $this->repository->whereHas('permissions', function (Builder $query) {
+            $query->where('permission', 'monitor');
+        })->get();
     }
 
     public function paginate($search, $sortBy, $sortDirection): LengthAwarePaginator
