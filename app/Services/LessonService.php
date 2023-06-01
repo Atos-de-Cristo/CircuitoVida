@@ -15,12 +15,12 @@ class LessonService
 
     public function getAll(array $filter = []): Collection
     {
-        return $this->repository->with('event', 'module')->where($filter)->get();
+        return $this->repository->with('event', 'module', 'activities')->where($filter)->get();
     }
 
     public function find(string $id): Lesson
     {
-        return $this->repository->with('event', 'module')->find($id);
+        return $this->repository->with('event', 'module', 'activities')->find($id);
     }
 
     public function create(array $data): Lesson

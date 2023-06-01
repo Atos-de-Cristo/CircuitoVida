@@ -13,19 +13,15 @@
         <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             viewBox="0 0 512 512" xml:space="preserve" width="30px" height="30px" fill="#000000" stroke="#000000"
             stroke-width="0.00512">
-
             <path class="st0" d="M512,0H0v40h16v296h480V40h16V0z M464,304H48V40h416V304z"></path>
             <rect x="240" y="352" class="st0" width="32" height="160"></rect>
             <polygon class="st0" points="113.273,512 145.273,512 212.179,352 180.179,352 "></polygon>
             <polygon class="st0" points="299.82,352 366.726,512 398.726,512 331.82,352 "></polygon>
-
-
         </svg>
         <div class="ml-2 text-3xl font-bold">
             {{ $event->name }}
         </div>
     </div>
-
     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4 mt-2 mb-4">
         <div class="flex flex-col sm:flex-row justify-between items-center">
             <div>
@@ -43,7 +39,6 @@
                         <polygon class="st0"
                             points="190.326,47.47 190.326,200.869 214.452,200.869 214.452,71.595 487.874,71.595 487.874,302.131 214.452,302.131 214.452,273.113 190.326,273.113 190.326,326.256 512,326.256 512,47.47 ">
                         </polygon>
-
                     </svg>
                     <span class="ml-2 font-bold">Monitores</span>
                 </div>
@@ -59,16 +54,11 @@
                     @endforelse
                 </div>
             </div>
-            {{--Botões--}}
-
-
-
             <div class="mt-2 sm:mt-0 flex space-x-2">
                 <button wire:click="createModule()"
                     class="inline-flex items-center justify-center bg-indigo-900 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full">
                     <svg width="22px" height="22px" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
-
                         <path d="M12 11L12 16" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round"></path>
                         <path d="M14.5 13.5L9.5 13.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
@@ -76,7 +66,6 @@
                         <path
                             d="M3 9.312C3 4.93757 3.93757 4 8.312 4H9.92963C10.5983 4 11.2228 4.3342 11.5937 4.8906L12.4063 6.1094C12.7772 6.6658 13.4017 7 14.0704 7C15.9647 7 17.8145 7 19.1258 7C20.1807 7 21.0128 7.82095 21.0029 8.8758C21.0013 9.05376 21 9.20638 21 9.312V14.688C21 19.0624 20.0624 20 15.688 20H8.312C3.93757 20 3 19.0624 3 14.688V9.312Z"
                             stroke="#ffffff" stroke-width="2"></path>
-
                     </svg>
                     <span class="ml-2">Módulos</span>
                 </button>
@@ -84,26 +73,17 @@
                     class="inline-flex items-center justify-center bg-indigo-900 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full">
                     <svg width="22px" height="22px" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
-
                         <path
                             d="M3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12Z"
                             stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                         <path d="M10 15V9L15 12L10 15Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round"></path>
-
                     </svg>
                     <span class="ml-2">Aulas</span>
                 </button>
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div class="sm:col-span-2 md:col-span-2">
             <div class="text-xl font-bold mb-4 flex items-center">
@@ -115,7 +95,7 @@
                 </svg>
                 <span class="ml-2">MODULOS</span>
             </div>
-            @foreach ($event->modules as $module)
+            @forelse ($event->modules as $module)
                 <div x-data="{ open: false }" class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 mb-4 py-4">
                     <div @click="open = !open" class="cursor-pointer">
                         <div class="flex items-center justify-between">
@@ -148,27 +128,28 @@
                                                     stroke="#312e81" stroke-width="2" stroke-linecap="round"
                                                     stroke-linejoin="round"></path>
                                         </svg>
-                                        <a href="{{ route('classroom') }}"
+                                        <a href="{{ route('classroom', ['id' => $lesson->id]) }}"
                                             class="text-blue-500 hover:text-blue-700 ml-1">{{ $lesson->title }}</a>
                                     </div>
-                                    @if($event->status != 'E' )
                                     <button wire:click="openModalFrequency({{ $lesson->id }})"
                                         class="inline-flex items-center justify-center bg-indigo-900 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full">
                                         Frequencia
                                     </button>
-                                    @endif
-
+                                    <button wire:click="openModalActivity({{ $lesson->id }})"
+                                        class="inline-flex items-center justify-center bg-indigo-900 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full">
+                                        Atividade
+                                    </button>
                                 </div>
                             @endforeach
                         </div>
                     </div>
-
                 </div>
-            @endforeach
-
+            @empty
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
+                    <span class="text-red-500">Nenhum Modulo cadastrado</span>
+                </div>
+            @endforelse
         </div>
-
-        {{-- Alunos --}}
         <div class="sm:col-span-2 md:col-span-1">
             <div class="text-xl font-bold mb-4 flex items-center">
                 <svg height="30px" width="30px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
@@ -183,16 +164,17 @@
                 </svg>
                 <span class="ml-2">ALUNOS</span>
             </div>
-
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
-                @foreach ($event->inscriptions as $aluno)
+                @forelse ($event->inscriptions as $aluno)
                     <div class="flex items-center mb-4">
                         <img class="w-8 h-8 rounded-full" src="{{ $aluno->user->profile_photo_url }}" width="32"
                             height="32" alt="{{ $aluno->user->name }}" />
                         <span
                             class="truncate ml-2 text-sm font-medium group-hover:text-slate-800">{{ $aluno->user->name }}</span>
                     </div>
-                @endforeach
+                @empty
+                    <span class="text-red-500">Nenhuma inscrição realizada</span>
+                @endforelse
             </div>
         </div>
     </div>

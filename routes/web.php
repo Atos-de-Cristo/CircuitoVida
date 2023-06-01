@@ -24,6 +24,6 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
 
     Route::middleware('can:admin,monitor,user')->group(function () {
         Route::get('/', function () { return view('dashboard'); })->name('dashboard');
-        Route::get('/classroom', Classroom::class)->name('classroom');
+        Route::get('/classroom/{id}', Classroom::class)->name('classroom');
     });
 });

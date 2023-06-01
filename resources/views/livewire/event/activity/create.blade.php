@@ -36,9 +36,8 @@
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 >
                                     <option value="">Selecione</option>
-                                    <option value="text">Texto</option>
-                                    <option value="radio">Uma opção</option>
-                                    <option value="checkbox">Multipla Escolhas</option>
+                                    <option value="text">Aberta</option>
+                                    <option value="radio">Multipla Escolhas</option>
                                 </select>
                                 @error('type')
                                     <span class="text-red-500">{{ $message }}</span>

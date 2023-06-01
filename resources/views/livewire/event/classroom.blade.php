@@ -11,52 +11,49 @@
             </path>
         </svg>
         <div class="ml-2 text-3xl font-bold">
-            Titulo
+            {{$lessonData->title}}
         </div>
     </div>
-
+    @if ($lessonData->video)
     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4 mt-2 mb-4">
-        <div class="w-full md:w-1/2">
+        <div class="w-full">
             <div style="position: relative; padding-bottom: 56.25%; height: 0;">
                 <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
-                    src="https://www.youtube.com/embed/8Kjhr_8MmU0?controls=0" frameborder="0"
+                    src="https://www.youtube.com/embed/{{$lessonData->video}}" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowfullscreen></iframe>
             </div>
         </div>
     </div>
-
+    @endif
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div class="sm:col-span-2 md:col-span-1">
             <div class="text-xl font-bold mb-4 flex items-center">
                 <svg width="30px" height="30px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"
                     fill="#000000">
-
-                                    <path d="M20,29H36a2,2,0,0,0,0-4H20a2,2,0,0,0,0,4Z"></path>
-                                    <path d="M20,22H36a2,2,0,0,0,0-4H20a2,2,0,0,0,0,4Z"></path>
-                                    <path d="M20,36H36a2,2,0,0,0,0-4H20a2,2,0,0,0,0,4Z"></path>
-                                    <circle cx="12" cy="27" r="2"></circle>
-                                    <circle cx="12" cy="34" r="2"></circle>
-                                    <path
-                                        d="M44,4H4A2,2,0,0,0,2,6V42a2,2,0,0,0,2,2H44a2,2,0,0,0,2-2V6A2,2,0,0,0,44,4ZM42,40H6V14H42Zm0-30H6V8H42Z">
-                                    </path>
-
+                    <path d="M20,29H36a2,2,0,0,0,0-4H20a2,2,0,0,0,0,4Z"></path>
+                    <path d="M20,22H36a2,2,0,0,0,0-4H20a2,2,0,0,0,0,4Z"></path>
+                    <path d="M20,36H36a2,2,0,0,0,0-4H20a2,2,0,0,0,0,4Z"></path>
+                    <circle cx="12" cy="27" r="2"></circle>
+                    <circle cx="12" cy="34" r="2"></circle>
+                    <path
+                        d="M44,4H4A2,2,0,0,0,2,6V42a2,2,0,0,0,2,2H44a2,2,0,0,0,2-2V6A2,2,0,0,0,44,4ZM42,40H6V14H42Zm0-30H6V8H42Z">
+                    </path>
                 </svg>
                 <span class="ml-2">Atividades</span>
             </div>
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4 mt-2 mb-4">
                 <div class="w-full md:w-1/2">
-                    @foreach ($activities as $title => $url)
-                        <a href="{{ $url }}"
-                            class="block text-blue-500 hover:text-blue-700 mb-1">{{ $title }}</a>
-                    @endforeach
+                    @forelse ($lessonData->activities as $activity)
+                        <a href="{{ $activity->id }}"
+                            class="block text-blue-500 hover:text-blue-700 mb-1">{{ $activity->title }}</a>
+                    @empty
+                        <span class="text-red-500">Nenhuma atividade cadastrada</span>
+                    @endforelse
                 </div>
             </div>
-
-
         </div>
 
-        {{-- Materiais --}}
         <div class="sm:col-span-2 md:col-span-1">
             <div class="text-xl font-bold mb-4 flex items-center">
                 <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none"
@@ -73,10 +70,11 @@
             </div>
 
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
-                @foreach ($materials as $title => $url)
-                    <a href="{{ $url }}"
-                        class="block text-blue-500 hover:text-blue-700 mb-1">{{ $title }}</a>
-                @endforeach
+                @if ($lessonData->slide)
+                <a href="{{ $lessonData->slide }}" class="block text-blue-500 hover:text-blue-700 mb-1" target="_blanck">PDF</a>
+                @else
+                <span class="text-red-500">Nenhum PDF cadastrado</span>
+                @endif
             </div>
         </div>
     </div>
