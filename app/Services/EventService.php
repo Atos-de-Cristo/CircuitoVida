@@ -32,12 +32,19 @@ class EventService
 
     public function create(array $data): Event
     {
-        return $this->repository->create($data);
+        $create = $this->repository->updateOrCreate($data);
+        if ($data['monitors']) {
+            $create->users()->sync($data['monitors']);
+        }
+        return $create;
     }
 
     public function update(array $data, int $id): bool
     {
         $repo = $this->find($id);
+        if ($data['monitors']) {
+            $repo->monitors()->sync($data['monitors']);
+        }
         return $repo->update($data);
     }
 

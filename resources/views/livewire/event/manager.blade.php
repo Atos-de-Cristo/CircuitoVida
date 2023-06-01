@@ -48,16 +48,15 @@
                     <span class="ml-2 font-bold">Monitores</span>
                 </div>
                 <div class="flex flex-col items-center sm:flex-row">
-                    <div class="flex items-center">
-                        <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset('images/logo.png') }}"
+                    @forelse ($event->monitors as $monitor)
+                    <div class="flex items-center mr-4">
+                        <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset($monitor->profile_photo_path) }}"
                             width="32" height="32" alt="Logo" />
-                        <span class="truncate text-sm font-medium group-hover:text-slate-800">Monitor 1</span>
+                        <span class="truncate text-sm font-medium group-hover:text-slate-800">{{$monitor->name}}</span>
                     </div>
-                    <div class="flex items-center mt-2 sm:mt-0 sm:ml-2">
-                        <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset('images/logo.png') }}"
-                            width="32" height="32" alt="Logo" />
-                        <span class="truncate text-sm font-medium group-hover:text-slate-800">Monitor 2</span>
-                    </div>
+                    @empty
+                        <span class="text-red-500">Monitor não cadastrado!</span>
+                    @endforelse
                 </div>
             </div>
             <div class="mt-2 sm:mt-0 flex space-x-2">

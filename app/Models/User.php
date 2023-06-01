@@ -69,6 +69,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Frequency::class);
     }
 
+    public function events(): BelongsToMany {
+        return $this->belongsToMany(Event::class);
+    }
+
     public function inscriptions(): HasMany {
         return $this->hasMany(Inscription::class);
     }

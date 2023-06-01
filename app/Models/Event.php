@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\{BelongsToMany, HasMany};
 
 class Event extends Model
 {
@@ -33,5 +33,9 @@ class Event extends Model
 
     public function lessons(): HasMany{
         return $this->hasMany(Lesson::class);
+    }
+
+    public function monitors(): BelongsToMany {
+        return $this->belongsToMany(User::class);
     }
 }

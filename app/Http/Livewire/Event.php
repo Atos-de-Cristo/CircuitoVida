@@ -3,17 +3,16 @@
 namespace App\Http\Livewire;
 
 use App\Enums\{EventStatus, EventType};
-use App\Services\EventService;
+use App\Services\{EventService, UserService};
+use Livewire\{Component, WithFileUploads, WithPagination};
 use Illuminate\Support\Facades\Storage;
-use Livewire\Component;
-use Livewire\WithFileUploads;
-use Livewire\WithPagination;
 class Event extends Component
 {
     use WithPagination;
     use WithFileUploads;
 
     public $_id, $type, $name, $image, $start_date, $end_date, $local, $description, $tickets_limit, $value, $status, $newImage;
+    public $monitors = [];
     public $isOpen = false;
     protected $service;
 
@@ -21,12 +20,21 @@ class Event extends Component
     public $sortBy = 'id';
     public $sortDirection = 'desc';
 
-    public function render(EventService $service)
+    protected $rules = [
+        'name' => 'required',
+        'type' => 'required',
+        'local' => 'required',
+        'status' => 'required',
+        'newImage' => 'image|mimes:jpeg,png,jpg,gif|max:5120'
+    ];
+
+    public function render(EventService $service, UserService $userService)
     {
         $dataAll = $service->paginate($this->search,$this->sortBy, $this->sortDirection);
+        $optMonitors = $userService->getMonitors();
         $typesList = EventType::cases();
         $statusList = EventStatus::cases();
-        return view('livewire.event.list', compact('dataAll', 'typesList', 'statusList'));
+        return view('livewire.event.list', compact('dataAll', 'typesList', 'statusList', 'optMonitors'));
     }
 
     public function create()
@@ -43,7 +51,6 @@ class Event extends Component
     public function closeModal()
     {
         $this->isOpen = false;
-
     }
 
     private function resetInputFields(){
@@ -59,25 +66,24 @@ class Event extends Component
         $this->tickets_limit = '';
         $this->value = '';
         $this->status = '';
+        $this->monitors = [];
     }
 
     public function store(EventService $service)
     {
-
-
-        $this->validate([
-            'name' => 'required',
-            'type' => 'required',
-            'local' => 'required',
-            'status' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:5120'
-        ]);
-
-
-
-
+        if ($this->_id) {
+            $this->validate([
+                'name' => 'required',
+                'type' => 'required',
+                'local' => 'required',
+                'status' => 'required'
+            ]);
+        }else{
+            $this->validate();
+        }
 
         $request = [
+            'id' => $this->_id,
             'type' => $this->type,
             'name' => $this->name,
             'start_date' => $this->start_date,
@@ -86,7 +92,8 @@ class Event extends Component
             'description' => $this->description,
             'tickets_limit' => $this->tickets_limit,
             'value' => $this->value,
-            'status' => $this->status
+            'status' => $this->status,
+            'monitors' => $this->monitors
         ];
 
         if ($this->newImage) {
@@ -96,7 +103,6 @@ class Event extends Component
 
         if ($this->_id) {
             $service->update($request, $this->_id);
-            dd('cuida');
         }else{
             $service->create($request);
         }
@@ -111,14 +117,15 @@ class Event extends Component
     public function edit($id, EventService $service)
     {
         $event = $service->find($id);
+        $this->monitors = $event->monitors->pluck('id')->toArray();
         $this->_id = $event->id;
         $this->name = $event->name;
         $this->image = $event->image;
         $this->newImage = null;
         $this->description = $event->description;
         $this->type = $event->type;
-        $this->start_date = $event->start_date;
-        $this->end_date = $event->end_date;
+        $this->start_date = date('Y-m-d H:i:s', strtotime($event->start_date));
+        $this->end_date = date('Y-m-d H:i:s', strtotime($event->end_date));
         $this->local = $event->local;
         $this->tickets_limit = $event->tickets_limit;
         $this->value = $event->value;

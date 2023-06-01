@@ -20,6 +20,6 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
 
     Route::middleware('can:user')->group(function () {
         Route::get('/inscription', Inscription::class)->name('inscription');
-        Route::get('/event/student/{id}', EventStudent::class)->name('eventStudent');
+        Route::get('/student/{id}', EventStudent::class)->name('eventStudent');
     });
 });
