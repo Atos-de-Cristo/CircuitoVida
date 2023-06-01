@@ -5,3 +5,7 @@
 [x-cloak] {
     display: none;
 }
+
+.card-white{
+    @apply bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4 mt-2 mb-4;
+}

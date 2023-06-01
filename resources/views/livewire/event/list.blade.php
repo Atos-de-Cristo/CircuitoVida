@@ -19,8 +19,8 @@
             <button wire:click="create()"
                 class="btn-primary">
                 <span >Novo Evento</span>
-
             </button>
+            <x-button wire:click.prefetch="create()" class="btn-primary">Novo Evento</x-button>
         </div>
         <div class="mb-4">
             <input wire:model.debounce.300ms="search" type="text"
