@@ -54,7 +54,7 @@
                                 <div class="flex justify-center space-x-4">
 
                                     <button wire:click="manager({{ $data->id }})"
-                                        class="bg-[#006000] hover:bg-[#004c00] text-white font-bold py-2 px-4 rounded w-full ">
+                                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full ">
                                         View
                                     </button>
 
@@ -63,7 +63,7 @@
                                         Edit
                                     </button>
                                     <button wire:click="delete({{ $data->id }})"
-                                        class="bg-red-900 hover:bg-red-700 text-white  font-bold py-2 px-4 rounded w-full">
+                                        class="bg-red-500 hover:bg-red-700 text-white  font-bold py-2 px-4 rounded w-full">
                                         Delete
                                     </button>
                                 </div>
