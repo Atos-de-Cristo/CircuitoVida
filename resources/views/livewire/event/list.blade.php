@@ -17,7 +17,7 @@
         <div class="flex flex-col sm:flex-row justify-between items-center mb-4">
             <h1 class="text-2xl font-bold mb-2 sm:mb-0">Lista de Eventos</h1>
             <button wire:click="create()"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                class="inline-flex items-center justify-center bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full">
                 <span >Novo Evento</span>
 
             </button>
@@ -52,16 +52,18 @@
                             <div>
                                 <hr class="my-2 border-gray-300">
                                 <div class="flex justify-center space-x-4">
+
                                     <button wire:click="manager({{ $data->id }})"
-                                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">
+                                        class="bg-[#006000] hover:bg-[#004c00] text-white font-bold py-2 px-4 rounded w-full ">
                                         View
                                     </button>
+
                                     <button wire:click="edit({{ $data->id }})"
                                         class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded w-full">
                                         Edit
                                     </button>
                                     <button wire:click="delete({{ $data->id }})"
-                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full">
+                                        class="bg-red-900 hover:bg-red-700 text-white  font-bold py-2 px-4 rounded w-full">
                                         Delete
                                     </button>
                                 </div>

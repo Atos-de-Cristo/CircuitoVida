@@ -36,23 +36,12 @@
                     </thead>
                     <tbody>
                         @foreach($event->inscriptions as $item)
+                        {{$item->$frequencies}}
                         <tr>
                             <td class="border px-2 py-2">{{ $item->user->id }}</td>
                             <td class="border px-2 py-2">{{ $item->user->name }}</td>
                             <td class="border px-2 py-2">{{ $item->user->email }}</td>
-                            <td class="border px-2 py-2">
-                                @if ($item->frequencies->count() >= 1)
-                                Presente
-                                @else
-                                <input
-                                    id="freq-{{ $item->user->id }}"
-                                    type="checkbox"
-                                    value="{{ $item }}"
-                                    wire:model.lazy="users"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                >
-                                @endif
-                            </td>
+
                         </tr>
                         @endforeach
                     </tbody>
