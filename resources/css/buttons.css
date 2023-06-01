@@ -1,0 +1,7 @@
+.btn-primary{
+    @apply inline-flex items-center justify-center bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full;
+}
+
+.btn-secondary{
+    @apply inline-flex items-center justify-center bg-indigo-900 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full;
+}
