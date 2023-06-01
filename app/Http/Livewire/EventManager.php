@@ -16,7 +16,8 @@ class EventManager extends Component
     protected $listeners = [
         'refreshComponent' => '$refresh',
         'closeModalActivity' => 'closeModalActivity',
-        'closeModalFrequency' => 'closeModalFrequency'
+        'closeModalFrequency' => 'closeModalFrequency',
+        'closeModalMonitors' => 'closeModalMonitors'
     ];
 
     public $eventId, $nameModule;
@@ -27,6 +28,7 @@ class EventManager extends Component
     public $isOpenLesson = false;
     public $isOpenFrequency = false;
     public $isOpenActivity = false;
+    public $isOpenMonitors = false;
 
     public function boot(Request $request)
     {
@@ -177,5 +179,15 @@ class EventManager extends Component
     public function closeModalFrequency()
     {
         $this->isOpenFrequency = false;
+    }
+
+    public function openModalMonitors()
+    {
+        $this->isOpenMonitors = true;
+    }
+
+    public function closeModalMonitors()
+    {
+        $this->isOpenMonitors = false;
     }
 }

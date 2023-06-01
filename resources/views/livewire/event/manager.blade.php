@@ -45,6 +45,10 @@
                     <img src="{{ asset('svg/lessons.svg') }}" alt="Ícone">
                     <span class="ml-2">Aulas</span>
                 </button>
+                <button wire:click="openModalMonitors()" class="btn-secondary">
+                    <img src="{{ asset('svg/lessons.svg') }}" alt="Ícone">
+                    <span class="ml-2">Monitores</span>
+                </button>
             </div>
         </div>
     </div>
@@ -130,5 +134,8 @@
     @endif
     @if ($isOpenFrequency)
         @livewire('event-frequency', [$eventId, $lessonId])
+    @endif
+    @if ($isOpenMonitors)
+        @livewire('event-monitors', [$eventId])
     @endif
 </div>
