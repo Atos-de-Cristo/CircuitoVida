@@ -52,7 +52,6 @@
         <div class="sm:col-span-2 md:col-span-2">
             <div class="text-xl font-bold mb-4 flex items-center">
                 <img src="{{ asset('svg/module.svg') }}" alt="Ícone">
-
                 <span class="ml-2">MODULOS</span>
             </div>
             @forelse ($event->modules as $module)
@@ -84,12 +83,10 @@
                                         <a href="{{ route('classroom', ['id' => $lesson->id]) }}"
                                             class="text-blue-500 hover:text-blue-700 ml-1">{{ $lesson->title }}</a>
                                     </div>
-                                    <button wire:click="openModalFrequency({{ $lesson->id }})"
-                                        class="btn-secondary">
+                                    <button wire:click="openModalFrequency({{ $lesson->id }})" class="btn-secondary">
                                         Frequencia
                                     </button>
-                                    <button wire:click="openModalActivity({{ $lesson->id }})"
-                                        class="btn-secondary">
+                                    <button wire:click="openModalActivity({{ $lesson->id }})" class="btn-secondary">
                                         Atividade
                                     </button>
                                 </div>

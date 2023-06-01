@@ -1,5 +1,5 @@
 <div>
-    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
+    <div class="card-white">
         @if (session()->has('message'))
             <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3"
                  role="alert"
@@ -20,12 +20,11 @@
                 class="btn-primary">
                 <span >Novo Evento</span>
             </button>
-            <x-button wire:click.prefetch="create()" class="btn-primary">Novo Evento</x-button>
         </div>
         <div class="mb-4">
             <input wire:model.debounce.300ms="search" type="text"
                 class="w-full sm:w-64 border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring focus:border-blue-500"
-                placeholder="Buscar usuários...">
+                placeholder="Buscar eventos...">
         </div>
 
         <div class="flex flex-wrap -m-4">
