@@ -1,5 +1,5 @@
 <div>
-    <div class=" font-bold mb-4 flex items-center">
+    <div class=" font-bold mb-2 flex items-center">
         <svg fill="#000000" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink" width="64px" height="64px" viewBox="0 0 100 100"
             enable-background="new 0 0 100 100" xml:space="preserve">

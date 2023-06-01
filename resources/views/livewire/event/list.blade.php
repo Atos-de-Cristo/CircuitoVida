@@ -17,7 +17,7 @@
         <div class="flex flex-col sm:flex-row justify-between items-center mb-4">
             <h1 class="text-2xl font-bold mb-2 sm:mb-0">Lista de Eventos</h1>
             <button wire:click="create()"
-                class="inline-flex items-center justify-center bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full">
+                class="btn-primary">
                 <span >Novo Evento</span>
 
             </button>
