@@ -20,7 +20,7 @@ class EventMonitors extends Component
 
     public function render(UserService $userService)
     {
-        $optMonitors = $userService->getMonitors($this->search);
+        $optMonitors = $userService->getMonitorsFiltered($this->search);
         return view('livewire.event.monitors.manager', compact('optMonitors'));
     }
 
