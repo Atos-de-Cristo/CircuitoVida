@@ -31,11 +31,7 @@
                         <div class="relative">
                             <input wire:model="search" type="text" id="campMonitos" placeholder="Pesquisar monitores"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            <svg class="absolute top-0 right-0 mt-3 mr-3 h-4 w-4 text-gray-500" fill="none"
-                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 15l-5-5m0 0l-5 5m5-5V3"></path>
-                            </svg>
+
                         </div>
                         @error('status')
                             <span class="text-red-500">{{ $message }}</span>
