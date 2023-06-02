@@ -22,10 +22,10 @@ class UserService
         return $this->repository->all();
     }
 
-    public function getMonitors(): Collection
+    public function getMonitors($search): Collection
     {
-        return $this->repository->whereHas('permissions', function (Builder $query) {
-            $query->where('permission', 'monitor');
+        return $this->repository->whereHas('permissions', function (Builder $query) use ($search) {
+            $query->where('permission', 'monitor')->where('name', 'LIKE', '%' . $search . '%');
         })->get();
     }
 

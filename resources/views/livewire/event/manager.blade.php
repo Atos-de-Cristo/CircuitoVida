@@ -27,7 +27,7 @@
                         <div class="flex items-center mr-4">
                             <img class="w-8 h-8 bg-black rounded-full mr-2"
                                 src="{{ asset($monitor->profile_photo_path) }}" width="32" height="32"
-                                alt="Logo" />
+                                alt="{{$monitor->name}}" />
                             <span
                                 class="truncate text-sm font-medium group-hover:text-slate-800">{{ $monitor->name }}</span>
                         </div>
@@ -37,16 +37,16 @@
                 </div>
             </div>
             <div class="mt-2 sm:mt-0 flex space-x-2">
-                <button wire:click="createModule()" class="btn-secondary">
+                <button wire:click="createModule()" class="btn-primary">
                     <img src="{{ asset('svg/pasta-add.svg') }}" alt="Ícone">
                     <span class="ml-2">Módulos</span>
                 </button>
-                <button wire:click="createLesson()" class="btn-secondary">
+                <button wire:click="createLesson()" class="btn-primary">
                     <img src="{{ asset('svg/lessons.svg') }}" alt="Ícone">
                     <span class="ml-2">Aulas</span>
                 </button>
-                <button wire:click="openModalMonitors()" class="btn-secondary">
-                    <img src="{{ asset('svg/lessons.svg') }}" alt="Ícone">
+                <button wire:click="openModalMonitors()" class="btn-primary">
+                    <img src="{{ asset('svg/users-group.svg') }}" alt="Ícone">
                     <span class="ml-2">Monitores</span>
                 </button>
             </div>
@@ -87,11 +87,13 @@
                                         <a href="{{ route('classroom', ['id' => $lesson->id]) }}"
                                             class="text-blue-500 hover:text-blue-700 ml-1">{{ $lesson->title }}</a>
                                     </div>
-                                    <button wire:click="openModalFrequency({{ $lesson->id }})" class="btn-secondary">
-                                        Frequencia
+                                    <button wire:click="openModalFrequency({{ $lesson->id }})" class="btn-primary">
+                                        <img src="{{ asset('svg/checklist.svg') }}" alt="Ícone">
+                                        <span class="ml-2">Frequência</span>
                                     </button>
-                                    <button wire:click="openModalActivity({{ $lesson->id }})" class="btn-secondary">
-                                        Atividade
+                                    <button wire:click="openModalActivity({{ $lesson->id }})" class="btn-primary">
+                                        <img src="{{ asset('svg/test.svg') }}" alt="Ícone">
+                                        <span class="ml-2">Atividade</span>
                                     </button>
                                 </div>
                             @endforeach

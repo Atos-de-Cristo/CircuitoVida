@@ -6,7 +6,7 @@
         </div>
 
         <!-- This element is to trick the browser into centering the modal contents. -->
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>​
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
 
         <div class="
             inline-block
@@ -28,17 +28,30 @@
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="mb-4">
                         <label for="campMonitos" class="block text-gray-700 text-sm font-bold mb-2">Monitores</label>
-                        <select id="campMonitos" wire:model="monitors" multiple
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            @foreach ($optMonitors as $monitor)
-                                <option value="{{ $monitor->id }}">{{ $monitor->name }}</option>
-                            @endforeach
-                        </select>
+                        <div class="relative">
+                            <input wire:model="search" type="text" id="campMonitos" placeholder="Pesquisar monitores"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <svg class="absolute top-0 right-0 mt-3 mr-3 h-4 w-4 text-gray-500" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 15l-5-5m0 0l-5 5m5-5V3"></path>
+                            </svg>
+                        </div>
                         @error('status')
-                        <span class="text-red-500">{{ $message }}</span>
+                            <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
                 </div>
+                <div class="max-h-80 overflow-y-auto px-4">
+                    @foreach ($optMonitors as $monitor)
+                        <label class="flex items-center space-x-2">
+                            <input wire:model="monitors" type="checkbox" value="{{ $monitor->id }}"
+                                class="form-checkbox">
+                            <span>{{ $monitor->name }}</span>
+                        </label>
+                    @endforeach
+                </div>
+
 
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
@@ -55,6 +68,7 @@
                     </span>
                 </div>
             </form>
+
         </div>
     </div>
 </div>

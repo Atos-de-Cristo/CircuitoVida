@@ -9,6 +9,7 @@ use Livewire\Component;
 class EventMonitors extends Component
 {
     public $eventId, $monitors;
+    public $search = '';
 
     public function mount($eventId, EventService $service)
     {
@@ -19,7 +20,7 @@ class EventMonitors extends Component
 
     public function render(UserService $userService)
     {
-        $optMonitors = $userService->getMonitors();
+        $optMonitors = $userService->getMonitors($this->search);
         return view('livewire.event.monitors.manager', compact('optMonitors'));
     }
 
@@ -30,6 +31,7 @@ class EventMonitors extends Component
 
     public function storeMonitors(EventService $eventService)
     {
+
         $eventService->update(['monitors' => $this->monitors], $this->eventId);
 
         $this->emit('closeModalMonitors');

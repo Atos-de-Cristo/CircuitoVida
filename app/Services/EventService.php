@@ -42,11 +42,17 @@ class EventService
     public function update(array $data, int $id): bool
     {
         $repo = $this->find($id);
-        if ($data['monitors']) {
-            $repo->monitors()->sync($data['monitors']);
+        if (isset($data['monitors'])) {
+            if (empty($data['monitors'])) {
+                $repo->monitors()->detach();
+            } else {
+                $repo->monitors()->sync($data['monitors']);
+            }
         }
         return $repo->update($data);
     }
+
+
 
     public function delete(string $id): void
     {
