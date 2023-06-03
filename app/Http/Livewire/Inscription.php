@@ -24,7 +24,7 @@ class Inscription extends Component
 
     public function view(string $id)
     {
-        redirect(route('eventStudent', ['id' => $id]));
+        redirect(route('eventManager', ['id' => $id]));
     }
 
     public function cancel(string $id, InscriptionService $service)

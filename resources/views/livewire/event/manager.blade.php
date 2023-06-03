@@ -36,6 +36,7 @@
                     @endforelse
                 </div>
             </div>
+            @can('admin')
             <div class="mt-2 sm:mt-0 flex space-x-2">
                 <button wire:click="createModule()" class="btn-primary">
                     <img src="{{ asset('svg/pasta-add.svg') }}" alt="Ícone">
@@ -50,6 +51,7 @@
                     <span class="ml-2">Monitores</span>
                 </button>
             </div>
+            @endcan
         </div>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -83,18 +85,19 @@
                                     <div class="flex items-center">
                                         <img class="text-red-500" src="{{ asset('svg/play-lesson.svg') }}"
                                             alt="Ícone">
-
                                         <a href="{{ route('classroom', ['id' => $lesson->id]) }}"
                                             class="text-blue-500 hover:text-blue-700 ml-1">{{ $lesson->title }}</a>
                                     </div>
-                                    <button wire:click="openModalFrequency({{ $lesson->id }})" class="btn-primary">
-                                        <img src="{{ asset('svg/checklist.svg') }}" alt="Ícone">
-                                        <span class="ml-2">Frequência</span>
-                                    </button>
-                                    <button wire:click="openModalActivity({{ $lesson->id }})" class="btn-primary">
-                                        <img src="{{ asset('svg/test.svg') }}" alt="Ícone">
-                                        <span class="ml-2">Atividade</span>
-                                    </button>
+                                    @can('admin', 'monitor')
+                                        <button wire:click="openModalFrequency({{ $lesson->id }})" class="btn-primary">
+                                            <img src="{{ asset('svg/checklist.svg') }}" alt="Ícone">
+                                            <span class="ml-2">Frequência</span>
+                                        </button>
+                                        <button wire:click="openModalActivity({{ $lesson->id }})" class="btn-primary">
+                                            <img src="{{ asset('svg/test.svg') }}" alt="Ícone">
+                                            <span class="ml-2">Atividade</span>
+                                        </button>
+                                    @endcan
                                 </div>
                             @endforeach
                         </div>

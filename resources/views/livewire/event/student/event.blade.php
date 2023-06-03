@@ -1,3 +1,0 @@
-<div>
-    Em desenvolvimento!
-</div>
