@@ -17,11 +17,6 @@ class Inscription extends Component
         return view('livewire.inscription.index', compact('dataAll'));
     }
 
-    public function ticket(string $id)
-    {
-
-    }
-
     public function view(string $id)
     {
         redirect(route('eventManager', ['id' => $id]));

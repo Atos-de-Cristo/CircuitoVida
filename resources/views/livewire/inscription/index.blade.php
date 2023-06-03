@@ -39,7 +39,6 @@
                     <td class="border px-2 py-2">{{getStatusInscription($data->status)}}</td>
                     <td class="border px-2 py-2">
                         <button wire:click="view({{ $data->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ver</button>
-                        <button wire:click="ticket({{ $data->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Tiket</button>
                         <button wire:click="cancel({{ $data->id }})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancelar</button>
                     </td>
                 </tr>
