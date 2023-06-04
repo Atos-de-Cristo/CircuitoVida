@@ -1,4 +1,7 @@
 <div>
+    @if ($isOpenQuestions)
+        @livewire('event-activity-question', [$atvId])
+    @endif
     <table class="table-fixed w-full">
         <thead>
             <tr class="bg-gray-100">
@@ -33,7 +36,4 @@
             @endforeach
         </tbody>
     </table>
-    @if ($isOpenQuestions)
-        @livewire('event-activity-question')
-    @endif
 </div>

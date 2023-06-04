@@ -13,6 +13,7 @@ class EventActivity extends Component
     public $eventId, $lessonId;
     public $title, $description;
     public $isOpenQuestions;
+    public $atvId;
 
     public function mount($eventId, $lessonId)
     {
@@ -56,13 +57,15 @@ class EventActivity extends Component
         $this->resetInputActivity();
     }
 
-    public function openModalQuestions()
+    public function openModalQuestions($atvId)
     {
+        $this->atvId = $atvId;
         $this->isOpenQuestions = true;
     }
 
     public function closeModalQuestions()
     {
+        $this->atvId = null;
         $this->isOpenQuestions = false;
     }
 }
