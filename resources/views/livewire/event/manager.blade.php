@@ -38,15 +38,15 @@
             </div>
             @can('admin')
             <div class="mt-2 sm:mt-0 flex space-x-2">
-                <button wire:click="createModule()" class="btn-primary">
+                <button wire:click.prevent="createModule()" class="btn-primary">
                     <img src="{{ asset('svg/pasta-add.svg') }}" alt="Ícone">
                     <span class="ml-2">Módulos</span>
                 </button>
-                <button wire:click="createLesson()" class="btn-primary">
+                <button wire:click.prevent="createLesson()" class="btn-primary">
                     <img src="{{ asset('svg/lessons.svg') }}" alt="Ícone">
                     <span class="ml-2">Aulas</span>
                 </button>
-                <button wire:click="openModalMonitors()" class="btn-primary">
+                <button wire:click.prevent="openModalMonitors()" class="btn-primary">
                     <img src="{{ asset('svg/users-group.svg') }}" alt="Ícone">
                     <span class="ml-2">Monitores</span>
                 </button>
@@ -89,11 +89,11 @@
                                             class="text-blue-500 hover:text-blue-700 ml-1">{{ $lesson->title }}</a>
                                     </div>
                                     @can('admin', 'monitor')
-                                        <button wire:click="openModalFrequency({{ $lesson->id }})" class="btn-primary">
+                                        <button wire:click.prevent="openModalFrequency({{ $lesson->id }})" class="btn-primary">
                                             <img src="{{ asset('svg/checklist.svg') }}" alt="Ícone">
                                             <span class="ml-2">Frequência</span>
                                         </button>
-                                        <button wire:click="openModalActivity({{ $lesson->id }})" class="btn-primary">
+                                        <button wire:click.prevent="openModalActivity({{ $lesson->id }})" class="btn-primary">
                                             <img src="{{ asset('svg/test.svg') }}" alt="Ícone">
                                             <span class="ml-2">Atividade</span>
                                         </button>

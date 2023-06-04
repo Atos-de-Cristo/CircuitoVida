@@ -1,9 +1,6 @@
 <?php
 
-use App\Models\Event;
-use App\Models\Inscription;
-use App\Models\Lesson;
-use App\Models\User;
+use App\Models\{Event, Inscription, Lesson, User};
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

@@ -52,18 +52,18 @@
                                 <hr class="my-2 border-gray-300">
                                 <div class="flex justify-center space-x-4">
 
-                                    <button wire:click="manager({{ $data->id }})"
+                                    <button wire:click.prevent="manager({{ $data->id }})"
                                         class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full ">
-                                        View
+                                        Ver
                                     </button>
 
-                                    <button wire:click="edit({{ $data->id }})"
+                                    <button wire:click.prevent="edit({{ $data->id }})"
                                         class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded w-full">
-                                        Edit
+                                        Editar
                                     </button>
-                                    <button wire:click="delete({{ $data->id }})"
+                                    <button wire:click.prevent="delete({{ $data->id }})"
                                         class="bg-red-500 hover:bg-red-700 text-white  font-bold py-2 px-4 rounded w-full">
-                                        Delete
+                                        Deletar
                                     </button>
                                 </div>
                             </div>

@@ -1,7 +1,6 @@
 <?php
 
-use App\Models\Event;
-use App\Models\Lesson;
+use App\Models\{Event, Lesson};
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,11 +14,10 @@ return new class extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Event::class);
-            $table->foreignIdFor(Lesson::class);
-            $table->text('title');
-            $table->enum('type', ['checkbox', 'radio', 'text']);
-            $table->json('options')->nullable();
+            $table->foreignIdFor(Event::class)->nullable();
+            $table->foreignIdFor(Lesson::class)->nullable();
+            $table->string('title');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

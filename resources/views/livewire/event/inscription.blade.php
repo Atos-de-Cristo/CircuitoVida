@@ -50,21 +50,21 @@
                                     {{-- TODO: usar enums --}}
                                     @switch($data->status)
                                         @case('P')
-                                            <button wire:click="open({{ $data->id }})"
+                                            <button wire:click.prevent="open({{ $data->id }})"
                                                 class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded w-full">Abrir
                                                 Inscrições</button>
                                         @break
 
                                         @case('A')
-                                            <button wire:click="close({{ $data->id }})"
+                                            <button wire:click.prevent="close({{ $data->id }})"
                                                 class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full">Encerrar</button>
                                         @break
 
                                         @case('E')
-                                            <button wire:click="viewInsc({{ $data->id }})"
+                                            <button wire:click.prevent="viewInsc({{ $data->id }})"
                                                 class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded w-full">
                                                 Inscritos</button>
-                                            <button wire:click="open({{ $data->id }})"
+                                            <button wire:click.prevent="open({{ $data->id }})"
                                                 class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">Reabrir
                                                 </button>
                                         @break

@@ -43,13 +43,13 @@
                         <td class="border px-2 py-2">{{ getStatusInscription($item->status) }}</td>
                         <td class="border px-2 py-2">
                             @if ($item->status == 'P')
-                                <button wire:click="approveInscription({{ $item->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Aprovar</button>
+                                <button wire:click.prevent="approveInscription({{ $item->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Aprovar</button>
                             @endif
                             @if ($item->status == 'L')
-                                <button wire:click="disapproveInscription({{ $item->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Cancelar</button>
+                                <button wire:click.prevent="disapproveInscription({{ $item->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Cancelar</button>
                             @endif
                             @if ($item->status == 'C')
-                                <button wire:click="approveInscription({{ $item->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Aprovar</button>
+                                <button wire:click.prevent="approveInscription({{ $item->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Aprovar</button>
                             @endif
                         </td>
                     </tr>

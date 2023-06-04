@@ -3,8 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Services\ActivityService;
-use App\Services\EventService;
-use App\Services\ModuleService;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -13,7 +11,8 @@ class EventActivity extends Component
     use WithFileUploads;
 
     public $eventId, $lessonId;
-    public $titleActivity, $type, $option;
+    public $title, $description;
+    public $isOpenQuestions;
 
     public function mount($eventId, $lessonId)
     {
@@ -37,29 +36,33 @@ class EventActivity extends Component
 
     private function resetInputActivity()
     {
-        $this->titleActivity = '';
-        $this->type = '';
-        $this->option = '';
+        $this->title = '';
+        $this->description = '';
     }
 
     public function storeActivity(ActivityService $service)
     {
-        $this->validate([
-            'titleActivity' => 'required',
-            'type' => 'required',
-            // 'option' => 'required'
-        ]);
+        $this->validate([ 'title' => 'required' ]);
 
         $request = [
             'event_id' => $this->eventId,
             'lesson_id' => $this->lessonId,
-            'title' => $this->titleActivity,
-            'type' => $this->type,
-            'option' => $this->option
+            'title' => $this->title,
+            'description' => $this->description
         ];
 
         $service->create($request);
 
         $this->resetInputActivity();
+    }
+
+    public function openModalQuestions()
+    {
+        $this->isOpenQuestions = true;
+    }
+
+    public function closeModalQuestions()
+    {
+        $this->isOpenQuestions = false;
     }
 }

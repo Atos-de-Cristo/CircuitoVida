@@ -1,7 +1,6 @@
 <?php
 
-use App\Models\Event;
-use App\Models\Module;
+use App\Models\{Event, Module};
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
