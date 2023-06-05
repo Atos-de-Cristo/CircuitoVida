@@ -119,7 +119,7 @@
                                 </div>
                             @empty
                                 <span class="text-red-500">Nenhuma aula cadastrada</span>
-                            @forelse
+                            @endforelse
                         </div>
                     </div>
                 </div>
