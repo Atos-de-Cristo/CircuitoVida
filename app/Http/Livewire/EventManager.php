@@ -14,7 +14,6 @@ class EventManager extends Component
 
     protected $listeners = [
         'refreshComponent' => '$refresh',
-        'closeModalActivity' => 'closeModalActivity',
         'closeModalFrequency' => 'closeModalFrequency',
         'closeModalMonitors' => 'closeModalMonitors',
         'closeModalLesson' => 'closeModalLesson'
@@ -26,7 +25,6 @@ class EventManager extends Component
     public $showConfirmationPopup = false;
     public $isOpenModule = false;
     public $isOpenLesson = false;
-    public $isOpenActivity = false;
     public $isOpenMonitors = false;
 
     public function boot(Request $request)

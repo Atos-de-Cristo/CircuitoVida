@@ -164,9 +164,6 @@
             'lessonId' => $lessonId
         ])
     @endif
-    @if ($isOpenActivity)
-        @livewire('event-activity', [$eventId, $lessonId])
-    @endif
     @if ($isOpenMonitors)
         @livewire('event-monitors', [$eventId])
     @endif
