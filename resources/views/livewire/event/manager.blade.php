@@ -121,7 +121,7 @@
                                     @can('admin')
                                     <div class="flex items-center mr-2">
                                         <button wire:click.prevent="editLesson({{ $lesson->id }})"
-                                            class="mr-2">
+                                            class="mr-5">
                                             <img src="{{ asset('svg/edit.svg') }}" alt="Ícone">
                                         </button>
                                         <button wire:click.prevent="dellLesson({{ $lesson->id }})">
