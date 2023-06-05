@@ -2,8 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Enums\InscriptionStatus;
-use App\Services\{EventService, InscriptionService, LessonService, ModuleService};
+use App\Services\LessonService;
 use Livewire\Component;
 use Illuminate\Http\Request;
 
