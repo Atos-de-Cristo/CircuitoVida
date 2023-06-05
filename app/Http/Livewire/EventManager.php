@@ -26,7 +26,6 @@ class EventManager extends Component
 
     public $isOpenModule = false;
     public $isOpenLesson = false;
-    public $isOpenFrequency = false;
     public $isOpenActivity = false;
     public $isOpenMonitors = false;
 
@@ -216,17 +215,6 @@ class EventManager extends Component
     public function closeModalActivity()
     {
         $this->isOpenActivity = false;
-    }
-
-    public function openModalFrequency(string $lessonId)
-    {
-        $this->lessonId = $lessonId;
-        $this->isOpenFrequency = true;
-    }
-
-    public function closeModalFrequency()
-    {
-        $this->isOpenFrequency = false;
     }
 
     public function openModalMonitors()
