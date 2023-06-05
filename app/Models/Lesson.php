@@ -18,7 +18,6 @@ class Lesson extends Model
         'title',
         'description',
         'video',
-        'slide',
         'date'
     ];
 

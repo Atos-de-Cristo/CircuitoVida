@@ -6,7 +6,6 @@ use App\Enums\InscriptionStatus;
 use App\Services\{EventService, InscriptionService, LessonService, ModuleService};
 use Livewire\Component;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 
 class EventManager extends Component
@@ -17,11 +16,12 @@ class EventManager extends Component
         'refreshComponent' => '$refresh',
         'closeModalActivity' => 'closeModalActivity',
         'closeModalFrequency' => 'closeModalFrequency',
-        'closeModalMonitors' => 'closeModalMonitors'
+        'closeModalMonitors' => 'closeModalMonitors',
+        'closeModalLesson' => 'closeModalLesson'
     ];
 
     public $eventId, $nameModule;
-    public $user_id, $event_id, $module_id, $title, $description, $video, $slide, $date, $itemdelete;
+    public $user_id, $event_id, $module_id, $title, $description, $video, $date, $itemdelete;
     public $lessonId, $moduleSelected;
     public $showConfirmationPopup = false;
     public $isOpenModule = false;
@@ -65,7 +65,7 @@ class EventManager extends Component
         $this->openModalModule();
     }
 
-    public function editModule($id, ModuleService $service)
+    public function editModule(string $id, ModuleService $service)
     {
         $this->resetInputModule();
 
@@ -76,11 +76,13 @@ class EventManager extends Component
 
         $this->openModalModule();
     }
-    public function deleteItem($id)
+
+    public function deleteItem(string $id)
     {
         $this->showConfirmationPopup = true;
         $this->itemdelete = $id;
     }
+
     public function confirmDelete(ModuleService $service)
     {
         $service->delete($this->itemdelete);
@@ -126,26 +128,11 @@ class EventManager extends Component
         $this->resetInputModule();
     }
 
-    public function createLesson()
+    public function openModalLesson(string $idModule, string | null $lessonId)
     {
-        $this->resetInputLesson();
-        $this->openModalLesson();
-    }
-
-    public function editLesson($id, LessonService $service)
-    {
-        $this->resetInputLesson();
-
-        $lessonData = $service->find($id);
-        $this->module_id = $lessonData->module->id;
-        $this->lessonId = $id;
-        $this->title = $lessonData->title;
-        $this->description = $lessonData->description;
-        $this->video = $lessonData->video;
-        $this->slide = $lessonData->slide;
-        $this->date = $lessonData->date;
-
-        $this->openModalLesson();
+        $this->moduleSelected = $idModule;
+        $this->lessonId = $lessonId;
+        $this->isOpenLesson = true;
     }
 
     public function dellLesson($id, LessonService $service)
@@ -154,71 +141,9 @@ class EventManager extends Component
         $this->emit('refreshComponent');
     }
 
-    public function openModalLesson()
-    {
-        $this->isOpenLesson = true;
-    }
-
     public function closeModalLesson()
     {
         $this->isOpenLesson = false;
-    }
-
-    private function resetInputLesson()
-    {
-        $this->user_id = '';
-        $this->event_id = '';
-        $this->title = '';
-        $this->description = '';
-        $this->video = '';
-        $this->slide = '';
-        $this->date = '';
-    }
-
-    public function storeLesson(LessonService $service)
-    {
-        $this->validate([
-            'title' => 'required',
-            'module_id' => 'required',
-            'date' => 'required',
-            'slide' => 'mimes:pdf|max:5120'
-        ]);
-
-        $request = [
-            'event_id' => $this->eventId,
-            'module_id' => $this->module_id,
-            'title' => $this->title,
-            'description' => $this->description,
-            'video' => $this->video,
-            'date' => $this->date,
-        ];
-
-        if ($this->slide) {
-            $imgName = $this->slide->store('files/slide', 'public');
-            $request['slide'] = Storage::url($imgName);
-        }
-
-        if ($this->lessonId) {
-            $service->update($request, $this->lessonId);
-        } else {
-            $service->create($request);
-        }
-
-        session()->flash('message', 'Aula cadastrado com sucesso.');
-
-        $this->closeModalLesson();
-        $this->resetInputLesson();
-    }
-
-    public function openModalActivity(string $lessonId)
-    {
-        $this->lessonId = $lessonId;
-        $this->isOpenActivity = true;
-    }
-
-    public function closeModalActivity()
-    {
-        $this->isOpenActivity = false;
     }
 
     public function openModalMonitors()

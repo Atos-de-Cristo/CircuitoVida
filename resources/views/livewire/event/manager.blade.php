@@ -91,7 +91,7 @@
                     <div x-show="open" class="bg-gray-50 p-2 transition-all mt-4 duration-300 ease-in-out rounded">
                         <div class="flex items-center mb-2 justify-between">
                             <h3 class="font-bold text-black mr-2">Título da Aula</h3>
-                            <button wire:click.prevent="createLesson({{ $module->id }})"
+                            <button wire:click.prevent="openModalLesson({{ $module->id }}, null)"
                                 class="btn-primary text-xs flex items-center">
                                 <svg class="w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                     fill="currentColor">
@@ -113,7 +113,7 @@
                                     </div>
                                     @can('admin')
                                         <div class="flex items-center mr-2">
-                                            <button wire:click.prevent="editLesson({{ $lesson->id }})" class="mr-5">
+                                            <button wire:click.prevent="openModalLesson({{ $module->id }}, {{ $lesson->id }})" class="mr-5">
                                                 <img src="{{ asset('svg/edit.svg') }}" alt="Ícone">
                                             </button>
                                             <button wire:click.prevent="dellLesson({{ $lesson->id }})">
@@ -158,7 +158,11 @@
         @include('livewire.event.module-create')
     @endif
     @if ($isOpenLesson)
-        @include('livewire.event.lesson-create')
+        @livewire('event-lesson', [
+            'eventId' => $eventId,
+            'moduleId' => $moduleSelected,
+            'lessonId' => $lessonId
+        ])
     @endif
     @if ($isOpenActivity)
         @livewire('event-activity', [$eventId, $lessonId])
