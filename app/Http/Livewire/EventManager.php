@@ -21,9 +21,9 @@ class EventManager extends Component
     ];
 
     public $eventId, $nameModule;
-    public $user_id, $event_id, $module_id, $title, $description, $video, $slide, $date;
+    public $user_id, $event_id, $module_id, $title, $description, $video, $slide, $date, $itemdelete;
     public $lessonId, $moduleSelected;
-
+    public $showConfirmationPopup = false;
     public $isOpenModule = false;
     public $isOpenLesson = false;
     public $isOpenActivity = false;
@@ -76,11 +76,15 @@ class EventManager extends Component
 
         $this->openModalModule();
     }
-
-    public function dellModule($id, ModuleService $service)
+    public function deleteItem($id)
     {
-        $service->delete($id);
-        $this->emit('refreshComponent');
+        $this->showConfirmationPopup = true;
+        $this->itemdelete = $id;
+    }
+    public function confirmDelete(ModuleService $service)
+    {
+        $service->delete($this->itemdelete);
+        $this->showConfirmationPopup = false;
     }
 
     public function openModalModule()
@@ -112,7 +116,7 @@ class EventManager extends Component
 
         if ($this->moduleSelected) {
             $service->update($request, $this->moduleSelected);
-        }else{
+        } else {
             $service->create($request);
         }
 
@@ -196,7 +200,7 @@ class EventManager extends Component
 
         if ($this->lessonId) {
             $service->update($request, $this->lessonId);
-        }else{
+        } else {
             $service->create($request);
         }
 
