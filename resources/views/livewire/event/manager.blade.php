@@ -64,7 +64,17 @@
                 <div x-data="{ open: false }" class="card-white py-4">
                     <div @click="open = !open" class="cursor-pointer">
                         <div class="flex items-center justify-between">
-                            <span class="text-xl">{{ $module->name }}</span>
+                            <span class="text-xl">
+                                @can('admin')
+                                <button wire:click.prevent="editModule({{ $module->id }})" class="btn-primary">
+                                    <span>Edit</span>
+                                </button>
+                                <button wire:click.prevent="dellModule({{ $module->id }})" class="btn-primary">
+                                    <span>Apagar</span>
+                                </button>
+                                @endcan
+                                {{ $module->name }}
+                            </span>
                             <svg x-show="!open" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -83,6 +93,14 @@
                             @foreach ($module->lessons as $lesson)
                                 <div class="border-t border-gray-200 pb-2 py-2 flex items-center justify-between">
                                     <div class="flex items-center">
+                                        @can('admin')
+                                        <button wire:click.prevent="editLesson({{ $lesson->id }})" class="btn-primary">
+                                            <span>Edit</span>
+                                        </button>
+                                        <button wire:click.prevent="dellLesson({{ $lesson->id }})" class="btn-primary">
+                                            <span>Apagar</span>
+                                        </button>
+                                        @endcan
                                         <img class="text-red-500" src="{{ asset('svg/play-lesson.svg') }}"
                                             alt="Ícone">
                                         <a href="{{ route('classroom', ['id' => $lesson->id]) }}"
@@ -117,8 +135,11 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
                 @forelse ($event->inscriptions as $aluno)
                     <div class="flex items-center mb-4">
-                        <img class="w-8 h-8 rounded-full" src="{{ $aluno->user->profile_photo_url }}" width="32"
-                            height="32" alt="{{ $aluno->user->name }}" />
+                        <img
+                            class="w-8 h-8 bg-black rounded-full mr-2"
+                            src="{{ asset($aluno->user->profile_photo_url) }}" width="32" height="32"
+                            alt="{{$aluno->user->name}}"
+                        />
                         <span
                             class="truncate ml-2 text-sm font-medium group-hover:text-slate-800">{{ $aluno->user->name }}</span>
                     </div>

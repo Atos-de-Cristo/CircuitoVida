@@ -22,7 +22,7 @@ class EventManager extends Component
 
     public $eventId, $nameModule;
     public $user_id, $event_id, $module_id, $title, $description, $video, $slide, $date;
-    public $lessonId;
+    public $lessonId, $moduleSelected;
 
     public $isOpenModule = false;
     public $isOpenLesson = false;
@@ -66,6 +66,24 @@ class EventManager extends Component
         $this->openModalModule();
     }
 
+    public function editModule($id, ModuleService $service)
+    {
+        $this->resetInputModule();
+
+        $moduleData = $service->find($id);
+
+        $this->moduleSelected = $id;
+        $this->nameModule = $moduleData->name;
+
+        $this->openModalModule();
+    }
+
+    public function dellModule($id, ModuleService $service)
+    {
+        $service->delete($id);
+        $this->emit('refreshComponent');
+    }
+
     public function openModalModule()
     {
         $this->isOpenModule = true;
@@ -78,6 +96,7 @@ class EventManager extends Component
 
     private function resetInputModule()
     {
+        $this->moduleSelected = null;
         $this->nameModule = '';
     }
 
@@ -89,11 +108,14 @@ class EventManager extends Component
 
         $request = [
             'name' => $this->nameModule,
-            'event_id' => $this->eventId,
-            'monitors'
+            'event_id' => $this->eventId
         ];
 
-        $service->create($request);
+        if ($this->moduleSelected) {
+            $service->update($request, $this->moduleSelected);
+        }else{
+            $service->create($request);
+        }
 
         session()->flash('message', 'Modulo cadastrado com sucesso.');
 
@@ -105,6 +127,28 @@ class EventManager extends Component
     {
         $this->resetInputLesson();
         $this->openModalLesson();
+    }
+
+    public function editLesson($id, LessonService $service)
+    {
+        $this->resetInputLesson();
+
+        $lessonData = $service->find($id);
+        $this->module_id = $lessonData->module->id;
+        $this->lessonId = $id;
+        $this->title = $lessonData->title;
+        $this->description = $lessonData->description;
+        $this->video = $lessonData->video;
+        $this->slide = $lessonData->slide;
+        $this->date = $lessonData->date;
+
+        $this->openModalLesson();
+    }
+
+    public function dellLesson($id, LessonService $service)
+    {
+        $service->delete($id);
+        $this->emit('refreshComponent');
     }
 
     public function openModalLesson()
@@ -151,7 +195,11 @@ class EventManager extends Component
             $request['slide'] = Storage::url($imgName);
         }
 
-        $service->create($request);
+        if ($this->lessonId) {
+            $service->update($request, $this->lessonId);
+        }else{
+            $service->create($request);
+        }
 
         session()->flash('message', 'Aula cadastrado com sucesso.');
 
