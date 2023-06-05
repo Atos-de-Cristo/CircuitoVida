@@ -7,14 +7,13 @@
     </div>
     <div class="card-white">
         <div class="flex flex-col sm:flex-row justify-between items-center">
-
             <div class="font-bold  flex items-center">
                 <img src="{{ asset('svg/play-title.svg') }}" alt="Ícone" class="w-12 h-12">
                 {{ $lessonData->title }}
             </div>
             @can('admin')
                 <div class="mt-2 sm:mt-0 flex space-x-2">
-                    <button wire:click.prevent="createModule()" class="btn-primary">
+                    <button wire:click.prevent="openModalFrequency()" class="btn-primary">
                         <img src="{{ asset('svg/checklist.svg') }}" alt="Ícone" class="w-4 h-4">
                         <span class="ml-2">Fequência</span>
                     </button>
@@ -34,18 +33,19 @@
             </div>
         </div>
     @endif
-
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div class="sm:col-span-2 md:col-span-1">
             <div class="text-xl font-bold mb-4 flex items-center">
                 <img src="{{ asset('svg/activits.svg') }}" alt="Ícone">
                 <span class="ml-2">Atividades</span>
+                @can('admin')
                 <button wire:click.prevent="addActivity" class="btn-primary text-xs ml-2">
                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 5v14M5 12h14" />
                     </svg>
                 </button>
+                @endCan
             </div>
             <div class="card-white">
                 <div class="w-full md:w-1/2">
@@ -58,11 +58,11 @@
                 </div>
             </div>
         </div>
-
         <div class="sm:col-span-2 md:col-span-1">
             <div class="text-xl font-bold mb-4 flex items-center">
                 <img src="{{ asset('svg/dowloard.svg') }}" alt="Ícone">
                 <span class="ml-2">Materiais</span>
+                @can('admin')
                 <button wire:click.prevent="attachFile" class="btn-primary text-xs ml-2">
                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -71,8 +71,8 @@
                         <path d="M14.828 9.172a4 4 0 10-5.656 5.656" />
                     </svg>
                 </button>
+                @endCan
             </div>
-
             <div class="card-white">
                 @if ($lessonData->slide)
                     <a href="{{ $lessonData->slide }}" class="block text-blue-500 hover:text-blue-700 mb-1"
@@ -83,6 +83,7 @@
             </div>
         </div>
     </div>
-
-
+    @if ($isOpenFrequency)
+        @livewire('event-frequency', [$eventId, $lessonId])
+    @endif
 </div>

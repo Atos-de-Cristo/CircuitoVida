@@ -42,7 +42,6 @@
                         <img src="{{ asset('svg/pasta-add.svg') }}" alt="Ícone">
                         <span class="ml-2">Módulos</span>
                     </button>
-
                     <button wire:click.prevent="openModalMonitors()" class="btn-primary">
                         <img src="{{ asset('svg/users-group.svg') }}" alt="Ícone">
                         <span class="ml-2">Monitores</span>
@@ -58,7 +57,6 @@
                 <span class="ml-2">MODULOS</span>
             </div>
             @forelse ($event->modules as $module)
-
                 <div x-data="{ open: false }" class="card-white py-4">
                     <div @click="open = !open" class="cursor-pointer">
                         <div class="flex items-center justify-between">
@@ -80,14 +78,12 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 9l-7 7-7-7" />
                                 </svg>
-
                                 <svg x-show="open" class="w-6 h-6 mx-2" xmlns="http://www.w3.org/2000/svg"
                                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M5 15l7-7 7 7" />
                                 </svg>
                             </div>
-
                         </div>
                     </div>
 
@@ -104,19 +100,14 @@
                                 <span>Aula</span>
                             </button>
                         </div>
-
-
-
                         <div class="border-t border-gray-200 pb-2">
                             @forelse ($module->lessons as $lesson)
                                 <div class="border-t border-gray-200 pb-2 py-2 flex items-center justify-between">
                                     <div class="flex items-center">
-
                                         <img src="{{ asset('svg/play-lesson.svg') }}" alt="Ícone"
                                             class="text-red-500">
-                                        <a href="{{ route('classroom', ['id' => $lesson->id]) }}"
+                                        <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
                                             class="text-blue-500 hover:text-blue-700 ml-2">{{ $lesson->title }}</a>
-
                                     </div>
                                     @can('admin')
                                     <div class="flex items-center mr-2">
@@ -129,9 +120,6 @@
                                         </button>
                                     </div>
                                 @endcan
-
-
-
                                 </div>
                             @empty
                                 <span class="text-red-500">Nenhuma aula cadastrada</span>
@@ -173,9 +161,6 @@
     @endif
     @if ($isOpenActivity)
         @livewire('event-activity', [$eventId, $lessonId])
-    @endif
-    @if ($isOpenFrequency)
-        @livewire('event-frequency', [$eventId, $lessonId])
     @endif
     @if ($isOpenMonitors)
         @livewire('event-monitors', [$eventId])
