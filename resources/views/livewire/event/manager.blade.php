@@ -90,7 +90,7 @@
                     <div x-show="open" class="transition-all mt-4 duration-300 ease-in-out">
                         <h3 class="font-bold">Título da Aula</h3>
                         <div class="border-t border-gray-200 pb-2">
-                            @foreach ($module->lessons as $lesson)
+                            @forelse ($module->lessons as $lesson)
                                 <div class="border-t border-gray-200 pb-2 py-2 flex items-center justify-between">
                                     <div class="flex items-center">
                                         @can('admin')
@@ -117,13 +117,15 @@
                                         </button>
                                     @endcan
                                 </div>
-                            @endforeach
+                            @empty
+                                <span class="text-red-500">Nenhuma aula cadastrada</span>
+                            @forelse
                         </div>
                     </div>
                 </div>
             @empty
                 <div class="card-white  py-4">
-                    <span class="text-red-500">Nenhum Modulo cadastrado</span>
+                    <span class="text-red-500">Nenhum módulo cadastrado</span>
                 </div>
             @endforelse
         </div>
