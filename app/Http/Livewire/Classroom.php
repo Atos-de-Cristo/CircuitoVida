@@ -10,10 +10,12 @@ class Classroom extends Component
 {
     public $lessonId, $eventId;
     public $isOpenFrequency = false;
+    public $isOpenActivity = false;
 
     protected $listeners = [
         'refreshComponent' => '$refresh',
-        'closeModalFrequency' => 'closeModalFrequency'
+        'closeModalFrequency' => 'closeModalFrequency',
+        'closeModalActivity' => 'closeModalActivity'
     ];
 
     public function boot(Request $request)
@@ -36,5 +38,15 @@ class Classroom extends Component
     public function closeModalFrequency()
     {
         $this->isOpenFrequency = false;
+    }
+
+    public function openModalActivity()
+    {
+        $this->isOpenActivity = true;
+    }
+
+    public function closeModalActivity()
+    {
+        $this->isOpenActivity = false;
     }
 }

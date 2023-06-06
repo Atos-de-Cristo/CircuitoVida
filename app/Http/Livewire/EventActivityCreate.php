@@ -6,7 +6,7 @@ use App\Services\ActivityService;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class EventActivity extends Component
+class EventActivityCreate extends Component
 {
     use WithFileUploads;
 
@@ -35,13 +35,7 @@ class EventActivity extends Component
         $this->emit('closeModalActivity');
     }
 
-    private function resetInputActivity()
-    {
-        $this->title = '';
-        $this->description = '';
-    }
-
-    public function storeActivity(ActivityService $service)
+    public function store(ActivityService $service)
     {
         $this->validate([ 'title' => 'required' ]);
 
@@ -54,7 +48,7 @@ class EventActivity extends Component
 
         $service->create($request);
 
-        $this->resetInputActivity();
+        $this->closeModalActivity();
     }
 
     public function openModalQuestions($atvId)
