@@ -8,7 +8,6 @@
                 <th class="text-left px-2 w-8">#</th>
                 <th class="text-left px-2">Titulo</th>
                 <td class="text-left px-2">Questões</td>
-                <th class="text-left px-2">Resposta</th>
             </tr>
         </thead>
         <tbody>
@@ -20,6 +19,7 @@
                     <small>{{$activity->description}}</small>
                 </td>
                 <td class="border px-2 py-2">
+                    @can('admin')
                     <button wire:click.prevent="openModalQuestions({{ $activity->id }})" class="btn-primary">
                         @if (count($activity->questions) > 0)
                             {{count($activity->questions)}}
@@ -28,9 +28,7 @@
                         @endif
                         questões
                     </button>
-                </td>
-                <td class="border px-2 py-2">
-
+                    @endcan
                 </td>
             </tr>
             @endforeach

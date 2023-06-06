@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class Inscription extends Component
 {
-    protected $listeners = ['refreshComponent' => '$refresh'];
+    protected $listeners = ['refreshInsc' => '$refresh'];
 
     public function render(InscriptionService $service)
     {
@@ -28,6 +28,6 @@ class Inscription extends Component
             'status' => InscriptionStatus::C->name,
         ], $id);
 
-        $this->emit('refreshComponent');
+        $this->emit('refreshInsc');
     }
 }

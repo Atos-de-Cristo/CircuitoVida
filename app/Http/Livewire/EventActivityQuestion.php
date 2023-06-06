@@ -20,15 +20,9 @@ class EventActivityQuestion extends Component
         return view('livewire.event.activity.question');
     }
 
-    public function resetInput()
+    public function close()
     {
-        $this->type = '';
-        $this->title = '';
-    }
-
-    public function cancel()
-    {
-        $this->resetInput();
+        $this->emit('closeModalQuestions');
     }
 
     public function store(QuestionService $questionService)
@@ -47,5 +41,12 @@ class EventActivityQuestion extends Component
         $questionService->create($request);
 
         $this->resetInput();
+        $this->emit('refreshActivity');
+    }
+
+    public function resetInput()
+    {
+        $this->type = '';
+        $this->title = '';
     }
 }

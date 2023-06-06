@@ -51,12 +51,7 @@
             </div>
             <div class="card-white">
                 <div class="w-full md:w-1/2">
-                    @forelse ($lessonData->activities as $activity)
-                        <a href="{{ $activity->id }}"
-                            class="block text-blue-500 hover:text-blue-700 mb-1">{{ $activity->title }}</a>
-                    @empty
-                        <span class="text-red-500">Nenhuma atividade cadastrada</span>
-                    @endforelse
+                    @livewire('event-activity-list', [ 'lessonId' => $lessonId ])
                 </div>
             </div>
         </div>

@@ -13,7 +13,7 @@ class Classroom extends Component
     public $isOpenActivity = false;
 
     protected $listeners = [
-        'refreshComponent' => '$refresh',
+        'refreshClassroom' => '$refresh',
         'closeModalFrequency' => 'closeModalFrequency',
         'closeModalActivity' => 'closeModalActivity'
     ];

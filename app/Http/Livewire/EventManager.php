@@ -13,7 +13,7 @@ class EventManager extends Component
     use WithFileUploads;
 
     protected $listeners = [
-        'refreshComponent' => '$refresh',
+        'refreshManage' => '$refresh',
         'closeModalFrequency' => 'closeModalFrequency',
         'closeModalMonitors' => 'closeModalMonitors',
         'closeModalLesson' => 'closeModalLesson'
@@ -45,7 +45,7 @@ class EventManager extends Component
             'status' => InscriptionStatus::G->name,
         ], $id);
 
-        $this->emit('refreshComponent');
+        $this->emit('refreshManage');
     }
 
     public function disapproveInscription(string $id, InscriptionService $inscriptionService)
@@ -54,7 +54,7 @@ class EventManager extends Component
             'status' => InscriptionStatus::C->name,
         ], $id);
 
-        $this->emit('refreshComponent');
+        $this->emit('refreshManage');
     }
 
     public function createModule()
@@ -136,7 +136,7 @@ class EventManager extends Component
     public function dellLesson($id, LessonService $service)
     {
         $service->delete($id);
-        $this->emit('refreshComponent');
+        $this->emit('refreshManage');
     }
 
     public function closeModalLesson()

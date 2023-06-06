@@ -10,9 +10,10 @@ use Livewire\Component;
 
 class EventInscription extends Component
 {
-    protected $listeners = ['refreshComponent' => '$refresh'];
     public $isUser = false;
     public $userInscription;
+
+    protected $listeners = ['refreshInscription' => '$refresh'];
 
     public function render(EventService $service)
     {
@@ -25,7 +26,7 @@ class EventInscription extends Component
             'status' => EventStatus::E->name,
         ], $id);
 
-        $this->emit('refreshComponent');
+        $this->emit('refreshInscription');
     }
 
     public function open(string $id, EventService $service){
@@ -33,7 +34,7 @@ class EventInscription extends Component
             'status' => EventStatus::A->name,
         ], $id);
 
-        $this->emit('refreshComponent');
+        $this->emit('refreshInscription');
     }
 
     public function viewInsc(string $id, InscriptionService $inscriptionService) {
