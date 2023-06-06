@@ -32,10 +32,6 @@
                     </svg>
                 </div>
             </div>
-
-        </div>
-        <div class="font-bold  flex items-center">
-
         </div>
 
         @can('admin')
@@ -94,17 +90,11 @@
                 </div>
             </div>
         </div>
-
-
         @endforeach
     </div>
-
     <div class="mt-4">
         {{ $dataAll->links() }}
-
     </div>
-
-
     @if($isOpen)
         @include('livewire.user.create')
     @endif
