@@ -35,12 +35,11 @@ class UserService
         })->get();
     }
 
-    public function paginate($search, $sortBy, $sortDirection): LengthAwarePaginator
+    public function paginate($search): LengthAwarePaginator
     {
         return $this->repository
             ->where('name', 'LIKE', '%' . $search . '%')
-            ->orderBy($sortBy, $sortDirection)
-            ->paginate(12);
+            ->paginate(12)->withQueryString();
     }
 
     public function find(string $id): User
