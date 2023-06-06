@@ -16,8 +16,7 @@ class User extends Component
     protected $service;
 
     public $search = '';
-    public $sortBy = 'id';
-    public $sortDirection = 'desc';
+
 
     protected $rules = [
         'name' => 'required|min:5',
@@ -38,19 +37,11 @@ class User extends Component
         ]);
     }
 
-    public function sortBy($field)
-    {
-        if ($this->sortBy === $field) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortBy = $field;
-            $this->sortDirection = 'asc';
-        }
-    }
+
 
     public function render(UserService $service)
     {
-        $dataAll = $service->paginate($this->search,$this->sortBy, $this->sortDirection);
+        $dataAll = $service->paginate($this->search);
         return view('livewire.user.index', compact('dataAll'));
     }
 
