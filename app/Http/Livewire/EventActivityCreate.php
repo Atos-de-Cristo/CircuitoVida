@@ -48,7 +48,14 @@ class EventActivityCreate extends Component
 
         $service->create($request);
 
-        $this->closeModalActivity();
+        $this->resetInput();
+        $this->emit('refreshActivity');
+    }
+
+    private function resetInput()
+    {
+        $this->title = '';
+        $this->description = '';
     }
 
     public function openModalQuestions($atvId)
