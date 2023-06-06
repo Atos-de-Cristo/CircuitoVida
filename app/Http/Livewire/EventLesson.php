@@ -10,6 +10,7 @@ class EventLesson extends Component
 {
     public $eventId, $moduleId, $lessonId;
     public $title, $description, $video, $date;
+    public $modalActivity;
 
     public function boot(Request $request)
     {
@@ -27,7 +28,7 @@ class EventLesson extends Component
 
     public function render()
     {
-        return view('livewire.event.lesson-create');
+        return view('livewire.event.lesson');
     }
 
     public function closeModal()
