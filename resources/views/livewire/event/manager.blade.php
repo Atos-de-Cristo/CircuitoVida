@@ -169,19 +169,19 @@
     @endif
 
     @if ($showConfirmationPopup)
-        <div class="fixed inset-0 flex items-center justify-center z-50">
-            <div
-                class="bg-white p-4 rounded shadow absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <h2 class="text-lg font-bold mb-4">Confirmação</h2>
-                <p>Deseja realmente excluir este item?</p>
-                <div class="flex justify-end mt-4">
-                    <button wire:click="confirmDelete"
-                        class="px-4 py-2 bg-red-500 text-white rounded">Confirmar</button>
-                    <button wire:click="$set('showConfirmationPopup', false)"
-                        class="px-4 py-2 bg-gray-300 rounded">Cancelar</button>
-                </div>
+    <div class="fixed inset-0 flex flex-col items-center justify-start z-50 mt-8">
+        <div class="bg-slate-800 p-4 rounded shadow-lg top-0">
+            <h2 class="text-lg text-white font-bold mb-4">Confirmação</h2>
+            <p class="text-white">Deseja realmente excluir este item?</p>
+            <div class="flex justify-end mt-4">
+                <button wire:click="confirmDelete"
+                    class="px-4 py-2 bg-red-500 text-white rounded">Confirmar</button>
+                <button wire:click="$set('showConfirmationPopup', false)"
+                    class=" ml-3 px-4 py-2 bg-gray-300 rounded">Cancelar</button>
             </div>
         </div>
-    @endif
+    </div>
+@endif
+
 
 </div>

@@ -42,6 +42,7 @@ class EventActivityQuestion extends Component
 
         $this->resetInput();
         $this->emit('refreshActivity');
+        $this->close();
     }
 
     public function resetInput()

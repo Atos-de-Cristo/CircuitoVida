@@ -50,6 +50,7 @@ class EventActivityCreate extends Component
 
         $this->resetInput();
         $this->emit('refreshActivity');
+        $this->closeModalActivity();
     }
 
     private function resetInput()

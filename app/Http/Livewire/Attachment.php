@@ -41,6 +41,9 @@ class Attachment extends Component
     public function saveAttachmentLesson()
     {
         $service = new AttachmentService;
+        $this->validate([
+            'name' => 'required',
+        ]);
 
         $request = [
             'lesson_id' => $this->lessonId,
@@ -54,5 +57,6 @@ class Attachment extends Component
         $service->create($request);
 
         $this->emit('refreshClassroom');
+        $this->closeModal();
     }
 }
