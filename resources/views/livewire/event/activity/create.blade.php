@@ -8,13 +8,13 @@
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
 
         <div class="fixed inset-0 flex flex-col items-center justify-start z-50 mt-8">
-            <div class="bg-white p-4 rounded shadow-lg top-0 sm:max-w-lg sm:w-full">
-                <form>
-                    <div class="bg-gray-50 text-center">
-                        <h2 class="text-lg text-gray-800 font-bold mb-4">Adicionar Atividade</h2>
-                    </div>
+            <div class="bg-white  rounded shadow-lg top-0 sm:max-w-lg sm:w-full">
 
-                    <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4 text-left">
+                <form>
+                    <div class="bg-gray-50 text-center rounded">
+                        <h2 class="text-lg text-gray-800 font-bold p-2 mb-4">Adicionar Atividade</h2>
+                    </div>
+                    <div class="px-4 pt-2 pb-4 sm:p-6 sm:pb-4 text-left">
                         <div class="md:flex">
                             <div class="md:w-1/2 p-1">
                                 <div class="mb-4">
@@ -36,7 +36,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 rounded sm:flex sm:flex-row-reverse">
                         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
                             <button wire:click.prevent="store()" type="button" class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5">
                                 Salvar
