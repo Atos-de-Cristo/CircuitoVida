@@ -1,29 +1,29 @@
 <?php
 namespace App\Services;
 
-use App\Models\Lesson;
+use App\Models\Attachment;
 use Illuminate\Database\Eloquent\Collection;
 
-class LessonService
+class AttachmentService
 {
     protected $repository;
 
     public function __construct()
     {
-        $this->repository = new Lesson();
+        $this->repository = new Attachment();
     }
 
     public function getAll(array $filter = []): Collection
     {
-        return $this->repository->with('event', 'module', 'activities', 'attachments')->where($filter)->get();
+        return $this->repository->with('lesson')->where($filter)->get();
     }
 
-    public function find(string $id): Lesson
+    public function find(string $id): Attachment
     {
-        return $this->repository->with('event', 'module', 'activities', 'attachments')->find($id);
+        return $this->repository->with('lesson')->find($id);
     }
 
-    public function create(array $data): Lesson
+    public function create(array $data): Attachment
     {
         return $this->repository->create($data);
     }

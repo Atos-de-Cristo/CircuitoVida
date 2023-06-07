@@ -33,7 +33,6 @@ class UsersTableSeeder extends Seeder
         DB::table('permission_user')->insert([
             'permission_id' => 1,
             'user_id' => 2,
-
         ]);
     }
 }

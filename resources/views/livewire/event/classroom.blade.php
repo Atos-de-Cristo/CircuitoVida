@@ -62,7 +62,7 @@
                     <span class="ml-2">Materiais</span>
                 </div>
                 @can('admin')
-                    <button wire:click.prevent="attachFile" class="btn-primary text-xs ml-2">
+                    <button wire:click.prevent="openModalAttachment" class="btn-primary text-xs ml-2">
                         <svg fill="#ffffff" class="w-4 h-4" viewBox="0 0 32 32" version="1.1"
                             xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -78,12 +78,11 @@
                 @endCan
             </div>
             <div class="card-white">
-                @if ($lessonData->slide)
-                    <a href="{{ $lessonData->slide }}" class="block text-blue-500 hover:text-blue-700 mb-1"
-                        target="_blank">PDF</a>
-                @else
-                    <span class="text-red-500">Nenhum PDF cadastrado</span>
-                @endif
+                @forelse ($lessonData->attachments as $attachment)
+                    <a href="{{$attachment->path}}" target="_blanck">{{$attachment->name}}</a>
+                @empty
+                    <span class="text-red-500">Nenhum anexo cadastrado</span>
+                @endforelse
             </div>
         </div>
     </div>
@@ -92,5 +91,8 @@
     @endif
     @if ($isOpenActivity)
         @livewire('event-activity-create', [$eventId, $lessonId])
+    @endif
+    @if ($isOpenAttachment)
+        @livewire('attachment', ['lessonId' => $lessonId])
     @endif
 </div>

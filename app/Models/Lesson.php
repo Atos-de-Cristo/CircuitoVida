@@ -32,4 +32,8 @@ class Lesson extends Model
     public function activities(): HasMany{
         return $this->hasMany(Activity::class);
     }
+
+    public function attachments(): HasMany{
+        return $this->hasMany(Attachment::class);
+    }
 }
