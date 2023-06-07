@@ -39,7 +39,7 @@ class UserService
     {
         return $this->repository
             ->where('name', 'LIKE', '%' . $search . '%')
-            ->paginate(12)->withQueryString();
+            ->paginate(12);
     }
 
     public function find(string $id): User

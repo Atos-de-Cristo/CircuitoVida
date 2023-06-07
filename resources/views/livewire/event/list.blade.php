@@ -9,7 +9,7 @@
             </div>
         </div>
     @endif
-    <h1 class="text-2xl font-bold mb-2 sm:mb-0">Lista de Eventos</h1>
+    <h1 class="text-xl font-bold mb-4 sm:mb-0">Lista de Eventos</h1>
     <div class="card-white">
         <div class="flex flex-col mb-4 sm:flex-row justify-between items-center">
 

@@ -100,7 +100,8 @@
     </div>
 
     <div class="mt-4">
-        {{ $dataAll->links() }}
+        {{ $dataAll->withQueryString()->links() }}
+
 
     </div>
 

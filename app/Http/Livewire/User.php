@@ -18,6 +18,7 @@ class User extends Component
     public $search = '';
 
 
+
     protected $rules = [
         'name' => 'required|min:5',
         'email' => 'required|email',
