@@ -169,18 +169,30 @@
     @endif
 
     @if ($showConfirmationPopup)
-    <div class="fixed inset-0 flex flex-col items-center justify-start z-50 mt-8">
-        <div class="bg-slate-800 p-4 rounded shadow-lg top-0">
-            <h2 class="text-lg text-white font-bold mb-4">Confirmação</h2>
-            <p class="text-white">Deseja realmente excluir este item?</p>
-            <div class="flex justify-end mt-4">
-                <button wire:click="confirmDelete"
-                    class="px-4 py-2 bg-red-500 text-white rounded">Confirmar</button>
-                <button wire:click="$set('showConfirmationPopup', false)"
-                    class=" ml-3 px-4 py-2 bg-gray-300 rounded">Cancelar</button>
+    <div class="fixed z-40 inset-0 overflow-y-auto ease-out duration-400">
+        <div class="flex items-end justify-start min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+
+            <!-- This element is to trick the browser into centering the modal contents. -->
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
+
+            <div class="fixed inset-0 flex flex-col items-center justify-start z-50 mt-8">
+                <div class="bg-slate-800 p-4  rounded-md shadow-lg top-0">
+                    <h2 class="text-lg text-white font-bold mb-4">Confirmação</h2>
+                    <p class="text-white">Deseja realmente excluir este item?</p>
+                    <div class="flex justify-end mt-4">
+                        <button wire:click="confirmDelete"
+                            class="px-4 py-2 bg-red-500 text-white rounded">Confirmar</button>
+                        <button wire:click="$set('showConfirmationPopup', false)"
+                            class=" ml-3 px-4 py-2 bg-gray-300 rounded">Cancelar</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 @endif
 
 
