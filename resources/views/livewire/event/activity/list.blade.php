@@ -3,7 +3,10 @@
         <div class="flex items-center justify-between">
             <div class="flex items-center">
                 <img src="{{ asset('svg/activity.svg') }}" alt="Ícone">
-                <a class="font-bold text-xl text-indigo-900 hover:text-indigo-600 ml-2">{{ $activity->title }}</a>
+                <a
+                    href="{{ route('eventActivityQuestion', ['id' => $activity->id]) }}"
+                    class="font-bold text-xl text-indigo-900 hover:text-indigo-600 ml-2"
+                >{{ $activity->title }}</a>
             </div>
             <div class="flex items-center mr-2">
                 <button wire:click.prevent="editActivity({{ $activity->id }})" class="mr-2">

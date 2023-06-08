@@ -3,16 +3,19 @@
 namespace App\Http\Livewire;
 
 use App\Services\QuestionService;
+use Illuminate\Http\Request;
 use Livewire\Component;
 
 class EventActivityQuestion extends Component
 {
-    public $type, $title;
+    public $title;
+    public $type = 'aberta';
+    public $options = [];
     public $atvId;
 
-    public function mount($atvId)
+    public function boot(Request $request)
     {
-        $this->atvId = $atvId;
+        $this->atvId = $request->id;
     }
 
     public function render()
@@ -20,9 +23,15 @@ class EventActivityQuestion extends Component
         return view('livewire.event.activity.question');
     }
 
-    public function close()
+    public function addOption()
     {
-        $this->emit('closeModalQuestions');
+        $this->options[] = ['text' => '', 'correct' => false];
+    }
+
+    public function removeOption($index)
+    {
+        unset($this->options[$index]);
+        $this->options = array_values($this->options);
     }
 
     public function store(QuestionService $questionService)
