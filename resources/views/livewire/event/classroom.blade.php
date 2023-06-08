@@ -50,7 +50,7 @@
                 @endCan
             </div>
             <div class="card-white h-48 overflow-y-auto">
-                <div class="w-full md:w-1/2">
+                <div class="w-full">
                     @livewire('event-activity-list', ['lessonId' => $lessonId])
                 </div>
             </div>
@@ -97,7 +97,10 @@
 
                         @can('admin')
                             <div class="flex items-center mr-2">
-                                <button wire:click.prevent="">
+                                <button wire:click.prevent="editAttachment({{ $attachment->id }})" class="mr-2">
+                                    <img src="{{ asset('svg/edit.svg') }}" alt="Ícone">
+                                </button>
+                                <button wire:click.prevent="dellAttachment({{ $attachment->id }})">
                                     <img src="{{ asset('svg/delete.svg') }}" alt="Ícone">
                                 </button>
                             </div>
