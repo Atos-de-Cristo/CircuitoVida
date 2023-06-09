@@ -1,4 +1,5 @@
 <div>
+
     @if (session()->has('message'))
         <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3"
             role="alert" x-data="{ showMessage: true }" x-show="showMessage" x-init="setTimeout(() => { showMessage = false; }, 4000)">
@@ -9,12 +10,26 @@
             </div>
         </div>
     @endif
-    <div class=" font-bold mb-4 flex items-center">
-        <img src="{{ asset('svg/board.svg') }}" alt="Ícone">
-        <div class="ml-2 text-3xl font-bold">
-            {{ $event->name }}
+
+        <div class="flex flex-col md:flex-row items-center justify-between mb-2">
+            <div class="flex items-center mb-2 md:mb-0">
+                <img src="{{ asset('svg/board.svg') }}" alt="Ícone" class="w-8 h-8">
+                <div class="ml-2 text-3xl font-bold">
+                    {{ $event->name }}
+                </div>
+            </div>
+            <div class=" hidden md:inline">
+                <ol class="flex items-center space-x-2  text-sm">
+                    <li class="breadcrumb-item">
+                        <a href="{{ url()->previous() }}" class="text-blue-500 hover:underline">Voltar</a>
+                    </li>
+                    <span class="text-gray-500">/</span>
+                    <li class="breadcrumb-item active">Módulos &amp; Aulas</li>
+                </ol>
+            </div>
         </div>
-    </div>
+
+
     <div class="card-white">
         <div class="flex flex-col sm:flex-row justify-between items-center">
             <div>

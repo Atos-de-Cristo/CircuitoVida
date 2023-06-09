@@ -1,4 +1,18 @@
 <div>
+    <div class="flex flex-col md:flex-row items-center justify-between mb-2">
+        <div class="flex items-center mb-2 md:mb-0">
+
+        </div>
+        <div class=" hidden md:inline">
+            <ol class="flex items-center space-x-2  text-sm">
+                <li class="breadcrumb-item">
+                    <a href="{{ url()->previous() }}" class="text-blue-500 hover:underline">Voltar</a>
+                </li>
+                <span class="text-gray-500">/</span>
+                <li class="breadcrumb-item active">Atividades &amp; Materiais</li>
+            </ol>
+        </div>
+    </div>
     @if (session()->has('message'))
         <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3"
             role="alert" x-data="{ showMessage: true }" x-show="showMessage" x-init="setTimeout(() => { showMessage = false; }, 4000)">
@@ -128,8 +142,5 @@
             </div>
 
         </div>
-
-
     </form>
-
 </div>
