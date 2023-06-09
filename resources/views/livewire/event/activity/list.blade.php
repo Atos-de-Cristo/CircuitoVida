@@ -15,12 +15,14 @@
                     class="font-bold text-xl text-indigo-900 hover:text-indigo-600 ml-2">{{ $activity->title }}</a>
             </div>
             <div class="flex items-center mr-2">
+                @can('admin')
                 <button wire:click.prevent="editActivity({{ $activity->id }})" class="mr-2">
                     <img src="{{ asset('svg/edit.svg') }}" alt="Ícone">
                 </button>
                 <button wire:click.prevent="dellActivity({{ $activity->id }})">
                     <img src="{{ asset('svg/delete.svg') }}" alt="Ícone">
                 </button>
+                @endcan
             </div>
         </div>
     @endforeach

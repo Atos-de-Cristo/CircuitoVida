@@ -18,6 +18,11 @@ class DashboardUser extends Component
         return view('livewire.dashboard.user', compact('eventAll'));
     }
 
+    public function view(string $id)
+    {
+        redirect(route('eventManager', ['id' => $id]));
+    }
+
     public function insc(string $idEvent, InscriptionService $service){
         $data = [
             'user_id' => Auth::user()->id,
