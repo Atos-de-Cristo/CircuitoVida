@@ -8,19 +8,24 @@ use Livewire\Component;
 
 class EventActivityQuestion extends Component
 {
-    public $title;
+    public $atvId, $title;
     public $type = 'aberta';
     public $options = [];
-    public $atvId;
+    public $answers = [];
+
+    protected $listeners = [
+        'refreshActivityQuestion' => '$refresh'
+    ];
 
     public function boot(Request $request)
     {
         $this->atvId = $request->id;
     }
 
-    public function render()
+    public function render(QuestionService $questionService)
     {
-        return view('livewire.event.activity.question');
+        $questions = $questionService->getAll($this->atvId);
+        return view('livewire.event.activity.question', compact('questions'));
     }
 
     public function addOption()
@@ -39,24 +44,54 @@ class EventActivityQuestion extends Component
         $this->validate([
             'type' => 'required',
             'title' => 'required',
+            'options.*.text' => 'required_if:type,multi',
         ]);
 
         $request = [
             'activity_id' => $this->atvId,
             'type' => $this->type,
             'title' => $this->title,
+            'options' => $this->options
         ];
 
         $questionService->create($request);
 
-        $this->resetInput();
-        $this->emit('refreshActivity');
-        $this->close();
+        $this->resetInputCreate();
+
+        session()->flash('message', 'A pergunta foi salva com sucesso!');
     }
 
-    public function resetInput()
+    public function resetInputCreate()
     {
-        $this->type = '';
+        $this->type = 'aberta';
+        $this->options = [];
+        $this->title = '';
+    }
+
+    public function storeQuestion()
+    {
+        // Validação das respostas
+        $this->validate([
+            'answers.*' => 'required',
+        ]);
+
+        // Salva as respostas no banco de dados
+        // foreach ($this->answers as $questionId => $answer) {
+        //     Answer::create([
+        //         'question_id' => $questionId,
+        //         'answer' => $answer,
+        //     ]);
+        // }
+
+        $this->resetInputAnswers();
+
+        session()->flash('message', 'As respostas foram salvas com sucesso!');
+    }
+
+    public function resetInputAnswers()
+    {
+        $this->type = 'aberta';
+        $this->options = [];
         $this->title = '';
     }
 }

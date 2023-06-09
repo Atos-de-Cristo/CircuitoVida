@@ -13,9 +13,9 @@ class QuestionService
         $this->repository = new Question();
     }
 
-    public function getAll(array $filter = []): Collection
+    public function getAll(string $activityId): Collection
     {
-        return $this->repository->with('activity')->where($filter)->get();
+        return $this->repository->with('activity')->where('activity_id', $activityId)->get();
     }
 
     public function find(string $id): Question
@@ -25,6 +25,13 @@ class QuestionService
 
     public function create(array $data): Question
     {
+        $processedOptions = collect($data['options'])->map(function ($option) {
+            return [
+                'text' => $option['text'],
+                'correct' => $option['correct'],
+            ];
+        });
+        $data['options'] = $processedOptions->toJson();
         return $this->repository->create($data);
     }
 

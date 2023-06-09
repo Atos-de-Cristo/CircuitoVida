@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Activity::class)->nullable();
+            $table->foreignIdFor(Activity::class);
             $table->enum('type', ['aberta', 'multi']);
             $table->string('title');
             $table->json('options')->nullable();

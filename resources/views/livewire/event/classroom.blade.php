@@ -105,9 +105,7 @@
                                 </button>
                             </div>
                         @endcan
-
                     </div>
-
                 @empty
                     <span class="text-red-500">Nenhum anexo cadastrado</span>
                 @endforelse
