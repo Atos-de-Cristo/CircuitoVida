@@ -9,7 +9,23 @@
             </div>
         </div>
     @endif
-    <h1 class="text-xl font-bold mb-4 sm:mb-0">Lista de Eventos</h1>
+    <div class="flex flex-col md:flex-row items-center justify-between mb-2">
+        <div class="flex items-center mb-2 md:mb-0">
+            <div class="ml-2 text-3xl font-bold">
+                Lista de Eventos
+            </div>
+        </div>
+        <div class=" hidden md:inline">
+            <ol class="flex items-center space-x-2  text-sm">
+                <li class="breadcrumb-item">
+                    <a href="{{ route('dashboard') }}" class="text-blue-500 hover:underline">Dashboard</a>
+                </li>
+                <span class="text-gray-500">/</span>
+                <li class="breadcrumb-item active">Cursos</li>
+            </ol>
+        </div>
+    </div>
+
     <div class="card-white">
         <div class="flex flex-col mb-4 sm:flex-row justify-between items-center">
 
