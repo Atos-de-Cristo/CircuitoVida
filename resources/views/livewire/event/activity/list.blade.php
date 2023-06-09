@@ -2,11 +2,17 @@
     @foreach ($activities as $activity)
         <div class="flex items-center justify-between">
             <div class="flex items-center">
-                <img src="{{ asset('svg/activity.svg') }}" alt="Ícone">
-                <a
-                    href="{{ route('eventActivityQuestion', ['id' => $activity->id]) }}"
-                    class="font-bold text-xl text-indigo-900 hover:text-indigo-600 ml-2"
-                >{{ $activity->title }}</a>
+                <svg class="w-4 h-4" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg" fill="#312e81" stroke="#312e81">
+
+                    <path
+                        d="m36.4 14.8h8.48a1.09 1.09 0 0 0 1.12-1.12 1 1 0 0 0 -.32-.8l-10.56-10.56a1 1 0 0 0 -.8-.32 1.09 1.09 0 0 0 -1.12 1.12v8.48a3.21 3.21 0 0 0 3.2 3.2z">
+                    </path>
+                    <path
+                        d="m44.4 19.6h-11.2a4.81 4.81 0 0 1 -4.8-4.8v-11.2a1.6 1.6 0 0 0 -1.6-1.6h-16a4.81 4.81 0 0 0 -4.8 4.8v38.4a4.81 4.81 0 0 0 4.8 4.8h30.4a4.81 4.81 0 0 0 4.8-4.8v-24a1.6 1.6 0 0 0 -1.6-1.6zm-32-1.6a1.62 1.62 0 0 1 1.6-1.55h6.55a1.56 1.56 0 0 1 1.57 1.55v1.59a1.63 1.63 0 0 1 -1.59 1.58h-6.53a1.55 1.55 0 0 1 -1.58-1.58zm24 20.77a1.6 1.6 0 0 1 -1.6 1.6h-20.8a1.6 1.6 0 0 1 -1.6-1.6v-1.57a1.6 1.6 0 0 1 1.6-1.6h20.8a1.6 1.6 0 0 1 1.6 1.6zm3.2-9.6a1.6 1.6 0 0 1 -1.6 1.63h-24a1.6 1.6 0 0 1 -1.6-1.6v-1.6a1.6 1.6 0 0 1 1.6-1.6h24a1.6 1.6 0 0 1 1.6 1.6z">
+                    </path>
+                </svg>
+                <a href="{{ route('eventActivityQuestion', ['id' => $activity->id]) }}"
+                    class="font-bold text-xl text-indigo-900 hover:text-indigo-600 ml-2">{{ $activity->title }}</a>
             </div>
             <div class="flex items-center mr-2">
                 <button wire:click.prevent="editActivity({{ $activity->id }})" class="mr-2">
