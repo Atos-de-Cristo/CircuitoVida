@@ -9,7 +9,7 @@
                     <a href="{{ url()->previous() }}" class="text-blue-500 hover:underline">Voltar</a>
                 </li>
                 <span class="text-gray-500">/</span>
-                <li class="breadcrumb-item active">Atividades &amp; Materiais</li>
+                <li class="breadcrumb-item active">Questões</li>
             </ol>
         </div>
     </div>
@@ -106,41 +106,57 @@
             <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 @forelse ($questions as $question)
                 <div class="mb-4 bg-gray-100 border border-gray-300  rounded-md p-4">
-                    <h3 class="text-lg font-semibold mb-2">{{ $question->title }}</h3>
+                    <div class="flex flex-row justify-between">
+                        <h3 class="text-lg font-semibold mb-2">{{ $question->title }}</h3>
+                        <div class="flex flex-row">
+                            <button wire:click.prevent="edit({{$question->id}})" class="mr-2">
+                                <img src="{{ asset('svg/edit.svg') }}" alt="Ícone">
+                            </button>
+                            <button wire:click.prevent="dell({{$question->id}})">
+                                <img src="{{ asset('svg/delete.svg') }}" alt="Ícone">
+                            </button>
+                        </div>
+                    </div>
                     @if ($question->type === 'aberta')
-                    <input type="text" wire:model="answers.{{ $question->id }}"
-                        class="w-full px-4 py-2 border border-gray-300 rounded" placeholder="Sua resposta">
-                    @error("answers.{$question->id}")
-                    <span class="text-red-500">{{ $message }}</span>
-                    @enderror
+                        <input
+                            type="text"
+                            wire:model="answers.{{ $question->id }}"
+                            class="w-full px-4 py-2 border border-gray-300 rounded"
+                            placeholder="Sua resposta"
+                        >
+                        @error("answers.{$question->id}")
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
                     @elseif ($question->type === 'multi')
-                    @if (!is_null($question->options))
-                    @foreach (json_decode($question->options) as $index => $option)
-                    <label class="flex items-center">
-                        <input type="radio" name="question_{{ $question->id }}" wire:model="answers.{{ $question->id }}"
-                            value="{{ $option->text }}" class="mr-2">
-                        <span class="text-sm">{{ $option->text }}</span>
-                    </label>
-                    @error("answers.{$question->id}")
-                    <span class="text-red-500">{{ $message }}</span>
-                    @enderror
-                    @endforeach
-                    @endif
+                        @if (!is_null($question->options))
+                            @foreach (json_decode($question->options) as $index => $option)
+                                <label class="flex items-center">
+                                    <input type="radio" name="question_{{ $question->id }}" wire:model="answers.{{ $question->id }}"
+                                        value="{{ $option->text }}" class="mr-2">
+                                    <span class="text-sm">{{ $option->text }}</span>
+                                </label>
+                                @error("answers.{$question->id}")
+                                    <span class="text-red-500">{{ $message }}</span>
+                                @enderror
+                            @endforeach
+                        @endif
                     @endif
                 </div>
                 @empty
-                <span class="text-red-500">Nenhuma questão cadastrada</span>
+                    <span class="text-red-500">Nenhuma questão cadastrada</span>
                 @endforelse
             </div>
             <div class="bg-gray-50 px-4 rounded-md py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                    <button wire:click.prevent="storeQuestion()" type="button"
-                        class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                    <button
+                        type="button"
+                        wire:click.prevent="storeQuestion()"
+                        class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                    >
                         Salvar
                     </button>
                 </span>
             </div>
-
         </div>
     </form>
 </div>

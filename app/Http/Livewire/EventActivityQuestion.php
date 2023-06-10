@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class EventActivityQuestion extends Component
 {
-    public $atvId, $title;
+    public $atvId, $title, $questionId;
     public $type = 'aberta';
     public $options = [];
     public $answers = [];
@@ -63,7 +63,11 @@ class EventActivityQuestion extends Component
             'options' => $this->options
         ];
 
-        $this->service->create($request);
+        if ($this->questionId) {
+            $request['id'] = $this->questionId;
+        }
+
+        $this->service->store($request);
 
         $this->resetInputCreate();
 
@@ -75,6 +79,7 @@ class EventActivityQuestion extends Component
         $this->type = 'aberta';
         $this->options = [];
         $this->title = '';
+        $this->questionId = '';
     }
 
     public function storeQuestion()
@@ -99,5 +104,20 @@ class EventActivityQuestion extends Component
     public function resetInputAnswers()
     {
         $this->answers = [];
+    }
+
+    public function edit($id)
+    {
+        $data = $this->service->find($id);
+
+        $this->type = $data->type;
+        $this->options = json_decode($data->options);
+        $this->title = $data->title;
+        $this->questionId = $data->id;
+    }
+
+    public function dell($id)
+    {
+        $this->service->delete($id);
     }
 }

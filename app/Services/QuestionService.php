@@ -23,7 +23,15 @@ class QuestionService
         return $this->repository->with('activity')->find($id);
     }
 
-    public function create(array $data): Question
+    public function store(array $data): Question | bool
+    {
+        if (isset($data['id'])) {
+            return $this->update($data, $data['id']);
+        }
+        return $this->create($data);
+    }
+
+    private function create(array $data): Question
     {
         $processedOptions = collect($data['options'])->map(function ($option) {
             return [
@@ -35,7 +43,7 @@ class QuestionService
         return $this->repository->create($data);
     }
 
-    public function update(array $data, int $id): bool
+    private function update(array $data, int $id): bool
     {
         $repo = $this->find($id);
         return $repo->update($data);
