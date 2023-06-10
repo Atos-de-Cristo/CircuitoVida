@@ -108,14 +108,16 @@
                 <div class="mb-4 bg-gray-100 border border-gray-300  rounded-md p-4">
                     <div class="flex flex-row justify-between">
                         <h3 class="text-lg font-semibold mb-2">{{ $question->title }}</h3>
-                        <div class="flex flex-row">
-                            <button wire:click.prevent="edit({{$question->id}})" class="mr-2">
-                                <img src="{{ asset('svg/edit.svg') }}" alt="Ícone">
-                            </button>
-                            <button wire:click.prevent="dell({{$question->id}})">
-                                <img src="{{ asset('svg/delete.svg') }}" alt="Ícone">
-                            </button>
-                        </div>
+                        @can('admin')
+                            <div class="flex flex-row">
+                                <button wire:click.prevent="edit({{$question->id}})" class="mr-2">
+                                    <img src="{{ asset('svg/edit.svg') }}" alt="Ícone">
+                                </button>
+                                <button wire:click.prevent="dell({{$question->id}})">
+                                    <img src="{{ asset('svg/delete.svg') }}" alt="Ícone">
+                                </button>
+                            </div>
+                        @endcan
                     </div>
                     @if ($question->type === 'aberta')
                         <input
