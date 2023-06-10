@@ -10,7 +10,7 @@ class Classroom extends Component
 {
     public $lessonId, $eventId;
     public $isOpenFrequency = false;
-    public $isOpenAttachment = false;
+    private $service;
 
     protected $listeners = [
         'refreshClassroom' => '$refresh',
@@ -18,15 +18,20 @@ class Classroom extends Component
         'closeModalAttachment' => 'closeModalAttachment'
     ];
 
-    public function boot(Request $request)
+    public function __construct()
+    {
+        $this->service = new LessonService;
+    }
+
+    public function mount(Request $request)
     {
         $this->eventId = $request->eventId;
         $this->lessonId = $request->id;
     }
 
-    public function render(LessonService $lessonService)
+    public function render()
     {
-        $lessonData = $lessonService->find($this->lessonId);
+        $lessonData = $this->service->find($this->lessonId);
         return view('livewire.event.classroom', compact('lessonData'));
     }
 
@@ -38,15 +43,5 @@ class Classroom extends Component
     public function closeModalFrequency()
     {
         $this->isOpenFrequency = false;
-    }
-
-    public function openModalAttachment()
-    {
-        $this->isOpenAttachment = true;
-    }
-
-    public function closeModalAttachment()
-    {
-        $this->isOpenAttachment = false;
     }
 }

@@ -104,7 +104,4 @@
     @if ($isOpenFrequency)
         @livewire('event-frequency', [$eventId, $lessonId])
     @endif
-    {{-- @if ($isOpenAttachment)
-        @livewire('attachment', ['lessonId' => $lessonId])
-    @endif --}}
 </div>
