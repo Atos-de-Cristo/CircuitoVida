@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Services\AttachmentService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -12,11 +11,29 @@ class Attachment extends Component
 {
     use WithFileUploads;
 
+    public string | null $attachmentId;
+    private $service;
     public $attachment, $name, $lessonId;
+    public bool $isOpenAttachment = false;
 
-    public function boot(Request $request)
+    protected $listeners = [
+        'refreshAttachment' => '$refresh'
+    ];
+
+    public function __construct()
     {
-        $this->lessonId = $request->id;
+        $this->service = new AttachmentService;
+    }
+
+    public function mount($lessonId, $attachmentId)
+    {
+        $this->lessonId = $lessonId;
+        $this->attachmentId = $attachmentId;
+
+        if ($attachmentId) {
+            $data = $this->service->find($attachmentId);
+            $this->name = $data->name;
+        }
     }
 
     public function render()
@@ -24,39 +41,46 @@ class Attachment extends Component
         return view('livewire.shared.attachment');
     }
 
-    public function closeModal()
-    {
-        $this->emit('closeModalAttachment');
-    }
-
     public function store()
     {
-        if ($this->attachment) {
-            if ($this->lessonId) {
-                $this->saveAttachmentLesson();
-            }
-        }
-    }
-
-    public function saveAttachmentLesson()
-    {
-        $service = new AttachmentService;
         $this->validate([
             'name' => 'required',
         ]);
 
         $request = [
-            'lesson_id' => $this->lessonId,
-            'type' => $this->attachment->extension(),
             'name' => $this->name
         ];
 
-        $attachment = $this->attachment->store('attachment', 'public');
-        $request['path'] = Storage::url($attachment);
+        if ($this->lessonId) {
+            $request['lesson_id'] = $this->lessonId;
+        }
 
-        $service->create($request);
+        if (isset($this->attachmentId)) {
+            $request['id'] = $this->attachmentId;
+        }
+
+        if ($this->attachment) {
+            $request['type'] = $this->attachment->extension();
+            $attachment = $this->attachment->store('attachment', 'public');
+            $request['path'] = Storage::url($attachment);
+        }
+
+        $this->service->store($request);
 
         $this->emit('refreshClassroom');
-        $this->closeModal();
+        $this->emit('refreshAttachment');
+        $this->isOpenAttachment = false;
+    }
+
+    private function resetInput()
+    {
+        $this->attachment = '';
+        $this->name = '';
+    }
+
+    public function dellAttachment()
+    {
+        $this->service->delete($this->attachmentId);
+        $this->emit('refreshClassroom');
     }
 }

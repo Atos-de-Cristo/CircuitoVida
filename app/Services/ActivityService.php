@@ -25,7 +25,7 @@ class ActivityService
 
     public function store(array $data): Activity | bool
     {
-        if ($data['id']) {
+        if (isset($data['id'])) {
             return $this->update($data, $data['id']);
         }
         return $this->create($data);

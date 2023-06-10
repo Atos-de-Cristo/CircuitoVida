@@ -23,12 +23,20 @@ class AttachmentService
         return $this->repository->with('lesson')->find($id);
     }
 
-    public function create(array $data): Attachment
+    public function store(array $data): Attachment | bool
+    {
+        if (isset($data['id'])) {
+            return $this->update($data, $data['id']);
+        }
+        return $this->create($data);
+    }
+
+    private function create(array $data): Attachment
     {
         return $this->repository->create($data);
     }
 
-    public function update(array $data, int $id): bool
+    private function update(array $data, int $id): bool
     {
         $repo = $this->find($id);
         return $repo->update($data);

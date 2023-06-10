@@ -27,7 +27,7 @@ class EventActivityActions extends Component
         $this->activityId = $activityId;
 
         if ($activityId) {
-            $data = $this->service->find($this->activityId);
+            $data = $this->service->find($activityId);
             $this->title = $data->title;
             $this->description = $data->description;
         }
