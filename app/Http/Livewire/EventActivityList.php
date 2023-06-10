@@ -16,7 +16,7 @@ class EventActivityList extends Component
     public $atvId;
 
     protected $listeners = [
-        'refreshActivity' => '$refresh',
+        'refreshActivityList' => '$refresh',
         'closeModalQuestions' => 'closeModalQuestions'
     ];
 

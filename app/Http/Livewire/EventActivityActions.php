@@ -51,7 +51,7 @@ class EventActivityActions extends Component
 
         $this->service->store($request);
 
-        $this->emit('refreshActivity');
+        $this->emit('refreshActivityList');
         $this->isOpenActivity = false;
         $this->resetInput();
     }
@@ -64,7 +64,8 @@ class EventActivityActions extends Component
 
     public function dellActivity()
     {
-        $this->service->delete($this->lessonId);
-        $this->emit('refreshActivity');
+        $this->service->delete($this->activityId);
+        $this->emit('refreshClassroom');
+        $this->emit('refreshActivityList');
     }
 }
