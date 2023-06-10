@@ -10,64 +10,55 @@ class EventActivityCreate extends Component
 {
     use WithFileUploads;
 
-    public $eventId, $lessonId;
+    private $service;
+    public $lessonId, $activityId;
     public $title, $description;
     public $isOpenQuestions;
-    public $atvId;
+    public $isOpenActivity = false;
 
-    public function mount($eventId, $lessonId)
+    public function __construct()
     {
-        $this->eventId = $eventId;
+        $this->service = new ActivityService;
+    }
+
+    public function mount($lessonId, $activityId)
+    {
         $this->lessonId = $lessonId;
+        $this->activityId = $activityId;
+
+        if ($activityId) {
+            $data = $this->service->find($this->activityId);
+            $this->title = $data->title;
+            $this->description = $data->description;
+        }
     }
 
-    public function render(ActivityService $activityService)
+    public function render()
     {
-        $activities = $activityService->getAll([
-            'event_id' => $this->eventId,
-            'lesson_id' => $this->lessonId
-        ]);
-        return view('livewire.event.activity.create', compact('activities'));
+        return view('livewire.event.activity.create');
     }
 
-    public function closeModalActivity()
-    {
-        $this->emit('closeModalActivity');
-    }
-
-    public function store(ActivityService $service)
+    public function store()
     {
         $this->validate([ 'title' => 'required' ]);
 
         $request = [
-            'event_id' => $this->eventId,
+            'id' => $this->activityId,
             'lesson_id' => $this->lessonId,
             'title' => $this->title,
             'description' => $this->description
         ];
 
-        $service->create($request);
+        $this->service->store($request);
 
-        $this->resetInput();
         $this->emit('refreshActivity');
-        $this->closeModalActivity();
+        $this->isOpenActivity = false;
+        $this->resetInput();
     }
 
     private function resetInput()
     {
         $this->title = '';
         $this->description = '';
-    }
-
-    public function openModalQuestions($atvId)
-    {
-        $this->atvId = $atvId;
-        $this->isOpenQuestions = true;
-    }
-
-    public function closeModalQuestions()
-    {
-        $this->atvId = null;
-        $this->isOpenQuestions = false;
     }
 }

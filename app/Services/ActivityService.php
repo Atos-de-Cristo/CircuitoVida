@@ -23,12 +23,20 @@ class ActivityService
         return $this->repository->with('event', 'lesson')->find($id);
     }
 
-    public function create(array $data): Activity
+    public function store(array $data): Activity | bool
+    {
+        if ($data['id']) {
+            return $this->update($data, $data['id']);
+        }
+        return $this->create($data);
+    }
+
+    private function create(array $data): Activity
     {
         return $this->repository->create($data);
     }
 
-    public function update(array $data, int $id): bool
+    private function update(array $data, int $id): bool
     {
         $repo = $this->find($id);
         return $repo->update($data);
