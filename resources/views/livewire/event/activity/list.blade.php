@@ -20,10 +20,7 @@
             </div>
             <div class="flex items-center mr-2">
                 @can('admin')
-                <livewire:event-activity-create :activityId="$activity->id" :lessonId="$lessonId">
-                <button wire:click.prevent="dellActivity({{ $activity->id }})">
-                    <img src="{{ asset('svg/delete.svg') }}" alt="Ícone">
-                </button>
+                <livewire:event-activity-actions :activityId="$activity->id" :lessonId="$lessonId">
                 @endcan
             </div>
         </div>

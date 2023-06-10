@@ -7,6 +7,9 @@
         <button wire:click.prevent="$set('isOpenActivity', true)" class="mr-2">
             <img src="{{ asset('svg/edit.svg') }}" alt="Ícone">
         </button>
+        <button wire:click.prevent="dellActivity()">
+            <img src="{{ asset('svg/delete.svg') }}" alt="Ícone">
+        </button>
     @endempty
 
     @if ($isOpenActivity)

@@ -52,7 +52,7 @@
                     <span class="ml-2">Atividades</span>
                 </div>
                 @can('admin')
-                    <livewire:event-activity-create :activityId="null" :lessonId="$lessonId">
+                    <livewire:event-activity-actions :activityId="null" :lessonId="$lessonId">
                 @endCan
             </div>
             <div class="card-white h-48 overflow-y-auto">

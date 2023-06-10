@@ -6,7 +6,7 @@ use App\Services\ActivityService;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class EventActivityCreate extends Component
+class EventActivityActions extends Component
 {
     use WithFileUploads;
 
@@ -35,7 +35,7 @@ class EventActivityCreate extends Component
 
     public function render()
     {
-        return view('livewire.event.activity.create');
+        return view('livewire.event.activity.actions');
     }
 
     public function store()
@@ -60,5 +60,11 @@ class EventActivityCreate extends Component
     {
         $this->title = '';
         $this->description = '';
+    }
+
+    public function dellActivity()
+    {
+        $this->service->delete($this->lessonId);
+        $this->emit('refreshActivity');
     }
 }
