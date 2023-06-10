@@ -3,7 +3,9 @@
 namespace App\Http\Livewire;
 
 use App\Services\QuestionService;
+use App\Services\ResponseService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class EventActivityQuestion extends Component
@@ -12,19 +14,26 @@ class EventActivityQuestion extends Component
     public $type = 'aberta';
     public $options = [];
     public $answers = [];
+    private $service, $serviceResponse;
 
     protected $listeners = [
         'refreshActivityQuestion' => '$refresh'
     ];
 
-    public function boot(Request $request)
+    public function __construct()
+    {
+        $this->service = new QuestionService;
+        $this->serviceResponse = new ResponseService;
+    }
+
+    public function mount(Request $request)
     {
         $this->atvId = $request->id;
     }
 
-    public function render(QuestionService $questionService)
+    public function render()
     {
-        $questions = $questionService->getAll($this->atvId);
+        $questions = $this->service->getAll($this->atvId);
         return view('livewire.event.activity.question', compact('questions'));
     }
 
@@ -39,7 +48,7 @@ class EventActivityQuestion extends Component
         $this->options = array_values($this->options);
     }
 
-    public function store(QuestionService $questionService)
+    public function store()
     {
         $this->validate([
             'type' => 'required',
@@ -54,7 +63,7 @@ class EventActivityQuestion extends Component
             'options' => $this->options
         ];
 
-        $questionService->create($request);
+        $this->service->create($request);
 
         $this->resetInputCreate();
 
@@ -70,18 +79,17 @@ class EventActivityQuestion extends Component
 
     public function storeQuestion()
     {
-        // Validação das respostas
         $this->validate([
             'answers.*' => 'required',
         ]);
 
-        // Salva as respostas no banco de dados
-        // foreach ($this->answers as $questionId => $answer) {
-        //     Answer::create([
-        //         'question_id' => $questionId,
-        //         'answer' => $answer,
-        //     ]);
-        // }
+        foreach ($this->answers as $questionId => $answer) {
+            $this->serviceResponse->create([
+                'user_id' => Auth::user()->id,
+                'question_id' => $questionId,
+                'response' => $answer,
+            ]);
+        }
 
         $this->resetInputAnswers();
 
@@ -90,8 +98,6 @@ class EventActivityQuestion extends Component
 
     public function resetInputAnswers()
     {
-        $this->type = 'aberta';
-        $this->options = [];
-        $this->title = '';
+        $this->answers = [];
     }
 }
