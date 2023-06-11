@@ -98,52 +98,68 @@
         </form>
     @endcan
     <form class="">
-
         <div class="bg-white shadow-xl  rounded-md ">
             <div class="bg-gray-50 text-center rounded-md">
                 <h2 class="text-lg text-gray-800 font-bold p-2 mb-4">Responder Questões</h2>
             </div>
             <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 @forelse ($questions as $question)
-                <div class="mb-4 bg-gray-100 border border-gray-300  rounded-md p-4">
-                    <div class="flex flex-row justify-between">
-                        <h3 class="text-lg font-semibold mb-2">{{ $question->title }}</h3>
-                        @can('admin')
-                            <div class="flex flex-row">
-                                <button wire:click.prevent="edit({{$question->id}})" class="mr-2">
-                                    <img src="{{ asset('svg/edit.svg') }}" alt="Ícone">
-                                </button>
-                                <button wire:click.prevent="dell({{$question->id}})">
-                                    <img src="{{ asset('svg/delete.svg') }}" alt="Ícone">
-                                </button>
-                            </div>
-                        @endcan
-                    </div>
-                    @if ($question->type === 'aberta')
-                        <input
-                            type="text"
-                            wire:model="answers.{{ $question->id }}"
-                            class="w-full px-4 py-2 border border-gray-300 rounded"
-                            placeholder="Sua resposta"
-                        >
-                        @error("answers.{$question->id}")
-                            <span class="text-red-500">{{ $message }}</span>
-                        @enderror
-                    @elseif ($question->type === 'multi')
-                        @if (!is_null($question->options))
-                            @foreach (json_decode($question->options) as $index => $option)
-                                <label class="flex items-center">
-                                    <input type="radio" name="question_{{ $question->id }}" wire:model="answers.{{ $question->id }}"
-                                        value="{{ $option->text }}" class="mr-2">
-                                    <span class="text-sm">{{ $option->text }}</span>
-                                </label>
+                    <div class="mb-4 border rounded-md p-4
+                        {{($question->response_status == 'correto') ? 'bg-green-100 border-green-300' : ''}}
+                        {{($question->response_status == 'errado') ? 'bg-red-100 border-red-300' : ''}}
+                        {{($question->response_status == 'pendente') ? 'bg-gray-100 border-gray-300' : ''}}">
+                        <div class="flex flex-row justify-between">
+                            <h3 class="text-lg font-semibold mb-2">{{ $question->title }}</h3>
+                            @can('admin')
+                                <div class="flex flex-row">
+                                    <button wire:click.prevent="edit({{$question->id}})" class="mr-2">
+                                        <img src="{{ asset('svg/edit.svg') }}" alt="Ícone">
+                                    </button>
+                                    <button wire:click.prevent="dell({{$question->id}})">
+                                        <img src="{{ asset('svg/delete.svg') }}" alt="Ícone">
+                                    </button>
+                                </div>
+                            @endcan
+                        </div>
+                        @if ($question->type === 'aberta')
+                            @if ($question->response)
+                                {{$question->response}}
+                            @else
+                                <input
+                                    type="text"
+                                    wire:model="answers.{{ $question->id }}"
+                                    class="w-full px-4 py-2 border border-gray-300 rounded"
+                                    placeholder="Sua resposta"
+                                >
                                 @error("answers.{$question->id}")
                                     <span class="text-red-500">{{ $message }}</span>
                                 @enderror
-                            @endforeach
+                            @endif
+                        @elseif ($question->type === 'multi')
+                            @forelse (json_decode($question->options) as $index => $option)
+                                @if ($question->response)
+                                    {{ $question->response }}
+                                @else
+                                    <label class="flex items-center">
+                                        <input
+                                            type="radio"
+                                            name="question_{{ $question->id }}"
+                                            wire:model="answers.{{ $question->id }}"
+                                            value="{{ $option->text }}"
+                                            class="mr-2"
+                                            {{ $question->response == $option->text ? 'checked' : '' }}
+                                        >
+                                        <span class="text-sm">{{ $option->text }}</span>
+                                    </label>
+                                    @error("answers.{$question->id}")
+                                        <span class="text-red-500">{{ $message }}</span>
+                                    @enderror
+                                @endif
+                            @empty
+                                <span class="text-red-500">Nenhuma opção cadastrada</span>
+                            @endforelse
                         @endif
-                    @endif
-                </div>
+                    </div>
                 @empty
                     <span class="text-red-500">Nenhuma questão cadastrada</span>
                 @endforelse
@@ -153,6 +169,7 @@
                     <button
                         type="button"
                         wire:click.prevent="storeQuestion()"
+                        {{$checkResponse == true ? 'disabled' : ''}}
                         class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5"
                     >
                         Salvar

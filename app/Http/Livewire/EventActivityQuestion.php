@@ -15,6 +15,7 @@ class EventActivityQuestion extends Component
     public $options = [];
     public $answers = [];
     private $service, $serviceResponse;
+    public $checkResponse = false;
 
     protected $listeners = [
         'refreshActivityQuestion' => '$refresh'
@@ -34,6 +35,11 @@ class EventActivityQuestion extends Component
     public function render()
     {
         $questions = $this->service->getAll($this->atvId);
+        foreach ($questions as $question) {
+            if ($this->checkResponse == false && isset($question->response_status)) {
+                $this->checkResponse = true;
+            }
+        }
         return view('livewire.event.activity.question', compact('questions'));
     }
 

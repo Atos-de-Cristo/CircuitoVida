@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Models\Question;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class QuestionService
 {
@@ -15,7 +16,21 @@ class QuestionService
 
     public function getAll(string $activityId): Collection
     {
-        return $this->repository->with('activity')->where('activity_id', $activityId)->get();
+        $userId = Auth::user()->id;
+
+        return $this->repository
+            ->with('activity')
+            ->where('activity_id', $activityId)
+            ->leftJoin('responses', function ($join) use ($userId) {
+                $join->on('questions.id', '=', 'responses.question_id')
+                    ->where('responses.user_id', '=', $userId);
+            })
+            ->select(
+                'questions.*',
+                'responses.response AS response',
+                'responses.status AS response_status'
+            )
+            ->get();
     }
 
     public function find(string $id): Question

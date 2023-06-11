@@ -13,9 +13,12 @@ class ResponseService
         $this->repository = new Response();
     }
 
-    public function getAll(array $filter = []): Collection
+    public function getAll(string $questionId): Collection
     {
-        return $this->repository->with('user', 'question')->where($filter)->get();
+        return $this->repository
+            ->with('user', 'question')
+            ->whereRelation('question', 'id', $questionId)
+            ->get();
     }
 
     public function find(string $id): Response
