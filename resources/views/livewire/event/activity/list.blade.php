@@ -12,7 +12,7 @@
                 </svg>
                 <a
                     href="{{ route('eventActivityQuestion', ['id' => $activity->id]) }}"
-                    class="font-bold text-xl text-indigo-900 hover:text-indigo-600 ml-2 flex flex-col"
+                    class="font-bold text-xl text-blue-500 hover:underline ml-2 flex flex-col"
                 >
                     {{ $activity->title }}
                     <small>{{ $activity->description }}</small>

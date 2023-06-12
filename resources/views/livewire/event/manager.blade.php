@@ -11,23 +11,23 @@
         </div>
     @endif
 
-        <div class="flex flex-col md:flex-row items-center justify-between mb-2">
-            <div class="flex items-center mb-2 md:mb-0">
-                <img src="{{ asset('svg/board.svg') }}" alt="Ícone" class="w-8 h-8">
-                <div class="ml-2 text-3xl font-bold">
-                    {{ $event->name }}
-                </div>
-            </div>
-            <div class=" hidden md:inline">
-                <ol class="flex items-center space-x-2  text-sm">
-                    <li class="breadcrumb-item">
-                        <a href="{{ url()->previous() }}" class="text-blue-500 hover:underline">Voltar</a>
-                    </li>
-                    <span class="text-gray-500">/</span>
-                    <li class="breadcrumb-item active">Módulos &amp; Aulas</li>
-                </ol>
+    <div class="flex flex-col md:flex-row items-center justify-between mb-2">
+        <div class="flex items-center mb-2 md:mb-0">
+            <img src="{{ asset('svg/board.svg') }}" alt="Ícone" class="w-8 h-8">
+            <div class="ml-2 text-3xl font-bold">
+                {{ $event->name }}
             </div>
         </div>
+        <div class=" hidden md:inline">
+            <ol class="flex items-center space-x-2  text-sm">
+                <li class="breadcrumb-item">
+                    <a href="{{ url()->previous() }}" class=" text-blue-500 hover:underline">Voltar</a>
+                </li>
+                <span class="text-gray-500">/</span>
+                <li class="breadcrumb-item active">Módulos &amp; Aulas</li>
+            </ol>
+        </div>
+    </div>
 
 
     <div class="card-white">
@@ -83,7 +83,8 @@
                                     <button wire:click.prevent="editModule({{ $module->id }})" class="mr-2">
                                         <img src="{{ asset('svg/edit.svg') }}" alt="Ícone">
                                     </button>
-                                    <button wire:click.prevent="deleteItem({{ $module->id }})" class="mr-5" @click.stop>
+                                    <button wire:click.prevent="deleteItem({{ $module->id }})" class="mr-5"
+                                        @click.stop>
                                         <img src="{{ asset('svg/delete.svg') }}" alt="Ícone">
                                     </button>
                                 @endcan
@@ -103,9 +104,10 @@
                     </div>
 
 
-                    <div x-show="open" class="bg-gray-50 p-2 transition-all mt-4 duration-300 ease-in-out rounded">
+                    <div x-show="open"
+                        class="bg-gray-50 dark:bg-slate-600 p-2 transition-all mt-4 duration-300 ease-in-out rounded">
                         <div class="flex items-center mb-2 justify-between">
-                            <h3 class="font-bold text-black mr-2">Título da Aula</h3>
+                            <h3 class="font-bold text-black dark:text-white mr-2">Título da Aula</h3>
                             <button wire:click.prevent="openModalLesson({{ $module->id }}, null)"
                                 class="btn-primary text-xs flex items-center">
                                 <svg class="w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
@@ -124,11 +126,13 @@
                                         <img src="{{ asset('svg/play-lesson.svg') }}" alt="Ícone"
                                             class="text-red-500">
                                         <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
-                                            class="text-blue-500 hover:text-blue-700 ml-2">{{ $lesson->title }}</a>
+                                            class="font-bold text-md text-blue-500 hover:underline  ml-2">{{ $lesson->title }}</a>
                                     </div>
                                     @can('admin')
                                         <div class="flex items-center mr-2">
-                                            <button wire:click.prevent="openModalLesson({{ $module->id }}, {{ $lesson->id }})" class="mr-5">
+                                            <button
+                                                wire:click.prevent="openModalLesson({{ $module->id }}, {{ $lesson->id }})"
+                                                class="mr-5">
                                                 <img src="{{ asset('svg/edit.svg') }}" alt="Ícone">
                                             </button>
                                             <button wire:click.prevent="dellLesson({{ $lesson->id }})">
@@ -151,10 +155,18 @@
         </div>
         <div class="sm:col-span-2 md:col-span-1">
             <div class="text-xl font-bold mb-4 flex items-center">
-                <img src="{{ asset('svg/student.svg') }}" alt="Ícone">
+                <svg class="w-8 h-8" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
+                    <path class="fill-current text-slate-600 dark:text-slate-200"
+                        d="M505.837,180.418L279.265,76.124c-7.349-3.385-15.177-5.093-23.265-5.093c-8.088,0-15.914,1.708-23.265,5.093 L6.163,180.418C2.418,182.149,0,185.922,0,190.045s2.418,7.896,6.163,9.627l226.572,104.294c7.349,3.385,15.177,5.101,23.265,5.101 c8.088,0,15.916-1.716,23.267-5.101l178.812-82.306v82.881c-7.096,0.8-12.63,6.84-12.63,14.138c0,6.359,4.208,11.864,10.206,13.618 l-12.092,79.791h55.676l-12.09-79.791c5.996-1.754,10.204-7.259,10.204-13.618c0-7.298-5.534-13.338-12.63-14.138v-95.148 l21.116-9.721c3.744-1.731,6.163-5.504,6.163-9.627S509.582,182.149,505.837,180.418z">
+                    </path>
+                    <path class="fill-current text-slate-600 dark:text-slate-200"
+                        d="M256,346.831c-11.246,0-22.143-2.391-32.386-7.104L112.793,288.71v101.638 c0,22.314,67.426,50.621,143.207,50.621c75.782,0,143.209-28.308,143.209-50.621V288.71l-110.827,51.017 C278.145,344.44,267.25,346.831,256,346.831z">
+                    </path>
+                </svg>
                 <span class="ml-2">ALUNOS</span>
             </div>
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
+            <div class="card-white">
                 @forelse ($event->inscriptions as $aluno)
                     <div class="flex items-center mb-4">
                         <img class="w-8 h-8 bg-black rounded-full mr-2"
@@ -176,7 +188,7 @@
         @livewire('event-lesson', [
             'eventId' => $eventId,
             'moduleId' => $moduleSelected,
-            'lessonId' => $lessonId
+            'lessonId' => $lessonId,
         ])
     @endif
     @if ($isOpenMonitors)
@@ -184,31 +196,30 @@
     @endif
 
     @if ($showConfirmationPopup)
-    <div class="fixed z-40 inset-0 overflow-y-auto ease-out duration-400">
-        <div class="flex items-end justify-start min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 transition-opacity">
-                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-            </div>
+        <div class="fixed z-40 inset-0 overflow-y-auto ease-out duration-400">
+            <div class="flex items-end justify-start min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div class="fixed inset-0 transition-opacity">
+                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
 
-            <!-- This element is to trick the browser into centering the modal contents. -->
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
+                <!-- This element is to trick the browser into centering the modal contents. -->
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
 
-            <div class="fixed inset-0 flex flex-col items-center justify-start z-50 mt-8">
-                <div class="bg-slate-800 p-4  rounded-md shadow-lg top-0">
-                    <h2 class="text-lg text-white font-bold mb-4">Confirmação</h2>
-                    <p class="text-white">Deseja realmente excluir este item?</p>
-                    <div class="flex justify-end mt-4">
-                        <button wire:click="confirmDelete"
-                            class="px-4 py-2 bg-red-500 text-white rounded">Confirmar</button>
-                        <button wire:click="$set('showConfirmationPopup', false)"
-                            class=" ml-3 px-4 py-2 bg-gray-300 rounded">Cancelar</button>
+                <div class="fixed inset-0 flex flex-col items-center justify-start z-50 mt-8">
+                    <div class="bg-slate-800 p-4  rounded-md shadow-lg top-0">
+                        <h2 class="text-lg text-white font-bold mb-4">Confirmação</h2>
+                        <p class="text-white">Deseja realmente excluir este item?</p>
+                        <div class="flex justify-end mt-4">
+                            <button wire:click="confirmDelete"
+                                class="px-4 py-2 bg-red-500 text-white rounded">Confirmar</button>
+                            <button wire:click="$set('showConfirmationPopup', false)"
+                                class=" ml-3 px-4 py-2 bg-gray-300 rounded">Cancelar</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-@endif
+    @endif
 
 
 </div>

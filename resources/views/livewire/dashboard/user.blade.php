@@ -50,4 +50,8 @@
             <p class="text-gray-600 dark:text-gray-400">Nenhum evento encontrado!</p>
         @endforelse
     </div>
+
+
+
+
 </div>
