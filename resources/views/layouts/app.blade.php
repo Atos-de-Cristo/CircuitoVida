@@ -8,21 +8,30 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css','resources/css/buttons.css', 'resources/js/app.js'])
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Styles -->
         @livewireStyles
+
+        <!-- Scripts -->
+        @vite(['resources/css/app.css','resources/css/buttons.css', 'resources/js/app.js'])
+        <script>
+            if (localStorage.getItem('dark-mode') === 'false' || !('dark-mode' in localStorage)) {
+                document.querySelector('html').classList.remove('dark');
+                document.querySelector('html').style.colorScheme = 'light';
+            } else {
+                document.querySelector('html').classList.add('dark');
+                document.querySelector('html').style.colorScheme = 'dark';
+            }
+        </script>
     </head>
     <body
-        class="font-inter antialiased bg-slate-100 text-slate-600"
+        class="font-inter antialiased bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-200"
         :class="{ 'sidebar-expanded': sidebarExpanded }"
         x-data="{ sidebarOpen: false, sidebarExpanded: localStorage.getItem('sidebar-expanded') == 'true' }"
         x-init="$watch('sidebarExpanded', value => localStorage.setItem('sidebar-expanded', value))"
     >
+
         <script>
             if (localStorage.getItem('sidebar-expanded') == 'true') {
                 document.querySelector('body').classList.add('sidebar-expanded');
@@ -33,6 +42,7 @@
 
         <!-- Page wrapper -->
         <div class="flex h-screen overflow-hidden">
+
             <x-app.sidebar />
 
             <!-- Content area -->
@@ -42,7 +52,7 @@
 
                 <main>
                     <div class="px-4 sm:px-6 lg:px-8 py-6 w-full max-w-9xl mx-auto">
-                        {{ $slot }}
+                    {{ $slot }}
                     </div>
                 </main>
 
@@ -52,7 +62,6 @@
 
         @stack('modals')
         @stack('scripts')
-
         @livewireScripts
     </body>
 </html>
