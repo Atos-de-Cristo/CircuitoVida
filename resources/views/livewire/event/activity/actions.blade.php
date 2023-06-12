@@ -1,7 +1,7 @@
 <div>
     @empty($activityId)
         <button wire:click.prevent="$set('isOpenActivity', true)" class="btn-primary text-xs ml-2">
-            <img src="{{ asset('svg/add.svg') }}" alt="Ícone">
+            <img class="w-4 h-4" src="{{ asset('svg/adds.svg') }}" alt="Ícone">
         </button>
     @else
         <button wire:click.prevent="$set('isOpenActivity', true)" class="mr-2">
