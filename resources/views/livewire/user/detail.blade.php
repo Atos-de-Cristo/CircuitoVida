@@ -2,7 +2,7 @@
     <h1 class="text-xl font-bold mb-4 sm:mb-0">Lista de Inscrições</h1>
     <div class="card-white">
         <div class="flex flex-wrap m-0 bg-gray-50 rounded">
-            @forelse ($user->inscriptions as $inscription)
+            @forelse ($this->user->inscriptions as $inscription)
                 <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4">
                     <div class="bg-white overflow-hidden shadow rounded-lg flex flex-col h-full">
                         <div class="flex-grow p-4 flex flex-col items-center justify-center">
@@ -15,6 +15,7 @@
                                 <h3 class="text-lg font-medium text-gray-900">{{ $inscription->event->name }}</h3>
                                 <p class="text-sm text-gray-500">Status: {{ getStatusInscription($inscription->status) }}</p>
                                 <p class="text-sm text-gray-500">Frequencia: {{ $inscription->frequencies->count() }} / {{ $inscription->event->lessons->count() }}</p>
+                                <p class="text-sm text-gray-500">Atividades: {{ $this->activity[$inscription->event_id] }}</p>
                             </div>
                         </div>
                     </div>
