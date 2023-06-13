@@ -1,4 +1,14 @@
 <div>
+    @if (session()->has('message'))
+    <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3"
+        role="alert" x-data="{ showMessage: true }" x-show="showMessage" x-init="setTimeout(() => { showMessage = false; }, 4000)">
+        <div class="flex">
+            <div>
+                <p class="text-sm">{{ session('message') }}</p>
+            </div>
+        </div>
+    </div>
+@endif
     <div class="flex flex-col md:flex-row items-center justify-between mb-2">
         <div class="flex items-center mb-2 md:mb-0">
 
@@ -13,16 +23,7 @@
             </ol>
         </div>
     </div>
-    @if (session()->has('message'))
-        <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3"
-            role="alert" x-data="{ showMessage: true }" x-show="showMessage" x-init="setTimeout(() => { showMessage = false; }, 4000)">
-            <div class="flex">
-                <div>
-                    <p class="text-sm">{{ session('message') }}</p>
-                </div>
-            </div>
-        </div>
-    @endif
+
     @can('admin')
         <form class="">
             <div class="bg-white shadow-xl rounded-md">
@@ -114,10 +115,11 @@
                             @can('admin')
                                 <div class="flex flex-row">
                                     <button wire:click.prevent="edit({{ $question->id }})" class="mr-2">
-                                        <img src="{{ asset('svg/edit.svg') }}" alt="Ícone">
+                                        <x-svg.edit/>
+
                                     </button>
                                     <button wire:click.prevent="dell({{ $question->id }})">
-                                        <img src="{{ asset('svg/delete.svg') }}" alt="Ícone">
+                                        <x-svg.delete/>
                                     </button>
                                 </div>
                             @endcan
