@@ -50,7 +50,7 @@
 
                     <div class="mb-4">
                         <label for="title" class="block">Título:</label>
-                        <input wire:model="title" type="text" id="title" name="title"
+                        <input wire:model.lazy="title" type="text" id="title" name="title"
                             class="w-full px-4 py-2 border border-gray-300 rounded">
                         @error('title')
                             <span class="text-red-500">{{ $message }}</span>
@@ -63,7 +63,7 @@
                             @if (!is_null($options))
                                 @foreach ($options as $index => $option)
                                     <div class="flex items-center mb-2">
-                                        <input wire:model="options.{{ $index }}.text" type="text"
+                                        <input wire:model.lazy="options.{{ $index }}.text" type="text"
                                             class="w-full px-4 py-2 border border-gray-300 rounded">
                                         <label class="ml-2">
                                             <input wire:model="options.{{ $index }}.correct" type="checkbox"
@@ -126,7 +126,7 @@
                             @if ($question->response)
                                 {{ $question->response }}
                             @else
-                                <input type="text" wire:model="answers.{{ $question->id }}"
+                                <input type="text" wire:model.lazy="answers.{{ $question->id }}"
                                     class="w-full px-4 py-2 border border-gray-300 rounded" placeholder="Sua resposta">
                                 @error("answers.{$question->id}")
                                     <span class="text-red-500">{{ $message }}</span>

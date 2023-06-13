@@ -35,7 +35,7 @@
                                         <div class="mb-4">
                                             <label for="campTitle"
                                                 class="block text-gray-700 text-sm font-bold mb-2">Titulo:</label>
-                                            <input type="text" wire:model="title" id="campTitle"
+                                            <input type="text" wire:model.lazy="title" id="campTitle"
                                                 placeholder="Entre com o titulo"
                                                 class="shadow appearance-none border rounded w-full sm:w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                             @error('title')
@@ -48,7 +48,7 @@
                                                 class="block text-gray-700 text-sm font-bold mb-2">Descrição:</label>
                                             <textarea
                                                 class="shadow appearance-none border rounded w-full sm:w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                id="campDescription" wire:model="description" placeholder="Informe a descrição" rows="5"></textarea>
+                                                id="campDescription" wire:model.lazy="description" placeholder="Informe a descrição" rows="5"></textarea>
                                             @error('description')
                                                 <span class="text-red-500">{{ $message }}</span>
                                             @enderror

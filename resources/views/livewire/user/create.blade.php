@@ -24,7 +24,7 @@
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="campName"
                             placeholder="Entre com um nome"
-                            wire:model="name"
+                            wire:model.lazy="name"
                         >
                         @error('name') <span class="text-red-500">{{ $message }}</span>@enderror
                     </div>
@@ -35,7 +35,7 @@
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="campEmail"
                             placeholder="Entre com um email"
-                            wire:model="email"
+                            wire:model.lazy="email"
                         >
                         @error('email') <span class="text-red-500">{{ $message }}</span>@enderror
                     </div>
@@ -46,7 +46,7 @@
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="campPasword"
                             placeholder="Entre com uma senha"
-                            wire:model="password"
+                            wire:model.lazy="password"
                         >
                         @error('password') <span class="text-red-500">{{ $message }}</span>@enderror
                     </div>

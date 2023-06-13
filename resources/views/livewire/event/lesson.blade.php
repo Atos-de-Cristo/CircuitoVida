@@ -35,7 +35,7 @@
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     id="campTitle"
                                     placeholder="Entre com um nome"
-                                    wire:model="title"
+                                    wire:model.lazy="title"
                                 >
                                 @error('title')
                                     <span class="text-red-500">{{ $message }}</span>
@@ -58,7 +58,7 @@
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     id="campTitle"
                                     placeholder="Entre com o ID do youtube"
-                                    wire:model="video"
+                                    wire:model.lazy="video"
                                 >
                                 @error('video')
                                     <span class="text-red-500">{{ $message }}</span>
@@ -69,7 +69,7 @@
                                 <label for="campData" class="block text-gray-700 text-sm font-bold mb-2">Data</label>
                                 <input type="datetime-local"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="campData" placeholder="Informe a data de início" wire:model="date">
+                                    id="campData" placeholder="Informe a data de início" wire:model.lazy="date">
                                 @error('date')
                                     <span class="text-red-500">{{ $message }}</span>
                                 @enderror

@@ -46,7 +46,7 @@
                                 <label for="campName" class="block text-gray-700 text-sm font-bold mb-2">Nome:</label>
                                 <input type="text"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="campName" placeholder="Entre com um nome" wire:model="name">
+                                    id="campName" placeholder="Entre com um nome" wire:model.lazy="name">
                                 @error('name')
                                     <span class="text-red-500">{{ $message }}</span>
                                 @enderror
@@ -56,7 +56,7 @@
                                     Início</label>
                                 <input type="datetime-local"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="campDataStart" placeholder="Informe a data de início" wire:model="start_date">
+                                    id="campDataStart" placeholder="Informe a data de início" wire:model.lazy="start_date">
                                 @error('start_date')
                                     <span class="text-red-500">{{ $message }}</span>
                                 @enderror
@@ -66,7 +66,7 @@
                                     Término:</label>
                                 <input type="datetime-local"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="campDataEnd" placeholder="Informe a data de término" wire:model="end_date">
+                                    id="campDataEnd" placeholder="Informe a data de término" wire:model.lazy="end_date">
                                 @error('end_date')
                                     <span class="text-red-500">{{ $message }}</span>
                                 @enderror
@@ -75,7 +75,7 @@
                                 <label for="campLocal" class="block text-gray-700 text-sm font-bold mb-2">Local:</label>
                                 <input type="text"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="campLocal" placeholder="Informe o local" wire:model="local">
+                                    id="campLocal" placeholder="Informe o local" wire:model.lazy="local">
                                 @error('local')
                                     <span class="text-red-500">{{ $message }}</span>
                                 @enderror
@@ -104,7 +104,7 @@
                                     class="block text-gray-700 text-sm font-bold mb-2">Vagas:</label>
                                 <input type="number"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="campTickets" placeholder="Limite de vagas" wire:model="tickets_limit">
+                                    id="campTickets" placeholder="Limite de vagas" wire:model.lazy="tickets_limit">
                                 @error('tickets_limit')
                                     <span class="text-red-500">{{ $message }}</span>
                                 @enderror
@@ -113,7 +113,7 @@
                                 <label for="campValue" class="block text-gray-700 text-sm font-bold mb-2">Valor:</label>
                                 <input type="number"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="campValue" placeholder="Informe o valor" wire:model="value">
+                                    id="campValue" placeholder="Informe o valor" wire:model.lazy="value">
                                 @error('value')
                                     <span class="text-red-500">{{ $message }}</span>
                                 @enderror
@@ -123,7 +123,7 @@
                                     class="block text-gray-700 text-sm font-bold mb-2">Descrição:</label>
                                 <textarea
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="campDescription" wire:model="description" placeholder="Informe a descrição" rows="5"></textarea>
+                                    id="campDescription" wire:model.lazy="description" placeholder="Informe a descrição" rows="5"></textarea>
                                 @error('description')
                                     <span class="text-red-500">{{ $message }}</span>
                                 @enderror

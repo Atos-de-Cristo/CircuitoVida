@@ -49,7 +49,7 @@
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         id="campName"
                                         placeholder="Entre com o nome"
-                                        wire:model="name"
+                                        wire:model.lazy="name"
                                     >
                                     @error('name')
                                         <span class="text-red-500">{{ $message }}</span>
