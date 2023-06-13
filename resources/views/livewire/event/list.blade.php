@@ -62,48 +62,46 @@
 
         <div class="flex flex-wrap m-0 bg-gray-50 rounded">
             @foreach ($dataAll as $data)
-                <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 ">
-                    <div class="bg-white overflow-hidden shadow rounded-lg flex flex-col h-full">
-                        <div class="flex-shrink-0">
-                            @if ($data->image)
-                                <img src="{{ asset($data->image) }}" alt="Logo Evento {{ $data->name }}"
-                                    class="hover:scale-125 h-52 w-full object-cover rounded-t-lg cursor-pointer"
-                                    wire:click="manager({{ $data->id }})">
-                            @else
-                                <img src="{{ asset('images/curso.png') }}" alt="Logo"
-                                    class="hover:scale-125 h-52 w-full bg-slate-500 rounded-t-lg cursor-pointer"
-                                    wire:click="manager({{ $data->id }})">
-                            @endif
+            <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4">
+                <div class="bg-white overflow-hidden shadow rounded-lg flex flex-col h-full">
+                    <div class="flex-shrink-0">
+                        @if ($data->image)
+                            <img src="{{ asset($data->image) }}" alt="Logo Evento {{ $data->name }}"
+                                class="hover:scale-125 h-52 w-full object-cover rounded-t-lg cursor-pointer"
+                                wire:click="manager({{ $data->id }})">
+                        @else
+                            <img src="{{ asset('images/curso.png') }}" alt="Logo"
+                                class="hover:scale-125 h-52 w-full bg-slate-500 rounded-t-lg cursor-pointer"
+                                wire:click="manager({{ $data->id }})">
+                        @endif
+                    </div>
+                    <div class="flex-grow p-4 flex flex-col justify-between">
+                        <div class="mb-4">
+                            <h3 class="text-lg font-medium text-gray-900">{{ $data->name }}</h3>
+                            <p class="text-sm text-gray-500">{{ getTypeEvent($data->type) }}</p>
+                            <p class="text-sm text-gray-500">{{ getStatusEvent($data->status) }}</p>
                         </div>
-                        <div class="flex-grow p-4 flex flex-col justify-between">
-                            <div class="mb-4">
-                                <h3 class="text-lg font-medium text-gray-900">{{ $data->name }}</h3>
-                                <p class="text-sm text-gray-500">{{ getTypeEvent($data->type) }}</p>
-                                <p class="text-sm text-gray-500">{{ getStatusEvent($data->status) }}</p>
+                        <div>
+                            <hr class="my-2 border-gray-300">
+                            <div class="flex justify-center space-x-4">
+                                <button wire:click.prevent="manager({{ $data->id }})"
+                                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">
+                                    Ver
+                                </button>
+                                <button wire:click.prevent="edit({{ $data->id }})"
+                                    class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded w-full">
+                                    Editar
+                                </button>
+                                <button wire:click.prevent="delete({{ $data->id }})"
+                                    class="bg-red-500 hover:bg-red-700 text-white  font-bold py-2 px-4 rounded w-full">
+                                    Deletar
+                                </button>
                             </div>
-                            <div>
-                                <hr class="my-2 border-gray-300">
-                                <div class="flex justify-center space-x-4">
-
-                                    <button wire:click.prevent="manager({{ $data->id }})"
-                                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full ">
-                                        Ver
-                                    </button>
-
-                                    <button wire:click.prevent="edit({{ $data->id }})"
-                                        class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded w-full">
-                                        Editar
-                                    </button>
-                                    <button wire:click.prevent="delete({{ $data->id }})"
-                                        class="bg-red-500 hover:bg-red-700 text-white  font-bold py-2 px-4 rounded w-full">
-                                        Deletar
-                                    </button>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                 </div>
+            </div>
+
             @endforeach
         </div>
 
