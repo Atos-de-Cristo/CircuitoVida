@@ -16,6 +16,7 @@
             <a class="block" href="{{ route('dashboard') }}">
                 <img src="{{ asset('images/logo.png') }}" class="w-25" />
             </a>
+
         </div>
 
         <div class="space-y-8">

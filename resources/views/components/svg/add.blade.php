@@ -1,8 +1,6 @@
-@props(['size' => 'h-5 w-5', 'color' => 'fill-current text-gray-400 '])
+@props(['size' => 'h-5 w-5', 'color' => 'fill-current text-white '])
 
-<svg {{ $attributes->merge(['class' => $size]) }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-    fill="currentColor">
-    <path {{ $attributes->merge(['class' => $color]) }}
-        d="M11 2a1 1 0 01.993.883L12 3v4h4a1 1 0 01.117 1.993L16 9h-4v4a1 1 0 01-1.993.117L10 13V9H6a1 1 0 01-.117-1.993L6 7h4V3a1 1 0 011-1z"
-        clip-rule="evenodd" />
+<svg {{ $attributes->merge(['class' => $size]) }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path {{ $attributes->merge(['class' => $color]) }} d="M12 5v14M5 12h14" />
 </svg>

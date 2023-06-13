@@ -22,9 +22,9 @@
             }
         </script>
     </head>
-    <body class="font-inter antialiased bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400">
+    <body class="font-inter antialiased bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-200">
 
-        <main >
+
 
             <!-- Content -->
             <div class="w-full">
@@ -39,8 +39,8 @@
 
             </div>
 
-            </div>
 
-        </main>
+
+
     </body>
 </html>
