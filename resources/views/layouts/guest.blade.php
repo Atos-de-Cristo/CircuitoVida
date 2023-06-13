@@ -8,15 +8,39 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css','resources/css/buttons.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script>
+            if (localStorage.getItem('dark-mode') === 'false' || !('dark-mode' in localStorage)) {
+                document.querySelector('html').classList.remove('dark');
+                document.querySelector('html').style.colorScheme = 'light';
+            } else {
+                document.querySelector('html').classList.add('dark');
+                document.querySelector('html').style.colorScheme = 'dark';
+            }
+        </script>
     </head>
-    <body>
-        <div class="font-sans text-gray-900 dark:text-gray-100 antialiased">
-            {{ $slot }}
-        </div>
+    <body class="font-inter antialiased bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400">
+
+        <main >
+
+            <!-- Content -->
+            <div class="w-full">
+
+                <div class="min-h-screen h-full">
+
+                    <div class="w-full max-w-3xl mx-auto px-4 py-8">
+                        {{ $slot }}
+                    </div>
+
+                </div>
+
+            </div>
+
+            </div>
+
+        </main>
     </body>
 </html>
