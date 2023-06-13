@@ -51,9 +51,10 @@
         @endcan
     </div>
 
+
     <div class="flex flex-wrap m-0  rounded-md">
         @foreach ($dataAll as $data)
-        <div class="w-full md:w-1/2 lg:w-1/2 xl:w-1/3 p-4">
+        <div class="w-full md:w-1/2 lg:w-1/2 xl:w-1/4 p-4">
             <div class="bg-gray-100 dark:bg-slate-600 overflow-hidden shadow rounded-lg flex flex-col h-full">
                 <div class="flex-grow p-4 flex flex-col items-center justify-center">
                     <div class="w-16 h-16 rounded-full overflow-hidden">
@@ -76,9 +77,11 @@
                     </div>
                     <div>
                         <hr class="my-2 border-gray-300">
-                        <div class="flex justify-center space-x-4">
-                            <a href="{{ route('userDetails', ['id' => $data->id]) }}"
-                                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">Ver</a>
+                        <div class="flex justify-center md:space-x-4 md:space-y-0 space-y-4 flex-col md:flex-row">
+                            <button wire:click.prevent="manager({{ $data->id }})"
+                                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">
+                                Ver
+                            </button>
                             <button wire:click.prevent="edit({{ $data->id }})"
                                 class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded w-full">
                                 Editar
@@ -88,6 +91,7 @@
                                 Deletar
                             </button>
                         </div>
+
                     </div>
                 </div>
             </div>

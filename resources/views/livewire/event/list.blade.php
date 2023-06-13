@@ -51,7 +51,7 @@
 
         <div class="flex flex-wrap m-0  rounded-md">
             @foreach ($dataAll as $data)
-            <div class="w-full md:w-1/2 lg:w-1/2 xl:w-1/3 p-4">
+            <div class="w-full md:w-1/2 lg:w-1/2 xl:w-1/4 p-4">
                 <div class="bg-gray-100 dark:bg-slate-600 overflow-hidden shadow rounded-lg flex flex-col h-full">
                     <div class="flex-shrink-0">
                         @if ($data->image)
