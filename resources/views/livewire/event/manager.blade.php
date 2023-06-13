@@ -13,8 +13,9 @@
 
     <div class="flex flex-col md:flex-row items-center justify-between mb-2">
         <div class="flex items-center mb-2 md:mb-0">
-            <img src="{{ asset('svg/board.svg') }}" alt="Ícone" class="w-8 h-8">
-            <div class="ml-2 text-3xl font-bold">
+            <x-svg.board />
+
+            <div class="ml-2 text-xl font-bold">
                 {{ $event->name }}
             </div>
         </div>
@@ -34,7 +35,7 @@
         <div class="flex flex-col sm:flex-row justify-between items-center">
             <div>
                 <div class="font-bold mb-4 flex items-center">
-                    <img src="{{ asset('svg/teacher.svg') }}" alt="Ícone">
+                    <x-svg.teacher size="h-5 w-5" />
                     <span class="ml-2 font-bold">Monitores</span>
                 </div>
                 <div class="flex flex-col items-center sm:flex-row">
@@ -54,11 +55,11 @@
             @can('admin')
                 <div class="mt-2 sm:mt-0 flex space-x-2">
                     <button wire:click.prevent="createModule()" class="btn-primary">
-                        <img src="{{ asset('svg/pasta-add.svg') }}" alt="Ícone">
+                        <x-svg.pasta-add size="h-5 w-5" color="fill-current text-white "/>
                         <span class="ml-2">Módulos</span>
                     </button>
                     <button wire:click.prevent="openModalMonitors()" class="btn-primary">
-                        <img src="{{ asset('svg/users-group.svg') }}" alt="Ícone">
+                        <x-svg.users-group size="h-5 w-5" color="fill-current text-white "/>
                         <span class="ml-2">Monitores</span>
                     </button>
                 </div>
@@ -68,7 +69,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div class="sm:col-span-2 md:col-span-2">
             <div class="text-xl font-bold mb-4 flex items-center">
-                <img src="{{ asset('svg/module.svg') }}" alt="Ícone">
+                <x-svg.module size="h-8 w-8"/>
                 <span class="ml-2">MODULOS</span>
             </div>
             @forelse ($event->modules as $module)
@@ -81,11 +82,11 @@
                             <div class="flex items-center space-x-2">
                                 @can('admin')
                                     <button wire:click.prevent="editModule({{ $module->id }})" class="mr-2">
-                                        <img src="{{ asset('svg/edit.svg') }}" alt="Ícone">
+                                        <x-svg.edit/>
                                     </button>
                                     <button wire:click.prevent="deleteItem({{ $module->id }})" class="mr-5"
                                         @click.stop>
-                                        <img src="{{ asset('svg/delete.svg') }}" alt="Ícone">
+                                        <x-svg.delete/>
                                     </button>
                                 @endcan
                                 <div class="border-r border-gray-400 h-4"></div>
@@ -110,22 +111,19 @@
                             <h3 class="font-bold text-black dark:text-white mr-2">Título da Aula</h3>
                             <button wire:click.prevent="openModalLesson({{ $module->id }}, null)"
                                 class="btn-primary text-xs flex items-center">
-                                <svg class="w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                    fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M11 2a1 1 0 01.993.883L12 3v4h4a1 1 0 01.117 1.993L16 9h-4v4a1 1 0 01-1.993.117L10 13V9H6a1 1 0 01-.117-1.993L6 7h4V3a1 1 0 011-1z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                                <span>Aula</span>
-                            </button>
+                            <div class="flex items-center justify-center">
+                                <x-svg.add color="text-white"/>
+                                <span class="ml-1">Aula</span>
+                            </div>
+                        </button>
+
                         </div>
                         <div class="border-t border-gray-200 pb-2">
                             @forelse ($module->lessons as $lesson)
                                 <div class="border-t border-gray-200 pb-2 py-2 flex items-center justify-between">
                                     <div class="flex items-center">
-                                        <img src="{{ asset('svg/play-lesson.svg') }}" alt="Ícone"
-                                            class="text-red-500">
-                                        <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
+                                        <x-svg.play-lesson size="h-5 w-5" />
+                                         <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
                                             class="font-bold text-md text-blue-500 hover:underline  ml-2">{{ $lesson->title }}</a>
                                     </div>
                                     @can('admin')
@@ -133,10 +131,12 @@
                                             <button
                                                 wire:click.prevent="openModalLesson({{ $module->id }}, {{ $lesson->id }})"
                                                 class="mr-5">
-                                                <img src="{{ asset('svg/edit.svg') }}" alt="Ícone">
+                                                <x-svg.edit/>
+
                                             </button>
                                             <button wire:click.prevent="dellLesson({{ $lesson->id }})">
-                                                <img src="{{ asset('svg/delete.svg') }}" alt="Ícone">
+                                                <x-svg.delete/>
+
                                             </button>
                                         </div>
                                     @endcan
@@ -155,15 +155,7 @@
         </div>
         <div class="sm:col-span-2 md:col-span-1">
             <div class="text-xl font-bold mb-4 flex items-center">
-                <svg class="w-8 h-8" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
-                    <path class="fill-current text-slate-600 dark:text-slate-200"
-                        d="M505.837,180.418L279.265,76.124c-7.349-3.385-15.177-5.093-23.265-5.093c-8.088,0-15.914,1.708-23.265,5.093 L6.163,180.418C2.418,182.149,0,185.922,0,190.045s2.418,7.896,6.163,9.627l226.572,104.294c7.349,3.385,15.177,5.101,23.265,5.101 c8.088,0,15.916-1.716,23.267-5.101l178.812-82.306v82.881c-7.096,0.8-12.63,6.84-12.63,14.138c0,6.359,4.208,11.864,10.206,13.618 l-12.092,79.791h55.676l-12.09-79.791c5.996-1.754,10.204-7.259,10.204-13.618c0-7.298-5.534-13.338-12.63-14.138v-95.148 l21.116-9.721c3.744-1.731,6.163-5.504,6.163-9.627S509.582,182.149,505.837,180.418z">
-                    </path>
-                    <path class="fill-current text-slate-600 dark:text-slate-200"
-                        d="M256,346.831c-11.246,0-22.143-2.391-32.386-7.104L112.793,288.71v101.638 c0,22.314,67.426,50.621,143.207,50.621c75.782,0,143.209-28.308,143.209-50.621V288.71l-110.827,51.017 C278.145,344.44,267.25,346.831,256,346.831z">
-                    </path>
-                </svg>
+                <x-svg.student/>
                 <span class="ml-2">ALUNOS</span>
             </div>
             <div class="card-white">

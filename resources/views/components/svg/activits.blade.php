@@ -1,0 +1,11 @@
+@props(['size' => 'h-8 w-8', 'color' => 'fill-current text-slate-600 dark:text-slate-200'])
+<svg {{ $attributes->merge(['class' => $size]) }} viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+    <path {{ $attributes->merge(['class' => $color]) }} d="M20,29H36a2,2,0,0,0,0-4H20a2,2,0,0,0,0,4Z"></path>
+    <path {{ $attributes->merge(['class' => $color]) }} d="M20,22H36a2,2,0,0,0,0-4H20a2,2,0,0,0,0,4Z"></path>
+    <path {{ $attributes->merge(['class' => $color]) }} d="M20,36H36a2,2,0,0,0,0-4H20a2,2,0,0,0,0,4Z"></path>
+    <circle cx="12" cy="27" r="2"></circle>
+    <circle cx="12" cy="34" r="2"></circle>
+    <path {{ $attributes->merge(['class' => $color]) }}
+        d="M44,4H4A2,2,0,0,0,2,6V42a2,2,0,0,0,2,2H44a2,2,0,0,0,2-2V6A2,2,0,0,0,44,4ZM42,40H6V14H42Zm0-30H6V8H42Z">
+    </path>
+</svg>
