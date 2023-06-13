@@ -14,9 +14,11 @@ class QuestionService
         $this->repository = new Question();
     }
 
-    public function getAll(string $activityId): Collection
+    public function getAll(string $activityId, string | null $userId = null): Collection
     {
-        $userId = Auth::user()->id;
+        if ($userId == null) {
+            $userId = Auth::user()->id;
+        }
 
         return $this->repository
             ->with('activity')

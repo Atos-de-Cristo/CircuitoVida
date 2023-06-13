@@ -20,9 +20,18 @@ class UserDetail extends Component
         $this->userId = $request->id;
     }
 
+    public function getUserProperty()
+    {
+        return $this->service->find($this->userId);
+    }
+
     public function render()
     {
-        $user = $this->service->find($this->userId);
-        return view('livewire.user.detail', compact('user'));
+        return view('livewire.user.detail');
+    }
+
+    public function getActivityProperty()
+    {
+        return $this->service->resumeActivity($this->userId);
     }
 }

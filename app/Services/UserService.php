@@ -68,4 +68,29 @@ class UserService
         $repo = $this->find($id);
         $repo->delete();
     }
+
+    public function resumeActivity(string $id)
+    {
+        $ret = [];
+        $user = $this->find($id);
+        $questionService = new QuestionService;
+        foreach ($user->inscriptions as $inscription) {
+            $lessons = $inscription->event->lessons;
+            $activityCount = 0;
+            $responseCount = 0;
+            foreach ($lessons as $lesson) {
+                $activityCount += $lesson->activities->count();
+
+                $activities = $lesson->activities;
+                foreach ($activities as $activity) {
+                    $questionData = $questionService->getAll($activity->id, $user->id);
+                    if (isset($questionData[0]['response'])) {
+                        $responseCount++;
+                    }
+                }
+            }
+            $ret[$inscription->event_id] = $responseCount.'/'.$activityCount;
+        }
+        return $ret;
+    }
 }
