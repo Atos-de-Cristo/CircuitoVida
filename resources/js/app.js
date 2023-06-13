@@ -45,16 +45,5 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // Toggle SVG color based on dark mode
-    const svgContainer = document.getElementById('mySvgContainer');
-    const svgPath = document.getElementById('mySvgPath');
 
-    function toggleDarkMode() {
-      const isDarkMode = localStorage.getItem('dark-mode') === 'true';
-      svgContainer.classList.toggle('dark', isDarkMode);
-      svgPath.style.fill = isDarkMode ? '#000000' : '#FFFFFF';
-    }
-
-    // Call the function when the page loads or when dark mode is toggled
-    toggleDarkMode();
   });
