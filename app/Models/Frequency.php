@@ -30,4 +30,9 @@ class Frequency extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function inscription(): BelongsTo
+    {
+        return $this->belongsTo(Inscription::class);
+    }
 }

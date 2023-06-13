@@ -17,6 +17,7 @@ class EventService
     {
         return $this->repository->with('inscriptions')->where($filter)->get();
     }
+
     public function paginate($search, $sortBy, $sortDirection): LengthAwarePaginator
     {
         return $this->repository

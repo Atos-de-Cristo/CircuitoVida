@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire;
 
-use App\Services\EventService;
 use App\Services\FrequencyService;
+use App\Services\InscriptionService;
 use Livewire\Component;
 
 class EventFrequency extends Component
@@ -18,10 +18,10 @@ class EventFrequency extends Component
         $this->users = [];
     }
 
-    public function render(EventService $eventService)
+    public function render(InscriptionService $inscriptionService)
     {
-        $event = $eventService->find($this->eventId);
-        return view('livewire.event.frequency.create', compact('event'));
+        $inscriptions = $inscriptionService->getFrequency($this->eventId, $this->lessonId);
+        return view('livewire.event.frequency.create', compact('inscriptions'));
     }
 
     public function closeModalFrequency()

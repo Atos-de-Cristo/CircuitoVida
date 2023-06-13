@@ -19,6 +19,14 @@ class InscriptionService
         return $this->repository->where($filter)->with('event', 'user')->get();
     }
 
+    public function getFrequency(string $eventId, string $lessonId): Collection
+    {
+        return $this->repository
+            ->with('event', 'user', 'frequencies')
+            ->where('inscriptions.event_id', $eventId)
+            ->get();
+    }
+
     public function find(string $id): Inscription
     {
         return $this->repository->find($id);
