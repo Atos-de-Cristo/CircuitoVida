@@ -31,8 +31,12 @@ class EventMonitors extends Component
 
     public function storeMonitors(EventService $eventService)
     {
+        $request = [
+            'id' => $this->eventId,
+            'monitors' => $this->monitors
+        ];
 
-        $eventService->update(['monitors' => $this->monitors], $this->eventId);
+        $eventService->store($request);
 
         $this->emit('closeModalMonitors');
     }

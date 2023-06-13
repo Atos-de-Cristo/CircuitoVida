@@ -30,16 +30,24 @@ class EventService
         return $this->repository->with('inscriptions')->with('modules')->with('lessons')->find($id);
     }
 
-    public function create(array $data): Event
+    public function store(array $data): Event | bool
+    {
+        if (isset($data['id']) && !empty($data['id'])) {
+            return $this->update($data, $data['id']);
+        }
+        return $this->create($data);
+    }
+
+    private function create(array $data): Event
     {
         $create = $this->repository->updateOrCreate($data);
-        if ($data['monitors']) {
+        if (isset($data['monitors'])) {
             $create->users()->sync($data['monitors']);
         }
         return $create;
     }
 
-    public function update(array $data, int $id): bool
+    private function update(array $data, int $id): bool
     {
         $repo = $this->find($id);
         if (isset($data['monitors'])) {

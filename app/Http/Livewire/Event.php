@@ -92,8 +92,7 @@ class Event extends Component
             'description' => $this->description,
             'tickets_limit' => $this->tickets_limit,
             'value' => $this->value,
-            'status' => $this->status,
-            'monitors' => $this->monitors
+            'status' => $this->status
         ];
 
         if ($this->newImage) {
@@ -101,11 +100,7 @@ class Event extends Component
             $request['image'] = Storage::url($imgName);
         }
 
-        if ($this->_id) {
-            $service->update($request, $this->_id);
-        }else{
-            $service->create($request);
-        }
+        $service->store($request);
 
         session()->flash('message',
             $this->_id ? 'Evento editado com sucesso.' : 'Evento cadastrado com sucesso.');
