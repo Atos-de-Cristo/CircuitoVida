@@ -44,7 +44,7 @@ class UserService
 
     public function find(string $id): User
     {
-        return $this->repository->find($id);
+        return $this->repository->with('inscriptions')->find($id);
     }
 
     public function create(array $data): User

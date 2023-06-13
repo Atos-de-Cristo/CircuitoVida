@@ -22,7 +22,7 @@ class UserDetail extends Component
 
     public function render()
     {
-        dump($this->userId);
-        return view('livewire.user.detail');
+        $user = $this->service->find($this->userId);
+        return view('livewire.user.detail', compact('user'));
     }
 }
