@@ -49,10 +49,10 @@
             @endcan
         </div>
 
-        <div class="flex flex-wrap m-0 bg-gray-50 dark:bg-slate-600 rounded-md">
+        <div class="flex flex-wrap m-0  rounded-md">
             @foreach ($dataAll as $data)
             <div class="w-full md:w-1/2 lg:w-1/2 xl:w-1/3 p-4">
-                <div class="bg-white overflow-hidden shadow rounded-lg flex flex-col h-full">
+                <div class="bg-gray-100 dark:bg-slate-600 overflow-hidden shadow rounded-lg flex flex-col h-full">
                     <div class="flex-shrink-0">
                         @if ($data->image)
                             <img src="{{ asset($data->image) }}" alt="Logo Evento {{ $data->name }}"
@@ -66,9 +66,9 @@
                     </div>
                     <div class="flex-grow p-4 flex flex-col justify-between">
                         <div class="mb-4">
-                            <h3 class="text-lg font-medium text-gray-900">{{ $data->name }}</h3>
-                            <p class="text-sm text-gray-500">{{ getTypeEvent($data->type) }}</p>
-                            <p class="text-sm text-gray-500">{{ getStatusEvent($data->status) }}</p>
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">{{ $data->name }}</h3>
+                            <p class="text-sm text-gray-500 dark:text-white">{{ getTypeEvent($data->type) }}</p>
+                            <p class="text-sm text-gray-500 dark:text-white">{{ getStatusEvent($data->status) }}</p>
                         </div>
                         <div>
                             <hr class="my-2 border-gray-300">
