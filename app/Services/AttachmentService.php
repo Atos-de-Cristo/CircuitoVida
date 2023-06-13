@@ -25,7 +25,7 @@ class AttachmentService
 
     public function store(array $data): Attachment | bool
     {
-        if (isset($data['id'])) {
+        if (isset($data['id']) && !empty($data['id'])) {
             return $this->update($data, $data['id']);
         }
         return $this->create($data);

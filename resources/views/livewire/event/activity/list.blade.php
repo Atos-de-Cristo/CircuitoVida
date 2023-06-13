@@ -1,5 +1,5 @@
 <div>
-    @foreach ($activities as $activity)
+    @forelse ($activities as $activity)
         <div class="flex items-center justify-between">
             <div class="flex justify-start items-baseline">
              <x-svg.activity/>
@@ -17,5 +17,7 @@
                 @endcan
             </div>
         </div>
-    @endforeach
+    @empty
+        <span class="text-red-500">Nenhuma atividade cadastrada</span>
+    @endforelse
 </div>
