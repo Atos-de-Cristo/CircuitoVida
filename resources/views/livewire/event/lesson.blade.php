@@ -9,44 +9,47 @@
     </x-slot>
 
     <x-slot name="content">
-
-                <div class="flex flex-col">
-                    <div class="mb-4">
-                        <label for="campTitle" class="label-input-form">Tema:</label>
-                        <input type="text"  class="input-form" id="campTitle" placeholder="Entre com um nome" wire:model.lazy="title">
-                        @error('title')
-                        <span class="text-red-500">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="campDescription" class="label-input-form">Descrição:</label>
-                        <textarea class="input-form" id="campDescription" wire:model="description" placeholder="Informe a descrição" rows="5"></textarea>
-                        @error('description')
-                        <span class="text-red-500">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="campTitle" class="label-input-form">Video:</label>
-                        <input type="text"  class="input-form" id="campTitle" placeholder="Entre com o ID do youtube" wire:model.lazy="video">
-                        @error('video')
-                        <span class="text-red-500">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="campData" class="label-input-form">Data</label>
-                        <input type="datetime-local"  class="input-form" id="campData" placeholder="Informe a data de início" wire:model.lazy="date">
-                        @error('date')
-                        <span class="text-red-500">{{ $message }}</span>
-                        @enderror
-                    </div>
+        <form>
+            <div class="flex flex-col">
+                <div class="mb-4">
+                    <label for="campTitle" class="label-input-form">Tema:</label>
+                    <input type="text"  class="input-form" id="campTitle" placeholder="Entre com um nome" wire:model.lazy="title">
+                    @error('title')
+                    <span class="text-red-500">{{ $message }}</span>
+                    @enderror
                 </div>
 
+                <div class="mb-4">
+                    <label for="campDescription" class="label-input-form">Descrição:</label>
+                    <textarea class="input-form" id="campDescription" wire:model="description" placeholder="Informe a descrição" rows="5"></textarea>
+                    @error('description')
+                    <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="mb-4">
+                    <label for="campTitle" class="label-input-form">Video:</label>
+                    <input
+                        type="text"
+                        wire:model="video"
+                        class="input-form"
+                        id="campTitle"
+                        placeholder="Entre com o ID do youtube"
+                    >
+                    @error('video')
+                    <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="mb-4">
+                    <label for="campData" class="label-input-form">Data</label>
+                    <input type="datetime-local"  class="input-form" id="campData" placeholder="Informe a data de início" wire:model.lazy="date">
+                    @error('date')
+                    <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
         </form>
-
-
     </x-slot>
 
     <x-slot name="footer">
@@ -66,6 +69,5 @@
                 Cancelar
             </button>
         </span>
-
     </x-slot>
 </x-dialog-modal>
