@@ -93,4 +93,26 @@ class UserService
         }
         return $ret;
     }
+
+    public function getUsersQuestions(array $questions)
+    {
+        return $this->repository
+            ->whereHas('responses', function (Builder $query) use ($questions) {
+                $query->whereIn('question_id', $questions);
+            })
+            ->with('responses')
+            ->withCount(['responses as respostas_pendente' => function ($query) use ($questions) {
+                $query->whereIn('question_id', $questions);
+                $query->where('status', 'pendente');
+            }])
+            ->withCount(['responses as respostas_correta' => function ($query) use ($questions) {
+                $query->whereIn('question_id', $questions);
+                $query->where('status', 'correto');
+            }])
+            ->withCount(['responses as respostas_errado' => function ($query) use ($questions) {
+                $query->whereIn('question_id', $questions);
+                $query->where('status', 'errado');
+            }])
+            ->get();
+    }
 }
