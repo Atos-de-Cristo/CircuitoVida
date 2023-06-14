@@ -1,5 +1,5 @@
 <div class="p-5">
-    <h1 class="text-3xl font-bold text-gray-900 dark:text-black">Cursos</h1>
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-black ">Cursos</h1>
     <div class="flex flex-wrap gap-4 sm:flex-row lg:flex-row mt-4">
         @forelse ($eventAll as $item)
             <div

@@ -20,7 +20,7 @@
                     <th class="text-left px-2 w-8">#</th>
                     <th>Imagem</th>
                     <th class="text-left px-2 w-32">Tipo</th>
-                    <th class="text-left px-2">Nome</th>
+                    <th class="text-left px-2">Nome a</th>
                     <th class="text-left px-2">Status</th>
                     <th class="text-left px-2"></th>
                 </tr>
