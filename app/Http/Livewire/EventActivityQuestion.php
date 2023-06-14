@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Services\QuestionService;
 use App\Services\ResponseService;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -14,7 +15,7 @@ class EventActivityQuestion extends Component
     public $type = 'aberta';
     public $options = [];
     public $answers = [];
-    private $service, $serviceResponse;
+    private $service, $serviceResponse, $serviceUser;
     public $checkResponse = false;
 
     protected $listeners = [
@@ -25,6 +26,7 @@ class EventActivityQuestion extends Component
     {
         $this->service = new QuestionService;
         $this->serviceResponse = new ResponseService;
+        $this->serviceUser = new UserService;
     }
 
     public function mount(Request $request)
@@ -32,7 +34,7 @@ class EventActivityQuestion extends Component
         $this->atvId = $request->id;
     }
 
-    public function render()
+    public function getQuestionsProperty()
     {
         $questions = $this->service->getAll($this->atvId);
         foreach ($questions as $question) {
@@ -40,7 +42,17 @@ class EventActivityQuestion extends Component
                 $this->checkResponse = true;
             }
         }
-        return view('livewire.event.activity.question', compact('questions'));
+        return $questions;
+    }
+
+    public function getUserQuestionsProperty()
+    {
+        return $this->serviceUser->getUsersQuestions($this->questions->pluck('id')->toArray());
+    }
+
+    public function render()
+    {
+        return view('livewire.event.activity.question');
     }
 
     public function addOption()

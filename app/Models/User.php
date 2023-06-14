@@ -77,6 +77,10 @@ class User extends Authenticatable
         return $this->hasMany(Inscription::class);
     }
 
+    public function responses(): HasMany {
+        return $this->hasMany(Response::class);
+    }
+
     public function givePermissionTo(string $permission): void {
         $p = Permission::getPermission($permission);
         $this->permissions()->attach($p);
