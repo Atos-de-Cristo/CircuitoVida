@@ -50,9 +50,9 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="title" class="block text-gray-700 dark:text-gray-300  text-sm font-bold mb-2">Título:</label>
+                    <label for="title" class="label-input-form">Título:</label>
                     <input wire:model.lazy="title" type="text" id="title" name="title"
-                        class="shadow appearance-none border border-gray-300 rounded w-full  py-2 px-3  text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline">
+                        class="input-form">
                     @error('title')
                         <span class="text-red-500">{{ $message }}</span>
                     @enderror

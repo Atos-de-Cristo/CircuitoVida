@@ -73,7 +73,7 @@
                         <div>
                             <hr class="my-2 border-gray-300">
                             <div class="flex justify-center md:space-x-4 md:space-y-0 space-y-4 flex-col md:flex-row">
-                                <button wire:click.prevent="manager({{ $data->id }})"
+                                <button wire:click.prevent="manager({{ $data->id }})"  x-data="{ open: null }"
                                     class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">
                                     Ver
                                 </button>
