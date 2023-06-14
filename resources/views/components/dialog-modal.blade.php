@@ -14,15 +14,16 @@
             {{ $title }}
         </div>
 
-        <div class="px-6 py-2">
-            <div class=" text-sm text-gray-600 dark:text-gray-400">
+        <div class="px-6 py-4">
+            <div class="mt-4 text-sm text-gray-600 dark:text-gray-400">
                 {{ $content }}
             </div>
         </div>
 
-        <div class="flex flex-row px-6 py-4 bg-gray-100 dark:bg-gray-800 sm:px-6 rounded sm:flex sm:flex-row-reverse">
+        <div class="flex flex-row px-6 py-4 bg-gray-100 dark:bg-gray-800 rounded dark:text-white sm:flex sm:flex-row-reverse">
             {{ $footer }}
         </div>
     </div>
 </x-modal>
+
 

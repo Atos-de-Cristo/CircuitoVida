@@ -66,6 +66,7 @@ class EventManager extends Component
     public function editModule(string $id, ModuleService $service)
     {
         $this->resetInputModule();
+        $this->module_id = $id;
 
         $moduleData = $service->find($id);
 

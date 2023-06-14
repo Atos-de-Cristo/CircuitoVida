@@ -34,7 +34,7 @@
         <div class="font-bold  flex items-center">
             <div class="relative mr-4 flex ">
                 <input wire:model.debounce.300ms="search" wire:ignore placeholder="Buscar usuário..."
-                class="form-input peer h-full rounded-full bg-slate-150 px-4 pl-9 text-xs+ text-slate-800 ring-primary/50 hover:bg-slate-200 focus:ring dark:bg-navy-900/90 dark:text-navy-100 dark:placeholder-navy-300 dark:ring-accent/50 dark:hover:bg-navy-900 dark:focus:bg-navy-900 w-60"
+                class="form-input peer h-full rounded-full bg-slate-150 px-4 pl-9 text-xs+ text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 ring-primary/50 hover:bg-slate-200 focus:ring dark:bg-navy-900/90 dark:text-navy-100 dark:placeholder-navy-300 dark:ring-accent/50 dark:hover:bg-navy-900 dark:focus:bg-navy-900 w-60"
                  type="text"
                >
             <x-svg.search/>
