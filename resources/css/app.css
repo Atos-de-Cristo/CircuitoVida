@@ -11,19 +11,27 @@
     display: none;
 }
 
-.card-white{
-    @apply bg-white dark:bg-slate-700 overflow-hidden shadow-xl sm:rounded-lg px-4 py-4 mt-2 mb-4;
-}
-
 @media screen and (max-width: theme('screens.lg')) {
     [x-cloak="lg"] { display: none; }
 }
 
-.dark-fill {
-    fill: gray;
+
+
+/* Estilos para o card branco */
+.card-white {
+    /* Aplica os estilos para o fundo branco */
+    @apply bg-white dark:bg-slate-700 overflow-hidden shadow-xl sm:rounded-lg px-4 py-4 mt-2 mb-4;
 }
 
-/* Estilos para o tema "não dark" */
-.light-fill {
-    fill: green;
+/* Estilos para o campo de input */
+.input-form {
+    /* Aplica os estilos para a sombra, borda e preenchimento do input */
+    @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 leading-tight focus:outline-none;
 }
+
+/* Estilos para o rótulo do campo de input */
+.label-input-form {
+    /* Aplica os estilos para a cor do texto do rótulo em diferentes temas (claro e escuro) */
+    @apply block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2;
+}
+

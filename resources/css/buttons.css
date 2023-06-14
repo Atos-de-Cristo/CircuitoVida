@@ -1,8 +1,24 @@
-.btn-primary{
+/* Estilos para o botão primário */
+.btn-primary {
+    /* Aplica os estilos para o fundo, cor do texto e demais propriedades do botão primário */
     @apply inline-flex items-center justify-center bg-indigo-900 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full;
-
 }
 
-.btn-secondary{
+/* Estilos para o botão secundário */
+.btn-secondary {
+    /* Aplica os estilos para o fundo, cor do texto e demais propriedades do botão secundário */
     @apply inline-flex items-center justify-center bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-full;
+}
+
+/* Estilos para o botão de envio */
+
+.btn-submit {
+    /* Aplica os estilos para o fundo, cor do texto e demais propriedades do botão de envio */
+    @apply inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:ring-green-700 focus:ring-2 transition ease-in-out duration-150 sm:text-sm sm:leading-5;
+}
+
+/* Estilos para o botão padrão */
+.btn-default {
+    /* Aplica os estilos para o fundo, cor do texto e demais propriedades do botão padrão */
+    @apply inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:ring-blue-300 transition ease-in-out duration-150 sm:text-sm sm:leading-5;
 }
