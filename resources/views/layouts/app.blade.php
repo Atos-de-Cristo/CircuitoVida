@@ -14,7 +14,7 @@
         @livewireStyles
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css','resources/css/buttons.css', 'resources/js/app.js'])
+        @vite(['resources/js/app.js'])
         <script>
             if (localStorage.getItem('dark-mode') === 'false' || !('dark-mode' in localStorage)) {
                 document.querySelector('html').classList.remove('dark');
@@ -59,7 +59,6 @@
             </div>
 
         </div>
-
 
         @livewireScripts
         @stack('modals')

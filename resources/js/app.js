@@ -1,7 +1,8 @@
 import './bootstrap';
+import '../css/app.css';
+import '../css/buttons.css';
 
 import Alpine from 'alpinejs';
-
 
 import focus from '@alpinejs/focus';
 window.Alpine = Alpine;
@@ -9,7 +10,6 @@ window.Alpine = Alpine;
 Alpine.plugin(focus);
 
 Alpine.start();
-
 
 document.addEventListener('DOMContentLoaded', () => {
     // Light switcher
@@ -44,6 +44,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
     }
-
-
   });
