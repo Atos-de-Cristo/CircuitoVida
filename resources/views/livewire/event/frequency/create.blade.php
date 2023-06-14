@@ -10,6 +10,9 @@
                 <div class="flex flex-col w-full">
                     @foreach($inscriptions as $item)
                     <div class="flex items-center justify-between border-b px-2 py-2">
+                        <img class="w-8 h-8 bg-black rounded-full mr-2"
+                        src="{{ asset($item->user->profile_photo_url) }}" width="32" height="32"
+                        alt="{{ $item->user->name }}" />
                         <div class="w-2/3">{{ $item->user->name }}</div>
                         <div class="w-1/3">
                             @if ($item->frequencies->where('user_id', $item->user->id)->where('lesson_id', $lessonId)->count() >= 1)
