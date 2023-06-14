@@ -113,8 +113,8 @@
                             @forelse ($this->questions as $question)
                                 <div
                                     class="mb-4 border border-gray-300  dark:border-gray-700 rounded-md p-4
-                                    {{ $question->response_status == 'correto' ? 'bg-green-100 border-green-300' : '' }}
-                                    {{ $question->response_status == 'errado' ? 'bg-red-100 border-red-300' : '' }}
+                                    {{ $question->response_status == 'correto' ? 'bg-green-100 border-green-300 dark:border-green-700 dark:bg-green-900' : '' }}
+                                    {{ $question->response_status == 'errado' ? 'bg-red-100 border-red-300 dark:border-red-700 dark:bg-red-900': '' }}
                                     {{ $question->response_status == 'pendente' ? 'bg-gray-100 border-gray-300 dark:border-gray-700 dark:bg-gray-900' : '' }}">
                                     <div class="flex flex-row justify-between">
                                         <h3 class="text-lg font-semibold mb-2">{{ $question->title }}</h3>
