@@ -22,17 +22,19 @@ class EventInscription extends Component
     }
 
     public function close(string $id, EventService $service){
-        $service->update([
+        $service->store([
+            'id' => $id,
             'status' => EventStatus::E->name,
-        ], $id);
+        ]);
 
         $this->emit('refreshInscription');
     }
 
     public function open(string $id, EventService $service){
-        $service->update([
+        $service->store([
+            'id' => $id,
             'status' => EventStatus::A->name,
-        ], $id);
+        ]);
 
         $this->emit('refreshInscription');
     }
