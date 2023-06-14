@@ -13,9 +13,9 @@
                 <div class="md:w-1/2 p-1">
                     <div class="mb-4">
                         <label for="campType"
-                            class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Tipo</label>
+                            class="label-input-form">Tipo</label>
                         <select id="campType" wire:model="type"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline">
+                            class="input-form">
                             <option value="">Selecione o tipo</option>
                             @foreach ($typesList as $type)
                             <option value="{{ $type->name }}">{{ $type->value }}</option>
@@ -29,9 +29,9 @@
 
                     <div class="mb-4">
                         <label for="campName"
-                            class="block  text-gray-700 dark:text-gray-300  text-sm font-bold mb-2">Nome:</label>
+                            class="label-input-form">Nome:</label>
                         <input type="text"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline"
+                            class="input-form"
                             id="campName" placeholder="Entre com um nome" wire:model.lazy="name">
                         @error('name')
                         <span class="text-red-500">{{ $message }}</span>
@@ -39,10 +39,10 @@
                     </div>
                     <div class="mb-4">
                         <label for="campDataStart"
-                            class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Data
+                            class="label-input-form">Data
                             Início</label>
                         <input type="datetime-local"
-                            class="shadow appearance-none border rounded w-full py-2 px-3text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline"
+                            class="input-form"
                             id="campDataStart" placeholder="Informe a data de início" wire:model.lazy="start_date">
                         @error('start_date')
                         <span class="text-red-500">{{ $message }}</span>
@@ -50,10 +50,10 @@
                     </div>
                     <div class="mb-4">
                         <label for="campDataEnd"
-                            class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Data
+                            class="label-input-form">Data
                             Término:</label>
                         <input type="datetime-local"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline"
+                            class="input-form"
                             id="campDataEnd" placeholder="Informe a data de término" wire:model.lazy="end_date">
                         @error('end_date')
                         <span class="text-red-500">{{ $message }}</span>
@@ -61,9 +61,9 @@
                     </div>
                     <div class="mb-4">
                         <label for="campLocal"
-                            class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Local:</label>
+                            class="label-input-form">Local:</label>
                         <input type="text"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline"
+                            class="input-form"
                             id="campLocal" placeholder="Informe o local" wire:model.lazy="local">
                         @error('local')
                         <span class="text-red-500">{{ $message }}</span>
@@ -71,9 +71,9 @@
                     </div>
                     <div class="mb-4">
                         <label for="campImg"
-                            class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Imagem</label>
+                            class="label-input-form">Imagem</label>
                         <input type="file" wire:model="newImage"
-                            class="text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300">
+                            class="label-input-form">
                         @error('newImage')
                         <span class="text-red-500">{{ $message }}</span>
                         @enderror
@@ -92,9 +92,9 @@
                 <div class="md:w-1/2 p-1">
                     <div class="mb-4">
                         <label for="campTickets"
-                            class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Vagas:</label>
+                            class="label-input-form">Vagas:</label>
                         <input type="number"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline"
+                            class="input-form"
                             id="campTickets" placeholder="Limite de vagas" wire:model.lazy="tickets_limit">
                         @error('tickets_limit')
                         <span class="text-red-500">{{ $message }}</span>
@@ -102,9 +102,9 @@
                     </div>
                     <div class="mb-4">
                         <label for="campValue"
-                            class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Valor:</label>
+                            class="label-input-form">Valor:</label>
                         <input type="number"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline"
+                            class="input-form"
                             id="campValue" placeholder="Informe o valor" wire:model.lazy="value">
                         @error('value')
                         <span class="text-red-500">{{ $message }}</span>
@@ -112,9 +112,9 @@
                     </div>
                     <div class="mb-2">
                         <label for="campDescription"
-                            class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Descrição:</label>
+                            class="label-input-form">Descrição:</label>
                         <textarea
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline"
+                            class="input-form"
                             id="campDescription" wire:model.lazy="description" placeholder="Informe a descrição"
                             rows="5"></textarea>
                         @error('description')
@@ -124,9 +124,9 @@
 
                     <div class="mb-4">
                         <label for="countries"
-                            class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Status</label>
+                            class="label-input-form">Status</label>
                         <select id="countries" wire:model="status"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline">
+                            class="input-form">
                             <option value="">Selecione o status</option>
                             @foreach ($statusList as $status)
                             <option value="{{ $status->name }}">{{ $status->value }}</option>
@@ -144,7 +144,7 @@
     <x-slot name="footer">
         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
             <button wire:click.prevent="store()" type="button"
-                class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                class="btn-submit">
                 @if (!empty($_id))
                 Atualizar
                 @else
@@ -155,7 +155,7 @@
         <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
 
             <button wire:click.prevent="closeModal()" type="button"
-                class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                class="btn-default">
                 Cancel
             </button>
         </span>

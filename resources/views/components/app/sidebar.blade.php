@@ -22,10 +22,10 @@
         <div class="space-y-8">
             <div>
                 <ul class="mt-3">
-                    <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['dashboard'])) {{ 'bg-slate-900' }} @endif"
-                        x-data="{ open: {{ in_array(Request::segment(1), ['dashboard']) ? 1 : 0 }} }">
-                        <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['dashboard'])) {{ 'hover:text-slate-200' }} @endif"
-                            href="{{ route('dashboard') }}">
+                    <li class="px-3 py-2 rounded-sm mb-0.5 @if (in_array(Request::segment(1), ['dashboard'])) {{ 'bg-slate-900' }} @endif"
+                    x-data="{ open: {{ in_array(Request::segment(1), ['dashboard']) ? 1 : 0 }} }">
+                    <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['dashboard'])) {{ 'hover:text-slate-200' }} @endif last:mb-0"
+                            href="{{ route('dashboard') }} ">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center">
                                     <svg class="shrink-0 h-6 w-6" viewBox="0 0 24 24">
@@ -46,12 +46,12 @@
                         </a>
                     </li>
                     @can('user')
-                        <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['users'])) {{ 'bg-slate-900' }} @endif"
-                            x-data="{ open: {{ in_array(Request::segment(1), ['users', 'user/create']) ? 1 : 0 }} }">
-                            <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['users'])) {{ 'hover:text-slate-200' }} @endif"
-                                href="{{ route('inscription') }}">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center">
+                    <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['users'])) {{ 'bg-slate-900' }} @endif"
+                    x-data="{ open: {{ in_array(Request::segment(1), ['users', 'user/create']) ? 1 : 0 }} }" x-cloak>
+                    <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['users'])) {{ 'hover:text-slate-200' }} @endif"
+                        href="{{ route('inscription') }}">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
                                         <svg class="shrink-0 h-6 w-6" viewBox="0 0 24 24">
                                             <path
                                                 class="fill-current @if (in_array(Request::segment(1), ['users'])) {{ 'text-indigo-500' }}@else{{ 'text-slate-600' }} @endif"
@@ -71,7 +71,7 @@
                         <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if (Request::is('event*')) {{ 'bg-slate-900' }} @endif"
                             x-data="{ open: {{ Request::is('event*') ? 1 : 0 }} }">
                             <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (Request::is('event*')) {{ 'hover:text-slate-200' }} @endif"
-                                href="#0" @click.prevent="open = !open">
+                                href="#0" x-on:click.prevent="open = !open">
                                 <div class="flex items-center justify-between">
                                     <div class="flex items-center">
                                         <svg class="shrink-0 h-6 w-6" viewBox="0 0 24 24">
@@ -99,7 +99,7 @@
                             </a>
                             <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
                                 <ul class="pl-9 mt-1 @if (!Request::is('event*')) {{ 'hidden' }} @endif"
-                                    :class="{ 'hidden': !open }">
+                                x-bind:class="{ 'hidden': !open }">
                                     <li class="mb-1 last:mb-0">
                                         <a class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate "
                                             href="{{ route('event') }}">
@@ -128,6 +128,7 @@
                                 </ul>
                             </div>
                         </li>
+
 
                         <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['users'])) {{ 'bg-slate-900' }} @endif"
                             x-data="{ open: {{ in_array(Request::segment(1), ['users', 'user/create']) ? 1 : 0 }} }">
