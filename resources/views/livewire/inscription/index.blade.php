@@ -17,7 +17,7 @@
         <table class="table-fixed w-full">
             <thead>
                 <tr class="bg-gray-100">
-                    <th class="text-left px-2 w-8">#</th>
+                    <th class="text-left px-2 w-8"># </th>
                     <th>Imagem</th>
                     <th class="text-left px-2 w-32">Tipo</th>
                     <th class="text-left px-2">Nome a</th>

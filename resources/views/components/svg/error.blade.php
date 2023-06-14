@@ -1,4 +1,4 @@
-@props(['size' => 'h-12 w-12', 'color' => 'fill-current text-red-500'])
+@props(['size' => 'h-8 w-8', 'color' => 'fill-current text-red-500'])
 <svg {{ $attributes->merge(['class' => $size]) }} viewBox="0 0 117 117" version="1.1" xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
