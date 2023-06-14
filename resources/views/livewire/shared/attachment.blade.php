@@ -52,14 +52,14 @@
             <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
                 <button wire:click="store()" type="button" class="btn-submit">
                     @if (!empty($attachmentId))
-                    Atualizar
+                        Atualizar
                     @else
-                    Salvar
+                        Salvar
                     @endif
                 </button>
             </span>
             <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                <button wire:click="$set('isOpenActivity', false)" type="button" class="btn-default">
+                <button wire:click="$set('isOpenAttachment', false)" type="button" class="btn-default">
                     Cancelar
                 </button>
             </span>
