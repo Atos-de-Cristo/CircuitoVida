@@ -13,17 +13,18 @@
         </div>
 
         <!-- Título do modal -->
-        <div class="text-lg font-medium p-2 bg-gray-100 dark:bg-gray-800 text-center text-gray-900 dark:text-gray-100">
+        <div class="text-lg font-medium p-2  bg-gray-100 dark:bg-gray-800 text-center text-gray-900 dark:text-gray-100">
             {{ $title }}
         </div>
 
         <!-- Conteúdo do modal -->
+        <div class="overflow-auto ">
         <div class="px-6 py-4">
-            <div class="mt-4 text-sm text-gray-600 dark:text-gray-400">
+            <div class="mt-4 text-sm  text-gray-600 dark:text-gray-400">
                 {{ $content }}
             </div>
         </div>
-
+    </div>
         <!-- Rodapé do modal -->
         <div class="flex flex-row px-6 py-4 bg-gray-100 dark:bg-gray-800 rounded dark:text-white sm:flex sm:flex-row-reverse">
             {{ $footer }}
