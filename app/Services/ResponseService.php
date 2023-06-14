@@ -36,4 +36,13 @@ class ResponseService
         $repo = $this->find($id);
         return $repo->update($data);
     }
+
+    public function getUserQuestionResponse(string $idUser, string $activityId)
+    {
+        return $this->repository
+            ->where('user_id', $idUser)
+            ->whereRelation('question', 'activity_id', $activityId)
+            ->with('question')
+            ->get();
+    }
 }

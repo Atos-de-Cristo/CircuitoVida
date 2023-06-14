@@ -94,7 +94,7 @@ class UserService
         return $ret;
     }
 
-    public function getUsersQuestions(array $questions)
+    public function getUsersQuestionsResume(array $questions)
     {
         return $this->repository
             ->whereHas('responses', function (Builder $query) use ($questions) {
