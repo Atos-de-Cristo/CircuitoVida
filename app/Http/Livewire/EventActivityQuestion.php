@@ -17,9 +17,12 @@ class EventActivityQuestion extends Component
     public $answers = [];
     private $service, $serviceResponse, $serviceUser;
     public $checkResponse = false;
+    public $userCorrectAnswer;
+    public $viewCorrectAnswers = false;
 
     protected $listeners = [
-        'refreshActivityQuestion' => '$refresh'
+        'refreshActivityQuestion' => '$refresh',
+        'closeCorrectAnswers' => 'closeCorrectAnswers'
     ];
 
     public function __construct()
@@ -27,6 +30,17 @@ class EventActivityQuestion extends Component
         $this->service = new QuestionService;
         $this->serviceResponse = new ResponseService;
         $this->serviceUser = new UserService;
+    }
+
+    public function correctAnswers(string $idUser)
+    {
+        $this->userCorrectAnswer = $idUser;
+        $this->viewCorrectAnswers = true;
+    }
+
+    public function closeCorrectAnswers()
+    {
+        $this->viewCorrectAnswers = false;
     }
 
     public function mount(Request $request)
@@ -47,7 +61,7 @@ class EventActivityQuestion extends Component
 
     public function getUserQuestionsProperty()
     {
-        return $this->serviceUser->getUsersQuestions($this->questions->pluck('id')->toArray());
+        return $this->serviceUser->getUsersQuestionsResume($this->questions->pluck('id')->toArray());
     }
 
     public function render()
