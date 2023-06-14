@@ -38,8 +38,6 @@ class User extends Component
         ]);
     }
 
-
-
     public function render(UserService $service)
     {
         $dataAll = $service->paginate($this->search);
@@ -110,5 +108,9 @@ class User extends Component
     {
         $service->delete($id);
         session()->flash('message', 'Evento deletado com sucesso.');
+    }
+
+    public function manager($id){
+        redirect(route('userDetails', ['id' => $id]));
     }
 }
