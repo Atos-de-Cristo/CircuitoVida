@@ -45,7 +45,7 @@
                             </div>
                         </a>
                     </li>
-                    @can('user')
+                    @can('aluno')
                     <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if (in_array(Request::segment(1), ['users'])) {{ 'bg-slate-900' }} @endif"
                     x-data="{ open: {{ in_array(Request::segment(1), ['users', 'user/create']) ? 1 : 0 }} }" x-cloak>
                     <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['users'])) {{ 'hover:text-slate-200' }} @endif"
@@ -67,7 +67,7 @@
                             </a>
                         </li>
                     @endcan
-                    @cannot('user')
+                    @cannot('aluno')
                         <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if (Request::is('event*')) {{ 'bg-slate-900' }} @endif"
                             x-data="{ open: {{ Request::is('event*') ? 1 : 0 }} }">
                             <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (Request::is('event*')) {{ 'hover:text-slate-200' }} @endif"

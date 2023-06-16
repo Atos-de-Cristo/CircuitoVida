@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('video')->nullable();
-            $table->date('date');
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->timestamps();
         });
     }

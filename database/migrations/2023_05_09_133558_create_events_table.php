@@ -17,12 +17,12 @@ return new class extends Migration
             $table->enum('type', array_column(EventType::cases(), 'name'));
             $table->string('name');
             $table->string('image')->nullable();
-            $table->date('start_date');
-            $table->date('end_date')->nullable();
+            $table->datetime('start_date');
+            $table->datetime('end_date')->nullable();
             $table->string('local');
             $table->text('description');
-            $table->string('tickets_limit')->nullable();
-            $table->string('value')->nullable();
+            $table->integer('tickets_limit')->nullable();
+            $table->decimal('value')->nullable();
             $table->enum('status', array_column(EventStatus::cases(), 'name'));
             $table->timestamps();
         });

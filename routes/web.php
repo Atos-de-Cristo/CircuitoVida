@@ -23,7 +23,7 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
         Route::get('/event/inscription', EventInscription::class)->name('eventInscription');
     });
 
-    Route::middleware('can:user')->group(function () {
+    Route::middleware('can:aluno')->group(function () {
         Route::get('/inscription', Inscription::class)->name('inscription');
     });
 });

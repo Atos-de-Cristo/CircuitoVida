@@ -19,7 +19,7 @@ class PermissionSeeder extends Seeder
             'permission' => 'monitor'
         ]);
         DB::table('permissions')->insert([
-            'permission' => 'user'
+            'permission' => 'aluno'
         ]);
     }
 }

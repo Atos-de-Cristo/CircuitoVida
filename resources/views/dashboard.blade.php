@@ -6,11 +6,10 @@
     </x-slot>
 
     <div class="card-white  overflow-hidden shadow-xl sm:rounded-lg">
-        @can('user')
+        @can('aluno')
             <livewire:dashboard-user />
+        @else
+            <h1>dashboard admin</h1>
         @endcan
-        @cannot('user')
-        <h1>dashboard admin</h1>
-        @endcannot
     </div>
 </x-app-layout>

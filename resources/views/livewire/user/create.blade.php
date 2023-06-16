@@ -59,7 +59,7 @@
                                 <div class="mt-2">
                                     <label class="inline-flex items-center">
                                         <input type="checkbox" wire:model="permissions" value="{{ $opt['id'] }}"
-                                            @if ($opt['permission'] != 'user') disabled @endif />
+                                            @if ($opt['permission'] != 'aluno') disabled @endif />
                                         <span class="ml-2">{{ $opt['permission'] }}</span>
                                     </label>
                                 </div>

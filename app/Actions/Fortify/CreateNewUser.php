@@ -34,7 +34,7 @@ class CreateNewUser implements CreatesNewUsers
                 'email' => $input['email'],
                 'password' => Hash::make($input['password']),
             ]), function (User $user) {
-                $user->givePermissionTo('user');
+                $user->givePermissionTo('aluno');
                 // $this->createTeam($user);
             });
         });

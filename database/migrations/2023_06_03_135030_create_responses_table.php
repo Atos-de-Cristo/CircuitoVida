@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Question::class);
-            $table->string('response');
+            $table->text('response');
             $table->enum('status', ['pendente', 'correto', 'errado']);
             $table->timestamps();
         });

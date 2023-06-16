@@ -1,6 +1,8 @@
 <?php
 namespace Database\Seeders;
 
+use App\Models\Permission;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -15,6 +17,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
+            'id' => 1,
             'name' => 'Wesley Teixeira',
             'email' => 'contato@wesleyteixeira.com.br',
             'email_verified_at' => now(),
@@ -23,6 +26,7 @@ class UsersTableSeeder extends Seeder
             'updated_at' => now()
         ]);
         DB::table('users')->insert([
+            'id' => 2,
             'name' => 'Berguison paiva',
             'email' => 'pberguison@gmail.com',
             'email_verified_at' => now(),
@@ -30,9 +34,12 @@ class UsersTableSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        DB::table('permission_user')->insert([
-            'permission_id' => 1,
-            'user_id' => 2,
-        ]);
+
+        User::factory(55)->hasAttached(Permission::find(3))->create();
+        User::find(1)->givePermissionTo('admin');
+        User::find(2)->givePermissionTo('admin');
+        User::find(3)->givePermissionTo('monitor');
+        User::find(4)->givePermissionTo('monitor');
+        User::find(5)->givePermissionTo('monitor');
     }
 }

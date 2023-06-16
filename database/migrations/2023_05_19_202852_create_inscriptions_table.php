@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(Event::class);
             $table->foreignIdFor(User::class);
             $table->integer('quantity');
-            $table->text('amount');
+            $table->decimal('amount');
             $table->enum('status', array_column(InscriptionStatus::cases(), 'name'));
             $table->timestamps();
         });

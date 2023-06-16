@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Activity::class);
             $table->enum('type', ['aberta', 'multi']);
-            $table->string('title');
+            $table->text('title');
             $table->json('options')->nullable();
             $table->timestamps();
         });

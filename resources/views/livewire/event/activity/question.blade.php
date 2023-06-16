@@ -98,7 +98,7 @@
     @endcan
     {{--Questões--}}
     <div class="grid grid-cols-12 gap-4">
-        <div class="{{ auth()->check() && auth()->user()->hasPermissionTo('user') ? 'col-span-12' : 'col-span-8' }}">
+        <div class="{{ auth()->check() && auth()->user()->hasPermissionTo('aluno') ? 'col-span-12' : 'col-span-8' }}">
             @if ($viewCorrectAnswers)
             <livewire:event-activity-question-correct :userId="$userCorrectAnswer" :atvId="$atvId" />
             @else
