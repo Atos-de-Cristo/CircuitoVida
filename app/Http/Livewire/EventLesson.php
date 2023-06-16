@@ -62,7 +62,7 @@ class EventLesson extends Component
             'video' => $this->video,
             'date' => $this->date,
         ];
-        dd($request);
+
         if ($this->lessonId) {
             $service->update($request, $this->lessonId);
         } else {
