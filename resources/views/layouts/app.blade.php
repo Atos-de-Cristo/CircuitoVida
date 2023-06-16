@@ -11,7 +11,7 @@
         @livewireStyles
 
         <!-- Scripts -->
-        @vite('resources/js/app.js')
+        @vite(['resources/css/app.css', 'resources/js/app.js','resources/css/buttons.css', 'resources/css/font.css', ])
 
         <script>
             if (localStorage.getItem('dark-mode') === 'false' || !('dark-mode' in localStorage)) {
