@@ -1,6 +1,4 @@
-import '../css/font.css';
-import '../css/app.css';
-import '../css/buttons.css';
+
 import './bootstrap';
 
 import Alpine from 'alpinejs';

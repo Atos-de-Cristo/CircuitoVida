@@ -6,9 +6,8 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Scripts -->
-        @vite('resources/js/app.js')
+ <!-- Scripts -->
+ @vite(['resources/css/app.css', 'resources/js/app.js','resources/css/buttons.css', 'resources/css/font.css', ])
 
         <script>
             if (localStorage.getItem('dark-mode') === 'false' || !('dark-mode' in localStorage)) {
