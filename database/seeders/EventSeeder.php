@@ -102,7 +102,7 @@ class EventSeeder extends Seeder
             'description' => 'desc da aula teste',
             'video' => 'MdO35UCxGxs',
             'start_date' => '2023-06-01 08:00:00',
-            'end_date' => '2023-07-01 08:00:00',
+            'end_date' => '2023-08-01 08:00:00',
         ]);
         DB::table('lessons')->insert([
             'id' => '2',
@@ -111,8 +111,8 @@ class EventSeeder extends Seeder
             'title' => 'Aula 02',
             'description' => 'desc da aula teste',
             'video' => 'MdO35UCxGxs',
-            'start_date' => '2023-06-01 08:00:00',
-            'end_date' => '2023-07-01 08:00:00',
+            'start_date' => '2023-10-01 08:00:00',
+            'end_date' => '2023-11-01 08:00:00',
         ]);
         DB::table('lessons')->insert([
             'id' => '3',
@@ -120,9 +120,7 @@ class EventSeeder extends Seeder
             'module_id' => '2',
             'title' => 'Aula 03',
             'description' => 'desc da aula teste',
-            'video' => 'MdO35UCxGxs',
-            'start_date' => '2023-06-01 08:00:00',
-            'end_date' => '2023-07-01 08:00:00',
+            'video' => 'MdO35UCxGxs'
         ]);
         DB::table('lessons')->insert([
             'id' => '4',
