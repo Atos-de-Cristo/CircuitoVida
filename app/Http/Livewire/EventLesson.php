@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class EventLesson extends Component
 {
     public $eventId, $moduleId, $lessonId;
-    public $title, $description, $video, $date;
+    public $title, $description, $video, $start_date, $end_date;
     public $modalActivity;
 
     public function boot(Request $request)
@@ -44,14 +44,14 @@ class EventLesson extends Component
         $this->title = $lessonData->title;
         $this->description = $lessonData->description;
         $this->video = $lessonData->video;
-        $this->date = date('Y-m-d H:i:s', strtotime($lessonData->date));
+        $this->start_date = date('Y-m-d H:i:s', strtotime($lessonData->start_date));
+        $this->end_date = date('Y-m-d H:i:s', strtotime($lessonData->end_date));
     }
 
     public function store(LessonService $service)
     {
         $this->validate([
-            'title' => 'required',
-            'date' => 'required'
+            'title' => 'required'
         ]);
 
         $request = [
@@ -60,14 +60,15 @@ class EventLesson extends Component
             'title' => $this->title,
             'description' => $this->description,
             'video' => $this->video,
-            'date' => $this->date,
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
         ];
 
         if ($this->lessonId) {
-            $service->update($request, $this->lessonId);
-        } else {
-            $service->create($request);
+            $request['id'] = $this->lessonId;
         }
+
+        $service->store($request);
 
         session()->flash('message', 'Aula cadastrado com sucesso.');
 

@@ -18,7 +18,8 @@ class Lesson extends Model
         'title',
         'description',
         'video',
-        'date'
+        'start_date',
+        'end_date'
     ];
 
     public function event(): BelongsTo{

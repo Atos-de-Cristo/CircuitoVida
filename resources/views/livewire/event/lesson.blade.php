@@ -42,10 +42,30 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="campData" class="label-input-form">Data</label>
-                    <input type="datetime-local"  class="input-form" id="campData" placeholder="Informe a data de início" wire:model.lazy="date">
-                    @error('date')
-                    <span class="text-red-500">{{ $message }}</span>
+                    <label for="campDataStart" class="label-input-form">Data Inicio</label>
+                    <input
+                        type="datetime-local"
+                        class="input-form"
+                        id="campDataStart"
+                        placeholder="Informe a data de início"
+                        wire:model.lazy="start_date"
+                    >
+                    @error('start_date')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="mb-4">
+                    <label for="campDataEnd" class="label-input-form">Data Inicio</label>
+                    <input
+                        type="datetime-local"
+                        class="input-form"
+                        id="campDataEnd"
+                        placeholder="Informe a data de fim"
+                        wire:model.lazy="end_date"
+                    >
+                    @error('end_date')
+                        <span class="text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
             </div>

@@ -53,7 +53,7 @@
                 </div>
                 @can('admin')
                     <livewire:event-activity-actions :activityId="null" :lessonId="$lessonId">
-                    @endCan
+                @endCan
             </div>
             <div class="card-white h-48 overflow-y-auto">
                 <div class="w-full">

@@ -122,11 +122,37 @@
                         <div class="border-t border-gray-200 pb-2 py-2 flex items-center justify-between">
                             <div class="flex items-center">
                                 <x-svg.play-lesson size="h-5 w-5" />
-                                <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
-                                    class="font-bold text-md text-blue-500 hover:underline ml-2"
-                                    x-data="{ open: null }">
-                                    {{ $lesson->title }}
-                                 </a>
+                                <div class="flex flex-col">
+                                    @if ($lesson->start_date && $lesson->end_date)
+                                        @if (
+                                            Carbon\Carbon::parse($lesson->start_date) <= Carbon\Carbon::parse(date('Y-m-d H:m:s')) &&
+                                            Carbon\Carbon::parse($lesson->end_date) > Carbon\Carbon::parse(date('Y-m-d H:m:s'))
+                                        )
+                                            <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
+                                                class="font-bold text-md text-blue-500 hover:underline ml-2"
+                                                x-data="{ open: null }">
+                                                {{ $lesson->title }}
+                                            </a>
+                                        @else
+                                            @can('admin')
+                                                <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
+                                                    class="font-bold text-md text-blue-500 hover:underline ml-2"
+                                                    x-data="{ open: null }">
+                                                    {{ $lesson->title }} (será libera em {{ \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:m:s')}})
+                                                </a>
+                                            @else
+                                                <p class="ml-2">{{ $lesson->title }} (será libera em {{ \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:m:s')}})</p>
+                                            @endcan
+                                        @endif
+                                    @else
+                                        <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
+                                            class="font-bold text-md text-blue-500 hover:underline ml-2"
+                                            x-data="{ open: null }">
+                                            {{ $lesson->title }}
+                                        </a>
+                                    @endif
+                                    <small class="ml-2">{{$lesson->description}}</small>
+                                </div>
                             </div>
                             @can('admin')
                             <div class="flex items-center mr-2">
