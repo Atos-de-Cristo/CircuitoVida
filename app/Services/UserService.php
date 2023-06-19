@@ -96,7 +96,7 @@ class UserService
 
     public function getUsersQuestionsResume(array $questions)
     {
-        return $this->repository
+        $results = $this->repository
             ->whereHas('responses', function (Builder $query) use ($questions) {
                 $query->whereIn('question_id', $questions);
             })
@@ -114,5 +114,11 @@ class UserService
                 $query->where('status', 'errado');
             }])
             ->get();
+
+        return $results->map(function ($item) {
+            $totalAnswers = $item->respostas_correta + $item->respostas_errado;
+            $item->porcentagem_acertos = $totalAnswers > 0 ? round(($item->respostas_correta / $totalAnswers) * 100, 2).'%' : 'Pendente correção!';
+            return $item;
+        });
     }
 }

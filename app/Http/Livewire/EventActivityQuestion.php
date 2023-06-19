@@ -121,7 +121,7 @@ class EventActivityQuestion extends Component
         ]);
 
         foreach ($this->answers as $questionId => $answer) {
-            $this->serviceResponse->create([
+            $this->serviceResponse->store([
                 'user_id' => Auth::user()->id,
                 'question_id' => $questionId,
                 'response' => $answer,

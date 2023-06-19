@@ -26,12 +26,20 @@ class ResponseService
         return $this->repository->with('user', 'question')->find($id);
     }
 
-    public function create(array $data): Response
+    public function store(array $data): Response | bool
+    {
+        if (isset($data['id']) && !empty($data['id'])) {
+            return $this->update($data, $data['id']);
+        }
+        return $this->create($data);
+    }
+
+    private function create(array $data): Response
     {
         return $this->repository->create($data);
     }
 
-    public function update(array $data, int $id): bool
+    private function update(array $data, int $id): bool
     {
         $repo = $this->find($id);
         return $repo->update($data);
@@ -42,7 +50,7 @@ class ResponseService
         return $this->repository
             ->where('user_id', $idUser)
             ->whereRelation('question', 'activity_id', $activityId)
-            ->with('question')
+            ->with('question', 'user')
             ->get();
     }
 }
