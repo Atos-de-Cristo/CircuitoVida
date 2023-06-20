@@ -18,15 +18,27 @@
                             class="input-form">
                             <option value="">Selecione o tipo</option>
                             @foreach ($typesList as $type)
-                            <option value="{{ $type->name }}">{{ $type->value }}</option>
+                                <option value="{{ $type->name }}">{{ $type->value }}</option>
                             @endforeach
                         </select>
                         @error('type')
-                        <span class="text-red-500">{{ $message }}</span>
+                            <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
-
-
+                    <div class="mb-4">
+                        <label for="campCategory"
+                            class="label-input-form">Categoria</label>
+                        <select id="campCategory" wire:model="category_id"
+                            class="input-form">
+                            <option value="">Selecione uma categoria</option>
+                            @foreach ($categoryList as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('category_id')
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
                     <div class="mb-4">
                         <label for="campName"
                             class="label-input-form">Nome:</label>
@@ -34,7 +46,7 @@
                             class="input-form"
                             id="campName" placeholder="Entre com um nome" wire:model.lazy="name">
                         @error('name')
-                        <span class="text-red-500">{{ $message }}</span>
+                            <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="mb-4">
@@ -45,7 +57,7 @@
                             class="input-form"
                             id="campDataStart" placeholder="Informe a data de início" wire:model.lazy="start_date">
                         @error('start_date')
-                        <span class="text-red-500">{{ $message }}</span>
+                            <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="mb-4">
@@ -56,7 +68,7 @@
                             class="input-form"
                             id="campDataEnd" placeholder="Informe a data de término" wire:model.lazy="end_date">
                         @error('end_date')
-                        <span class="text-red-500">{{ $message }}</span>
+                            <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="mb-4">
@@ -66,7 +78,7 @@
                             class="input-form"
                             id="campLocal" placeholder="Informe o local" wire:model.lazy="local">
                         @error('local')
-                        <span class="text-red-500">{{ $message }}</span>
+                            <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="mb-4">
@@ -75,17 +87,17 @@
                         <input type="file" wire:model="newImage"
                             class="label-input-form">
                         @error('newImage')
-                        <span class="text-red-500">{{ $message }}</span>
+                            <span class="text-red-500">{{ $message }}</span>
                         @enderror
                         @error('image')
-                        <span class="text-red-500">{{ $message }}</span>
+                            <span class="text-red-500">{{ $message }}</span>
                         @enderror
 
                         @if ($newImage)
-                        <img src="{{ $newImage->temporaryUrl() }}" alt="Nova Imagem Selecionada"
-                            class="mt-2 w-32 h-auto">
+                            <img src="{{ $newImage->temporaryUrl() }}" alt="Nova Imagem Selecionada"
+                                class="mt-2 w-32 h-auto">
                         @elseif ($image != '')
-                        <img src="{{ asset($image) }}" alt="Imagem Atual" class="mt-2 w-32 h-auto">
+                            <img src="{{ asset($image) }}" alt="Imagem Atual" class="mt-2 w-32 h-auto">
                         @endif
                     </div>
                 </div>
@@ -97,7 +109,7 @@
                             class="input-form"
                             id="campTickets" placeholder="Limite de vagas" wire:model.lazy="tickets_limit">
                         @error('tickets_limit')
-                        <span class="text-red-500">{{ $message }}</span>
+                            <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="mb-4">
@@ -107,7 +119,7 @@
                             class="input-form"
                             id="campValue" placeholder="Informe o valor" wire:model.lazy="value">
                         @error('value')
-                        <span class="text-red-500">{{ $message }}</span>
+                            <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="mb-2">
@@ -118,7 +130,7 @@
                             id="campDescription" wire:model.lazy="description" placeholder="Informe a descrição"
                             rows="5"></textarea>
                         @error('description')
-                        <span class="text-red-500">{{ $message }}</span>
+                            <span class="text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
 
@@ -129,7 +141,7 @@
                             class="input-form">
                             <option value="">Selecione o status</option>
                             @foreach ($statusList as $status)
-                            <option value="{{ $status->name }}">{{ $status->value }}</option>
+                                <option value="{{ $status->name }}">{{ $status->value }}</option>
                             @endforeach
                         </select>
                         @error('status')

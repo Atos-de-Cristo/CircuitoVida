@@ -12,9 +12,23 @@ class EventSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('categories')->insert([
+            'id' => '1',
+            'name' => 'Iniciante',
+        ]);
+        DB::table('categories')->insert([
+            'id' => '2',
+            'name' => 'Avançado',
+        ]);
+        DB::table('categories')->insert([
+            'id' => '3',
+            'name' => 'Vocacionado',
+        ]);
+
         DB::table('events')->insert([
             'id' => 1,
             'type' => 'C',
+            'category_id' => '1',
             'name' => 'IMERSÃO TOTAL - TESTE',
             'image' => 'https://storage.googleapis.com/media_files_prod/uploads/event/432167/event-a18e5eb552ed3eb8b8e4290c0c6e47fc.jpg',
             'start_date' => '2023-06-01 08:00:00',

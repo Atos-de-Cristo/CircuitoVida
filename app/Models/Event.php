@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\{BelongsToMany, HasMany};
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany, HasMany};
 
 class Event extends Model
 {
@@ -12,6 +12,7 @@ class Event extends Model
 
     protected $fillable = [
         'type',
+        'category_id',
         'name',
         'image',
         'start_date',
@@ -37,5 +38,10 @@ class Event extends Model
 
     public function monitors(): BelongsToMany {
         return $this->belongsToMany(User::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 }
