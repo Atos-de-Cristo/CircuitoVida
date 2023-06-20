@@ -2,7 +2,7 @@
     <form class="">
         <div class="bg-white dark:bg-slate-800 shadow-xl rounded-md ">
             <div class="bg-gray-50 dark:bg-gray-700 text-center rounded-md">
-                <h2 class="text-lg text-gray-800 dark:text-white font-bold p-2 mb-4">Corrigir Questões</h2>
+                <h2 class="text-lg  text-gray-800 dark:text-white font-bold p-2 mb-4">Corrigir Questões</h2>
             </div>
             <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <h2>Aluno: {{ $this->questions->first()->user->name }}</h2>

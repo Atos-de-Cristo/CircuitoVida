@@ -1,7 +1,7 @@
 <div>
     @if (session()->has('message'))
-    <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3" role="alert"
-        x-data="{ showMessage: true }" x-show="showMessage" x-init="setTimeout(() => { showMessage = false; }, 4000)">
+    <div class="bg-teal-100 rounded-md border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3" role="alert"
+        x-data="{ showMessage: true }" x-show="showMessage" x-init="setTimeout(() => { showMessage = false; }, 1000)">
         <div class="flex">
             <div>
                 <p class="text-sm">{{ session('message') }}</p>
@@ -26,8 +26,8 @@
 
     @can('admin')
     <form class="">
-        <div class="bg-white dark:bg-slate-800 shadow-xl rounded-md">
-            <div class="bg-gray-50 dark:bg-gray-700 text-center rounded">
+        <div class="bg-white border-t-4 border-indigo-900  dark:bg-slate-800 shadow-xl rounded-md">
+            <div class="bg-gray-50 dark:bg-gray-700 text-center rounded-t-md">
                 <h2 class="text-lg text-gray-800 dark:text-white font-bold p-2 mb-4">Adicionar Questões</h2>
             </div>
             <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
@@ -85,7 +85,7 @@
 
             </div>
 
-            <div class="bg-gray-50 dark:bg-gray-700 px-4 py-3 rounded-md sm:px-6 sm:flex sm:flex-row-reverse mb-4">
+            <div class="bg-gray-50 dark:bg-gray-700 px-4 py-3 rounded-b-md sm:px-6 sm:flex sm:flex-row-reverse mb-4">
                 <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
                     <button wire:click.prevent="store()" type="button" class="btn-submit">
                         Salvar
@@ -103,16 +103,16 @@
             <livewire:event-activity-question-correct :userId="$userCorrectAnswer" :atvId="$atvId" />
             @else
             <form class="">
-                <div class="bg-white dark:bg-slate-800 shadow-xl rounded-md ">
-                    <div class="bg-gray-50 dark:bg-gray-700 text-center rounded-md">
-                        <div class="flex justify-center items-center">
+                <div class="bg-white border-t-4 border-indigo-900 dark:bg-slate-800 shadow-xl rounded-md ">
+                    <div class="bg-gray-50 dark:bg-gray-700 text-center rounded-t-md">
+                        <div class="flex justify-center items-center h-full p-2">
                             <div class="flex-grow">
-                                <h2 class="text-lg text-gray-800 dark:text-white font-bold p-2 mb-4">Responder Questões
+                                <h2 class="text-lg text-gray-800 dark:text-white font-bold ">Responder Questões
                                 </h2>
                             </div>
                             @can('aluno')
                             <div class="ml-auto mr-2">
-                                <h3 class="text-lg text-gray-800 dark:text-white font-bold p-2">10% Acertos</h3>
+                                <h3 class="text-lg text-gray-800 dark:text-white font-bold ">10% Acertos</h3>
                             </div>
                             @endcan
                         </div>
@@ -122,7 +122,7 @@
                         @forelse ($this->questions as $question)
                         <div
                             class="mb-4 border border-gray-300  dark:border-gray-700 rounded-md p-4
-                                    {{ $question->response_status == 'correto' ? 'bg-green-100 border-green-300 dark:border-green-700 dark:bg-green-900' : '' }}
+                                    {{ $question->response_status == 'correto' ? 'bg-green-100 border-green-300 dark:border-green-800 dark:bg-green-900' : '' }}
                                     {{ $question->response_status == 'errado' ? 'bg-red-100 border-red-300 dark:border-red-700 dark:bg-red-900': '' }}
                                     {{ $question->response_status == 'pendente' ? 'bg-gray-100 border-gray-300 dark:border-gray-700 dark:bg-gray-900' : '' }}">
                             <div class="flex flex-row justify-between">
@@ -173,14 +173,17 @@
                         <span class="text-red-500">Nenhuma questão cadastrada</span>
                         @endforelse
                     </div>
+                    @can('aluno')
                     <div class="bg-gray-50 dark:bg-gray-700 px-4 rounded py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                         <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
                             <button type="button" wire:click.prevent="storeQuestion()" {{ $checkResponse==true
-                                ? 'disabled' : '' }} class="btn-submit {{ $checkResponse==true ? 'opacity-50' : '' }}">
+                                ? 'disabled' : '' }} class="btn-submit {{ $checkResponse==true ? 'opacity-50' : '' }}" >
                                 Salvar
                             </button>
                         </span>
                     </div>
+                    @endcan
+
                 </div>
             </form>
             @endif
@@ -188,8 +191,8 @@
         {{--Correção--}}
         @can('admin')
         <div class="col-span-4">
-            <div class="bg-white dark:bg-slate-800 shadow-xl rounded-md">
-                <div class="bg-gray-50 dark:bg-gray-700 text-center rounded-md">
+            <div class="bg-white border-t-4 border-indigo-900 dark:bg-slate-800 shadow-xl rounded-md">
+                <div class="bg-gray-50 dark:bg-gray-700 text-center rounded-t-md">
                     <h2 class="text-lg text-gray-800 dark:text-white font-bold p-2 mb-4">Correção</h2>
                 </div>
                 <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">

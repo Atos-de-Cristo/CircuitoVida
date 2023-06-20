@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="card-white  overflow-hidden shadow-xl sm:rounded-lg">
+    <div >
         @can('aluno')
             <livewire:dashboard-user />
         @else

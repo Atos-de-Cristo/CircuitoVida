@@ -98,7 +98,7 @@ class EventActivityQuestion extends Component
         if ($this->questionId) {
             $request['id'] = $this->questionId;
         }
-
+        $this->checkResponse = true;
         $this->service->store($request);
 
         $this->resetInputCreate();

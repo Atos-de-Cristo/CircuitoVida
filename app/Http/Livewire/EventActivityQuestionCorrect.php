@@ -66,5 +66,6 @@ class EventActivityQuestionCorrect extends Component
                 'status' => $status
             ));
         }
+       $this->closeCorrectAnswers();
     }
 }
