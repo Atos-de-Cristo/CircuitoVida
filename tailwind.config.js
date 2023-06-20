@@ -11,6 +11,12 @@ module.exports = {
     darkMode: "class",
     theme: {
         extend: {
+            screens: {
+                sm: '480px',
+                md: '768px',
+                lg: '976px',
+                xl: '1440px',
+              },
             boxShadow: {
                 DEFAULT: '0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.02)',
                 md: '0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.02)',
@@ -35,9 +41,7 @@ module.exports = {
                 '5xl': ['3rem', { lineHeight: '1.25', letterSpacing: '-0.02em' }],
                 '6xl': ['3.75rem', { lineHeight: '1.2', letterSpacing: '-0.02em' }],
             },
-            screens: {
-                xs: '480px',
-            },
+
             borderWidth: {
                 3: '3px',
             },
