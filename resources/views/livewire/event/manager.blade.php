@@ -125,8 +125,8 @@
                                 <div class="flex flex-col">
                                     @if ($lesson->start_date && $lesson->end_date)
                                         @if (
-                                            Carbon\Carbon::parse($lesson->start_date) <= Carbon\Carbon::parse(date('Y-m-d H:m:s')) &&
-                                            Carbon\Carbon::parse($lesson->end_date) > Carbon\Carbon::parse(date('Y-m-d H:m:s'))
+                                            Carbon\Carbon::parse($lesson->start_date) <= Carbon\Carbon::parse(date('Y-m-d H:i:s')) &&
+                                            Carbon\Carbon::parse($lesson->end_date) > Carbon\Carbon::parse(date('Y-m-d H:i:s'))
                                         )
                                             <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
                                                 class="font-bold text-md text-blue-500 hover:underline ml-2"

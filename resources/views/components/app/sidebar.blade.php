@@ -67,7 +67,7 @@
                             </a>
                         </li>
                     @endcan
-                    @cannot('aluno')
+                    @can('admin')
                         <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if (Request::is('event*')) {{ 'bg-slate-900' }} @endif"
                             x-data="{ open: {{ Request::is('event*') ? 1 : 0 }} }">
                             <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (Request::is('event*')) {{ 'hover:text-slate-200' }} @endif"
@@ -150,7 +150,7 @@
                                 </div>
                             </a>
                         </li>
-                    @endcannot
+                    @endcan
 
 
 
