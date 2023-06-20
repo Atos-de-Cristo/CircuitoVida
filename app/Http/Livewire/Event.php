@@ -140,6 +140,6 @@ class Event extends Component
     }
 
     public function manager($id){
-        redirect(route('eventManager', ['id' => $id]));
+        redirect()->route('eventManager', ['id' => $id]);
     }
 }
