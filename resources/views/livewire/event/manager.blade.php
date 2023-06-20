@@ -138,10 +138,10 @@
                                                 <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
                                                     class="font-bold text-md text-blue-500 hover:underline ml-2"
                                                     x-data="{ open: null }">
-                                                    {{ $lesson->title }} ( liberada {{ \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:m:s')}} à {{ \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:m:s')}})
+                                                    {{ $lesson->title }} ( liberada {{ \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:m:s')}} à {{ \Carbon\Carbon::parse($lesson->end_date)->format('d/m/Y H:m:s')}})
                                                 </a>
                                             @else
-                                                <p class="ml-2">{{ $lesson->title }} ( liberada {{ \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:m:s')}} à {{ \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:m:s')}})</p>
+                                                <p class="ml-2">{{ $lesson->title }} ( liberada {{ \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:m:s')}} à {{ \Carbon\Carbon::parse($lesson->end_date)->format('d/m/Y H:m:s')}})</p>
                                             @endcan
                                         @endif
                                     @else
