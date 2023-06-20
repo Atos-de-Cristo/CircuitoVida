@@ -1,18 +1,18 @@
 <div>
     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
         @if (session()->has('message'))
-        <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3"
-             role="alert"
-             x-data="{ showMessage: true }"
-             x-show="showMessage"
-             x-init="setTimeout(() => { showMessage = false; }, 4000)">
-            <div class="flex">
-                <div>
-                    <p class="text-sm">{{ session('message') }}</p>
+            <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3"
+                role="alert"
+                x-data="{ showMessage: true }"
+                x-show="showMessage"
+                x-init="setTimeout(() => { showMessage = false; }, 4000)">
+                <div class="flex">
+                    <div>
+                        <p class="text-sm">{{ session('message') }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    @endif
+        @endif
         <h1 class="float-left py-4 font-bold text-xl">Lista de Inscrições</h1>
         <table class="table-fixed w-full">
             <thead>

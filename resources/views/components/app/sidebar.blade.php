@@ -101,21 +101,31 @@
                                 <ul class="pl-9 mt-1 @if (!Request::is('event*')) {{ 'hidden' }} @endif"
                                 x-bind:class="{ 'hidden': !open }">
                                     <li class="mb-1 last:mb-0">
-                                        <a class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate "
-                                            href="{{ route('event') }}">
-
-                                            <span
-                                                class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200 @if (Route::is('event')) {{ 'text-indigo-300 ' }} @endif">Gerencial</span>
+                                        <a
+                                            class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate"
+                                            href="{{ route('event') }}"
+                                        >
+                                            <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200 @if (Route::is('event')) {{ 'text-indigo-300 ' }} @endif">
+                                                Gerencial
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="mb-1 last:mb-0">
+                                        <a
+                                            class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate"
+                                            href="{{ route('eventCategory') }}"
+                                        >
+                                            <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200 @if (Route::is('eventCategory')) {{ 'text-indigo-300 ' }} @endif">
+                                                Categorias
+                                            </span>
                                         </a>
                                     </li>
                                     <li class="mb-1 last:mb-0">
                                         <a class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate "
                                             href="{{ route('eventInscription') }}">
-
                                             <span
                                                 class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200"
                                                 x-bind:class="{ 'text-indigo-300': '{{ Str::contains(url()->current(), 'event/inscription') }}' }">Inscrições</span>
-
                                         </a>
                                     </li>
                                     <li class="mb-1 last:mb-0">
