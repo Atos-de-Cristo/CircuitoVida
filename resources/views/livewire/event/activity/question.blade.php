@@ -106,6 +106,9 @@
                 <div class="bg-white dark:bg-slate-800 shadow-xl rounded-md ">
                     <div class="bg-gray-50 dark:bg-gray-700 text-center rounded-md">
                         <h2 class="text-lg text-gray-800 dark:text-white font-bold p-2 mb-4">Responder Questões</h2>
+                      @can('aluno')
+                      {{$this->userQuestions->porcentagem_acertos}}
+                      @endcan
                     </div>
                     <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         @forelse ($this->questions as $question)
