@@ -1,11 +1,13 @@
 <div>
     <form class="">
-        <div class="bg-white dark:bg-slate-800 shadow-xl rounded-md ">
+        <div class="bg-white border-t-2 dark:border-indigo-900 dark:bg-slate-800 shadow-xl rounded-md ">
             <div class="bg-gray-50 dark:bg-gray-700 text-center rounded-md">
                 <h2 class="text-lg  text-gray-800 dark:text-white font-bold p-2 mb-4">Corrigir Questões</h2>
             </div>
             <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <h2>Aluno: {{ $this->questions->first()->user->name }}</h2>
+                <div class="ml-2 mb-3">
+                    <h2>Aluno: {{ $this->questions->first()->user->name }}</h2>
+                </div>
                 @forelse ($this->questions as $item)
                     <div class="flex mb-4 border border-gray-300 dark:border-gray-700 rounded-md p-4
                         {{ (isset($checkResponse[$item->id]) && $checkResponse[$item->id] == 'correto') ? 'bg-green-100 border-green-300 dark:border-green-700 dark:bg-green-900' : '' }}
@@ -14,7 +16,7 @@
                     ">
                         <div class="flex flex-col flex-1 justify-between">
                             <h3 class="text-lg font-semibold mb-2 mr-5">{{ $item->question->title }}</h3>
-                            <small>{{ $item->response }} - {{ $item->id }}</small>
+                            <small>{{ $item->response }}</small>
                         </div>
                         <div class="flex flex-col self-start space-y-2">
                             <button wire:click.prevent="checkQuestion('correto', {{$item->id}})" class="hover:bg-gray-100 rounded-full">
