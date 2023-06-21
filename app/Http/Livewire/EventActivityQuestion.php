@@ -16,7 +16,6 @@ class EventActivityQuestion extends Component
     public $options = [];
     public $answers = [];
     private $service, $serviceResponse, $serviceUser;
-    public $checkResponse = false;
     public $userCorrectAnswer;
     public $viewCorrectAnswers = false;
 
@@ -32,6 +31,27 @@ class EventActivityQuestion extends Component
         $this->serviceUser = new UserService;
     }
 
+    public function getQuestionsProperty()
+    {
+        return $this->service->getQuestionsCorrect($this->atvId);
+    }
+
+    public function getUserQuestionsProperty()
+    {
+        return $this->serviceUser->getUsersQuestionsResume($this->questions->pluck('id')->toArray());
+    }
+
+    public function mount(Request $request)
+    {
+        $this->atvId = $request->id;
+        $this->questions;
+    }
+
+    public function render()
+    {
+        return view('livewire.event.activity.question');
+    }
+
     public function correctAnswers(string $idUser)
     {
         $this->userCorrectAnswer = $idUser;
@@ -41,32 +61,6 @@ class EventActivityQuestion extends Component
     public function closeCorrectAnswers()
     {
         $this->viewCorrectAnswers = false;
-    }
-
-    public function mount(Request $request)
-    {
-        $this->atvId = $request->id;
-    }
-
-    public function getQuestionsProperty()
-    {
-        $questions = $this->service->getAll($this->atvId);
-        foreach ($questions as $question) {
-            if ($this->checkResponse == false && isset($question->response_status)) {
-                $this->checkResponse = true;
-            }
-        }
-        return $questions;
-    }
-
-    public function getUserQuestionsProperty()
-    {
-        return $this->serviceUser->getUsersQuestionsResume($this->questions->pluck('id')->toArray());
-    }
-
-    public function render()
-    {
-        return view('livewire.event.activity.question');
     }
 
     public function addOption()
@@ -98,7 +92,7 @@ class EventActivityQuestion extends Component
         if ($this->questionId) {
             $request['id'] = $this->questionId;
         }
-        $this->checkResponse = true;
+
         $this->service->store($request);
 
         $this->resetInputCreate();
