@@ -50,17 +50,18 @@
         </div>
 
         <div class="flex flex-wrap m-0  rounded-md">
+
             @foreach ($dataAll as $data)
-            <div class="w-full md:w-1/2 lg:w-1/2 xl:w-1/3 p-4">
-                <div class="bg-gray-100 dark:bg-slate-800 overflow-hidden shadow rounded-lg flex flex-col h-full">
+            <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-2">
+                <div class="bg-gray-100  max-w-sm  dark:bg-slate-800 overflow-hidden shadow rounded-lg flex flex-col ">
                     <div class="flex-shrink-0">
                         @if ($data->image)
                             <img src="{{ asset($data->image) }}" alt="Logo Evento {{ $data->name }}"
-                                class="hover:scale-125 h-52 w-full object-cover rounded-t-lg cursor-pointer"
+                                class="hover:scale-110 h-52 w-full object-cover  cursor-pointer"
                                 wire:click="manager({{ $data->id }})">
                         @else
                             <img src="{{ asset('images/curso.png') }}" alt="Logo"
-                                class="hover:scale-125 h-52 w-full bg-slate-500 rounded-t-lg cursor-pointer"
+                                class="hover:scale-110 h-52 w-full bg-slate-500  cursor-pointer"
                                 wire:click="manager({{ $data->id }})">
                         @endif
                     </div>
@@ -90,6 +91,8 @@
                         </div>
                     </div>
                 </div>
+
+
             </div>
 
             @endforeach
