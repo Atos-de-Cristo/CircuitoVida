@@ -71,7 +71,7 @@ class QuestionService
         }
 
         $totalAnswers = $answers_correct + $answers_wrong;
-        $checkCorrect = ($answers_pending > 0) ? 'Pendente de correção' : round(($answers_correct / $totalAnswers) * 100, 2).'%';
+        $checkCorrect = ($totalAnswers > 0) ? round(($answers_correct / $totalAnswers) * 100, 2).'%' : 'Pendente correção!';
 
         return [
             'data' => $results,

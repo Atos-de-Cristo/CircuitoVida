@@ -10,6 +10,7 @@ use Livewire\Component;
 
 class DashboardUser extends Component
 {
+
     public function render(EventService $service)
     {
         $eventAll = $service->getAll([

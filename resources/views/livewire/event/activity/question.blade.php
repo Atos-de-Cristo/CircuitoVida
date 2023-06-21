@@ -107,7 +107,11 @@
                                     @if ($this->questions['checkResponse']==true)
                                         <div class="ml-auto mr-2">
                                             <h3 class="text-lg text-gray-800 dark:text-white font-bold">
-                                                {{$this->questions['correct']}} Acertos
+                                                @if (strpos($this->questions['correct'], '%') !== false)
+                                                    {{ $this->questions['correct'] }} Acertos
+                                                @else
+                                                    {{ $this->questions['correct'] }}
+                                                @endif
                                             </h3>
                                         </div>
                                     @endif
