@@ -38,7 +38,7 @@ class EventActivityQuestion extends Component
 
     public function getUserQuestionsProperty()
     {
-        return $this->serviceUser->getUsersQuestionsResume($this->questions->pluck('id'));
+        return $this->serviceUser->getUsersQuestionsResume($this->questions->pluck('id')->toArray());
     }
 
     public function mount(Request $request)
