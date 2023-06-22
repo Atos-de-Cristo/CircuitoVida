@@ -17,6 +17,10 @@ class User extends Component
 
     public $search = '';
 
+    public function search()
+    {
+        $this->resetPage();
+    }
 
 
     protected $rules = [

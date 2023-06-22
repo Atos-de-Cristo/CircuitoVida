@@ -19,6 +19,10 @@ class Event extends Component
     public $search = '';
     public $sortBy = 'id';
     public $sortDirection = 'desc';
+    public function search()
+    {
+        $this->resetPage();
+    }
 
     protected $rules = [
         'name' => 'required',
@@ -27,6 +31,8 @@ class Event extends Component
         'status' => 'required',
         'newImage' => 'image|mimes:jpeg,png,jpg,gif|max:5120'
     ];
+
+
 
     public function render(EventService $service, UserService $userService, CategoryService $categoryService)
     {

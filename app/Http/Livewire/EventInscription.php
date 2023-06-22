@@ -7,14 +7,21 @@ use App\Enums\InscriptionStatus;
 use App\Services\EventService;
 use App\Services\InscriptionService;
 use Livewire\Component;
-
+use Livewire\WithPagination;
 class EventInscription extends Component
 {
+    use WithPagination;
     public $isUser = false;
     public $userInscription;
+
     public $search = '';
     public $sortBy = 'id';
     public $sortDirection = 'desc';
+    public function search()
+    {
+        $this->resetPage();
+    }
+
     protected $listeners = ['refreshInscription' => '$refresh'];
 
     public function render(EventService $service)

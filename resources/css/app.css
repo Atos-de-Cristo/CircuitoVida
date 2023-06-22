@@ -28,6 +28,11 @@
     /* Aplica os estilos para a sombra, borda e preenchimento do input */
     @apply shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 leading-tight focus:outline-none;
 }
+/* Estilos para o campo de input de pesquisa */
+.input-form-search {
+    /* Aplica os estilos para a sombra, borda e preenchimento do input */
+    @apply form-input h-full rounded-full bg-slate-200 px-4 pl-9  text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300  hover:bg-slate-200  w-60;
+}
 
 /* Estilos para o rótulo do campo de input */
 .label-input-form {

@@ -1,14 +1,13 @@
-
 <div>
     @if (session()->has('message'))
-        <div class="bg-teal-100  border-teal-500 rounded-md text-teal-900 px-4 py-3 shadow-md my-3"
-            role="alert" x-data="{ showMessage: true }" x-show="showMessage" x-init="setTimeout(() => { showMessage = false; }, 1000)">
-            <div class="flex">
-                <div>
-                    <p class="text-sm">{{ session('message') }}</p>
-                </div>
+    <div class="bg-teal-100  border-teal-500 rounded-md text-teal-900 px-4 py-3 shadow-md my-3" role="alert"
+        x-data="{ showMessage: true }" x-show="showMessage" x-init="setTimeout(() => { showMessage = false; }, 1000)">
+        <div class="flex">
+            <div>
+                <p class="text-sm">{{ session('message') }}</p>
             </div>
         </div>
+    </div>
     @endif
     <div class="flex flex-col md:flex-row items-center justify-between mb-2">
         <div class="flex items-center mb-2 md:mb-0">
@@ -32,10 +31,9 @@
 
             <div class="font-bold flex items-center">
                 <div class="relative mr-4 flex">
-                    <input wire:model.debounce.300ms="search" placeholder="Buscar eventos..."
-                        class="form-input peer h-full rounded-full bg-slate-150 px-4 pl-9 text-xs+ text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 ring-primary/50 hover:bg-slate-200 focus:ring dark:bg-navy-900/90 dark:text-navy-100 dark:placeholder-navy-300 dark:ring-accent/50 dark:hover:bg-navy-900 dark:focus:bg-navy-900 w-60"
+                    <input wire:model.debounce.300ms="search" wire:keydown='search' placeholder="Buscar eventos..." class="input-form-search"
                         type="text">
-                        <x-svg.search/>
+                    <x-svg.search />
                 </div>
             </div>
 
@@ -45,30 +43,29 @@
         <div class="flex flex-wrap m-0  rounded-md">
             @foreach ($dataAll as $data)
             <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4">
-                <div class="bg-gray-100  max-w-sm  dark:bg-slate-800  overflow-hidden shadow rounded-lg flex flex-col h-full">
+                <div
+                    class="bg-gray-100  max-w-sm  dark:bg-slate-800  overflow-hidden shadow rounded-lg flex flex-col h-full">
                     <div class="flex-shrink-0">
-                        @if ($data->image)
-                        <img src="{{ asset($data->image) }}" alt="Logo Evento {{ $data->name }}"
-                            class="hover:scale-125 h-52 w-full object-cover rounded-t-lg cursor-pointer"
+                        <img src="{{ asset(!empty($data->image) ? $data->image : 'images/curso.png') }}"
+                            alt="Logo Evento {{ $data->name }}"
+                            class="hover:scale-110 h-52 w-full object-cover rounded-t-lg cursor-pointer"
                             wire:click="manager({{ $data->id }})">
-                        @else
-                        <img src="{{ asset('images/curso.png') }}" alt="Logo"
-                            class="hover:scale-125 h-52 w-full bg-slate-500 rounded-t-lg cursor-pointer"
-                            wire:click="manager({{ $data->id }})">
-                        @endif
+
                     </div>
                     <div class="flex-grow p-4 flex flex-col justify-between">
                         <div class="mb-4">
-                            <h3 class="text-lg font-medium text-gray-900">{{ $data->name }} </h3>
-                            <p class="text-sm text-gray-500">Tipo: {{ getTypeEvent($data->type) }}</p>
-                            <p class="text-sm text-gray-500">Início:
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">{{ $data->name }} </h3>
+                            <p class="text-sm dark:text-white text-gray-500 ">Início:
                                 {{ date('d/m/Y', strtotime($data->start_date)) }}</p>
-                            <p class="text-sm text-gray-500">Fim: {{ date('d/m/Y', strtotime($data->end_date)) }}
+                            <p class="text-sm dark:text-white text-gray-500">Fim: {{ date('d/m/Y',
+                                strtotime($data->end_date)) }}
                             </p>
-                            <p class="text-sm text-gray-500">Status: {{ getStatusEvent($data->status) }}</p>
-                            <p class="text-sm text-gray-500">Vagas: {{ $data->tickets_limit }}</p>
-                            <p class="text-sm text-gray-500">Inscritos: {{ count($data->inscriptions) }}</p>
-                            <p class="text-sm text-gray-500">Valor: R$
+                            <p class="text-sm dark:text-white text-gray-500">Status: {{ getStatusEvent($data->status) }}
+                            </p>
+                            <p class="text-sm dark:text-white text-gray-500">Vagas: {{ $data->tickets_limit }}</p>
+                            <p class="text-sm dark:text-white text-gray-500">Inscritos: {{ count($data->inscriptions) }}
+                            </p>
+                            <p class="text-sm dark:text-white text-gray-500">Valor: R$
                                 {{ number_format(floatval($data->value), 2, ',', '.') }}</p>
                         </div>
                         <div>

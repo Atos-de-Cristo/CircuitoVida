@@ -1,13 +1,13 @@
 <div>
     @if (session()->has('message'))
-        <div class="bg-teal-100  border-teal-500 rounded-md text-teal-900 px-4 py-3 shadow-md my-3"
-            role="alert" x-data="{ showMessage: true }" x-show="showMessage" x-init="setTimeout(() => { showMessage = false; }, 1000)">
-            <div class="flex">
-                <div>
-                    <p class="text-sm">{{ session('message') }}</p>
-                </div>
+    <div class="bg-teal-100  border-teal-500 rounded-md text-teal-900 px-4 py-3 shadow-md my-3" role="alert"
+        x-data="{ showMessage: true }" x-show="showMessage" x-init="setTimeout(() => { showMessage = false; }, 1000)">
+        <div class="flex">
+            <div>
+                <p class="text-sm">{{ session('message') }}</p>
             </div>
         </div>
+    </div>
     @endif
     <div class="flex flex-col md:flex-row items-center justify-between mb-2">
         <div class="flex items-center mb-2 md:mb-0">
@@ -31,21 +31,21 @@
 
             <div class="font-bold flex items-center">
                 <div class="relative mr-4 flex">
-                    <input wire:model.debounce.300ms="search" placeholder="Buscar eventos..."
-                        class="form-input peer h-full rounded-full bg-slate-150 px-4 pl-9 text-xs+ text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 ring-primary/50 hover:bg-slate-200 focus:ring dark:bg-navy-900/90 dark:text-navy-100 dark:placeholder-navy-300 dark:ring-accent/50 dark:hover:bg-navy-900 dark:focus:bg-navy-900 w-60"
+                    <input wire:model.debounce.300ms.page="search"  wire:keydown="search" placeholder="Buscar eventos..."
+                        class="input-form-search"
                         type="text">
-                        <x-svg.search/>
+
+                    <x-svg.search />
                 </div>
             </div>
 
             @can('admin')
-                <div class="mt-2 sm:mt-0 flex space-x-2">
-                    <button wire:click="create()"
-                        class="btn-primary">
-                        <x-svg.add size="h-6 w-6"/>
-                        <span>Evento</span>
-                    </button>
-                </div>
+            <div class="mt-2 sm:mt-0 flex space-x-2">
+                <button wire:click="create()" class="btn-primary">
+                    <x-svg.add size="h-6 w-6" />
+                    <span>Evento</span>
+                </button>
+            </div>
             @endcan
         </div>
 
@@ -55,15 +55,10 @@
             <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-2">
                 <div class="bg-gray-100  max-w-sm  dark:bg-slate-800 overflow-hidden shadow rounded-lg flex flex-col ">
                     <div class="flex-shrink-0">
-                        @if ($data->image)
-                            <img src="{{ asset($data->image) }}" alt="Logo Evento {{ $data->name }}"
-                                class="hover:scale-110 h-52 w-full object-cover  cursor-pointer"
-                                wire:click="manager({{ $data->id }})">
-                        @else
-                            <img src="{{ asset('images/curso.png') }}" alt="Logo"
-                                class="hover:scale-110 h-52 w-full bg-slate-500  cursor-pointer"
-                                wire:click="manager({{ $data->id }})">
-                        @endif
+                        <img src="{{ asset(!empty($data->image) ? $data->image : 'images/curso.png') }}"
+                            alt="Logo Evento {{ $data->name }}"
+                            class="hover:scale-110 h-52 w-full object-cover rounded-t-lg cursor-pointer"
+                            wire:click="manager({{ $data->id }})">
                     </div>
                     <div class="flex-grow p-4 flex flex-col justify-between">
                         <div class="mb-4">
@@ -74,7 +69,7 @@
                         <div>
                             <hr class="my-2 border-gray-300">
                             <div class="flex justify-center md:space-x-4 md:space-y-0 space-y-4 flex-col md:flex-row">
-                                <button wire:click.prevent="manager({{ $data->id }})"  x-data="{ open: null }"
+                                <button wire:click.prevent="manager({{ $data->id }})" x-data="{ open: null }"
                                     class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">
                                     Ver
                                 </button>
