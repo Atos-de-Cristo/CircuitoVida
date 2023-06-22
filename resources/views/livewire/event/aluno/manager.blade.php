@@ -1,7 +1,8 @@
+
 <div class="card-white">
     <div class="font-bold flex items-center">
         <div class="relative mr-4 flex">
-            <input wire:model.debounce.300ms.page="search"  placeholder="Buscar eventos..."
+            <input wire:model.debounce.300ms.page="search"  placeholder="Buscar aluno..."
                 class="input-form-search"
                 type="text">
             <x-svg.search />
@@ -23,6 +24,9 @@
         @endcan
     </div>
     @empty
-    <span class="text-red-500">Nenhuma inscrição realizada</span>
+    <div class="mt-5">
+        <span class="text-red-500 ">Nenhuma inscrição realizada</span>
+    </div>
+
     @endforelse
 </div>
