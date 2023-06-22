@@ -6,21 +6,21 @@
                 <img src="{{ asset($this->user->profile_photo_url) }}" alt="{{ $this->user->name }}"
                     class="object-cover h-full w-full cursor-pointer">
             </div>
-            <h1 class="text-xl font-bold text-center mb-4 sm:mb-0">{{ $this->user->name }}</h1>
+            <h1 class="text-xl font-bold text-center mt-5 mb-4 sm:mb-0">{{ $this->user->name }}</h1>
             <p class="text-center">{{ $this->user->email }}</p>
         </div>
     </div>
     <div class="sm:col-span-2 md:col-span-2">
         <div class="card-white">
             <h1 class="text-xl font-bold text-center mb-4 sm:mb-0">Cursos</h1>
-            <div class="flex flex-wrap m-0 bg-gray-50 rounded">
+            <div class="flex flex-wrap m-0  rounded">
                 @forelse ($this->user->inscriptions as $inscription)
                     <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4">
                         <div class="bg-white overflow-hidden shadow rounded-lg flex flex-col h-full">
-                            <div class="flex-grow p-4 flex flex-col items-center justify-center">
+                            <div class="flex-grow  flex flex-col items-center justify-center">
                                 <img src="{{ asset(!empty($inscription->event->image) ? $inscription->event->image : 'images/curso.png') }}"
                                     alt="{{ $inscription->name }}"
-                                    class="hover:scale-125 h-52 w-full bg-slate-500 rounded-t-lg">
+                                    class="hover:scale-110 h-52 w-full bg-slate-500 ">
                             </div>
                             <div class="flex-grow p-4 flex flex-col justify-between">
                                 <div class="mb-4">

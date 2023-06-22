@@ -12,12 +12,14 @@ class EventInscription extends Component
 {
     public $isUser = false;
     public $userInscription;
-
+    public $search = '';
+    public $sortBy = 'id';
+    public $sortDirection = 'desc';
     protected $listeners = ['refreshInscription' => '$refresh'];
 
     public function render(EventService $service)
     {
-        $dataAll = $service->getAll();
+        $dataAll = $service->paginate($this->search,$this->sortBy, $this->sortDirection);
         return view('livewire.event.inscription', compact("dataAll"));
     }
 
