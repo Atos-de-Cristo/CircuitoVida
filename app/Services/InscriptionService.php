@@ -18,6 +18,15 @@ class InscriptionService
     {
         return $this->repository->where($filter)->with('event', 'user')->get();
     }
+    public function getAllAlunos($search, $eventId): Collection
+    {
+        return Inscription::where('event_id', $eventId)
+            ->whereHas('user', function ($query) use ($search) {
+                $query->where('name', 'LIKE', '%' . $search . '%');
+            })
+            ->get();
+    }
+
 
     public function getFrequency(string $eventId, string $lessonId): Collection
     {
