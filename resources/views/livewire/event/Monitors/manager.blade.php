@@ -1,12 +1,5 @@
 <div>
-    <button wire:click.prevent="openModalMonitors" class="btn-primary">
-        <x-svg.users-group size="h-5 w-5" color="fill-current text-white " />
-        <span class="ml-2">Monitores</span>
-    </button>
-
-
-    @if ($isOpenMonitors)
-    <x-dialog-modal id="myModal" wire:model="isOpenMonitors" maxWidth="2xl" closeModal="closeModalMonitors()">
+    <x-dialog-modal id="myModal" wire:model.defer="isOpenMonitors" maxWidth="2xl" closeModal="closeModalMonitors()">
         <x-slot name="title">
             @if (!empty($_id))
             Atualizar Monitor
@@ -67,7 +60,5 @@
             </span>
         </x-slot>
     </x-dialog-modal>
-    @endif
-
 </div>
 

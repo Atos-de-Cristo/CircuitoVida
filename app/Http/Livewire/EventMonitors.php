@@ -15,6 +15,7 @@ class EventMonitors extends Component
 
     public function mount($eventId, EventService $service)
     {
+        $this->isOpenMonitors = true;
         $this->eventId = $eventId;
         $event = $service->find($eventId);
         $this->monitors = $event->monitors->pluck('id')->toArray();
@@ -46,5 +47,6 @@ class EventMonitors extends Component
 
         $this->emit('refreshManage');
         $this->isOpenMonitors = false;
+        $this->emit('closeModalMonitors');
     }
 }

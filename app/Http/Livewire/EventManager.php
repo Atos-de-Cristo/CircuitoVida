@@ -24,8 +24,8 @@ class EventManager extends Component
     public $lessonId, $moduleSelected;
     public $showConfirmationPopup = false;
     public $isOpenModule = false;
-
-
+    public $isOpenLesson = false;
+    public $isOpenMonitors = false;
 
     public function boot(Request $request)
     {
@@ -90,6 +90,8 @@ class EventManager extends Component
 
     public function openModalModule()
     {
+        $this->isOpenMonitors = false;
+        $this->isOpenLesson = false;
         $this->isOpenModule = true;
     }
 
@@ -127,7 +129,14 @@ class EventManager extends Component
         $this->resetInputModule();
     }
 
-
+    public function openModalLesson(string $idModule, string | null $lessonId)
+    {
+        $this->moduleSelected = $idModule;
+        $this->lessonId = $lessonId;
+        $this->isOpenMonitors = true;
+        $this->isOpenLesson = true;
+        $this->isOpenModule = false;
+    }
 
     public function dellLesson($id, LessonService $service)
     {
@@ -135,6 +144,22 @@ class EventManager extends Component
         $this->emit('refreshManage');
     }
 
+    public function closeModalLesson()
+    {
+        $this->isOpenLesson = false;
+    }
+
+    public function openModalMonitors()
+    {
+        $this->isOpenMonitors = true;
+        $this->emit('isOpenMonitors');
+        $this->isOpenModule = false;
+    }
+
+    public function closeModalMonitors()
+    {
+        $this->isOpenMonitors = false;
 
 
+    }
 }

@@ -53,12 +53,14 @@
             </div>
             @can('admin')
             <div class="mt-2 sm:mt-0 flex space-x-2">
-                <button wire:click.prevent="createModule" class="btn-primary">
+                <button wire:click.prevent="createModule()" class="btn-primary">
                     <x-svg.pasta-add size="h-5 w-5" color="fill-current text-white " />
                     <span class="ml-2">Módulos</span>
                 </button>
-                <livewire:event-monitors :eventId="$eventId" />
-
+                <button wire:click.prevent="openModalMonitors()" class="btn-primary">
+                    <x-svg.users-group size="h-5 w-5" color="fill-current text-white " />
+                    <span class="ml-2">Monitores</span>
+                </button>
             </div>
             @endcan
         </div>
@@ -78,10 +80,10 @@
                         </span>
                         <div class="flex items-center space-x-2">
                             @can('admin')
-                            <button wire:click.prevent="editModule({{ $module->id }})" class="mr-2" @click.stop>
+                            <button wire:click.prevent="editModule({{ $module->id }})" class="mr-2 hover:scale-110"  @click.stop>
                                 <x-svg.edit />
                             </button>
-                            <button wire:click.prevent="deleteItem({{ $module->id }})" class="mr-5" @click.stop>
+                            <button wire:click.prevent="deleteItem({{ $module->id }})" class="mr-5 hover:scale-110" @click.stop>
                                 <x-svg.delete />
                             </button>
                             @endcan
@@ -106,8 +108,13 @@
                     <div class="flex items-center mb-2 justify-between">
                         <h3 class="font-bold text-black dark:text-white mr-2">Título da Aula</h3>
                         @can('admin')
-                        <livewire:event-lesson :eventId="$eventId" :moduleId="$module->id" :lessonId="$lessonId" />
-
+                        <button wire:click.prevent="openModalLesson({{ $module->id }}, null)"
+                            class="btn-primary text-xs flex items-center">
+                            <div class="flex items-center justify-center">
+                                <x-svg.add color="text-white" />
+                                <span class="ml-1">Aula</span>
+                            </div>
+                        </button>
                         @endcan
                     </div>
                     <div class="border-t border-gray-200 pb-2">
@@ -191,8 +198,16 @@
     @if ($isOpenModule)
     @include('livewire.event.module-create')
     @endif
-
-
+    @if ($isOpenLesson)
+    @livewire('event-lesson', [
+    'eventId' => $eventId,
+    'moduleId' => $moduleSelected,
+    'lessonId' => $lessonId,
+    ])
+    @endif
+    @if ($isOpenMonitors)
+    @livewire('event-monitors', [$eventId])
+    @endif
 
     @if ($showConfirmationPopup)
     <div class="fixed z-40 inset-0 overflow-y-auto ease-out duration-400">

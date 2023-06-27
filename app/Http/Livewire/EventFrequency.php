@@ -10,9 +10,11 @@ class EventFrequency extends Component
 {
     public $eventId, $lessonId;
     public array $users;
+    public $isOpenFrequency = false;
 
     public function mount($eventId, $lessonId)
     {
+        $this->isOpenFrequency = true;
         $this->eventId = $eventId;
         $this->lessonId = $lessonId;
         $this->users = [];

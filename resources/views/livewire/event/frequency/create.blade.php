@@ -1,5 +1,5 @@
 
-<x-dialog-modal id="myModal" maxWidth="lg" closeModal="closeModalFrequency()">
+<x-dialog-modal id="myModal" wire:model="isOpenFrequency" maxWidth="lg" closeModal="closeModalFrequency()">
     <x-slot name="title">
      Frequência Aula
     </x-slot>
