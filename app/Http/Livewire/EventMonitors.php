@@ -44,6 +44,7 @@ class EventMonitors extends Component
 
         $eventService->store($request);
 
-        $this->emit('closeModalMonitors');
+        $this->emit('refreshManage');
+        $this->isOpenMonitors = false;
     }
 }

@@ -106,13 +106,8 @@
                     <div class="flex items-center mb-2 justify-between">
                         <h3 class="font-bold text-black dark:text-white mr-2">Título da Aula</h3>
                         @can('admin')
-                        <button wire:click.prevent="openModalLesson({{ $module->id }}, null)"
-                            class="btn-primary text-xs flex items-center">
-                            <div class="flex items-center justify-center">
-                                <x-svg.add color="text-white" />
-                                <span class="ml-1">Aula</span>
-                            </div>
-                        </button>
+                        <livewire:event-lesson :eventId="$eventId" :moduleId="$module->id" :lessonId="$lessonId" />
+
                         @endcan
                     </div>
                     <div class="border-t border-gray-200 pb-2">
@@ -196,13 +191,7 @@
     @if ($isOpenModule)
     @include('livewire.event.module-create')
     @endif
-    @if ($isOpenLesson)
-    @livewire('event-lesson', [
-    'eventId' => $eventId,
-    'moduleId' => $moduleSelected,
-    'lessonId' => $lessonId,
-    ])
-    @endif
+
 
 
     @if ($showConfirmationPopup)

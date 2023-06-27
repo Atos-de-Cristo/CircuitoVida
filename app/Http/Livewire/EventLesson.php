@@ -9,18 +9,16 @@ use Illuminate\Http\Request;
 class EventLesson extends Component
 {
     public $eventId, $moduleId, $lessonId;
-    public $title, $description, $video, $start_date, $end_date;
+    public $title, $moduleSelected, $description, $video, $start_date, $end_date;
     public $modalActivity;
+    public $isOpenLesson = false;
 
-    public function boot(Request $request)
+    public function mount($eventId, $moduleId,$lessonId)
     {
-        $this->eventId = $request->eventId;
-        $this->moduleId = $request->moduleId;
-        $this->lessonId = $request->lessonId;
-    }
+        $this->eventId = $eventId;
+        $this->moduleId = $moduleId;
+        $this->lessonId = $lessonId;
 
-    public function booted()
-    {
         if ($this->lessonId) {
             $this->editLesson();
         }
@@ -33,7 +31,7 @@ class EventLesson extends Component
 
     public function closeModal()
     {
-        $this->emit('closeModalLesson');
+        $this->reset();
     }
 
     public function editLesson()
@@ -48,10 +46,11 @@ class EventLesson extends Component
         $this->end_date = date('Y-m-d H:i:s', strtotime($lessonData->end_date));
     }
 
-    public function store(LessonService $service)
+    public function store(LessonService $lessonService)
     {
         $this->validate([
-            'title' => 'required'
+            'title' => 'required',
+            'end_date' => 'required|after:start_date',
         ]);
 
         $request = [
@@ -68,10 +67,16 @@ class EventLesson extends Component
             $request['id'] = $this->lessonId;
         }
 
-        $service->store($request);
+        $lessonService->store($request);
 
-        session()->flash('message', 'Aula cadastrado com sucesso.');
+        session()->flash('message', 'Aula cadastrada com sucesso.');
 
         $this->closeModal();
+        $this-> emit('refreshManage');
+    }
+
+    public function openModalLesson()
+    {
+        $this->isOpenLesson = true;
     }
 }

@@ -1,5 +1,15 @@
 
-<x-dialog-modal id="isOpenLesson" wire:model="isOpenLesson" maxWidth="lg" closeModal="closeModal()">
+<div>
+    <button wire:click.prevent="openModalLesson"
+    class="btn-primary text-xs flex items-center">
+    <div class="flex items-center justify-center">
+        <x-svg.add color="text-white" />
+        <span class="ml-1">Aula</span>
+    </div>
+</button>
+
+@if($isOpenLesson)
+<x-dialog-modal id="myModal" wire:model="isOpenLesson" maxWidth="lg" closeModal="closeModal()">
     <x-slot name="title">
         @if (!empty($lessonId))
         Atualizar Aula
@@ -91,3 +101,7 @@
         </span>
     </x-slot>
 </x-dialog-modal>
+@endif
+
+</div>
+
