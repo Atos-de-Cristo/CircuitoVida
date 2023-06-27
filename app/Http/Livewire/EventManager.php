@@ -25,7 +25,7 @@ class EventManager extends Component
     public $isOpenModule = false;
     public $isOpenMonitors = false;
 
-    public function boot(Request $request)
+    public function mount(Request $request)
     {
         $this->eventId = $request->id;
     }
