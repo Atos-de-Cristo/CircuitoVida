@@ -1,4 +1,4 @@
-<x-dialog-modal id="myModal" maxWidth="lg" closeModal="closeModalModule()">
+<x-dialog-modal id="isOpenModule" wire:model="isOpenModule" maxWidth="lg" closeModal="closeModalModule()">
     <x-slot name="title">
         @if (!empty($module_id))
         Atualizar Módulo

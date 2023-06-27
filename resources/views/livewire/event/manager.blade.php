@@ -1,8 +1,8 @@
 <div>
 
     @if (session()->has('message'))
-    <div class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3" role="alert"
-        x-data="{ showMessage: true }" x-show="showMessage" x-init="setTimeout(() => { showMessage = false; }, 4000)">
+    <div class="bg-teal-100  border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3" role="alert"
+        x-data="{ showMessage: true }" x-show="showMessage" x-init="setTimeout(() => { showMessage = false; }, 1000)">
         <div class="flex">
             <div>
                 <p class="text-sm">{{ session('message') }}</p>
@@ -53,14 +53,12 @@
             </div>
             @can('admin')
             <div class="mt-2 sm:mt-0 flex space-x-2">
-                <button wire:click.prevent="createModule()" class="btn-primary">
+                <button wire:click.prevent="createModule" class="btn-primary">
                     <x-svg.pasta-add size="h-5 w-5" color="fill-current text-white " />
                     <span class="ml-2">Módulos</span>
                 </button>
-                <button wire:click.prevent="openModalMonitors()" class="btn-primary">
-                    <x-svg.users-group size="h-5 w-5" color="fill-current text-white " />
-                    <span class="ml-2">Monitores</span>
-                </button>
+                <livewire:event-monitors :eventId="$eventId" />
+
             </div>
             @endcan
         </div>
@@ -80,7 +78,7 @@
                         </span>
                         <div class="flex items-center space-x-2">
                             @can('admin')
-                            <button wire:click.prevent="editModule({{ $module->id }})" class="mr-2">
+                            <button wire:click.prevent="editModule({{ $module->id }})" class="mr-2" @click.stop>
                                 <x-svg.edit />
                             </button>
                             <button wire:click.prevent="deleteItem({{ $module->id }})" class="mr-5" @click.stop>
@@ -205,9 +203,7 @@
     'lessonId' => $lessonId,
     ])
     @endif
-    @if ($isOpenMonitors)
-    @livewire('event-monitors', [$eventId])
-    @endif
+
 
     @if ($showConfirmationPopup)
     <div class="fixed z-40 inset-0 overflow-y-auto ease-out duration-400">

@@ -8,8 +8,10 @@ use Livewire\Component;
 
 class EventMonitors extends Component
 {
+
     public $eventId, $monitors;
     public $search = '';
+    public $isOpenMonitors = false;
 
     public function mount($eventId, EventService $service)
     {
@@ -23,10 +25,14 @@ class EventMonitors extends Component
         $optMonitors = $userService->getMonitorsFiltered($this->search);
         return view('livewire.event.monitors.manager', compact('optMonitors'));
     }
+    public function openModalMonitors()
+    {
+        $this->isOpenMonitors = true;
+    }
 
     public function closeModalMonitors()
     {
-        $this->emit('closeModalMonitors');
+        $this->isOpenMonitors = false;
     }
 
     public function storeMonitors(EventService $eventService)

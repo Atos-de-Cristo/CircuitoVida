@@ -1,4 +1,4 @@
-<x-dialog-modal id="myModal" maxWidth="2xl" closeModal="closeModal()">
+<x-dialog-modal id="myModal" wire:model="isOpen" maxWidth="2xl" closeModal="closeModal()">
     <x-slot name="title">
         @if (!empty($_id))
         Atualizar Evento

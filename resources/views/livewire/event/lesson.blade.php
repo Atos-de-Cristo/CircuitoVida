@@ -1,5 +1,5 @@
 
-<x-dialog-modal id="myModal" maxWidth="lg" closeModal="closeModal()">
+<x-dialog-modal id="isOpenLesson" wire:model="isOpenLesson" maxWidth="lg" closeModal="closeModal()">
     <x-slot name="title">
         @if (!empty($lessonId))
         Atualizar Aula
