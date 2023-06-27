@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Enums\InscriptionStatus;
-use App\Services\{EventService, InscriptionService, LessonService, ModuleService};
+use App\Services\{EventService, InscriptionService, ModuleService};
 use Livewire\Component;
 use Illuminate\Http\Request;
 use Livewire\WithFileUploads;
@@ -16,15 +16,13 @@ class EventManager extends Component
         'refreshManage' => '$refresh',
         'closeModalFrequency' => 'closeModalFrequency',
         'closeModalMonitors' => 'closeModalMonitors',
-        'closeModalLesson' => 'closeModalLesson'
     ];
 
     public $eventId, $nameModule;
     public $user_id, $event_id, $module_id, $title, $description, $video, $date, $itemdelete;
-    public $lessonId, $moduleSelected;
+    public $moduleSelected;
     public $showConfirmationPopup = false;
     public $isOpenModule = false;
-    public $isOpenLesson = false;
     public $isOpenMonitors = false;
 
     public function boot(Request $request)
@@ -91,7 +89,6 @@ class EventManager extends Component
     public function openModalModule()
     {
         $this->isOpenMonitors = false;
-        $this->isOpenLesson = false;
         $this->isOpenModule = true;
     }
 
@@ -127,26 +124,6 @@ class EventManager extends Component
 
         $this->closeModalModule();
         $this->resetInputModule();
-    }
-
-    public function openModalLesson(string $idModule, string | null $lessonId)
-    {
-        $this->moduleSelected = $idModule;
-        $this->lessonId = $lessonId;
-        $this->isOpenMonitors = true;
-        $this->isOpenLesson = true;
-        $this->isOpenModule = false;
-    }
-
-    public function dellLesson($id, LessonService $service)
-    {
-        $service->delete($id);
-        $this->emit('refreshManage');
-    }
-
-    public function closeModalLesson()
-    {
-        $this->isOpenLesson = false;
     }
 
     public function openModalMonitors()

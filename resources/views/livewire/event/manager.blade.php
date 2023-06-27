@@ -101,20 +101,12 @@
                         </div>
                     </div>
                 </div>
-
-
                 <div x-show="open"
                     class="bg-gray-50 dark:bg-slate-600 p-2 transition-all mt-4 duration-300 ease-in-out rounded">
                     <div class="flex items-center mb-2 justify-between">
                         <h3 class="font-bold text-black dark:text-white mr-2">Título da Aula</h3>
                         @can('admin')
-                        <button wire:click.prevent="openModalLesson({{ $module->id }}, null)"
-                            class="btn-primary text-xs flex items-center">
-                            <div class="flex items-center justify-center">
-                                <x-svg.add color="text-white" />
-                                <span class="ml-1">Aula</span>
-                            </div>
-                        </button>
+                            <livewire:event-lesson :eventId="$eventId" :moduleId="$module->id" :key="time().$module->id" />
                         @endcan
                     </div>
                     <div class="border-t border-gray-200 pb-2">
@@ -163,15 +155,7 @@
                             </div>
                             @can('admin')
                             <div class="flex items-center mr-2">
-                                <button wire:click.prevent="openModalLesson({{ $module->id }}, {{ $lesson->id }})"
-                                    class="mr-5">
-                                    <x-svg.edit />
-
-                                </button>
-                                <button wire:click.prevent="dellLesson({{ $lesson->id }})">
-                                    <x-svg.delete />
-
-                                </button>
+                                <livewire:event-lesson :eventId="$eventId" :moduleId="$module->id" :lessonId="$lesson->id" :key="time().$lesson->id" />
                             </div>
                             @endcan
                         </div>
@@ -196,17 +180,10 @@
         </div>
     </div>
     @if ($isOpenModule)
-    @include('livewire.event.module-create')
-    @endif
-    @if ($isOpenLesson)
-    @livewire('event-lesson', [
-    'eventId' => $eventId,
-    'moduleId' => $moduleSelected,
-    'lessonId' => $lessonId,
-    ])
+        @include('livewire.event.module-create')
     @endif
     @if ($isOpenMonitors)
-    @livewire('event-monitors', [$eventId])
+        @livewire('event-monitors', [$eventId])
     @endif
 
     @if ($showConfirmationPopup)
@@ -234,6 +211,4 @@
         </div>
     </div>
     @endif
-
-
 </div>

@@ -11,6 +11,7 @@ class EventLesson extends Component
     public $eventId, $moduleId, $lessonId;
     public $title, $description, $video, $start_date, $end_date;
     public $modalActivity;
+    public $isOpenLesson = false;
 
     public function boot(Request $request)
     {
@@ -29,11 +30,6 @@ class EventLesson extends Component
     public function render()
     {
         return view('livewire.event.lesson');
-    }
-
-    public function closeModal()
-    {
-        $this->emit('closeModalLesson');
     }
 
     public function editLesson()
@@ -70,9 +66,13 @@ class EventLesson extends Component
 
         $service->store($request);
 
-        session()->flash('message', 'Aula cadastrado com sucesso.');
+        $this->isOpenLesson = false;
+        $this->emit('refreshManage');
+    }
 
-        $this->closeModal();
-        $this->emit('closeModalLesson');
+    public function dellLesson(LessonService $service)
+    {
+        $service->delete($this->lessonId);
+        $this->emit('refreshManage');
     }
 }
