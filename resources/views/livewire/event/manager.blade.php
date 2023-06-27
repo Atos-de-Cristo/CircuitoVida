@@ -57,10 +57,7 @@
                     <x-svg.pasta-add size="h-5 w-5" color="fill-current text-white " />
                     <span class="ml-2">Módulos</span>
                 </button>
-                <button wire:click.prevent="openModalMonitors()" class="btn-primary">
-                    <x-svg.users-group size="h-5 w-5" color="fill-current text-white " />
-                    <span class="ml-2">Monitores</span>
-                </button>
+                <livewire:event-monitors :eventId='$eventId'>
             </div>
             @endcan
         </div>
@@ -182,10 +179,6 @@
     @if ($isOpenModule)
         @include('livewire.event.module-create')
     @endif
-    @if ($isOpenMonitors)
-        @livewire('event-monitors', [$eventId])
-    @endif
-
     @if ($showConfirmationPopup)
     <div class="fixed z-40 inset-0 overflow-y-auto ease-out duration-400">
         <div class="flex items-end justify-start min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">

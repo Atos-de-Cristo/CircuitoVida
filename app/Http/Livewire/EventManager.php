@@ -15,7 +15,6 @@ class EventManager extends Component
     protected $listeners = [
         'refreshManage' => '$refresh',
         'closeModalFrequency' => 'closeModalFrequency',
-        'closeModalMonitors' => 'closeModalMonitors',
     ];
 
     public $eventId, $nameModule;
@@ -23,7 +22,6 @@ class EventManager extends Component
     public $moduleSelected;
     public $showConfirmationPopup = false;
     public $isOpenModule = false;
-    public $isOpenMonitors = false;
 
     public function mount(Request $request)
     {
@@ -88,7 +86,6 @@ class EventManager extends Component
 
     public function openModalModule()
     {
-        $this->isOpenMonitors = false;
         $this->isOpenModule = true;
     }
 
@@ -124,19 +121,5 @@ class EventManager extends Component
 
         $this->closeModalModule();
         $this->resetInputModule();
-    }
-
-    public function openModalMonitors()
-    {
-        $this->isOpenMonitors = true;
-        $this->emit('isOpenMonitors');
-        $this->isOpenModule = false;
-    }
-
-    public function closeModalMonitors()
-    {
-        $this->isOpenMonitors = false;
-
-
     }
 }

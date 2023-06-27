@@ -4,20 +4,23 @@ namespace App\Http\Livewire;
 
 use App\Services\EventService;
 use App\Services\UserService;
+use Illuminate\Http\Request;
 use Livewire\Component;
 
 class EventMonitors extends Component
 {
-
     public $eventId, $monitors;
     public $search = '';
     public $isOpenMonitors = false;
 
-    public function mount($eventId, EventService $service)
+    public function boot(Request $request)
     {
-        $this->isOpenMonitors = true;
-        $this->eventId = $eventId;
-        $event = $service->find($eventId);
+        $this->eventId = $request->eventId;
+    }
+
+    public function mount(EventService $service)
+    {
+        $event = $service->find($this->eventId);
         $this->monitors = $event->monitors->pluck('id')->toArray();
     }
 
@@ -25,15 +28,6 @@ class EventMonitors extends Component
     {
         $optMonitors = $userService->getMonitorsFiltered($this->search);
         return view('livewire.event.monitors.manager', compact('optMonitors'));
-    }
-    public function openModalMonitors()
-    {
-        $this->isOpenMonitors = true;
-    }
-
-    public function closeModalMonitors()
-    {
-        $this->isOpenMonitors = false;
     }
 
     public function storeMonitors(EventService $eventService)
@@ -47,6 +41,5 @@ class EventMonitors extends Component
 
         $this->emit('refreshManage');
         $this->isOpenMonitors = false;
-        $this->emit('closeModalMonitors');
     }
 }
