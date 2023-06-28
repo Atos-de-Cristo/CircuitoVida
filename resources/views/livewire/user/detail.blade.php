@@ -18,8 +18,9 @@
                 <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4">
                     <div class="bg-white overflow-hidden shadow rounded-lg flex flex-col h-full">
                         <div class="flex-grow  flex flex-col items-center justify-center">
-                            <img src="{{ asset(!empty($inscription->event->image) ? $inscription->event->image : 'images/curso.png') }}"
-                                alt="{{ $inscription->name }}" class="hover:scale-110 h-52 w-full bg-slate-500 ">
+                           <a href="{{route('eventManager',$inscription->event->id)}}"><img src="{{ asset(!empty($inscription->event->image) ? $inscription->event->image : 'images/curso.png') }}"
+                            alt="{{ $inscription->name }}" class="hover:scale-105 h-52 w-full bg-slate-500 ">
+                            </a>
                         </div>
                         <div class="flex-grow p-4 flex flex-col justify-between">
                             <div class="mb-4">
@@ -28,6 +29,19 @@
                                     }}</p>
                                 <p class="text-sm text-gray-500">Atividades: {{ $this->activity[$inscription->event_id]
                                     }}</p>
+                                <div class="relative">
+                                    <div class="mb-2">
+                                        <span class="text-gray-500 text-xs">Atividades:</span>
+                                    </div>
+                                    <div class="overflow-hidden h-4 text-xs flex bg-indigo-200 rounded">
+                                        <div style="width: {{ is_numeric($this->activity[$inscription->event_id]) && is_numeric($inscription->event->lessons->count()) ? ($this->activity[$inscription->event_id] / $inscription->event->lessons->count() * 100) : 0 }}%"
+                                            class="shadow-none flex flex-col text-center whitespace-nowrap justify-center {{ $this->activity[$inscription->event_id] == $inscription->event->lessons->count() ? 'bg-green-500' : 'bg-indigo-500' }}">
+                                        </div>
+                                    </div>
+                                    <span
+                                        class="absolute right-0 top-1/2 transform -translate-y-1/2 pr-2 text-sm text-gray-500">{{
+                                        $this->activity[$inscription->event_id] }}</span>
+                                </div>
                                 <div class="relative">
                                     <div class="mb-2">
                                         <span class="text-gray-500 text-xs">Frequência:</span>
