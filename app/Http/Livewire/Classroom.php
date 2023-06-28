@@ -35,13 +35,5 @@ class Classroom extends Component
         return view('livewire.event.classroom', compact('lessonData'));
     }
 
-    public function openModalFrequency()
-    {
-        $this->isOpenFrequency = true;
-    }
 
-    public function closeModalFrequency()
-    {
-        $this->isOpenFrequency = false;
-    }
 }

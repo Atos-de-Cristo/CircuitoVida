@@ -4,16 +4,16 @@
         <x-svg.uploud size="w-4 h-4" />
     </button>
     @else
-    <button wire:click.prevent="$set('isOpenAttachment', true)" class="mr-2">
+    <button wire:click.prevent="$set('isOpenAttachment', true)" class="mr-2 hover:scale-110">
         <x-svg.edit />
     </button>
-    <button wire:click.prevent="dellAttachment()">
+    <button wire:click.prevent="dellAttachment()" class="hover:scale-110">
         <x-svg.delete />
     </button>
     @endempty
 
     @if ($isOpenAttachment)
-    <x-dialog-modal id="myModal" maxWidth="xl" closeModal="$set('isOpenAttachment', false)">
+    <x-dialog-modal id="isOpenAttachment" wire:model="isOpenAttachment" maxWidth="xl" closeModal="$set('isOpenAttachment', false)">
         <x-slot name="title">
             @if (!empty($attachmentId))
             Atualizar Material

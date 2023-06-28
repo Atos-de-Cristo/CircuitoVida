@@ -12,26 +12,23 @@ class Attachment extends Component
     use WithFileUploads;
 
     public string | null $attachmentId;
-    private $service;
+
     public $attachment, $name, $lessonId;
-    public bool $isOpenAttachment = false;
+    public $isOpenAttachment = false;
 
     protected $listeners = [
         'refreshAttachment' => '$refresh'
     ];
 
-    public function __construct()
-    {
-        $this->service = new AttachmentService;
-    }
 
-    public function mount($lessonId, $attachmentId)
+
+    public function mount($lessonId, $attachmentId, AttachmentService $service)
     {
         $this->lessonId = $lessonId;
         $this->attachmentId = $attachmentId;
 
         if ($attachmentId) {
-            $data = $this->service->find($attachmentId);
+            $data = $service->find($attachmentId);
             $this->name = $data->name;
         }
     }
@@ -41,7 +38,7 @@ class Attachment extends Component
         return view('livewire.shared.attachment');
     }
 
-    public function store()
+    public function store(AttachmentService $service)
     {
         $this->validate([
             'name' => 'required',
@@ -65,7 +62,7 @@ class Attachment extends Component
             $request['path'] = Storage::url($attachment);
         }
 
-        $this->service->store($request);
+        $service->store($request);
 
         $this->emit('refreshClassroom');
         $this->emit('refreshAttachment');
@@ -78,9 +75,10 @@ class Attachment extends Component
         $this->name = '';
     }
 
-    public function dellAttachment()
+    public function dellAttachment(AttachmentService $service)
     {
-        $this->service->delete($this->attachmentId);
+        $service->delete($this->attachmentId);
         $this->emit('refreshClassroom');
     }
+
 }

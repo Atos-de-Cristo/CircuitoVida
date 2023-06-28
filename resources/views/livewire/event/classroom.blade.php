@@ -23,12 +23,7 @@
                 {{ $lessonData->title }}
             </div>
             @can('admin')
-                <div class="mt-2 sm:mt-0 flex space-x-2">
-                    <button wire:click.prevent="openModalFrequency()" class="btn-primary">
-                        <x-svg.checklist size="w-4 h-4" />
-                        <span class="ml-2">Fequência</span>
-                    </button>
-                </div>
+            @livewire('event-frequency', [$eventId, $lessonId])
             @endcan
         </div>
     </div>
@@ -76,9 +71,11 @@
                     <div class="flex items-center justify-between ml-3 ">
                         <div class="flex items-center">
                             <x-svg.anexo size="h-5 w-5" />
-                            <a href="{{ $attachment->path }}" target="_blanck"
-                                class=" font-bold text-md text-blue-500 hover:underline  ml-2">{{ $attachment->name }}</a>
+                            <a href="{{ $attachment->path }}" target="_blank" class="font-bold text-md text-blue-500 hover:underline ml-2">
+                                {{ $attachment->name }}.{{ pathinfo($attachment->path, PATHINFO_EXTENSION) }}
+                            </a>
                         </div>
+
 
                         @can('admin')
                             <div class="flex items-center mr-2">
@@ -92,7 +89,5 @@
             </div>
         </div>
     </div>
-    @if ($isOpenFrequency)
-        @livewire('event-frequency', [$eventId, $lessonId])
-    @endif
+
 </div>

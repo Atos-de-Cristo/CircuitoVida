@@ -12,7 +12,7 @@ class EventActivityList extends Component
     use WithFileUploads;
 
     public $lessonId;
-    public $isOpenQuestions;
+    public $isOpenQuestions = false;
     public $atvId;
 
     protected $listeners = [

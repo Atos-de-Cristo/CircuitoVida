@@ -4,16 +4,16 @@
         <x-svg.add size="w-4 h-4" color="text-white" />
     </button>
     @else
-    <button wire:click.prevent="$set('isOpenActivity', true)" class="mr-2">
+    <button wire:click.prevent="$set('isOpenActivity', true)" class="mr-2 hover:scale-110">
         <x-svg.edit />
     </button>
-    <button wire:click.prevent="dellActivity()">
+    <button wire:click.prevent="dellActivity()"class="hover:scale-110">
         <x-svg.delete />
     </button>
     @endempty
 
     @if ($isOpenActivity)
-    <x-dialog-modal id="myModal" maxWidth="lg" closeModal="$set('isOpenActivity', false)">
+    <x-dialog-modal id="isOpenActivity" wire:model="isOpenActivity" maxWidth="lg" closeModal="$set('isOpenActivity', false)">
         <x-slot name="title">
             @if (!empty($activityId))
             Atualizar Atividade

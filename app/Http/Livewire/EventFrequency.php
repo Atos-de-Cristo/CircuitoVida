@@ -14,7 +14,6 @@ class EventFrequency extends Component
 
     public function mount($eventId, $lessonId)
     {
-        $this->isOpenFrequency = true;
         $this->eventId = $eventId;
         $this->lessonId = $lessonId;
         $this->users = [];
@@ -26,10 +25,7 @@ class EventFrequency extends Component
         return view('livewire.event.frequency.create', compact('inscriptions'));
     }
 
-    public function closeModalFrequency()
-    {
-        $this->emit('closeModalFrequency');
-    }
+
 
     public function storeFrequency(FrequencyService $frequencyService)
     {
@@ -44,6 +40,6 @@ class EventFrequency extends Component
 
         $frequencyService->create($request);
 
-        $this->emit('closeModalFrequency');
+         $this->isOpenFrequency = false;
     }
 }
