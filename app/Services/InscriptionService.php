@@ -2,8 +2,10 @@
 namespace App\Services;
 
 use App\Models\Inscription;
+use Carbon\Carbon;
 use Error;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class InscriptionService
 {
@@ -18,7 +20,19 @@ class InscriptionService
     {
         return $this->repository->where($filter)->with('event', 'user')->get();
     }
-    public function getAllAlunos($search, $eventId): Collection
+
+    public function getInscriptionActive(): Collection
+    {
+        return $this->repository
+            ->with('event.modules.lessons')
+            ->where([
+                'user_id' => Auth::user()->id,
+                'status' => 'L'
+            ])
+            ->get();
+    }
+
+    public function getAllStudent($search, $eventId): Collection
     {
         return Inscription::where('event_id', $eventId)
             ->whereHas('user', function ($query) use ($search) {
@@ -26,7 +40,6 @@ class InscriptionService
             })
             ->get();
     }
-
 
     public function getFrequency(string $eventId, string $lessonId): Collection
     {

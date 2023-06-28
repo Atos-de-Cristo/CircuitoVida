@@ -27,7 +27,7 @@
                                 <h3 class="text-lg font-medium text-gray-900">{{ $inscription->event->name }}</h3>
                                 <p class="text-sm text-gray-500">Status: {{ getStatusInscription($inscription->status)
                                     }}</p>
-                                <p class="text-sm text-gray-500">Atividades: {{ $this->activity[$inscription->event_id]
+                                <p class="text-sm text-gray-500">Atividades: {{ $this->activity[$inscription->event_id]['activityCount']
                                     }}</p>
                                 <div class="relative">
                                     <div class="mb-2">
@@ -38,9 +38,9 @@
                                             class="shadow-none flex flex-col text-center whitespace-nowrap justify-center {{ $this->activity[$inscription->event_id] == $inscription->event->lessons->count() ? 'bg-green-500' : 'bg-indigo-500' }}">
                                         </div>
                                     </div>
-                                    <span
-                                        class="absolute right-0 top-1/2 transform -translate-y-1/2 pr-2 text-sm text-gray-500">{{
-                                        $this->activity[$inscription->event_id] }}</span>
+                                    <span class="absolute right-0 top-1/2 transform -translate-y-1/2 pr-2 text-sm text-gray-500">
+                                        {{ $this->activity[$inscription->event_id]['responseCount'] }} / {{ $this->activity[$inscription->event_id]['activityCount'] }}
+                                    </span>
                                 </div>
                                 <div class="relative">
                                     <div class="mb-2">

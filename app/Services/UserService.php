@@ -89,8 +89,10 @@ class UserService
                     }
                 }
             }
-            $ret[$inscription->event_id] = $responseCount.'/'.$activityCount;
+            $ret[$inscription->event_id]['responseCount'] = $responseCount;
+            $ret[$inscription->event_id]['activityCount'] = $activityCount;
         }
+
         return $ret;
     }
 

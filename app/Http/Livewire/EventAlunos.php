@@ -17,7 +17,7 @@ class EventAlunos extends Component
     public $search = '';
     public function render(InscriptionService $service)
     {
-        $inscriptions = $service->getAllAlunos($this->search, $this->event_id);
+        $inscriptions = $service->getAllStudent($this->search, $this->event_id);
         return view('livewire.event.aluno.manager', compact('inscriptions'));
     }
 }

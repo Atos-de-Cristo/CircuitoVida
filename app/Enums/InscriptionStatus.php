@@ -6,9 +6,7 @@ enum InscriptionStatus: string {
     case L = "Liberado";
     case A = "Aprovado";
     case R = "Reprovado";
-    case G = "Pago";
     case C = "Cancelado";
-    case I = "Iniciado";
     case F = "Finalizado";
 
     public static function fromValue(string $status): string {

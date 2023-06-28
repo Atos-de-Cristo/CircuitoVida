@@ -64,4 +64,18 @@
             @endforelse
         </div>
     </div>
+
+    <div class="flex flex-col md:flex-row items-center justify-between mb-2">
+        <div class="flex items-center mb-2 md:mb-0">
+            <div class="ml-2 text-xl font-bold">
+                Aulas
+            </div>
+        </div>
+    </div>
+
+    <div class="card-white overflow-hidden shadow-xl sm:rounded-lg">
+        <div class="flex flex-wrap gap-4 sm:flex-row lg:flex-row mt-4">
+            <livewire:list-lesson />
+        </div>
+    </div>
 </div>
