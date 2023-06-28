@@ -16,18 +16,15 @@ class EventActivityActions extends Component
     public $isOpenQuestions;
     public $isOpenActivity = false;
 
-    public function __construct()
-    {
-        $this->service = new ActivityService;
-    }
 
-    public function mount($lessonId, $activityId)
+
+    public function mount($lessonId, $activityId, ActivityService $service)
     {
         $this->lessonId = $lessonId;
         $this->activityId = $activityId;
 
         if ($activityId) {
-            $data = $this->service->find($activityId);
+            $data = $service->find($activityId);
             $this->title = $data->title;
             $this->description = $data->description;
         }
@@ -38,7 +35,7 @@ class EventActivityActions extends Component
         return view('livewire.event.activity.actions');
     }
 
-    public function store()
+    public function store(ActivityService $service)
     {
         $this->validate([ 'title' => 'required' ]);
 
@@ -49,7 +46,7 @@ class EventActivityActions extends Component
             'description' => $this->description
         ];
 
-        $this->service->store($request);
+        $service->store($request);
 
         $this->emit('refreshActivityList');
         $this->isOpenActivity = false;
@@ -62,9 +59,9 @@ class EventActivityActions extends Component
         $this->description = '';
     }
 
-    public function dellActivity()
+    public function dellActivity(ActivityService $service)
     {
-        $this->service->delete($this->activityId);
+        $service->delete($this->activityId);
         $this->emit('refreshClassroom');
         $this->emit('refreshActivityList');
     }
