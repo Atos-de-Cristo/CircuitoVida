@@ -38,12 +38,7 @@
             </div>
 
             @can('admin')
-            <div class="mt-2 sm:mt-0 flex space-x-2">
-                <button wire:click="create()" class="btn-primary">
-                    <x-svg.add size="h-6 w-6" />
-                    <span>Usuário</span>
-                </button>
-            </div>
+            @include('livewire.user.create')
             @endcan
         </div>
 
@@ -97,7 +92,5 @@
         <div class="mt-4">
             {{ $dataAll->links() }}
         </div>
-        @if($isOpen)
-        @include('livewire.user.create')
-        @endif
+
     </div>

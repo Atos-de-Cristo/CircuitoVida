@@ -51,19 +51,9 @@ class User extends Component
     public function create()
     {
         $this->resetInputFields();
-        $this->openModal();
-    }
-
-    public function openModal()
-    {
         $this->isOpen = true;
     }
 
-    public function closeModal()
-    {
-        $this->resetInputFields();
-        $this->isOpen = false;
-    }
 
     private function resetInputFields(){
         $this->_id = '';
@@ -92,7 +82,7 @@ class User extends Component
         session()->flash('message',
             $this->_id ? 'Usuário editado com sucesso.' : 'Usuário cadastrado com sucesso.');
 
-        $this->closeModal();
+        $this->isOpen = false;
         $this->resetInputFields();
     }
 
@@ -105,7 +95,7 @@ class User extends Component
         //TODO: melhorar consulta relacionamentos
         $this->permissions = explode(',', $user->permissions()->implode('id', ','));
 
-        $this->openModal();
+        $this->isOpen = false;
     }
 
     public function delete($id, UserService $service)
