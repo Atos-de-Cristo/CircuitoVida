@@ -3,21 +3,22 @@
 namespace App\Http\Livewire;
 
 use App\Services\UserService;
-use Illuminate\Http\Request;
 use Livewire\Component;
 
 class UserDetail extends Component
 {
-    private $service, $userId;
+    private $service;
+    public $tab = 'curso';
+    public $userId;
 
     public function __construct()
     {
         $this->service = new UserService;
     }
 
-    public function mount(Request $request)
+    public function mount()
     {
-        $this->userId = $request->id;
+        $this->userId = request()->route('id');
     }
 
     public function getUserProperty()
