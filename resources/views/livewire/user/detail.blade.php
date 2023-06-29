@@ -41,7 +41,7 @@
                                         {{ $this->activity[$inscription->event_id]['responseCount'] }} / {{ $this->activity[$inscription->event_id]['activityCount'] }}
                                     </span>
                                 </div>
-                                <div class="relative">
+                                <div class="relative mt-2">
                                     <div class="mb-2">
                                         <span class="text-gray-500 text-xs dark:text-white">Frequência:</span>
                                     </div>
