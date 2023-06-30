@@ -75,11 +75,9 @@
                                 {{ $attachment->name }}.{{ pathinfo($attachment->path, PATHINFO_EXTENSION) }}
                             </a>
                         </div>
-
-
                         @can('admin')
                             <div class="flex items-center mr-2">
-                                <livewire:attachment :lessonId='$lessonId' :attachmentId='$attachment->id' />
+                                <livewire:attachment :lessonId='$lessonId' :attachmentId='$attachment->id' :key="time().$attachment->id" />
                             </div>
                         @endcan
                     </div>

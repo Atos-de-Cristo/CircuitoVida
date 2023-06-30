@@ -13,7 +13,7 @@
             </div>
             <div class="flex items-center mr-2">
                 @can('admin')
-                <livewire:event-activity-actions :activityId="$activity->id" :lessonId="$lessonId">
+                    <livewire:event-activity-actions :activityId="$activity->id" :lessonId="$lessonId" :key="time().$activity->id" />
                 @endcan
             </div>
         </div>
