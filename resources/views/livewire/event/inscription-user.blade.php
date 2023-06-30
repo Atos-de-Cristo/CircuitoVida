@@ -2,7 +2,7 @@
 
 
 
-<x-dialog-modal id="myModal" maxWidth="2xl" closeModal="closeModal()">
+<x-dialog-modal id="myModal" wire:model='isUser' maxWidth="2xl" closeModal="closeModal()">
     <x-slot name="title">
      Inscritos
     </x-slot>
