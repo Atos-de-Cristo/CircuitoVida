@@ -21,15 +21,38 @@ class InscriptionService
         return $this->repository->where($filter)->with('event', 'user')->get();
     }
 
-    public function getInscriptionActive(): Collection
+    public function getInscriptionActive(): array
     {
-        return $this->repository
+        $req = $this->repository
             ->with('event.modules.lessons')
             ->where([
                 'user_id' => Auth::user()->id,
                 'status' => 'L'
             ])
             ->get();
+
+        $lessonActivity = [];
+        foreach ($req->first()->event->first()->modules as $mod) {
+            $lessonActivity[$mod->id]['event_id'] = $req->first()->event->first()->id;
+            $lessonActivity[$mod->id]['event'] = $req->first()->event->first()->name;
+            $lessonActivity[$mod->id]['module'] = $mod->name;
+
+            foreach ($mod->lessons as $lesson) {
+                if ($lesson->start_date && $lesson->end_date) {
+                    if (
+                        Carbon::parse($lesson->start_date) <= Carbon::parse(date('Y-m-d H:i:s'))
+                        && Carbon::parse($lesson->end_date) > Carbon::parse(date('Y-m-d H:i:s'))
+                    ) {
+                        $lessonActivity[$mod->id]['lessons'][$lesson->id] = $lesson->toArray();
+                    }
+                }
+            }
+        }
+        return array_filter($lessonActivity, function($lesson) {
+            if (isset($lesson['lessons']) && !empty($lesson['lessons'])) {
+                return $lesson;
+            }
+        });
     }
 
     public function getAllStudent($search, $eventId): Collection
