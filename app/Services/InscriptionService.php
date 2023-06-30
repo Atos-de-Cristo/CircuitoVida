@@ -32,22 +32,25 @@ class InscriptionService
             ->get();
 
         $lessonActivity = [];
-        foreach ($req->first()->event->first()->modules as $mod) {
-            $lessonActivity[$mod->id]['event_id'] = $req->first()->event->first()->id;
-            $lessonActivity[$mod->id]['event'] = $req->first()->event->first()->name;
-            $lessonActivity[$mod->id]['module'] = $mod->name;
+        if($req->isNotEmpty()){
+            foreach ($req->first()->event->first()->modules as $mod) {
+                $lessonActivity[$mod->id]['event_id'] = $req->first()->event->first()->id;
+                $lessonActivity[$mod->id]['event'] = $req->first()->event->first()->name;
+                $lessonActivity[$mod->id]['module'] = $mod->name;
 
-            foreach ($mod->lessons as $lesson) {
-                if ($lesson->start_date && $lesson->end_date) {
-                    if (
-                        Carbon::parse($lesson->start_date) <= Carbon::parse(date('Y-m-d H:i:s'))
-                        && Carbon::parse($lesson->end_date) > Carbon::parse(date('Y-m-d H:i:s'))
-                    ) {
-                        $lessonActivity[$mod->id]['lessons'][$lesson->id] = $lesson->toArray();
+                foreach ($mod->lessons as $lesson) {
+                    if ($lesson->start_date && $lesson->end_date) {
+                        if (
+                            Carbon::parse($lesson->start_date) <= Carbon::parse(date('Y-m-d H:i:s'))
+                            && Carbon::parse($lesson->end_date) > Carbon::parse(date('Y-m-d H:i:s'))
+                        ) {
+                            $lessonActivity[$mod->id]['lessons'][$lesson->id] = $lesson->toArray();
+                        }
                     }
                 }
             }
         }
+
         return array_filter($lessonActivity, function($lesson) {
             if (isset($lesson['lessons']) && !empty($lesson['lessons'])) {
                 return $lesson;
