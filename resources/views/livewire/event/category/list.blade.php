@@ -4,7 +4,7 @@
     </div>
     <div class="card-white">
         <div class="mt-2 sm:mt-0 flex space-x-2">
-            <livewire:event-category-add/>
+            <livewire:event-category-add :key="rand()"/>
         </div>
         <table class="table-fixed w-full">
             <thead>
@@ -21,7 +21,7 @@
                         <td class="border px-2 py-2">{{$category->id}}</td>
                         <td class="border">{{$category->name}}</td>
                         <td class="border px-2 py-2">{{$category->events->count()}}</td>
-                        <td class="border px-2 py-2"><livewire:event-category-add :id="$category->id"/></td>
+                        <td class="border px-2 py-2"><livewire:event-category-add :id="$category->id" :key="rand()"/></td>
                     </tr>
                 @empty
                     <tr>

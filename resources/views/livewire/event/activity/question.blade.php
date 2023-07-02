@@ -93,7 +93,7 @@
         <div
             class="{{ auth()->check() && auth()->user()->hasPermissionTo('aluno') ? 'col-span-12' : 'sm:col-span-12 md:col-span-2' }}">
             @if ($viewCorrectAnswers)
-            <livewire:event-activity-question-correct :userId="$userCorrectAnswer" :atvId="$atvId" />
+            <livewire:event-activity-question-correct :userId="$userCorrectAnswer" :atvId="$atvId" :key="rand()"/>
             @else
             <form class="">
                 <div class="bg-white border-t-2 dark:border-indigo-900 dark:bg-slate-800 shadow-xl rounded-md ">
