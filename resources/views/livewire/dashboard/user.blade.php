@@ -59,5 +59,7 @@
             @endforelse
         </div>
     </div>
+
+    <livewire:list-lesson :key="rand()"/>
 </div>
 

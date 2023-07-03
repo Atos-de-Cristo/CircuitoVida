@@ -50,6 +50,8 @@ class InscriptionService
                             ) {
                                 $lessonActivity[$mod->id]['lessons'][$lesson->id] = $lesson->toArray();
                             }
+                        }else{
+                            $lessonActivity[$mod->id]['lessons'][$lesson->id] = $lesson->toArray();
                         }
                     }
                 }

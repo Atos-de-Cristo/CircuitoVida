@@ -57,7 +57,7 @@
                     <x-svg.pasta-add size="h-5 w-5" color="fill-current text-white " />
                     <span class="ml-2">Módulos</span>
                 </button>
-                <livewire:event-monitors :eventId='$eventId'>
+                <livewire:event-monitors :eventId='$eventId' :key="rand()">
             </div>
             @endcan
         </div>
@@ -103,7 +103,7 @@
                     <div class="flex items-center mb-2 justify-between">
                         <h3 class="font-bold text-black dark:text-white mr-2">Título da Aula</h3>
                         @can('admin')
-                            <livewire:event-lesson :eventId="$eventId" :moduleId="$module->id" :key="time().$module->id" />
+                            <livewire:event-lesson :eventId="$eventId" :moduleId="$module->id" :key="rand().$module->id" />
                         @endcan
                     </div>
                     <div class="border-t border-gray-200 pb-2">
@@ -152,7 +152,7 @@
                             </div>
                             @can('admin')
                             <div class="flex items-center mr-2">
-                                <livewire:event-lesson :eventId="$eventId" :moduleId="$module->id" :lessonId="$lesson->id" :key="time().$lesson->id" />
+                                <livewire:event-lesson :eventId="$eventId" :moduleId="$module->id" :lessonId="$lesson->id" :key="rand().$lesson->id" />
                             </div>
                             @endcan
                         </div>
@@ -173,7 +173,7 @@
                 <x-svg.student />
                 <span class="ml-2">ALUNOS</span>
             </div>
-            <livewire:event-alunos :id="$event->id" />
+            <livewire:event-alunos :id="$event->id" :key="rand()"/>
         </div>
     </div>
     @if ($isOpenModule)

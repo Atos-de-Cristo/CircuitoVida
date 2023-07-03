@@ -47,7 +47,7 @@
                     <span class="ml-2">Atividades</span>
                 </div>
                 @can('admin')
-                    <livewire:event-activity-actions :activityId="null" :lessonId="$lessonId">
+                    <livewire:event-activity-actions :activityId="null" :lessonId="$lessonId" :key="rand()">
                 @endCan
             </div>
             <div class="card-white h-48 overflow-y-auto">
@@ -63,7 +63,7 @@
                     <span class="ml-2">Materiais</span>
                 </div>
                 @can('admin')
-                    <livewire:attachment :lessonId='$lessonId' :attachmentId='null' />
+                    <livewire:attachment :lessonId='$lessonId' :attachmentId='null' :key="rand()"/>
                 @endCan
             </div>
             <div class="card-white  h-48 overflow-y-auto">
@@ -77,7 +77,7 @@
                         </div>
                         @can('admin')
                             <div class="flex items-center mr-2">
-                                <livewire:attachment :lessonId='$lessonId' :attachmentId='$attachment->id' :key="time().$attachment->id" />
+                                <livewire:attachment :lessonId='$lessonId' :attachmentId='$attachment->id' :key="rand().$attachment->id" />
                             </div>
                         @endcan
                     </div>
