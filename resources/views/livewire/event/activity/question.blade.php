@@ -202,6 +202,13 @@
                 <div class="bg-gray-50 dark:bg-gray-700 text-center rounded-t-md">
                     <h2 class="text-lg text-gray-800 dark:text-white font-bold p-2 mb-4">Correção</h2>
                 </div>
+                <div class="relative ml-4 flex">
+                    <input wire:model.debounce.300ms.page="search"  placeholder="Buscar aluno..."
+                        class="input-form-search"
+                        type="text">
+                    <x-svg.search />
+                </div>
+
                 <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     @forelse ($this->userQuestions as $user)
                         <div class="flex flex-col md:flex-row md:items-center mb-4">

@@ -18,6 +18,7 @@ class EventActivityQuestion extends Component
     private $service, $serviceResponse, $serviceUser;
     public $userCorrectAnswer;
     public $viewCorrectAnswers = false;
+    public $search ='';
 
     protected $listeners = [
         'refreshActivityQuestion' => '$refresh',
@@ -36,10 +37,28 @@ class EventActivityQuestion extends Component
         return $this->service->getQuestionsCorrect($this->atvId);
     }
 
+    //public function getUserQuestionsProperty()
+   // {
+   //     return $this->serviceUser->getUsersQuestionsResume($this->questions['data']->pluck('id')->toArray());
+   // }
     public function getUserQuestionsProperty()
-    {
-        return $this->serviceUser->getUsersQuestionsResume($this->questions['data']->pluck('id')->toArray());
+{
+    // Obtenha os IDs das perguntas
+    $questionIds = $this->questions['data']->pluck('id')->toArray();
+
+    // Verifique se há um valor de busca
+    if (!empty($this->search)) {
+        // Filtre os dados com base no valor de busca
+        return $this->serviceUser->getUsersQuestionsResume($questionIds)->filter(function ($userQuestion) {
+            // Faça a comparação com base no critério de busca
+            return stripos($userQuestion->name, $this->search) !== false;
+        });
     }
+
+    // Caso contrário, retorne todos os dados
+    return $this->serviceUser->getUsersQuestionsResume($questionIds);
+}
+
 
     public function mount(Request $request)
     {
