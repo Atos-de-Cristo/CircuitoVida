@@ -4,33 +4,45 @@
     </div>
     <div class="card-white">
         <div class="mt-2 sm:mt-0 flex space-x-2">
-            <livewire:event-category-add :key="rand()"/>
+
         </div>
-        <table class="table-fixed w-full">
-            <thead>
-                <tr class="bg-gray-100">
-                    <th class="text-left px-2 w-8"># </th>
-                    <th class="text-left px-2 ">Nome</th>
-                    <th class="text-left px-2 w-16">Cursos</th>
-                    <th class="text-left px-2 w-20"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($this->categories as $category)
-                    <tr>
-                        <td class="border px-2 py-2">{{$category->id}}</td>
-                        <td class="border">{{$category->name}}</td>
-                        <td class="border px-2 py-2">{{$category->events->count()}}</td>
-                        <td class="border px-2 py-2"><livewire:event-category-add :id="$category->id" :key="rand()"/></td>
-                    </tr>
+        <div class="flex flex-col mb-4 sm:flex-row justify-between items-center">
+
+            <div class="font-bold flex items-center">
+                <div class="relative mr-4 flex">
+                    <input wire:model.debounce.300ms="search" wire:keydown="search" placeholder="Buscar categoria..."
+                        class="input-form-search" type="text">
+                    <x-svg.search />
+                </div>
+            </div>
+
+            @can('admin')
+            <div class="mt-2 sm:mt-0 flex space-x-2">
+                <livewire:event-category-add :key="rand()" />
+            </div>
+            @endcan
+        </div>
+        <div>
+            <ul class="border rounded-md divide-y divide-gray-200">
+                @forelse ($this->categories as $category)
+                <li class="py-2 px-4 flex items-center justify-between">
+                    <div class="flex-1">
+                        <span class="dark:text-white text-gray-600">{{ $category->name }}</span>
+                    </div>
+                    <div class="flex-1">
+                        <span class="text-sm text-gray-400 mr-2">{{ $category->events->count() }} cursos</span>
+                    </div>
+                    <div class="flex items-center">
+
+                        <livewire:event-category-add :id="$category->id" :key="rand()" />
+                    </div>
+                </li>
                 @empty
-                    <tr>
-                        <td colspan="4">
-                            <span class="text-red-500">Nenhuma categoria cadastrada</span>
-                        </td>
-                    </tr>
+                <span class="text-red-500">Nenhuma categoria cadastrada</span>
                 @endforelse
-            </tbody>
-        </table>
+            </ul>
+
+        </div>
+
     </div>
 </div>
