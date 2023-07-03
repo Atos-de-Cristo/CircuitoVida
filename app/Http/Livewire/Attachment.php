@@ -42,6 +42,7 @@ class Attachment extends Component
     {
         $this->validate([
             'name' => 'required',
+            'attachment'=> 'required',
         ]);
 
         $request = [
