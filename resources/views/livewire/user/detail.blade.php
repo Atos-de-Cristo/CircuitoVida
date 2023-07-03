@@ -65,17 +65,20 @@
                                     <div class="mb-2">
                                         <span class="text-gray-500 text-xs dark:text-white">Frequência:</span>
                                     </div>
-                                    <div class="overflow-hidden h-4 text-xs flex bg-indigo-200 rounded">
-                                        <div style="width: {{ $inscription->frequencies->count() / $inscription->event->lessons->count() * 100 }}%"
-                                            class="shadow-none flex flex-col text-center whitespace-nowrap justify-center {{ $inscription->frequencies->count() == $inscription->event->lessons->count() ? 'bg-green-500' : 'bg-indigo-500' }}">
+                                    @if ($inscription->event->lessons->count() > 0)
+                                        <div class="overflow-hidden h-4 text-xs flex bg-indigo-200 rounded">
+                                            <div style="width: {{ $inscription->frequencies->count() / $inscription->event->lessons->count() * 100 }}%"
+                                                class="shadow-none flex flex-col text-center whitespace-nowrap justify-center {{ $inscription->frequencies->count() == $inscription->event->lessons->count() ? 'bg-green-500' : 'bg-indigo-500' }}">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <span
-                                        class="absolute right-0 top-1/2 transform -translate-y-1/2 pr-2 text-sm text-gray-500">
-                                        {{ $inscription->frequencies->count() }} / {{
-                                        $inscription->event->lessons->count() }}
-                                    </span>
+                                        <span class="absolute right-0 top-1/2 transform -translate-y-1/2 pr-2 text-sm text-gray-500">
+                                            {{ $inscription->frequencies->count() }} / {{ $inscription->event->lessons->count() }}
+                                        </span>
+                                    @else
+                                        <span class="text-red-500">Nenhuma registrada</span>
+                                    @endif
                                 </div>
+
                             </div>
                         </div>
                     </div>
