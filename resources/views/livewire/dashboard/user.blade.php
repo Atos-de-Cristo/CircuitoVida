@@ -20,9 +20,11 @@
         <div class="flex flex-wrap gap-4 sm:flex-row lg:flex-row mt-4">
 
             @forelse ($eventAll as $item)
-            <div class="max-w-xs w-full sm:w-auto  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div
+                class="max-w-xs w-full sm:w-auto  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <a href="#">
-                    <img class=" rounded-t-lg w-80 h-40 sm:h-64" src="{{ asset(!empty($item->image)? $item->image : 'images/curso.png')}}" alt="" />
+                    <img class=" rounded-t-lg w-80 h-40 sm:h-64"
+                        src="{{ asset(!empty($item->image)? $item->image : 'images/curso.png')}}" alt="" />
                 </a>
                 <div class="p-3">
                     <a href="#">
@@ -59,7 +61,8 @@
             @endforelse
         </div>
     </div>
+    <div>
+        <livewire:list-lesson :key="rand()" />
+    </div>
 
-    <livewire:list-lesson :key="rand()"/>
 </div>
-
