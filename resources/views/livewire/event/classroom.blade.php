@@ -50,8 +50,8 @@
                     <livewire:event-activity-actions :activityId="null" :lessonId="$lessonId" :key="rand()">
                 @endCan
             </div>
-            <div class="card-white h-48 overflow-y-auto">
-                <div class="w-full">
+            <div class="bg-white border-t-2 dark:border-indigo-900 dark:bg-slate-700 overflow-hidden shadow-xl rounded-md  mt-2 mb-4">
+                <div class="h-48 overflow-auto px-4 py-4">
                     @livewire('event-activity-list', ['lessonId' => $lessonId])
                 </div>
             </div>
@@ -66,25 +66,30 @@
                     <livewire:attachment :lessonId='$lessonId' :attachmentId='null' :key="rand()"/>
                 @endCan
             </div>
-            <div class="card-white  h-48 overflow-y-auto">
-                @forelse ($lessonData->attachments as $attachment)
-                    <div class="flex items-center justify-between ml-3 ">
+            <div class="bg-white border-t-2 dark:border-indigo-900 dark:bg-slate-700 overflow-hidden shadow-xl rounded-md mt-2 mb-4">
+                <div class="h-48 overflow-auto px-4 py-4">
+                    @forelse ($lessonData->attachments as $attachment)
+                    <div class="flex items-center justify-between ">
                         <div class="flex items-center">
                             <x-svg.anexo size="h-5 w-5" />
-                            <a href="{{ $attachment->path }}" target="_blank" class="font-bold text-md text-blue-500 hover:underline ml-2">
+                            <a href="{{ $attachment->path }}" target="_blank"
+                                class="font-bold text-md text-blue-500 hover:underline ml-2">
                                 {{ $attachment->name }}.{{ pathinfo($attachment->path, PATHINFO_EXTENSION) }}
                             </a>
                         </div>
                         @can('admin')
-                            <div class="flex items-center mr-2">
-                                <livewire:attachment :lessonId='$lessonId' :attachmentId='$attachment->id' :key="rand().$attachment->id" />
-                            </div>
+                        <div class="flex items-center mr-2">
+                            <livewire:attachment :lessonId='$lessonId' :attachmentId='$attachment->id' :key="rand().$attachment->id" />
+                        </div>
                         @endcan
                     </div>
-                @empty
+                    @empty
                     <span class="text-red-500">Nenhum anexo cadastrado</span>
-                @endforelse
+                    @endforelse
+                </div>
             </div>
+
+
         </div>
     </div>
 

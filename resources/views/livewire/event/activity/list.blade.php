@@ -1,4 +1,4 @@
-<div>
+<div class="overflow-auto ">
     @forelse ($activities as $activity)
         <div class="flex items-center justify-between">
             <div class="flex justify-start items-baseline">
