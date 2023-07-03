@@ -4,6 +4,7 @@ use App\Enums\ChurchRelationship;
 use App\Enums\HouMeet;
 use App\Enums\MaritalStatus;
 use App\Enums\Schooling;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
