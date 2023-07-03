@@ -21,7 +21,7 @@
                     <a href="{{ route('classroom', ['id' => $lesson['id'], 'eventId' => $modules['event_id']]) }}"
                         class="mt-auto font-bold text-md text-blue-500 hover:underline">
                         <div
-                            class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg ">
+                            class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 blur-sm rounded-lg ">
                             <x-svg.play-lesson size="h-12 w-12" class="text-gray-500" />
                         </div>
                     </a>
