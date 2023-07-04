@@ -77,6 +77,10 @@ class User extends Authenticatable
         return $this->hasMany(Inscription::class);
     }
 
+    public function profile(): HasMany {
+        return $this->hasMany(Profile::class);
+    }
+
     public function responses(): HasMany {
         return $this->hasMany(Response::class);
     }

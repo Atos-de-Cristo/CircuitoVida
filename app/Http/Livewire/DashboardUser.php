@@ -25,6 +25,10 @@ class DashboardUser extends Component
     }
 
     public function insc(string $idEvent, InscriptionService $service){
+        if (Auth::user()->profile->count() == 0) {
+            return redirect()->route('profile.show');
+        }
+
         $data = [
             'user_id' => Auth::user()->id,
             'event_id' => $idEvent,

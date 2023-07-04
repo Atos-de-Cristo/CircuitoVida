@@ -89,6 +89,10 @@ class InscriptionService
 
     public function create(array $data): Inscription
     {
+        if (Auth::user()->profile->count() == 0) {
+            throw new Error('Preencha seu perfil!');
+        }
+
         $getInsc = $this->repository
             ->where('user_id', $data['user_id'])
             ->where('event_id', $data['event_id'])
