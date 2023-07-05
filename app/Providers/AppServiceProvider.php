@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Permission;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Carbon::setLocale('pt_BR');
         Permission::observe(Permission::class);
         Gate::before(function (User $user, $ability) {
             if (Permission::existsOnCache($ability)) {

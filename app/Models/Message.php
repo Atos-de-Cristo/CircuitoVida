@@ -12,12 +12,12 @@ class Message extends Model
 
     protected $guarded = ['id'];
 
-    public function user_send(): BelongsTo
+    public function userSend(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_send');
     }
 
-    public function user_for(): BelongsTo
+    public function userFor(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_for');
     }

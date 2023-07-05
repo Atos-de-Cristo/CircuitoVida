@@ -26,6 +26,10 @@
                         <button wire:click="$set('tab', 'anexos')"
                             class="inline-block rounded-t-lg p-4 {{ $tab === 'anexos' ? 'border-b-2 dark:border-indigo-800' : '' }}">Anexos</button>
                     </li>
+                    <li class="mr-2" role="presentation">
+                        <button wire:click="$set('tab', 'message')"
+                            class="inline-block rounded-t-lg p-4 {{ $tab === 'message' ? 'border-b-2 dark:border-indigo-800' : '' }}">Messagens</button>
+                    </li>
                 </ul>
             </div>
             <div class="flex flex-wrap m-0 rounded">
@@ -87,27 +91,22 @@
                 <span class="text-red-500">Nenhuma inscrição encontrada</span>
                 @endforelse
                 @endif
-
                 @if ($tab === 'atividades')
                 <div class="px-5 py-5">
                     Atividades
                 </div>
-
                 @endif
                 @if ($tab === 'anexos')
                 <div class="px-5 py-5">
                     Anexos
                 </div>
-
                 @endif
-
-
+                @if ($tab === 'message')
+                <div class="px-5 py-5 w-full">
+                    <livewire:user-message :user="$this->user->id" :key="rand()" />
+                </div>
+                @endif
             </div>
         </div>
-
-
-
-
     </div>
-
 </div>

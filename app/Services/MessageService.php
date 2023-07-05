@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Models\Message;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class MessageService
@@ -18,15 +19,20 @@ class MessageService
         return $this->repository->find($id);
     }
 
-    public function listMessageUser(): Message
+    public function listMessageUser(int | null $id = null): Collection
     {
-        return $this->repository->where('user_for', Auth::user()->id)->get();
+        return $this->repository
+            ->with('userSend', 'userFor')
+            ->where('user_for', ($id) ? $id : Auth::user()->id)
+            ->orderBy('date_send', 'asc')
+            ->get();
     }
 
     public function send(array $data): Message
     {
         $data['user_send'] = Auth::user()->id;
-        $data['data_send'] = date('Y-m-d H:i:s');
+        $data['date_send'] = date('Y-m-d H:i:s');
+        $data['read'] = false;
         return $this->repository->create($data);
     }
 
