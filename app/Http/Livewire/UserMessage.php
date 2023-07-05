@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class UserMessage extends Component
 {
-    public $message, $userId;
+    public $message = '', $userId;
 
     public function mount($user=null)
     {
