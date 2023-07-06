@@ -1,4 +1,5 @@
-<svg version="1.0" xmlns="http://www.w3.org/2000/svg" class="w-72 h-72" viewBox="0 0 733.000000 566.000000"
+@props(['size' => 'h-8 w-8', 'color' => 'fill-current text-red-500'])
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg" {{ $attributes->merge(['class' => $size]) }}viewBox="0 0 733.000000 566.000000"
     preserveAspectRatio="xMidYMid meet">
     <g transform="translate(0.000000,566.000000) scale(0.100000,-0.100000)" stroke="none">
         <path  class="fill-current dark:text-white text-black"

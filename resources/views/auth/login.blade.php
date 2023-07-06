@@ -2,7 +2,7 @@
     <x-authentication-card>
 
         <x-slot name="logo">
-            <x-svg.logo class="w-72 h-72"/>
+            <x-svg.logo class="w-40 h-40"/>
         </x-slot>
 
         <x-validation-errors class="mb-2" />

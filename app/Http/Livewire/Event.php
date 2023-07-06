@@ -6,6 +6,7 @@ use App\Enums\{EventStatus, EventType};
 use App\Services\{CategoryService, EventService, UserService};
 use Livewire\{Component, WithFileUploads, WithPagination};
 use Illuminate\Support\Facades\Storage;
+
 class Event extends Component
 {
     use WithPagination;
@@ -36,7 +37,7 @@ class Event extends Component
 
     public function render(EventService $service, UserService $userService, CategoryService $categoryService)
     {
-        $dataAll = $service->paginate($this->search,$this->sortBy, $this->sortDirection);
+        $dataAll = $service->paginate($this->search, $this->sortBy, $this->sortDirection);
         $optMonitors = $userService->getMonitors();
         $typesList = EventType::cases();
         $statusList = EventStatus::cases();
@@ -60,7 +61,8 @@ class Event extends Component
         $this->isOpen = false;
     }
 
-    private function resetInputFields(){
+    private function resetInputFields()
+    {
         $this->_id = '';
         $this->type = '';
         $this->category_id = '';
@@ -86,7 +88,7 @@ class Event extends Component
                 'local' => 'required',
                 'status' => 'required'
             ]);
-        }else{
+        } else {
             $this->validate();
         }
 
@@ -110,9 +112,10 @@ class Event extends Component
         }
 
         $service->store($request);
-
-        session()->flash('message',
-            $this->_id ? 'Evento editado com sucesso.' : 'Evento cadastrado com sucesso.');
+        session()->flash('message', [
+            'text' =>  $this->_id ? 'Evento editado com sucesso.' : 'Evento cadastrado com sucesso.',
+            'type' => 'success',
+        ]);
 
         $this->closeModal();
         $this->resetInputFields();
@@ -142,10 +145,14 @@ class Event extends Component
     public function delete($id, EventService $service)
     {
         $service->delete($id);
-        session()->flash('message', 'Evento deletado com sucesso.');
+        session()->flash('message', [
+            'text' => 'Evento deletado com sucesso.',
+            'type' => 'success',
+        ]);
     }
 
-    public function manager($id){
+    public function manager($id)
+    {
         redirect()->route('eventManager', ['id' => $id]);
     }
 }
