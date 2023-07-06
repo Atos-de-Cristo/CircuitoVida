@@ -24,7 +24,7 @@ class MessageService
         return $this->repository
             ->with('userSend', 'userFor')
             ->where('user_for', ($id) ? $id : Auth::user()->id)
-            ->orderBy('date_send', 'asc')
+            ->orderBy('date_send', 'desc')
             ->get();
     }
 
