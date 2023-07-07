@@ -6,7 +6,7 @@
         </button>
     </div>
     @if ($isOpen)
-    <x-dialog-modal id="isOpen" wire:model='isOpen' maxWidth="xl" closeModal="$set(isOpen, false)">
+    <x-dialog-modal id="isOpen" wire:model='isOpen' maxWidth="xl" closeModal="close()">
         <x-slot name="title">
             @if (!empty($_id))
                 Atualizar Usuário
@@ -89,7 +89,6 @@
             <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
                 <button wire:click.prevent="store()" type="button"
                     class="btn-submit">
-
                     @if (!empty($_id))
                         Atualizar
                     @else
@@ -98,7 +97,7 @@
                 </button>
             </span>
             <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                <button wire:click="$set(isOpen, false)" type="button"
+                <button wire:click="close()" type="button"
                     class="btn-default">
                     Cancelar
                 </button>

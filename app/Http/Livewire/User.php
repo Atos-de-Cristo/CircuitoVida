@@ -22,7 +22,6 @@ class User extends Component
         $this->resetPage();
     }
 
-
     protected $rules = [
         'name' => 'required|min:5',
         'email' => 'required|email',
@@ -54,6 +53,11 @@ class User extends Component
         $this->isOpen = true;
     }
 
+    public function close()
+    {
+        $this->resetInputFields();
+        $this->isOpen = false;
+    }
 
     private function resetInputFields(){
         $this->_id = '';
