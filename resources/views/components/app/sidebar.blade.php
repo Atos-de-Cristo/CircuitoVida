@@ -14,7 +14,7 @@
                 </svg>
             </button>
             <a class="block" href="{{ route('dashboard') }}">
-                <x-svg.logo size="w-40 h-40 "/>
+                <x-svg.logo size="w-40 h-40 " color="fill-current  text-white"/>
             </a>
 
         </div>
