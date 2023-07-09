@@ -122,4 +122,14 @@ class EventManager extends Component
         $this->closeModalModule();
         $this->resetInputModule();
     }
+
+    public function sendMessage($idSend)
+    {
+        $this->emit('openSendMessage', $idSend);
+    }
+
+    public function sendRoom()
+    {
+        $this->emit('openSendMessageRoom', $this->eventId);
+    }
 }

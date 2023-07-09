@@ -1,6 +1,6 @@
 <div>
     <div class="flex flex-col md:flex-row items-center justify-between mb-2">
-        <h1 class="float-left py-4 font-bold text-xl">Lista de Inscrições</h1>
+        <h1 class="float-left py-4 font-bold text-xl">Lista de Categorias</h1>
     </div>
     <div class="card-white">
         <div class="mt-2 sm:mt-0 flex space-x-2">

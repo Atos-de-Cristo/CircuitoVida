@@ -19,8 +19,11 @@
                 }}</span>
         </a>
         @elsecan('aluno')
-        <span class="truncate ml-2 text-sm font-medium group-hover:text-slate-800">{{ $aluno->user->name
-            }}</span>
+        <a wire:click="sendMessage({{$aluno->user->id}})"
+            class="font-bold text-md text-blue-500 hover:underline ml-2" x-data="{ open: null }">
+            <span class="truncate ml-2 text-sm font-medium group-hover:text-slate-800">{{ $aluno->user->name
+                }}</span>
+        </a>
         @endcan
     </div>
     @empty

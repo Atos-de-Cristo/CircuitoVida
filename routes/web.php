@@ -9,6 +9,7 @@ use App\Http\Livewire\{
     Classroom,
     EventActivityQuestion,
     EventCategory,
+    ListMessages,
     UserDetail
 };
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,7 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
     Route::get('/event/classroom/{id}', Classroom::class)->name('classroom');
     Route::get('/event/manager/{id}', EventManager::class)->name('eventManager');
     Route::get('/event/question/{id}', EventActivityQuestion::class)->name('eventActivityQuestion');
+    Route::get('/messages', ListMessages::class)->name('listMessages');
 
     Route::middleware('can:admin,monitor')->group(function () {
         Route::get('/event', Event::class)->name('event');

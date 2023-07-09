@@ -41,6 +41,11 @@
                 </a>
             </li>
             <li>
+                <a class="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3" href="{{ route('listMessages') }}" @click="open = false" @focus="open = true" @focusout="open = false">
+                    {{ __('Mensagens') }}
+                </a>
+            </li>
+            <li>
                 <form method="POST" action="{{ route('logout') }}" x-data>
                     @csrf
 

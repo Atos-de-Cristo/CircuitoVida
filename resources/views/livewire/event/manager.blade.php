@@ -40,14 +40,20 @@
                 </div>
                 <div class="flex flex-col items-center sm:flex-row">
                     @forelse ($event->monitors as $monitor)
-                    <div class="flex items-center mr-4">
-                        <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset($monitor->profile_photo_path) }}"
-                            width="32" height="32" alt="{{ $monitor->name }}" />
-                        <span class="truncate text-sm font-medium group-hover:text-slate-800">{{ $monitor->name
-                            }}</span>
-                    </div>
+                        <div>
+                            <a class="flex items-center mr-4" wire:click="sendMessage({{$monitor->id}})">
+                                <img
+                                    class="w-8 h-8 bg-black rounded-full mr-2"
+                                    src="{{ asset($monitor->profile_photo_path) }}"
+                                    width="32" height="32" alt="{{ $monitor->name }}"
+                                />
+                                <span class="truncate text-sm font-medium group-hover:text-slate-800">
+                                    {{ $monitor->name }}
+                                </span>
+                            </a>
+                        </div>
                     @empty
-                    <span class="text-red-500">Monitor não cadastrado!</span>
+                        <span class="text-red-500">Monitor não cadastrado!</span>
                     @endforelse
                 </div>
             </div>
@@ -169,9 +175,14 @@
             @endforelse
         </div>
         <div class="sm:col-span-2 md:col-span-1">
-            <div class="text-xl font-bold mb-4 flex items-center">
-                <x-svg.student />
-                <span class="ml-2">ALUNOS</span>
+            <div class="text-xl font-bold mb-4 flex items-center justify-between">
+                <div class="flex">
+                    <x-svg.student />
+                    <span class="ml-2">ALUNOS</span>
+                </div>
+                <button wire:click="sendRoom" class="btn-primary">
+                    Enviar Notificação
+                </button>
             </div>
             <livewire:event-alunos :id="$event->id" :key="rand()"/>
         </div>

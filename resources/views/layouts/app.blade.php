@@ -58,6 +58,8 @@
 
         </div>
 
+        <livewire:send-message />
+
         @livewireScripts
         @stack('modals')
         @stack('scripts')

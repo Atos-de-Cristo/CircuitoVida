@@ -28,12 +28,32 @@ class MessageService
             ->get();
     }
 
-    public function send(array $data): Message
+    public function listMessageUnread(): Collection
+    {
+        return $this->repository
+            ->with('userSend', 'userFor')
+            ->where('user_for', Auth::user()->id)
+            ->where('read', false)
+            ->orderBy('date_send', 'desc')
+            ->get();
+    }
+
+    public function send(array $data)
     {
         $data['user_send'] = Auth::user()->id;
         $data['date_send'] = date('Y-m-d H:i:s');
         $data['read'] = false;
         return $this->repository->create($data);
+    }
+
+    public function sendGroup(array $data): void
+    {
+        foreach ($data['list_for'] as $forId) {
+            $this->send([
+                'message' => $data['message'],
+                'user_for' => $forId
+            ]);
+        }
     }
 
     public function read(int $id): bool

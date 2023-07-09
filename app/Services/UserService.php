@@ -123,4 +123,12 @@ class UserService
             return $item;
         });
     }
+
+    public function listIdsEvent($eventId)
+    {
+        return $this->repository->
+        whereHas('inscriptions.event', function ($query) use ($eventId) {
+            $query->where('id', $eventId);
+        })->pluck('id');
+    }
 }

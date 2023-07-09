@@ -20,4 +20,9 @@ class EventAlunos extends Component
         $inscriptions = $service->getAllStudent($this->search, $this->event_id);
         return view('livewire.event.aluno.manager', compact('inscriptions'));
     }
+
+    public function sendMessage($idSend)
+    {
+        $this->emit('openSendMessage', $idSend);
+    }
 }
