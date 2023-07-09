@@ -180,9 +180,11 @@
                     <x-svg.student />
                     <span class="ml-2">ALUNOS</span>
                 </div>
-                <button wire:click="sendRoom" class="btn-primary">
-                    Enviar Notificação
-                </button>
+                @can('admin')
+                    <button wire:click="sendRoom" class="btn-primary">
+                        Enviar Notificação
+                    </button>
+                @endcan
             </div>
             <livewire:event-alunos :id="$event->id" :key="rand()"/>
         </div>
