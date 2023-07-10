@@ -34,37 +34,48 @@
     <div class="card-white">
         <div class="flex flex-col sm:flex-row justify-between items-center">
             <div>
-                <div class="font-bold mb-4 flex items-center">
+                <div class="font-bold px-4 mb-2 flex items-center">
                     <x-svg.teacher size="h-5 w-5" />
                     <span class="ml-2 font-bold">Monitores</span>
                 </div>
-                <div class="flex flex-col items-center sm:flex-row">
+                <div class="flex  items-center sm:flex-row mb-5">
                     @forelse ($event->monitors as $monitor)
-                        <div>
-                            <a class="flex items-center mr-4" wire:click="sendMessage({{$monitor->id}})">
-                                <img
-                                    class="w-8 h-8 bg-black rounded-full mr-2"
-                                    src="{{ asset($monitor->profile_photo_path) }}"
-                                    width="32" height="32" alt="{{ $monitor->name }}"
-                                />
-                                <span class="truncate text-sm font-medium group-hover:text-slate-800">
-                                    {{ $monitor->name }}
-                                </span>
-                            </a>
-                        </div>
+                    <div class="flex items-center ml-2">
+                        <img class="w-8 h-8 bg-black rounded-full " src="{{ asset($monitor->profile_photo_url) }}"
+                            width="32" height="32" alt="{{ $monitor->name }}" />
+                        <a class="font-bold cursor-pointer text-md text-blue-500 hover:underline ml-2"
+                            wire:click="sendMessage({{$monitor->id}})">
+                            <span class="truncate  text-sm font-medium group-hover:text-slate-800">{{ $monitor->name
+                                }}</span>
+                        </a>
+                    </div>
                     @empty
-                        <span class="text-red-500">Monitor não cadastrado!</span>
+                    <span class="text-red-500">Monitor não cadastrado!</span>
                     @endforelse
                 </div>
             </div>
             @can('admin')
-            <div class="mt-2 sm:mt-0 flex space-x-2">
-                <button wire:click.prevent="createModule()" class="btn-primary">
-                    <x-svg.pasta-add size="h-5 w-5" color="fill-current text-white " />
-                    <span class="ml-2">Módulos</span>
-                </button>
-                <livewire:event-monitors :eventId='$eventId' :key="rand()">
+            <div class="flex justify-center flex-wrap gap-2">
+                <div><button wire:click.prevent="createModule()" class="btn-primary sm:w-">
+                        <x-svg.pasta-add size="h-5 w-5" color="fill-current text-white " />
+                        <span class="ml-2">Módulos</span>
+                    </button></div>
+                <div>
+                    <livewire:event-monitors :eventId='$eventId' :key="rand()">
+                </div>
+                <div><button wire:click="sendRoom" class="btn-primary sm:px-2">
+                        <svg fill="#ffffff" class="h-5 w-5 mr-2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path
+                                    d="M10,20h4a2,2,0,0,1-4,0Zm8-4V10a6,6,0,0,0-5-5.91V3a1,1,0,0,0-2,0V4.09A6,6,0,0,0,6,10v6L4,18H20Z">
+                                </path>
+                            </g>
+                        </svg> Notificação
+                    </button></div>
             </div>
+
             @endcan
         </div>
     </div>
@@ -83,10 +94,12 @@
                         </span>
                         <div class="flex items-center space-x-2">
                             @can('admin')
-                            <button wire:click.prevent="editModule({{ $module->id }})" class="mr-2 hover:scale-110"  @click.stop>
+                            <button wire:click.prevent="editModule({{ $module->id }})" class="mr-2 hover:scale-110"
+                                @click.stop>
                                 <x-svg.edit />
                             </button>
-                            <button wire:click.prevent="deleteItem({{ $module->id }})" class="mr-5 hover:scale-110" @click.stop>
+                            <button wire:click.prevent="deleteItem({{ $module->id }})" class="mr-5 hover:scale-110"
+                                @click.stop>
                                 <x-svg.delete />
                             </button>
                             @endcan
@@ -109,7 +122,7 @@
                     <div class="flex items-center mb-2 justify-between">
                         <h3 class="font-bold text-black dark:text-white mr-2">Título da Aula</h3>
                         @can('admin')
-                            <livewire:event-lesson :eventId="$eventId" :moduleId="$module->id" :key="rand().$module->id" />
+                        <livewire:event-lesson :eventId="$eventId" :moduleId="$module->id" :key="rand().$module->id" />
                         @endcan
                     </div>
                     <div class="border-t border-gray-200 pb-2">
@@ -158,7 +171,8 @@
                             </div>
                             @can('admin')
                             <div class="flex items-center mr-2">
-                                <livewire:event-lesson :eventId="$eventId" :moduleId="$module->id" :lessonId="$lesson->id" :key="rand().$lesson->id" />
+                                <livewire:event-lesson :eventId="$eventId" :moduleId="$module->id"
+                                    :lessonId="$lesson->id" :key="rand().$lesson->id" />
                             </div>
                             @endcan
                         </div>
@@ -180,17 +194,14 @@
                     <x-svg.student />
                     <span class="ml-2">ALUNOS</span>
                 </div>
-                @can('admin')
-                    <button wire:click="sendRoom" class="btn-primary">
-                        Enviar Notificação
-                    </button>
-                @endcan
+
+
             </div>
-            <livewire:event-alunos :id="$event->id" :key="rand()"/>
+            <livewire:event-alunos :id="$event->id" :key="rand()" />
         </div>
     </div>
     @if ($isOpenModule)
-        @include('livewire.event.module-create')
+    @include('livewire.event.module-create')
     @endif
     @if ($showConfirmationPopup)
     <div class="fixed z-40 inset-0 overflow-y-auto ease-out duration-400">

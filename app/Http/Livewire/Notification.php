@@ -28,5 +28,6 @@ class Notification extends Component
     {
         $this->messageService->read($id);
         $this->emit('refreshNotification');
+        redirect()->to('messages');
     }
 }
