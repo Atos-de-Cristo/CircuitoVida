@@ -40,12 +40,14 @@ class SendMessage extends Component
     public function openSendMessage($id)
     {
         $this->forUser = $this->userService->find($id);
+        $this->message = '';
         $this->isOpenMessage = true;
     }
 
     public function openSendMessageRoom($id)
     {
         $this->forEvent = $this->eventService->find($id);
+        $this->message = '';
         $this->isOpenMessage = true;
     }
 
