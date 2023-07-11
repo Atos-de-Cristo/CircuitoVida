@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Enums\EventStatus;
 use App\Models\Event;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -16,6 +17,15 @@ class EventService
     public function getAll(array $filter = []): Collection
     {
         return $this->repository->with('inscriptions')->where($filter)->get();
+    }
+
+    public function listActive(): Collection
+    {
+        return $this->repository
+            ->with('inscriptions')
+            ->where('status', '!=', EventStatus::P->name)
+            ->where('status', '!=', EventStatus::F->name)
+            ->get();
     }
 
     public function paginate($search, $sortBy, $sortDirection): LengthAwarePaginator

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\EventStatus;
 use App\Models\Inscription;
 use Carbon\Carbon;
 use Error;
@@ -34,7 +35,12 @@ class InscriptionService
 
         $lessonActivity = [];
         if ($req->isNotEmpty() && $req->first()->event !== null) {
-            $event = $req->first()->event->where('status', 'A')->first();
+            $event = $req
+                ->first()
+                ->event
+                    ->where('status', '!=', EventStatus::P->name)
+                    ->where('status', '!=', EventStatus::F->name)
+                    ->first();
             if ($event !== null && $event->modules !== null) {
                 $modules = $event->modules;
                 foreach ($modules as $mod) {

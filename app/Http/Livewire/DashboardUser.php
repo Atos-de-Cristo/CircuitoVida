@@ -13,9 +13,7 @@ class DashboardUser extends Component
 
     public function render(EventService $service)
     {
-        $eventAll = $service->getAll([
-            'status' => EventStatus::A->name
-        ]);
+        $eventAll = $service->listActive();
         return view('livewire.dashboard.user', compact('eventAll'));
     }
 
