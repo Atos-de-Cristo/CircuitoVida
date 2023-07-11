@@ -88,8 +88,16 @@
                     @endforelse
                 </div>
             </div>
-
-
+        </div>
+    </div>
+    <div class="grid grid-cols-1 gap-4">
+        <div class="text-xl font-bold flex items-center justify-between w-full">
+            <div class="flex items-center">
+                <span class="ml-2">Forum</span>
+            </div>
+        </div>
+        <div class="bg-white border-t-2 dark:border-indigo-900 dark:bg-slate-700 overflow-hidden shadow-xl rounded-md mb-4 p-4">
+            <livewire:forum :lessonId="$lessonId" :key="rand()"/>
         </div>
     </div>
 </div>
