@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Cache;
@@ -77,8 +78,9 @@ class User extends Authenticatable
         return $this->hasMany(Inscription::class);
     }
 
-    public function profile(): HasMany {
-        return $this->hasMany(Profile::class);
+    public function profile(): HasOne
+    {
+        return $this->hasOne(Profile::class);
     }
 
     public function responses(): HasMany {

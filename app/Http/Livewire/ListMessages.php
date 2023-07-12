@@ -33,4 +33,10 @@ class ListMessages extends Component
     {
         $this->resetPage();
     }
+    public function read(int $id)
+    {
+        $this->messageService->read($id);
+
+        session()->flash('message', 'Mensagem lida!');
+    }
 }

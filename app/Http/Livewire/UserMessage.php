@@ -37,6 +37,7 @@ class UserMessage extends Component
         ]);
 
         session()->flash('message', 'Mensagem enviada!');
+        $this->refreshComponent();
     }
 
     public function read(int $id)
@@ -45,4 +46,8 @@ class UserMessage extends Component
 
         session()->flash('message', 'Mensagem lida!');
     }
+    public function refreshComponent()
+{
+    $this->emitSelf('refreshComponent');
+}
 }
