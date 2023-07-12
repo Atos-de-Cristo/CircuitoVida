@@ -4,9 +4,13 @@ namespace App\Http\Livewire;
 
 use App\Services\MessageService;
 use Livewire\Component;
-
+use Livewire\WithPagination;
 class ListMessages extends Component
 {
+    use WithPagination;
+    public $search = '';
+   
+
     public function getMessageServiceProperty()
     {
         return new MessageService;
@@ -14,11 +18,19 @@ class ListMessages extends Component
 
     public function getListMessageProperty()
     {
-        return $this->messageService->listMessageUser();
+        return $this->messageService->listMessageUser(null, $this->search);
     }
+
 
     public function render()
     {
+       
+
         return view('livewire.user.list-messages');
+    }
+    
+    public function search()
+    {
+        $this->resetPage();
     }
 }
