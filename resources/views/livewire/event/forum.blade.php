@@ -1,4 +1,5 @@
 <div>
+  <div class="bg-white border-t-2 dark:border-indigo-900 dark:bg-slate-700 overflow-hidden shadow-xl rounded-md mb-4 p-4">
     <form>
         <div
         x-data="{ textareaHeight: 'auto' }"
@@ -53,15 +54,59 @@
           </button>
         </div>
     </form>
-    <ul>
-        @forelse ($this->listForum as $item)
-            <li>
-                <small>{{$item->userSend->name}}</small>
-                <p>{{$item->message}}</p>
-                <small>{{\Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:m:s')}}</small>
-            </li>
-        @empty
-            <li>Nenhuma mensagem enviada!</li>
-        @endforelse
-    </ul>
+   
+ 
+</div>
+<ul class="py-6">
+  @forelse ($this->listForum as $item)
+  <li class="flex items-start mb-2">
+    @if ($item->userSend->id == auth()->user()->id)
+      <div class="flex-1 rounded-lg rounded-tr-none overflow-hidden shadow-lg bg-white dark:bg-gray-800 ml-14">
+        <div class="px-4 py-2">
+          <p>{{$item->message}}</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 px-4 py-2">
+          <div class="flex flex-col sm:flex-row justify-between">
+            <div>
+              <small class="font-sans">{{$item->userSend->name}}</small>
+            </div>
+            <div class="sm:ml-4">
+              <small class="sm:block italic">Publicado <span>{{\Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:m:s')}}</span></small>            
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <div>
+        <img class="w-12 h-12 bg-black rounded-full ml-2" src="{{ asset($item->userSend->profile_photo_url) }}"
+          width="32" height="32" alt="{{ $item->userSend->name }}" />
+      </div>
+    @else
+      <div>
+        <img class="w-12 h-12 bg-black rounded-full mr-2" src="{{ asset($item->userSend->profile_photo_url) }}"
+          width="32" height="32" alt="{{ $item->userSend->name }}" />
+      </div>
+      <div class="flex-1 rounded-lg rounded-tl-none  overflow-hidden shadow-lg bg-white dark:bg-gray-800 mr-14">
+        <div class="px-4 py-2">
+          <p>{{$item->message}}</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 px-4 py-2">
+          <div class="flex flex-col sm:flex-row justify-between">
+            <div>
+              <small class="font-sans">{{$item->userSend->name}}</small>
+            </div>
+            <div class="sm:ml-4">
+              <small class="sm:block italic">Publicado <span>{{\Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:m:s')}}</span></small> 
+          </div>
+        </div>
+        
+      </div>
+    @endif
+  </li>
+  @empty
+      <li>Nenhuma mensagem enviada!</li>
+  @endforelse
+</ul>
+
+
 </div>
