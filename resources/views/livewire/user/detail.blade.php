@@ -238,7 +238,7 @@
                 @endif
                 @if ($tab === 'message')
                 <div class="px-5 py-5 w-full">
-                    <livewire:user-message :user="$this->user->profile->id" :key="rand()" />
+                    <livewire:user-message :user="$this->user->id" :key="rand()" />
                 </div>
                 @endif
             </div>
