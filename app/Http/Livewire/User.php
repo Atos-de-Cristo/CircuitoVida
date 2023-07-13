@@ -82,9 +82,10 @@ class User extends Component
         }else{
             $service->create($request);
         }
-
-        session()->flash('message',
-            $this->_id ? 'Usuário editado com sucesso.' : 'Usuário cadastrado com sucesso.');
+        session()->flash('message', [
+            'text' =>  $this->_id ? 'Usuário editado com sucesso.' : 'Usuário cadastrado com sucesso.',
+            'type' => 'success',
+        ]);
 
         $this->isOpen = false;
         $this->resetInputFields();
@@ -105,7 +106,12 @@ class User extends Component
     public function delete($id, UserService $service)
     {
         $service->delete($id);
-        session()->flash('message', 'Evento deletado com sucesso.');
+        
+        session()->flash('message', [
+            'text' => 'Usuário deletado com sucesso.' ,
+            'type' => 'success',
+        ]);
+        
     }
 
     public function manager($id){

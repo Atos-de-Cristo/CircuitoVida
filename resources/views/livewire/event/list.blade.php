@@ -1,10 +1,8 @@
-
 <div>
     @if (session()->has('message'))
     <x-alert-message :message="session('message')['text']" :messageType="session('message')['type']" />
-@endif
+    @endif
 
-    
     <div class="flex flex-col md:flex-row items-center justify-between mb-2">
         <div class="flex items-center mb-2 md:mb-0">
             <div class="ml-2 text-xl font-bold">
@@ -27,9 +25,8 @@
 
             <div class="font-bold flex items-center">
                 <div class="relative mr-4 flex">
-                    <input wire:model.debounce.300ms.page="search"  wire:keydown="search" placeholder="Buscar eventos..."
-                        class="input-form-search"
-                        type="text">
+                    <input wire:model.debounce.300ms.page="search" wire:keydown="search" placeholder="Buscar eventos..."
+                        class="input-form-search" type="text">
 
                     <x-svg.search />
                 </div>
