@@ -24,7 +24,7 @@
                     <div class="px-4 py-2 flex flex-col sm:flex-row justify-between">
                         <p>{{$message->message}}</p>
                         <div>
-                            @if ($message->user_for == auth()->user()->id)\
+                            @if ($message->user_for == auth()->user()->id)
                                 @if (!$message->read)
                                     <button wire:click.prevent="read({{$message->id}})">
                                         <svg class="h-5 w-5 animate-pulse hover:animate-none" viewBox="0 0 24 24"
