@@ -20,19 +20,19 @@
       x-data="{ textareaHeight: 'auto' }"
       x-init="() => {
         const textarea = document.getElementById('messageTextarea');
-    
+
         increaseTextareaHeight = () => {
           textarea.style.height = 'auto';
           textarea.style.height = textarea.scrollHeight + 'px';
           textareaHeight = textarea.style.height;
         };
-    
+
         decreaseTextareaHeight = () => {
           textarea.style.height = 'auto';
           textarea.style.height = textarea.scrollHeight - 16 + 'px';
           textareaHeight = textarea.style.height;
         };
-    
+
         textarea.addEventListener('keydown', (event) => {
           if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
@@ -58,7 +58,6 @@
         ></textarea>
         <button
           wire:click="send"
-          
           {{$message == null||$message == '' ? 'disabled' : ''}}
           class="absolute p-1 rounded-md md:bottom-3 md:p-2 md:right-3 enabled:bg-green-600 dark:disabled:hover:bg-transparent right-2 disabled:text-gray-400  enabled:bg-green-purple text-white bottom-1.5 transition-colors disabled:opacity-10"
         >
@@ -83,19 +82,24 @@
             <div class="px-4 py-2 flex flex-col sm:flex-row justify-between">
                 <p>{{$message->message}}</p>
                 <div>
-                    @if (!$message->read)
-                    <button wire:click.prevent="read({{$message->id}})">
-                        <svg class="h-5 w-5 animate-pulse hover:animate-none" viewBox="0 0 24 24"
-                            fill="none">
-                            <path opacity="0.5"
-                                d="M22 10C22.0185 10.7271 22 11.0542 22 12C22 15.7712 22 17.6569 20.8284 18.8284C19.6569 20 17.7712 20 14 20H10C6.22876 20 4.34315 20 3.17157 18.8284C2 17.6569 2 15.7712 2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H13"
-                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                            <path
-                                d="M6 8L8.1589 9.79908C9.99553 11.3296 10.9139 12.0949 12 12.0949C13.0861 12.0949 14.0045 11.3296 15.8411 9.79908"
-                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                            <circle cx="19" cy="5" r="3" stroke="currentColor" stroke-width="1.5"></circle>
-                        </svg>
-                    </button>
+                    @if ($message->user_for == auth()->user()->id)
+                        @if (!$message->read)
+                            <button wire:click.prevent="read({{$message->id}})">
+                                <svg class="h-5 w-5 animate-pulse hover:animate-none" viewBox="0 0 24 24"
+                                    fill="none">
+                                    <path opacity="0.5"
+                                        d="M22 10C22.0185 10.7271 22 11.0542 22 12C22 15.7712 22 17.6569 20.8284 18.8284C19.6569 20 17.7712 20 14 20H10C6.22876 20 4.34315 20 3.17157 18.8284C2 17.6569 2 15.7712 2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H13"
+                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                                    <path
+                                        d="M6 8L8.1589 9.79908C9.99553 11.3296 10.9139 12.0949 12 12.0949C13.0861 12.0949 14.0045 11.3296 15.8411 9.79908"
+                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                                    <circle cx="19" cy="5" r="3" stroke="currentColor" stroke-width="1.5"></circle>
+                                </svg>
+                            </button>
+                        @endif
+                        <button wire:click.prevent="sendMessage({{$message->user_send}})">
+                            Responder!
+                        </button>
                     @endif
                 </div>
             </div>
@@ -120,4 +124,3 @@
       @endforelse
     </ul>
   </div>
-  
