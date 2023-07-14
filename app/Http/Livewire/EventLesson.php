@@ -20,7 +20,7 @@ class EventLesson extends Component
         $this->lessonId = $request->lessonId;
     }
 
-    public function booted()
+    public function mount()
     {
         if ($this->lessonId) {
             $this->editLesson();
@@ -40,8 +40,8 @@ class EventLesson extends Component
         $this->title = $lessonData->title;
         $this->description = $lessonData->description;
         $this->video = $lessonData->video;
-        $this->start_date = date('Y-m-d H:i:s', strtotime($lessonData->start_date));
-        $this->end_date = date('Y-m-d H:i:s', strtotime($lessonData->end_date));
+        $lessonData->start_date ? $this->start_date = date('Y-m-d H:i:s', strtotime($lessonData->start_date)) : '';
+        $lessonData->end_date ? $this->end_date = date('Y-m-d H:i:s', strtotime($lessonData->end_date)) : '';
     }
 
     public function store(LessonService $service)
