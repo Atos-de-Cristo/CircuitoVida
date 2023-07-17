@@ -73,11 +73,34 @@ class InscriptionService
 
     public function getAllStudent($search, $eventId): Collection
     {
-        return Inscription::where('event_id', $eventId)
-            ->whereHas('user', function ($query) use ($search) {
-                $query->where('name', 'LIKE', '%' . $search . '%');
-            })
+        $today = Carbon::now()->toDateString();
+
+        $results = Inscription::where('event_id', $eventId)
+            ->with([
+                'user' => function ($query) use ($search) {
+                    $query->where('name', 'LIKE', '%' . $search . '%');
+                },
+                'event.lessons' => function ($query) use ($today) {
+                    $query->where('end_date', '<=', $today);
+                },
+                'event.lessons.frequency'
+            ])
             ->get();
+
+        $results = $results->map(function ($item) {
+            $totalLessons = $item->event->lessons->count();
+            $totalFrequency = 0;
+            foreach ($item->event->lessons as $lesson) {
+                $totalFrequency += $lesson->frequency->where('user_id', $item->user_id)->count();
+            }
+            $item->user->absenceCount = $totalLessons-$totalFrequency;
+            $item->user->activityStatus = true;
+            return $item;
+        });
+
+        dd($results);
+
+        return $results;
     }
 
     public function getFrequency(string $eventId, string $lessonId): Collection
