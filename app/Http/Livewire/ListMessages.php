@@ -9,7 +9,6 @@ class ListMessages extends Component
 {
     use WithPagination;
     public $search = '';
-   
 
     public function getMessageServiceProperty()
     {
@@ -21,22 +20,25 @@ class ListMessages extends Component
         return $this->messageService->listMessageUser(null, $this->search);
     }
 
-
     public function render()
     {
-       
-
         return view('livewire.user.list-messages');
     }
-    
+
     public function search()
     {
         $this->resetPage();
     }
+
     public function read(int $id)
     {
         $this->messageService->read($id);
 
         session()->flash('message', 'Mensagem lida!');
+    }
+
+    public function sendMessage($idSend)
+    {
+        $this->emit('openSendMessage', $idSend);
     }
 }

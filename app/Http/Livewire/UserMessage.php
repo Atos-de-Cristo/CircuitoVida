@@ -46,8 +46,14 @@ class UserMessage extends Component
 
         session()->flash('message', 'Mensagem lida!');
     }
+
+    public function sendMessage($idSend)
+    {
+        $this->emit('openSendMessage', $idSend);
+    }
+
     public function refreshComponent()
-{
-    $this->emitSelf('refreshComponent');
-}
+    {
+        $this->emitSelf('refreshComponent');
+    }
 }
