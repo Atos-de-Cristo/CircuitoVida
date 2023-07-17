@@ -95,7 +95,7 @@ class InscriptionService
 
     public function create(array $data): Inscription
     {
-        if (Auth::user()->profile->count() == 0) {
+        if (Auth::user()->profile === null) {
             throw new Error('Preencha seu perfil!');
         }
 

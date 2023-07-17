@@ -49,6 +49,9 @@ class Profile extends Component
     {
         $this->profileService->store($this->form);
 
-        session()->flash('message', 'Perfil atualizado.');
+        session()->flash('message', [
+            'text' => 'Perfil atualizado com sucesso.' ,
+            'type' => 'success',
+        ]);
     }
 }
