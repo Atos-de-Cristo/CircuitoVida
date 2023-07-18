@@ -83,22 +83,68 @@ class InscriptionService
                 'event.lessons' => function ($query) use ($today) {
                     $query->where('end_date', '<=', $today);
                 },
-                'event.lessons.frequency'
+                'event.lessons.frequency',
+                'event.lessons.activities.questions.Response',
             ])
             ->get();
 
         $results = $results->map(function ($item) {
             $totalLessons = $item->event->lessons->count();
             $totalFrequency = 0;
-            foreach ($item->event->lessons as $lesson) {
+            $statusActivity = [];
+            $item->event->lessons->each(function ($lesson) use (&$item, &$totalFrequency, &$statusActivity) {
                 $totalFrequency += $lesson->frequency->where('user_id', $item->user_id)->count();
-            }
+                $lesson->activities->each(function ($activity) use (&$item, &$statusActivity, &$lesson) {
+                    $totalPendent = 0;
+                    $totalCorrect = 0;
+                    $totalIncorrect = 0;
+                    $notResponse = false;
+                    $totalQuestions = $activity->questions->count();
+
+                    $activity->questions->each(function ($question) use (&$item, &$totalPendent, &$totalCorrect, &$totalIncorrect, &$notResponse) {
+                        if ($question->response->where('user_id', $item->user_id)->count() <= 0) {
+                            $notResponse = true;
+                            return;
+                        }
+
+                        $totalPendent += $question->response->where('user_id', $item->user_id)->where('status', 'pendente')->count();
+                        $totalCorrect += $question->response->where('user_id', $item->user_id)->where('status', 'correto')->count();
+                        $totalIncorrect += $question->response->where('user_id', $item->user_id)->where('status', 'errado')->count();
+                    });
+
+                    // TODO: melhorar ifs
+                    if ($notResponse == false) {
+                        $percent = ($totalCorrect/$totalQuestions)*100;
+                        if ($percent <= 70 || $totalPendent > 0) {
+                            $statusActivity[] = [
+                                'lesson' => $lesson->title,
+                                'activity' => $activity->title,
+                                'pendent' => $totalPendent,
+                                'correct' => $totalCorrect,
+                                'incorrect' => $totalIncorrect,
+                                'percent' => number_format($percent, 2, '.', ''),
+                                'status' => $totalPendent > 0 ? 'Pendente' : 'Reprovado',
+                                'totalQuestions' => $totalQuestions,
+                            ];
+                        }
+                    }else{
+                        $statusActivity[] = [
+                            'lesson' => $lesson->title,
+                            'activity' => $activity->title,
+                            'pendent' => $totalPendent,
+                            'correct' => $totalCorrect,
+                            'incorrect' => $totalIncorrect,
+                            'percent' => 0,
+                            'status' => 'Não respondido',
+                            'totalQuestions' => $totalQuestions,
+                        ];
+                    }
+                });
+            });
             $item->user->absenceCount = $totalLessons-$totalFrequency;
-            $item->user->activityStatus = true;
+            $item->user->activityStatus = $statusActivity;
             return $item;
         });
-
-        dd($results);
 
         return $results;
     }
