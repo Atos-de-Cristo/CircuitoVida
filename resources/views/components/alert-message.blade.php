@@ -1,6 +1,6 @@
 <div class=" absolute z-50  border-b-3 border-green-100 flex  rounded-md  px-4 py-3 shadow-md my-3 
 {{$messageType === 'success' ? 'bg-green-600 border-green-600 text-green-900':'bg-red-400 border-red-500 text-red-900'}}"
-    x-data="{ showMessage: true }" x-show="showMessage" x-init="setTimeout(() => { showMessage = false; }, 2000)"
+    x-data="{ showMessage: true }" x-show="showMessage" x-init="setTimeout(() => { showMessage = false; }, 4000)"
     x-transition:enter="transform-gpu ease-out duration-200"
     x-transition:enter-start="opacity-0 transform -translate-y-4"
     x-transition:enter-end="opacity-100 transform translate-y-0"

@@ -33,8 +33,11 @@ class ListMessages extends Component
     public function read(int $id)
     {
         $this->messageService->read($id);
-
-        session()->flash('message', 'Mensagem lida!');
+        session()->flash('message', [
+            'text' => 'Mensagem lida!' ,
+            'type' => 'success',
+        ]); 
+       
     }
 
     public function sendMessage($idSend)

@@ -1,13 +1,6 @@
 <div>
     @if (session()->has('message'))
-    <div class="bg-teal-100 rounded-md border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md my-3" role="alert"
-        x-data="{ showMessage: true }" x-show="showMessage" x-init="setTimeout(() => { showMessage = false; }, 1000)">
-        <div class="flex">
-            <div>
-                <p class="text-sm">{{ session('message') }}</p>
-            </div>
-        </div>
-    </div>
+    <x-alert-message :message="session('message')['text']" :messageType="session('message')['type']" />
     @endif
     <div class="flex flex-col md:flex-row items-center justify-between mb-2">
         <div class="flex items-center mb-2 md:mb-0">

@@ -116,8 +116,11 @@ class EventManager extends Component
         } else {
             $service->create($request);
         }
-
-        session()->flash('message', 'Modulo cadastrado com sucesso.');
+        session()->flash('message', [
+            'text' => 'Modulo cadastrado com sucesso.' ,
+            'type' => 'success',
+        ]);        
+       
 
         $this->closeModalModule();
         $this->resetInputModule();
