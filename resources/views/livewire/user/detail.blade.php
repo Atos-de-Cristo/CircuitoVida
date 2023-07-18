@@ -10,134 +10,130 @@
                             class="object-cover h-full w-full cursor-pointer">
                     </div>
                 </div>
-                
+
             </div>
             <div class="px-4">
                 <h1 class="text-xl font-bold mt-5 sm:mb-0">{{ $this->user->name }}</h1>
                 <p class="">{{ $this->user->email }}</p>
             </div>
-           
+
         </div>
         <div
         class="bg-white border-t-2 dark:border-indigo-900 dark:bg-slate-700 overflow-hidden shadow-xl rounded-md   mt-2 mb-4  ">
-        
-        <div class="px-5">
-                
-            <div class="flex mt-4 justify-center">
-                <div class="mr-8">
-                    <p class="cpf font-bold">CPF: {{$this->user->profile->cpf}}</p>
+        @if ($this->user->profile)
+            <div class="px-5">
+                <div class="flex mt-4 justify-center">
+                    <div class="mr-8">
+                        <p class="cpf font-bold">CPF: {{$this->user->profile->cpf}}</p>
+                    </div>
+                    <div>
+                        <p class="rg font-bold">RG: {{ $this->user->profile->rg }}</p>
+                    </div>
                 </div>
-                <div>
-                    <p class="rg font-bold">RG: {{ $this->user->profile->rg }}</p>
+                <div class="grid grid-cols-2 gap-4 mt-4">
+                    <div>
+                        <p class="sex font-bold">Sexo: {{ $this->user->profile->sex }}</p>
+                    </div>
+                    <div>
+                        <p class="birth font-bold">Data de Nascimento:</p>
+                        <p id="birth">{{ $this->user->profile->birth }}</p>
+                    </div>
+                    <div>
+                        <p class="marital_status font-bold">Estado Civil:</p>
+                        <p id="marital_status">{{ $this->user->profile->marital_status }}</p>
+                    </div>
+                    <div>
+                        <p class="date_wedding font-bold">Data de Casamento:</p>
+                        <p id="date_wedding">{{ $this->user->profile->date_wedding }}</p>
+                    </div>
+                    <div>
+                        <p class="country font-bold">País:</p>
+                        <p id="country">{{ $this->user->profile->country }}</p>
+                    </div>
+                    <div>
+                        <p class="zip_code font-bold">CEP:</p>
+                        <p id="zip_code">{{ $this->user->profile->zip_code }}</p>
+                    </div>
+                    <div>
+                        <p class="address font-bold">Endereço:</p>
+                        <p id="address">{{ $this->user->profile->address }}</p>
+                    </div>
+                    <div>
+                        <p class="number font-bold">Número:</p>
+                        <p id="number">{{ $this->user->profile->number }}</p>
+                    </div>
+                    <div>
+                        <p class="complement font-bold">Complemento:</p>
+                        <p id="complement">{{ $this->user->profile->complement }}</p>
+                    </div>
+                    <div>
+                        <p class="district font-bold">Bairro:</p>
+                        <p id="district">{{ $this->user->profile->district }}</p>
+                    </div>
+                    <div>
+                        <p class="city font-bold">Cidade:</p>
+                        <p id="city">{{ $this->user->profile->city }}</p>
+                    </div>
+                    <div>
+                        <p class="uf font-bold">UF:</p>
+                        <p id="uf">{{ $this->user->profile->uf }}</p>
+                    </div>
+                    <div>
+                        <p class="phone font-bold">Telefone:</p>
+                        <p id="phone">{{ $this->user->profile->phone }}</p>
+                    </div>
+                    <div>
+                        <p class="cell_phone font-bold">Celular:</p>
+                        <p id="cell_phone">{{$this->user->profile->cell_phone }}</p>
+                    </div>
+                    <div>
+                        <p class="church_relationship font-bold">Relacionamento com a Igreja:</p>
+                        <p id="church_relationship">{{ $this->user->profile->church_relationship }}</p>
+                    </div>
+                    <div>
+                        <p class="entry_date font-bold">Data de Entrada: <span>{{\Carbon\Carbon::parse(
+                                $this->user->profile->entry_date)->format('d/m/Y')}}</span></p>
+                    </div>
+                    <div>
+                        <p class="hou_meet font-bold">Hora do Encontro:</p>
+                        <p id="hou_meet">{{ $this->user->profile->hou_meet }}</p>
+                    </div>
+                    <div>
+                        <p class="church_from font-bold">Igreja de Origem:</p>
+                        <p id="church_from">{{ $this->user->profile->church_from }}</p>
+                    </div>
+                    <div>
+                        <p class="baptized font-bold">Batizado:</p>
+                        <p id="baptized">{{ $this->user->profile->baptized }}</p>
+                    </div>
+                    <div>
+                        <p class="accepted_jesus font-bold">Aceitou Jesus:</p>
+                        <p id="accepted_jesus">{{ $this->user->profile->accepted_jesus }}</p>
+                    </div>
+                    <div>
+                        <p class="date_accepted_jesus font-bold">Data de Aceitação de Jesus:
+                            <span>{{\Carbon\Carbon::parse(
+                                $this->user->profile->date_accepted_jesus)->format('d/m/Y')}}</span></p>
+                    </div>
+                    <div>
+                        <p class="leader font-bold">Líder:</p>
+                        <p id="leader">{{ $this->user->profile->leader }}</p>
+                    </div>
+                    <div>
+                        <p class="pastor font-bold">Pastor:</p>
+                        <p id="pastor">{{ $this->user->profile->pastor }}</p>
+                    </div>
+                    <div>
+                        <p class="schooling font-bold">Escolaridade:</p>
+                        <p id="schooling">{{ $this->user->profile->schooling }}</p>
+                    </div>
+                    <div>
+                        <p class="profession font-bold">Profissão:</p>
+                        <p id="profession">{{ $this->user->profile->profession }}</p>
+                    </div>
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-4 mt-4">
-                <div>
-                    <p class="sex font-bold">Sexo: {{ $this->user->profile->sex }}</p>
-                </div>
-                <div>
-                    <p class="birth font-bold">Data de Nascimento:</p>
-                    <p id="birth">{{ $this->user->profile->birth }}</p>
-                </div>
-                <div>
-                    <p class="marital_status font-bold">Estado Civil:</p>
-                    <p id="marital_status">{{ $this->user->profile->marital_status }}</p>
-                </div>
-                <div>
-                    <p class="date_wedding font-bold">Data de Casamento:</p>
-                    <p id="date_wedding">{{ $this->user->profile->date_wedding }}</p>
-                </div>
-                <div>
-                    <p class="country font-bold">País:</p>
-                    <p id="country">{{ $this->user->profile->country }}</p>
-                </div>
-                <div>
-                    <p class="zip_code font-bold">CEP:</p>
-                    <p id="zip_code">{{ $this->user->profile->zip_code }}</p>
-                </div>
-                <div>
-                    <p class="address font-bold">Endereço:</p>
-                    <p id="address">{{ $this->user->profile->address }}</p>
-                </div>
-                <div>
-                    <p class="number font-bold">Número:</p>
-                    <p id="number">{{ $this->user->profile->number }}</p>
-                </div>
-                <div>
-                    <p class="complement font-bold">Complemento:</p>
-                    <p id="complement">{{ $this->user->profile->complement }}</p>
-                </div>
-                <div>
-                    <p class="district font-bold">Bairro:</p>
-                    <p id="district">{{ $this->user->profile->district }}</p>
-                </div>
-                <div>
-                    <p class="city font-bold">Cidade:</p>
-                    <p id="city">{{ $this->user->profile->city }}</p>
-                </div>
-                <div>
-                    <p class="uf font-bold">UF:</p>
-                    <p id="uf">{{ $this->user->profile->uf }}</p>
-                </div>
-                <div>
-                    <p class="phone font-bold">Telefone:</p>
-                    <p id="phone">{{ $this->user->profile->phone }}</p>
-                </div>
-                <div>
-                    <p class="cell_phone font-bold">Celular:</p>
-                    <p id="cell_phone">{{$this->user->profile->cell_phone }}</p>
-                </div>
-                <div>
-                    <p class="church_relationship font-bold">Relacionamento com a Igreja:</p>
-                    <p id="church_relationship">{{ $this->user->profile->church_relationship }}</p>
-                </div>
-                <div>
-                    <p class="entry_date font-bold">Data de Entrada: <span>{{\Carbon\Carbon::parse(
-                            $this->user->profile->entry_date)->format('d/m/Y')}}</span></p>
-                </div>
-                <div>
-                    <p class="hou_meet font-bold">Hora do Encontro:</p>
-                    <p id="hou_meet">{{ $this->user->profile->hou_meet }}</p>
-                </div>
-                <div>
-                    <p class="church_from font-bold">Igreja de Origem:</p>
-                    <p id="church_from">{{ $this->user->profile->church_from }}</p>
-                </div>
-                <div>
-                    <p class="baptized font-bold">Batizado:</p>
-                    <p id="baptized">{{ $this->user->profile->baptized }}</p>
-                </div>
-                <div>
-                    <p class="accepted_jesus font-bold">Aceitou Jesus:</p>
-                    <p id="accepted_jesus">{{ $this->user->profile->accepted_jesus }}</p>
-                </div>
-                <div>
-                    <p class="date_accepted_jesus font-bold">Data de Aceitação de Jesus:
-                        <span>{{\Carbon\Carbon::parse(
-                            $this->user->profile->date_accepted_jesus)->format('d/m/Y')}}</span></p>
-                </div>
-                <div>
-                    <p class="leader font-bold">Líder:</p>
-                    <p id="leader">{{ $this->user->profile->leader }}</p>
-                </div>
-                <div>
-                    <p class="pastor font-bold">Pastor:</p>
-                    <p id="pastor">{{ $this->user->profile->pastor }}</p>
-                </div>
-                <div>
-                    <p class="schooling font-bold">Escolaridade:</p>
-                    <p id="schooling">{{ $this->user->profile->schooling }}</p>
-                </div>
-                <div>
-                    <p class="profession font-bold">Profissão:</p>
-                    <p id="profession">{{ $this->user->profile->profession }}</p>
-                </div>
-            </div>
-
-
-
-
-        </div>
+        @endif
     </div>
     </div>
 

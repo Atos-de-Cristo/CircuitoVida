@@ -37,4 +37,8 @@ class Lesson extends Model
     public function attachments(): HasMany{
         return $this->hasMany(Attachment::class);
     }
+
+    public function frequency(): HasMany{
+        return $this->hasMany(Frequency::class);
+    }
 }
