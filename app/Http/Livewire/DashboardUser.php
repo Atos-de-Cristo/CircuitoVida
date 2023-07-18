@@ -23,8 +23,12 @@ class DashboardUser extends Component
     }
 
     public function insc(string $idEvent, InscriptionService $service){
-        if (Auth::user()->profile->count() == 0) {
-            return redirect()->route('profile.show');
+        if (Auth::user()->profile === null) {
+            return redirect()->route('profile.show')->with('message', [
+                'text' => 'Preecha seu Perfil completo' ,
+                'type' => 'error',
+            ]);
+          
         }
 
         $data = [

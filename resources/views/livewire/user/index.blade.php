@@ -60,22 +60,23 @@
                                 {{$data->permissions()->implode('permission', ',') }}</p>
                         </div>
                         <div>
-                            <hr class="my-2 border-gray-300">
-                            <div class="flex justify-center md:space-x-4 md:space-y-0 space-y-4 flex-col md:flex-row">
-                                <button wire:click.prevent="manager({{ $data->id }})"
-                                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">
-                                    Ver
-                                </button>
-                                <button wire:click.prevent="edit({{ $data->id }})"
-                                    class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded w-full">
-                                    Editar
-                                </button>
-                                <button wire:click.prevent="delete({{ $data->id }})"
-                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full">
-                                    Deletar
-                                </button>
+                          
+                            <div>
+                                <hr class="my-2 border-gray-300">
+                                <div
+                                    class="flex justify-between px-5 ">
+                                    <button wire:click.prevent="manager({{ $data->id }})">                               
+                                        <x-svg.view size="h-9 w-9 text-gray-400" />
+                                    </button>
+                                    <button wire:click.prevent="edit({{ $data->id }})">
+                                        <x-svg.edit size="h-6 w-6" />
+                                    </button>
+                                    <button wire:click.prevent="delete({{ $data->id }})">
+                                        <x-svg.delete size="h-7 w-7 " />
+                                    </button>
+                                </div>
+    
                             </div>
-
                         </div>
                     </div>
                 </div>

@@ -10,14 +10,7 @@
 
         <x-slot name="form">
             @if (session()->has('message'))
-                <div class="bg-teal-100  border-teal-500 rounded-md text-teal-900 px-4 py-3 shadow-md my-3" role="alert"
-                    x-data="{ showMessage: true }" x-show="showMessage" x-init="setTimeout(() => { showMessage = false; }, 1000)">
-                    <div class="flex">
-                        <div>
-                            <p class="text-sm">{{ session('message') }}</p>
-                        </div>
-                    </div>
-                </div>
+            <x-alert-message :message="session('message')['text']" :messageType="session('message')['type']" />
             @endif
             <div class="col-span-6 sm:col-span-3">
                 <x-label for="cpf" value="{{ __('CPF') }}" />
