@@ -204,7 +204,7 @@
 
                 <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     @forelse ($this->userQuestions as $user)
-                        <div class="flex flex-col md:flex-row md:items-center mb-4">
+                        <div class="flex flex-col xl:flex-row xl:items-center mb-4">
                             <div class="md:flex-grow">
                                 <div class="flex items-center">
                                     <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset($user->profile_photo_url) }}"
@@ -220,7 +220,7 @@
                                 </div>
                             </div>
                             @if ($user->respostas_pendente > 0)
-                                <div class="flex justify-end mt-1 md:mt-0">
+                                <div class="flex justify-end mt-1   md:mt-0">
                                     <button type="button" wire:click.prevent="correctAnswers({{$user->id}})" class="btn-submit">
                                         Corrigir
                                     </button>
