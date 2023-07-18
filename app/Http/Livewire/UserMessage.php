@@ -35,32 +35,20 @@ class UserMessage extends Component
             'message' => $this->message,
             'user_for' => $this->userId
         ]);
-        session()->flash('message', [
-            'text' => 'Mensagem lida!' ,
-            'type' => 'success',
-        ]); 
-       
-        
-        $this->refreshComponent();
+        $this->message = '';
     }
 
     public function read(int $id)
     {
         $this->messageService->read($id);
         session()->flash('message', [
-            'text' => 'Mensagem lida!' ,
+            'text' => 'Mensagem lida!',
             'type' => 'success',
-        ]); 
-        
+        ]);
     }
 
     public function sendMessage($idSend)
     {
         $this->emit('openSendMessage', $idSend);
-    }
-
-    public function refreshComponent()
-    {
-        $this->emitSelf('refreshComponent');
     }
 }

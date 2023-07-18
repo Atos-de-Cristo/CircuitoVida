@@ -1,7 +1,4 @@
 <div>
-  @if (session()->has('message'))
-  <x-alert-message :message="session('message')['text']" :messageType="session('message')['type']" />
-  @endif
     @can('admin')
     <form>
       <div
@@ -45,7 +42,7 @@
           style="overflow-y: auto; scrollbar-width: thin; scrollbar-color: transparent transparent; resize: vertical;"
         ></textarea>
         <button
-          wire:click="send"
+          wire:click.prevent="send()"
           {{$message == null||$message == '' ? 'disabled' : ''}}
           class="absolute p-1 rounded-md md:bottom-3 md:p-2 md:right-3 enabled:bg-green-600 dark:disabled:hover:bg-transparent right-2 disabled:text-gray-400  enabled:bg-green-purple text-white bottom-1.5 transition-colors disabled:opacity-10"
         >
