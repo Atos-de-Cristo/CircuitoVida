@@ -20,8 +20,6 @@ class Attachment extends Component
         'refreshAttachment' => '$refresh'
     ];
 
-
-
     public function mount($lessonId, $attachmentId, AttachmentService $service)
     {
         $this->lessonId = $lessonId;
