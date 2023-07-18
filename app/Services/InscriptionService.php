@@ -123,7 +123,7 @@ class InscriptionService
                                 'correct' => $totalCorrect,
                                 'incorrect' => $totalIncorrect,
                                 'percent' => number_format($percent, 2, '.', ''),
-                                'status' => $totalPendent > 0 ? 'Pendente' : 'Reprovado',
+                                'status' => $totalPendent > 0 ? 'Questoes pendentes de correção' : 'Reprovado',
                                 'totalQuestions' => $totalQuestions,
                             ];
                         }
