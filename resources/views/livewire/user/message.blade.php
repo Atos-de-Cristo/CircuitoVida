@@ -1,19 +1,7 @@
 <div>
-    @if (session()->has('message'))
-    <div
-      x-data="{ showMessage: true }"
-      x-show="showMessage"
-      x-init="setTimeout(() => { showMessage = false; }, 1000)"
-      class="bg-teal-100 border-teal-500 rounded-md text-teal-900 px-4 py-3 shadow-md my-3"
-      role="alert"
-    >
-      <div class="flex">
-        <div>
-          <p class="text-sm">{{ session('message') }}</p>
-        </div>
-      </div>
-    </div>
-    @endif
+  @if (session()->has('message'))
+  <x-alert-message :message="session('message')['text']" :messageType="session('message')['type']" />
+  @endif
     @can('admin')
     <form>
       <div
