@@ -53,5 +53,7 @@ class Profile extends Component
             'text' => 'Perfil atualizado com sucesso.' ,
             'type' => 'success',
         ]);
+
+       
     }
 }

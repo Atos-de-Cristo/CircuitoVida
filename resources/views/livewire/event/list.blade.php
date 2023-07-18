@@ -64,13 +64,13 @@
                             <div
                                 class="flex justify-between px-5 ">
                                 <button wire:click.prevent="manager({{ $data->id }})">                               
-                                    <x-svg.view size="h-9 w-9 text-gray-400" />
+                                    <x-svg.view size="h-9 w-9 text-gray-400 hover:scale-125" />
                                 </button>
-                                <button wire:click.prevent="edit({{ $data->id }})">
-                                    <x-svg.edit size="h-6 w-6" />
+                                <button wire:click.prevent="edit({{ $data->id }})" class="hover:scale-125">
+                                    <x-svg.edit size="h-6 w-6 " />
                                 </button>
                                 <button wire:click.prevent="delete({{ $data->id }})">
-                                    <x-svg.delete size="h-7 w-7 " />
+                                    <x-svg.delete size="h-7 w-7 hover:scale-125" />
                                 </button>
                             </div>
 

@@ -108,7 +108,11 @@ class EventActivityQuestion extends Component
 
         $this->resetInputCreate();
 
-        session()->flash('message', 'A pergunta foi salva com sucesso!');
+        session()->flash('message', [
+            'text' => 'A pergunta foi salva com sucesso!' ,
+            'type' => 'success',
+        ]);
+      
     }
 
     public function resetInputCreate()
@@ -134,8 +138,11 @@ class EventActivityQuestion extends Component
         }
 
         $this->resetInputAnswers();
-
-        session()->flash('message', 'As respostas foram salvas com sucesso!');
+        session()->flash('message', [
+            'text' => 'As respostas foram salvas com sucesso!' ,
+            'type' => 'success',
+        ]);
+        
     }
 
     public function resetInputAnswers()
