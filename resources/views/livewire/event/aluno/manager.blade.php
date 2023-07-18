@@ -11,9 +11,9 @@
     @forelse ($inscriptions as $aluno)
         @can('admin')
             <div class="
-                flex items-center mt-5 mb-4
+                flex items-center mt-4 
                 @if(count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2)
-                    bg-red-500 rounded-full
+                    bg-red-500 rounded-md p-2
                 @endif
                 "
             >
