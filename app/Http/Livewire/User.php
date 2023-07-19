@@ -100,18 +100,18 @@ class User extends Component
         //TODO: melhorar consulta relacionamentos
         $this->permissions = explode(',', $user->permissions()->implode('id', ','));
 
-        $this->isOpen = false;
+        $this->isOpen = true;
     }
 
     public function delete($id, UserService $service)
     {
         $service->delete($id);
-        
+
         session()->flash('message', [
             'text' => 'Usuário deletado com sucesso.' ,
             'type' => 'success',
         ]);
-        
+
     }
 
     public function manager($id){
