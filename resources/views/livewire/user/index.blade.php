@@ -71,7 +71,7 @@
                                         <x-svg.edit size="h-6 w-6 " />
                                     </button>
                                     <button wire:click.prevent="delete({{ $data->id }})" class="hover:scale-125">
-                                        <x-svg.delete size="h-7 w-7 " />
+                                        <x-svg.delete size="h-7 w-7" />
                                     </button>
                                 </div>
 
