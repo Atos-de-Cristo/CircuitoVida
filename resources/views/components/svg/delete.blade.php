@@ -1,4 +1,4 @@
-@props(['size' => 'h-5 w-5 text-gray-400 '])
+@props(['size' => 'h-5 w-5 text-gray-400'])
 <svg {{ $attributes->merge(['class' => $size]) }}  viewBox="0 0 1024 1024"  class="icon" version="1.1"
     >
 
