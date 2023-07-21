@@ -1,14 +1,14 @@
 <div>
     @empty($activityId)
     <button wire:click.prevent="$set('isOpenActivity', true)" class="btn-primary text-xs ml-2">
-        <x-svg.add size="w-4 h-4" color="text-white" />
+        <x-icon-plus  />
     </button>
     @else
     <button wire:click.prevent="$set('isOpenActivity', true)" class="mr-2 hover:scale-110">
-        <x-svg.edit />
+        <x-icon-pencil class="w-5 h-5" />
     </button>
     <button wire:click.prevent="dellActivity()"class="hover:scale-110">
-        <x-svg.delete />
+        <x-icon-trash class="w-5 h-5" />
     </button>
     @endempty
 

@@ -2,7 +2,7 @@
     @forelse ($activities as $activity)
         <div class="flex items-center justify-between">
             <div class="flex justify-start items-baseline">
-             <x-svg.activity/>
+                <x-icon-file-word />
                 <a
                     href="{{ route('eventActivityQuestion', ['id' => $activity->id]) }}"
                     class="font-bold text-md text-blue-500 hover:underline  ml-2 flex flex-col"

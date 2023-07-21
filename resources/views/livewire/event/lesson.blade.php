@@ -1,16 +1,16 @@
 <div>
     @if ($lessonId)
         <button wire:click.prevent="$set('isOpenLesson', true)" class="mr-5">
-            <x-svg.edit />
+            <x-icon-pencil class="w-5 h-5" />
         </button>
         <button wire:click.prevent="dellLesson()">
-            <x-svg.delete />
+            <x-icon-trash class="w-5 h-5" />
         </button>
     @else
         <button wire:click.prevent="$set('isOpenLesson', true)"
             class="btn-primary text-xs flex items-center">
             <div class="flex items-center justify-center">
-                <x-svg.add color="text-white" />
+                <x-icon-plus class="w-4 h-4" />
                 <span class="ml-1">Aula</span>
             </div>
         </button>

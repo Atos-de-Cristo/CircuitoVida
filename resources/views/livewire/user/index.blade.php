@@ -20,16 +20,7 @@
     </div>
     <div class="card-white">
         <div class="flex flex-col mb-4 sm:flex-row justify-between items-center">
-
-            <div class="font-bold  flex items-center">
-                <div class="relative mr-4 flex ">
-                    <input wire:model.debounce.300ms="search" wire:keydown="search" placeholder="Buscar usuário..."
-                        class="input-form-search" type="text">
-
-                    <x-svg.search />
-                </div>
-            </div>
-
+            <x-search-form placeholder="Buscar usuário..."/>
             @can('admin')
             @include('livewire.user.create')
             @endcan
@@ -61,17 +52,16 @@
                         </div>
                         <div>
 
-                            <div>
-                                <hr class="my-2 border-gray-300">
+                            <div class="dark:bg-slate-900 bg-slate-200 rounded-md py-3">                                
                                 <div class="flex justify-between px-5 ">
                                     <button wire:click.prevent="manager({{ $data->id }})" class="hover:scale-125">
-                                        <x-svg.view size="h-9 w-9 text-gray-400" />
+                                        <x-icon-eye class="w-6 h-6" />
                                     </button>
                                     <button wire:click.prevent="edit({{ $data->id }})" class="hover:scale-125">
-                                        <x-svg.edit size="h-6 w-6 " />
+                                        <x-icon-pencil class="w-5 h-5" />
                                     </button>
                                     <button wire:click.prevent="delete({{ $data->id }})" class="hover:scale-125">
-                                        <x-svg.delete />
+                                        <x-icon-trash class="w-5 h-5" />
                                     </button>
                                 </div>
 

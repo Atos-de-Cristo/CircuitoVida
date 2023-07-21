@@ -26,8 +26,8 @@
             @can('admin')
             <div class="mt-2 sm:mt-0 flex space-x-2">
                 <button wire:click="create()" class="btn-primary">
-                    <x-svg.add size="h-6 w-6" />
-                    <span>Evento</span>
+                    <x-icon-plus class="w-4 h-4" />
+                    <span class="ml-1">Evento</span>
                 </button>
             </div>
             @endcan
@@ -50,17 +50,16 @@
                             <p class="text-sm text-gray-500 dark:text-white">{{ getTypeEvent($data->type) }}</p>
                             <p class="text-sm text-gray-500 dark:text-white">{{ getStatusEvent($data->status) }}</p>
                         </div>
-                        <div>
-                            <hr class="my-2 border-gray-300">
+                        <div  class="dark:bg-slate-900 bg-slate-200 rounded-md py-3">
                             <div class="flex justify-between px-5 ">
                                 <button wire:click.prevent="manager({{ $data->id }})" class="hover:scale-125">
-                                    <x-svg.view size="h-9 w-9 text-gray-400" />
+                                    <x-icon-eye class="w-5 h-5" />
                                 </button>
                                 <button wire:click.prevent="edit({{ $data->id }})" class="hover:scale-125">
-                                    <x-svg.edit size="h-6 w-6 " />
+                                    <x-icon-pencil class="w-5 h-5" />
                                 </button>
                                 <button wire:click.prevent="delete({{ $data->id }})" class="hover:scale-125">
-                                    <x-svg.delete />
+                                    <x-icon-trash class="w-5 h-5" />
                                 </button>
                             </div>
                         </div>

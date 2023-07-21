@@ -1,14 +1,14 @@
 <div>
     @empty($attachmentId)
     <button wire:click.prevent="$set('isOpenAttachment', true)" class="btn-primary text-xs ml-2">
-        <x-svg.uploud size="w-4 h-4" />
+        <x-icon-cloud-arrow-up  />
     </button>
     @else
     <button wire:click.prevent="$set('isOpenAttachment', true)" class="mr-2 hover:scale-110">
-        <x-svg.edit />
+        <x-icon-pencil class="w-5 h-5" />
     </button>
     <button wire:click.prevent="dellAttachment()" class="hover:scale-110">
-        <x-svg.delete />
+        <x-icon-trash class="w-5 h-5" />
     </button>
     @endempty
 

@@ -3,7 +3,7 @@
     <div class="sm:col-span-2 md:col-span-1">
         <div
             class="bg-white border-t-2 dark:border-indigo-900 dark:bg-slate-700 overflow-hidden shadow-xl rounded-md   mt-2 mb-4  ">
-            <div class="dark:bg-indigo-900 h-16 rounded-t-lg p-2">
+            <div class="dark:bg-gradient-to-r from-indigo-900 to-indigo-600 h-16 rounded-t-lg p-2">
                 <div class="  bg-slate-700 w-20 h-20 rounded-full flex items-center justify-center">
                     <div class="w-16 h-16 flex  border-2 border-white rounded-full overflow-hidden">
                         <img src="{{ asset($this->user->profile_photo_url) }}" alt="{{ $this->user->name }}"

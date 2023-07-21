@@ -1,8 +1,8 @@
 <div>
     <div class="mt-2 sm:mt-0 flex space-x-2">
         <button wire:click="create()" class="btn-primary">
-            <x-svg.add size="h-6 w-6" />
-            <span>Usuário</span>
+            <x-icon-plus size="h-6 w-6" />
+            <span class="ml-1">Usuário</span>
         </button>
     </div>
     @if ($isOpen)

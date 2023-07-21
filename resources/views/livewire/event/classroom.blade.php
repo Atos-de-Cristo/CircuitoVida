@@ -1,9 +1,9 @@
 <div>
     <div class="flex flex-col md:flex-row items-center justify-between mb-2">
         <div class="flex items-center mb-2 md:mb-0">
-            <x-svg.module size="h-8 w-8" />
+            <x-icon-cubes class="w-8 h-8" />
             <div class="ml-2 text-xl font-bold">
-                {{ $lessonData->module->name }}
+               <strong>{{ $lessonData->module->name }}</strong> 
             </div>
         </div>
         <div class=" hidden md:inline">
@@ -19,8 +19,8 @@
     <div class="card-white">
         <div class="flex flex-col sm:flex-row justify-between items-center">
             <div class="font-bold  flex items-center">
-                <x-svg.play-lesson size="h-8 w-8" />
-                {{ $lessonData->title }}
+                <x-icon-circle-play class="w-5 h-5" />
+               <strong class="ml-2">{{ $lessonData->title }}</strong> 
             </div>
             @can('admin')
             @livewire('event-frequency', [$eventId, $lessonId])
@@ -43,7 +43,7 @@
         <div class="sm:col-span-2 md:col-span-1">
             <div class="text-xl font-bold mb-4 flex items-center justify-between">
                 <div class="flex items-center">
-                    <x-svg.activits />
+                    <x-icon-paste />
                     <span class="ml-2">Atividades</span>
                 </div>
                 @can('admin')
@@ -60,7 +60,7 @@
         <div class="sm:col-span-2 md:col-span-1">
             <div class="text-xl font-bold mb-4 flex items-center justify-between">
                 <div class="flex items-center">
-                    <x-svg.dowloard />
+                    <x-icon-cloud-arrow-up  />
                     <span class="ml-2">Materiais</span>
                 </div>
                 @can('admin')
@@ -73,7 +73,7 @@
                     @forelse ($lessonData->attachments as $attachment)
                     <div class="flex items-center justify-between ">
                         <div class="flex items-center">
-                            <x-svg.anexo size="h-5 w-5" />
+                            <x-icon-paperclip  />
                             <a href="{{ $attachment->path }}" target="_blank"
                                 class="font-bold text-md text-blue-500 hover:underline ml-2">
                                 {{ $attachment->name }}.{{ pathinfo($attachment->path, PATHINFO_EXTENSION) }}
