@@ -2,7 +2,6 @@
     @if (session()->has('message'))
     <x-alert-message :message="session('message')['text']" :messageType="session('message')['type']" />
     @endif
-
     <div class="flex flex-col md:flex-row items-center justify-between mb-2">
         <div class="flex items-center mb-2 md:mb-0">
             <div class="ml-2 text-xl font-bold">
@@ -19,7 +18,6 @@
             </ol>
         </div>
     </div>
-
     <div class="card-white">
         <div class="flex flex-col mb-4 sm:flex-row justify-between items-center">
             <x-search-form placeholder="Buscar eventos..."/>
@@ -32,9 +30,7 @@
             </div>
             @endcan
         </div>
-
         <div class="flex flex-wrap m-0  rounded-md">
-
             @foreach ($dataAll as $data)
             <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-2">
                 <div class="bg-gray-100  max-w-sm  dark:bg-slate-800 overflow-hidden shadow rounded-lg flex flex-col ">
@@ -65,13 +61,9 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
-
             @endforeach
         </div>
-
         <div class="mt-4">
             {{ $dataAll->links() }}
         </div>

@@ -15,7 +15,6 @@
             </div>
         </button>
     @endif
-
     @if ($isOpenLesson)
     <x-dialog-modal id="isOpenLesson" wire:model="isOpenLesson" maxWidth="lg" closeModal="$set('isOpenLesson', false)">
         <x-slot name="title">
@@ -25,7 +24,6 @@
             Adicionar Aula
             @endif
         </x-slot>
-
         <x-slot name="content">
             <form>
                 <div class="flex flex-col">
@@ -89,7 +87,6 @@
                 </div>
             </form>
         </x-slot>
-
         <x-slot name="footer">
             <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
                 <button wire:click.prevent="store()" type="button"

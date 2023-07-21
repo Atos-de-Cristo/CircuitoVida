@@ -1,15 +1,15 @@
 <div>
     @if ($categoryId)
         <button wire:click.prevent="$set('isOpen', true)" class="mr-2">
-            <x-svg.edit />
+            <x-icon-pencil class="w-5 h-5" />
         </button>
         <button wire:click="del()" class="mr-2">
-            <x-svg.delete />
+            <x-icon-trash class="w-5 h-5" />
         </button>
     @else
         <button wire:click.prevent="$set('isOpen', true)" class="btn-primary" >
-            <x-svg.add size="h-6 w-6"/>
-            <span>Categoria</span>
+            <x-icon-plus/>
+            <span class="ml-1">Categoria</span>
         </button>
     @endif
 

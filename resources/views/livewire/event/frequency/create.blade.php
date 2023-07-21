@@ -3,7 +3,7 @@
 <div>
     <div class="mt-2 sm:mt-0 flex space-x-2">
         <button wire:click.prevent="$set('isOpenFrequency', true)" class="btn-primary">
-            <x-svg.checklist size="w-4 h-4" />
+            <x-icon-check class="w-4 h-4" />
             <span class="ml-2">Fequência</span>
         </button>
     </div>
