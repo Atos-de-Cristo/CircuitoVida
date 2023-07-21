@@ -21,18 +21,8 @@
 
     <div class="card-white">
         <div class="flex flex-col mb-4 sm:flex-row justify-between items-center">
-
-            <div class="font-bold flex items-center">
-                <div class="relative mr-4 flex">
-                    <input wire:model.debounce.300ms="search" wire:keydown='search' placeholder="Buscar eventos..." class="input-form-search"
-                        type="text">
-                    <x-svg.search />
-                </div>
-            </div>
-
-
+            <x-search-form placeholder="Buscar eventos..."/>
         </div>
-
         <div class="flex flex-wrap m-0  rounded-md">
             @foreach ($dataAll as $data)
             <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4">

@@ -24,7 +24,7 @@
                         class="mt-auto font-bold text-md text-blue-500 hover:underline">
                         <div
                             class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg">
-                            <x-svg.play-lesson size="h-12 w-12" class="text-gray-500" />
+                            <x-icon-circle-play class="h-12 w-12" />
                         </div>
                     </a>
                 </div>

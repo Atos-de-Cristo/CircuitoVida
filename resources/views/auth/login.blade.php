@@ -2,7 +2,7 @@
     <x-authentication-card>
 
         <x-slot name="logo">
-            <x-svg.logo size="w-40 h-40" color="fill-current dark:text-white text-black"/>
+            <x-icon-logo class="w-40 h-40 dark:text-white text-black"/>
         </x-slot>
 
         <x-validation-errors class="mb-2" />
