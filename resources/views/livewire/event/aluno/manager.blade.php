@@ -1,13 +1,6 @@
 
 <div class="card-white">
-    <div class="font-bold flex items-center">
-        <div class="relative mr-4 flex">
-            <input wire:model.debounce.300ms.page="search"  placeholder="Buscar aluno..."
-                class="input-form-search"
-                type="text">
-            <x-svg.search />
-        </div>
-    </div>
+ <x-search-form placeholder="Buscar aluno..."/>
     @forelse ($inscriptions as $aluno)
         @can('admin')
             <div class="

@@ -22,16 +22,7 @@
 
     <div class="card-white">
         <div class="flex flex-col mb-4 sm:flex-row justify-between items-center">
-
-            <div class="font-bold flex items-center">
-                <div class="relative mr-4 flex">
-                    <input wire:model.debounce.300ms.page="search" wire:keydown="search" placeholder="Buscar eventos..."
-                        class="input-form-search" type="text">
-
-                    <x-svg.search />
-                </div>
-            </div>
-
+            <x-search-form placeholder="Buscar eventos..."/>
             @can('admin')
             <div class="mt-2 sm:mt-0 flex space-x-2">
                 <button wire:click="create()" class="btn-primary">

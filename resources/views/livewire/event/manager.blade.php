@@ -6,8 +6,7 @@
 
     <div class="flex flex-col md:flex-row items-center justify-between mb-2">
         <div class="flex items-center mb-2 md:mb-0">
-            <x-svg.board />
-
+            <x-icon-display class="w-6 h-6" />
             <div class="ml-2 text-xl font-bold">
                 {{ $event->name }}
             </div>
@@ -28,7 +27,7 @@
         <div class="flex flex-col sm:flex-row justify-between items-center">
             <div>
                 <div class="font-bold px-4 mb-2 flex items-center">
-                    <x-svg.teacher size="h-5 w-5" />
+                    <x-icon-person-chalkboard class="w-6 h-6" />
                     <span class="ml-2 font-bold">Monitores</span>
                 </div>
                 <div class="flex  items-center sm:flex-row mb-5">
@@ -49,24 +48,17 @@
             </div>
             @can('admin')
             <div class="flex justify-center flex-wrap gap-2">
-                <div><button wire:click.prevent="createModule()" class="btn-primary sm:w-">
-                        <x-svg.pasta-add size="h-5 w-5" color="fill-current text-white " />
-                        <span class="ml-2">Módulos</span>
-                    </button></div>
+                <button wire:click.prevent="createModule()" class="btn-primary ">
+                    <x-icon-folder class="w-4 h-4" />
+                          <span class="ml-2">Módulos</span>
+                    </button>
                 <div>
                     <livewire:event-monitors :eventId='$eventId' :key="rand()">
                 </div>
-                <div><button wire:click="sendRoom" class="btn-primary sm:px-2">
-                        <svg fill="#ffffff" class="h-5 w-5 mr-2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier">
-                                <path
-                                    d="M10,20h4a2,2,0,0,1-4,0Zm8-4V10a6,6,0,0,0-5-5.91V3a1,1,0,0,0-2,0V4.09A6,6,0,0,0,6,10v6L4,18H20Z">
-                                </path>
-                            </g>
-                        </svg> Notificação
-                    </button></div>
+                <button wire:click="sendRoom" class="btn-primary sm:px-2">
+                    <x-icon-bell class="w-4 h-4" />
+                        <span class="ml-2">Notificação</span>
+                    </button>
             </div>
 
             @endcan
@@ -74,8 +66,8 @@
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div class="sm:col-span-2 md:col-span-2">
-            <div class="text-xl font-bold mb-4 flex items-center">
-                <x-svg.module size="h-8 w-8" />
+            <div class="text-xl font-bold mb-4 flex items-center">                
+                <x-icon-cubes class="w-8 h-8" />
                 <span class="ml-2">MODULOS</span>
             </div>
             @forelse ($event->modules as $module)
@@ -89,24 +81,16 @@
                             @can('admin')
                             <button wire:click.prevent="editModule({{ $module->id }})" class="mr-2 hover:scale-110"
                                 @click.stop>
-                                <x-svg.edit />
+                                <x-icon-pencil class="w-5 h-5" />
                             </button>
                             <button wire:click.prevent="deleteItem({{ $module->id }})" class="mr-5 hover:scale-110"
                                 @click.stop>
-                                <x-svg.delete />
+                                <x-icon-trash class="w-5 h-5" />
                             </button>
                             @endcan
-                            <div class="border-r border-gray-400 h-4"></div>
-                            <svg x-show="!open" class="w-6 h-6 mx-2" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 9l-7 7-7-7" />
-                            </svg>
-                            <svg x-show="open" class="w-6 h-6 mx-2" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 15l7-7 7 7" />
-                            </svg>
+                            <div class="border-r border-gray-400 h-4"></div>                          
+                            <x-icon-angle-down x-show="!open" class="w-6 h-6" />
+                            <x-icon-angle-up x-show="open" class="w-6 h-6" />
                         </div>
                     </div>
                 </div>
@@ -122,7 +106,7 @@
                         @forelse ($module->lessons as $lesson)
                         <div class="border-t border-gray-200 pb-2 py-2 flex items-center justify-between">
                             <div class="flex items-center">
-                                <x-svg.play-lesson size="h-5 w-5" />
+                                <x-icon-circle-play class="w-5 h-5" />
                                 <div class="flex flex-col">
                                     @if ($lesson->start_date && $lesson->end_date)
                                     @if (
@@ -159,7 +143,7 @@
                                             {{ $lesson->title }}
                                         </a>
                                         @endif
-                                        <small class="ml-2">{{$lesson->description}}</small>
+                                        
                                 </div>
                             </div>
                             @can('admin')
@@ -180,11 +164,12 @@
                 <span class="text-red-500">Nenhum módulo cadastrado</span>
             </div>
             @endforelse
-        </div>
+        </div>        
         <div class="sm:col-span-2 md:col-span-1">
             <div class="text-xl font-bold mb-4 flex items-center justify-between">
                 <div class="flex">
-                    <x-svg.student />
+                 
+                    <x-icon-graduation-cap class="w-8 h-8" />
                     <span class="ml-2">ALUNOS</span>
                 </div>
 

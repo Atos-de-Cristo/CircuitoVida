@@ -1,6 +1,6 @@
 <div>
     <button wire:click.prevent="$set('isOpenMonitors', true)" class="btn-primary ">
-        <x-svg.users-group size="h-5 w-5" color="fill-current text-white " />
+        <x-icon-people-group class="w-5 h-5" />
         <span class="ml-2">Monitores</span>
     </button>
     @if ($isOpenMonitors)
