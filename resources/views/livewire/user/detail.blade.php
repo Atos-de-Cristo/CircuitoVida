@@ -218,7 +218,7 @@
                 @endif
                 @if ($tab === 'atividades')
                     <div class="px-5 py-5">
-                        Atividades
+                        <livewire:user-activity :user="$this->user->id" :key="rand()" />
                     </div>
                 @endif
                 @if ($tab === 'anexos')
