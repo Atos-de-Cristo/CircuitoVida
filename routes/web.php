@@ -10,6 +10,7 @@ use App\Http\Livewire\{
     EventActivityQuestion,
     EventCategory,
     ListMessages,
+    StudentActivities,
     UserDetail
 };
 use Illuminate\Support\Facades\Route;
@@ -31,5 +32,6 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
 
     Route::middleware('can:aluno')->group(function () {
         Route::get('/inscription', Inscription::class)->name('inscription');
+        Route::get('/activities', StudentActivities::class)->name('activities');
     });
 });
