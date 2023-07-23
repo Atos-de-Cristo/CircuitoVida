@@ -125,10 +125,10 @@
                                 @can('admin')
                                 <div class="flex flex-row">
                                     <button wire:click.prevent="edit({{ $question->id }})" class="mr-2">
-                                        <x-svg.edit />
+                                        <x-icon-pencil />
                                     </button>
                                     <button wire:click.prevent="dell({{ $question->id }})">
-                                        <x-svg.delete />
+                                        <x-icon-trash />
                                     </button>
                                 </div>
                                 @endcan
@@ -194,14 +194,10 @@
             <div class="bg-white border-t-2 dark:border-indigo-900 dark:bg-slate-800 shadow-xl rounded-md">
                 <div class="bg-gray-50 dark:bg-gray-700 text-center rounded-t-md">
                     <h2 class="text-lg text-gray-800 dark:text-white font-bold p-2 mb-4">Correção</h2>
-                </div>
+                </div>                
                 <div class="relative ml-4 flex">
-                    <input wire:model.debounce.300ms.page="search"  placeholder="Buscar aluno..."
-                        class="input-form-search"
-                        type="text">
-                    <x-svg.search />
+                    <x-search-form placeholder="Buscar aluno..."/>
                 </div>
-
                 <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     @forelse ($this->userQuestions as $user)
                         <div class="flex flex-col xl:flex-row xl:items-center mb-4">
@@ -236,8 +232,6 @@
                     @endforelse
                 </div>
             </div>
-
-
         </div>
         @endcan
 

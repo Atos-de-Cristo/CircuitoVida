@@ -2,7 +2,7 @@
 import './bootstrap';
 
 import Alpine from 'alpinejs';
-import 'flowbite/dist/flowbite.min.js';
+import 'flowbite';
 import focus from '@alpinejs/focus';
 window.Alpine = Alpine;
 

@@ -60,9 +60,9 @@ module.exports = {
         },
     },
     plugins: [
-        require("@tailwindcss/forms"),
-        require("@tailwindcss/typography"),
         require('flowbite/plugin'),
+        require("@tailwindcss/forms"),
+        require("@tailwindcss/typography"),       
         // add custom variant for expanding sidebar
         plugin(({ addVariant, e }) => {
             addVariant("sidebar-expanded", ({ modifySelectors, separator }) => {
