@@ -11,6 +11,7 @@ use App\Http\Livewire\{
     EventCategory,
     ListMessages,
     StudentActivities,
+    StudentAttachments,
     UserDetail
 };
 use Illuminate\Support\Facades\Route;
@@ -33,5 +34,6 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
     Route::middleware('can:aluno')->group(function () {
         Route::get('/inscription', Inscription::class)->name('inscription');
         Route::get('/activities', StudentActivities::class)->name('activities');
+        Route::get('/attachments', StudentAttachments::class)->name('attachments');
     });
 });
