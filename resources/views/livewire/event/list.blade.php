@@ -1,5 +1,5 @@
 <div>
-    @if (session()->has('message'))
+     @if (session()->has('message'))
     <x-alert-message :message="session('message')['text']" :messageType="session('message')['type']" />
     @endif
     <div class="flex flex-col md:flex-row items-center justify-between mb-2">
