@@ -21,7 +21,7 @@
         <div class="space-y-8">
             <div>
                 <ul class="mt-3">
-                    <li class="px-3 py-2 rounded-sm mb-0.5 @if (in_array(Request::segment(1), ['dashboard'])) {{ 'bg-slate-900' }} @endif"
+                    <li class="px-3 py-2 rounded-sm mb-0.5 @if (in_array(Request::segment(1), [''])) {{ 'bg-slate-900' }} @endif"
                         x-data="{ open: {{ in_array(Request::segment(1), ['dashboard']) ? 1 : 0 }} }">
                         <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['dashboard'])) {{ 'hover:text-slate-200' }} @endif last:mb-0"
                             href="{{ route('dashboard') }} ">
@@ -29,13 +29,13 @@
                                 <div class="flex items-center">
                                     <svg class="shrink-0 h-6 w-6" viewBox="0 0 24 24">
                                         <path
-                                            class="fill-current @if (in_array(Request::segment(1), ['dashboard'])) {{ 'text-indigo-500' }}@else{{ 'text-slate-400' }} @endif"
+                                            class="fill-current @if (in_array(Request::segment(1), [''])) {{ 'text-indigo-500' }}@else{{ 'text-slate-400' }} @endif"
                                             d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z" />
                                         <path
-                                            class="fill-current @if (in_array(Request::segment(1), ['dashboard'])) {{ 'text-indigo-600' }}@else{{ 'text-slate-600' }} @endif"
+                                            class="fill-current @if (in_array(Request::segment(1), [''])) {{ 'text-indigo-600' }}@else{{ 'text-slate-600' }} @endif"
                                             d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z" />
                                         <path
-                                            class="fill-current @if (in_array(Request::segment(1), ['dashboard'])) {{ 'text-indigo-200' }}@else{{ 'text-slate-400' }} @endif"
+                                            class="fill-current @if (in_array(Request::segment(1), [''])) {{ 'text-indigo-200' }}@else{{ 'text-slate-400' }} @endif"
                                             d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z" />
                                     </svg>
                                     <span
@@ -54,10 +54,10 @@
                                 <div class="flex items-center">
                                     <svg class="shrink-0 h-6 w-6" viewBox="0 0 24 24">
                                         <path
-                                            class="fill-current @if (in_array(Request::segment(1), ['users'])) {{ 'text-indigo-500' }}@else{{ 'text-slate-600' }} @endif"
+                                            class="fill-current @if (in_array(Request::segment(1), ['inscription'])) {{ 'text-indigo-500' }}@else{{ 'text-slate-600' }} @endif"
                                             d="M18.974 8H22a2 2 0 012 2v6h-2v5a1 1 0 01-1 1h-2a1 1 0 01-1-1v-5h-2v-6a2 2 0 012-2h.974zM20 7a2 2 0 11-.001-3.999A2 2 0 0120 7zM2.974 8H6a2 2 0 012 2v6H6v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5H0v-6a2 2 0 012-2h.974zM4 7a2 2 0 11-.001-3.999A2 2 0 014 7z" />
                                         <path
-                                            class="fill-current @if (in_array(Request::segment(1), ['users'])) {{ 'text-indigo-300' }}@else{{ 'text-slate-400' }} @endif"
+                                            class="fill-current @if (in_array(Request::segment(1), ['inscription'])) {{ 'text-indigo-300' }}@else{{ 'text-slate-400' }} @endif"
                                             d="M12 6a3 3 0 110-6 3 3 0 010 6zm2 18h-4a1 1 0 01-1-1v-6H6v-6a3 3 0 013-3h6a3 3 0 013 3v6h-3v6a1 1 0 01-1 1z" />
                                     </svg>
                                     <span
@@ -74,15 +74,11 @@
                         <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if (in_array(Request::segment(1), ['activities'])) {{ 'hover:text-slate-200' }} @endif"
                             href="{{ route('activities') }}">
                             <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <svg class="shrink-0 h-6 w-6" viewBox="0 0 24 24">
-                                        <path
-                                            class="fill-current @if (in_array(Request::segment(1), ['activities'])) {{ 'text-indigo-500' }}@else{{ 'text-slate-600' }} @endif"
-                                            d="M18.974 8H22a2 2 0 012 2v6h-2v5a1 1 0 01-1 1h-2a1 1 0 01-1-1v-5h-2v-6a2 2 0 012-2h.974zM20 7a2 2 0 11-.001-3.999A2 2 0 0120 7zM2.974 8H6a2 2 0 012 2v6H6v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5H0v-6a2 2 0 012-2h.974zM4 7a2 2 0 11-.001-3.999A2 2 0 014 7z" />
-                                        <path
-                                            class="fill-current @if (in_array(Request::segment(1), ['activities'])) {{ 'text-indigo-300' }}@else{{ 'text-slate-400' }} @endif"
-                                            d="M12 6a3 3 0 110-6 3 3 0 010 6zm2 18h-4a1 1 0 01-1-1v-6H6v-6a3 3 0 013-3h6a3 3 0 013 3v6h-3v6a1 1 0 01-1 1z" />
-                                    </svg>
+                                <div class="flex items-center ">
+                                    <div class="@if (in_array(Request::segment(1), ['activities'])) {{ 'text-indigo-500' }}@else{{ 'text-slate-400' }} @endif">
+                                        <x-icon-paste />    
+                                    </div>
+                                                                    
                                     <span
                                         class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Atividades</span>
                                 </div>
@@ -98,14 +94,9 @@
                             href="{{ route('attachments') }}">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center">
-                                    <svg class="shrink-0 h-6 w-6" viewBox="0 0 24 24">
-                                        <path
-                                            class="fill-current @if (in_array(Request::segment(1), ['attachments'])) {{ 'text-indigo-500' }}@else{{ 'text-slate-600' }} @endif"
-                                            d="M18.974 8H22a2 2 0 012 2v6h-2v5a1 1 0 01-1 1h-2a1 1 0 01-1-1v-5h-2v-6a2 2 0 012-2h.974zM20 7a2 2 0 11-.001-3.999A2 2 0 0120 7zM2.974 8H6a2 2 0 012 2v6H6v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5H0v-6a2 2 0 012-2h.974zM4 7a2 2 0 11-.001-3.999A2 2 0 014 7z" />
-                                        <path
-                                            class="fill-current @if (in_array(Request::segment(1), ['attachments'])) {{ 'text-indigo-300' }}@else{{ 'text-slate-400' }} @endif"
-                                            d="M12 6a3 3 0 110-6 3 3 0 010 6zm2 18h-4a1 1 0 01-1-1v-6H6v-6a3 3 0 013-3h6a3 3 0 013 3v6h-3v6a1 1 0 01-1 1z" />
-                                    </svg>
+                                    <div class="@if (in_array(Request::segment(1), ['attachments'])) {{ 'text-indigo-500' }}@else{{ 'text-slate-400' }} @endif">
+                                        <x-icon-paperclip  /> 
+                                    </div>                                                                       
                                     <span
                                         class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Anexos</span>
                                 </div>
