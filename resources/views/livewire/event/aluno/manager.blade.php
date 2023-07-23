@@ -1,60 +1,91 @@
-
 <div class="card-white">
- <x-search-form placeholder="Buscar aluno..."/>
+    <x-search-form placeholder="Buscar aluno..." />
+
     @forelse ($inscriptions as $aluno)
         @can('admin')
-            <div class="
-                flex items-center mt-4 
-                @if(count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2)
-                    bg-red-500 rounded-md p-2
-                @endif
-                "
-            >
+        <div>
+            <div class="flex items-center mt-4 {{ (count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2) ? 'bg-red-500 rounded-md p-2' : '' }}">
                 <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset($aluno->user->profile_photo_url) }}"
                     width="32" height="32" alt="{{ $aluno->user->name }}" />
-                <a
-                    href="{{ route('userDetails', $aluno->user->id) }}"
-                    class="font-bold text-md text-blue-500 hover:underline ml-2"
-                    x-data="{ open: null }"
-                >
-                    <span class="
-                        truncate ml-2 text-sm font-medium group-hover:text-slate-800
-                        @if(count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2)
-                            text-white
-                        @endif
-                    ">
+                <button class="font-bold text-md text-blue-500 hover:underline ml-2"
+                    data-popover-target="{{ $aluno->user->id }}" data-popover-trigger="click"
+                    data-popover-placement="left">
+                    <span class="truncate ml-1 text-sm font-medium group-hover:text-slate-800 {{ (count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2) ? 'text-white' : '' }}">
                         {{ $aluno->user->name }}
-                        @if(count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2)
-                            <br />
-                            <small>
-                                Pendencias:<br />
-                                @if ($aluno->user->absenceCount > 2)
-                                    Faltas: {{$aluno->user->absenceCount}}<br />
-                                @endif
-                                @foreach ($aluno->user->activityStatus as $activityPendent)
-                                    {{$activityPendent['lesson']}} ({{$activityPendent['activity']}}) - {{$activityPendent['status']}}<br />
-                                @endforeach
-                            </small>
-                        @endif
                     </span>
-                </a>
+                </button>
             </div>
-        @elsecan('aluno')
-            <div class="flex items-center mt-5 mb-4">
-                <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset($aluno->user->profile_photo_url) }}"
-                    width="32" height="32" alt="{{ $aluno->user->name }}" />
-                <a wire:click="sendMessage({{$aluno->user->id}})"
-                    class="font-bold text-md text-blue-500 hover:underline ml-2 cursor-pointer {{$aluno->user->id == Auth::user()->id ? 'pointer-events-none' : ''}}" x-data="{ open: null }">
-                    <span class="truncate ml-2 text-sm font-medium group-hover:text-slate-800">{{ $aluno->user->name
-                        }}</span>
+            <div data-popover id="{{ $aluno->user->id }}" role="tooltip"
+                class="absolute z-10 invisible inline-block w-64 h-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:bg-gray-800 dark:border-gray-600 overflow-auto">
+                <div class="p-3">
+                    <div class="flex items-center justify-between mb-2">
+                        <a href="#">
+                            <img class="w-10 h-10 rounded-full" src="{{ asset($aluno->user->profile_photo_url) }}"
+                                alt="{{ $aluno->user->name }}">
+                        </a>
+                        <div>
+                            <!-- Algum conteúdo adicional aqui? -->
+                        </div>
+                    </div>
+                    <p class="text-base font-semibold leading-none text-gray-900 dark:text-white">
+                        <a href="{{ route('userDetails', $aluno->user->id) }}">{{ $aluno->user->name }}</a>
+                    </p>
 
-                </a>
+                    @if (count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2)
+                    <span>Pendências:</span>
+                    <div
+                        class="relative ml-6 py-2 text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
+
+                        @if ($aluno->user->absenceCount > 2)
+                        <div class="mb-5 ml-6">
+                            <span
+                                class="absolute flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-green-900">
+                                <svg class="w-3.5 h-3.5 text-green-500 dark:text-green-400" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M1 5.917 5.724 10.5 15 1.5" />
+                                </svg>
+                            </span>
+                            <h3 class="font-medium leading-tight">Faltas:</h3>
+                            <p class="text-sm">{{ $aluno->user->absenceCount }}</p>
+                        </div>
+                        @endif
+
+                        @foreach ($aluno->user->activityStatus as $activityPendent)
+                        <div class="mb-5 ml-6">
+                            <span
+                                class="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-red-900 dark:bg-gray-700">
+                                <svg class="w-3.5 h-3.5 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                                    <path
+                                        d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z" />
+                                </svg>
+                            </span>
+                            <h3 class="font-medium leading-tight">{{ $activityPendent['lesson'] }}</h3>
+                            <p class="text-sm">{{ $activityPendent['activity'] }}</p>
+                            <p class="text-sm">{{ $activityPendent['status'] }}</p>
+                        </div>
+                        @endforeach
+                    </div>
+                    @endif
+                </div>
+                <div data-popper-arrow></div>
             </div>
+        </div>
+        @elsecan('aluno')
+        <div class="flex items-center mt-5 mb-4">
+            <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset($aluno->user->profile_photo_url) }}"
+                width="32" height="32" alt="{{ $aluno->user->name }}" />
+            <a wire:click="sendMessage({{$aluno->user->id}})"
+                class="font-bold text-md text-blue-500 hover:underline ml-2 cursor-pointer {{$aluno->user->id == Auth::user()->id ? 'pointer-events-none' : ''}}"
+                x-data="{ open: null }">
+                <span class="truncate ml-2 text-sm font-medium group-hover:text-slate-800">{{ $aluno->user->name }}</span>
+            </a>
+        </div>
         @endcan
     @empty
     <div class="mt-5">
-        <span class="text-red-500 ">Nenhuma inscrição realizada</span>
+        <span class="text-red-500">Nenhuma inscrição realizada</span>
     </div>
-
     @endforelse
 </div>

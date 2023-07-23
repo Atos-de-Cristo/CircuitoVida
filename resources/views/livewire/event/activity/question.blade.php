@@ -125,10 +125,17 @@
                                 @can('admin')
                                 <div class="flex flex-row">
                                     <button wire:click.prevent="edit({{ $question->id }})" class="mr-2">
+<<<<<<< HEAD
                                         <x-icon-pencil class="w-5 h-5" />
                                     </button>
                                     <button wire:click.prevent="dell({{ $question->id }})">
                                         <x-icon-trash class="w-5 h-5" />
+=======
+                                        <x-icon-pencil />
+                                    </button>
+                                    <button wire:click.prevent="dell({{ $question->id }})">
+                                        <x-icon-trash />
+>>>>>>> ca36338e1b5235401c13b33d0d2ef047c0339a13
                                     </button>
                                 </div>
                                 @endcan
@@ -199,9 +206,8 @@
                     <input wire:model.debounce.300ms.page="search"  placeholder="Buscar aluno..."
                         class="input-form-search"
                         type="text">
-                    {{-- <x-feathericon-searc class="w-5 h-5" /> --}}
+                    <x-search-form placeholder="Buscar aluno..."/>
                 </div>
-
                 <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     @forelse ($this->userQuestions as $user)
                         <div class="flex flex-col xl:flex-row xl:items-center mb-4">
@@ -236,8 +242,6 @@
                     @endforelse
                 </div>
             </div>
-
-
         </div>
         @endcan
 
