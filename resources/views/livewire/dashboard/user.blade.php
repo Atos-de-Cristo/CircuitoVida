@@ -31,7 +31,13 @@
                         <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
                             {{ $item->name }}</h5>
                     </a>
-                    @if ($item->inscriptions->firstWhere('user_id', Auth::user()->id))
+                    @if($item->inscriptions->where('status', 'P')->where('user_id', Auth::user()->id)->count() > 0)
+                        <p class="text-red-500">Inscrição Pendente!</p>
+                    @else
+                    @if($item->inscriptions->where('status', 'C')->where('user_id', Auth::user()->id)->count() > 0)
+                        <p class="text-red-500">Inscrição Cancelada!</p>
+                    @else
+                    @if ($item->inscriptions->where('status', 'L')->where('user_id', Auth::user()->id)->count() > 0)
                     <button wire:click="view({{ $item->id }})"
                         class=" w-full inline-flex justify-center items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         Acessar!
@@ -57,6 +63,8 @@
                         @else
                             <p class="text-red-500">Inscrições Encerradas!</p>
                         @endif
+                    @endif
+                    @endif
                     @endif
                 </div>
             </div>
