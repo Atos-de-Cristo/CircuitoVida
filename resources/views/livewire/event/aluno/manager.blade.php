@@ -8,14 +8,18 @@
             <div class="flex items-center mt-4 {{ (count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2) ? 'bg-red-500 rounded-md p-2' : '' }}">
                 <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset($aluno->user->profile_photo_url) }}"
                     width="32" height="32" alt="{{ $aluno->user->name }}" />
-                <button class="font-bold text-md text-blue-500 hover:underline ml-2"
+                <a class="font-bold text-md text-blue-500 hover:underline ml-2 cursor-pointer"
                     data-popover-target="{{ $aluno->user->id }}" data-popover-trigger="click"
-                    data-popover-placement="left">
+                    data-popover-placement="left"
+                    @if (!count($aluno->user->activityStatus) > 0 || !$aluno->user->absenceCount > 2)
+                    href="{{route('userDetails', $aluno->user->id)}}" 
+                    @endif                   
+                     >
                     <span
                         class="truncate ml-1 text-sm font-medium group-hover:text-slate-800 {{ (count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2) ? 'text-white' : '' }}">
                         {{ $aluno->user->name }}
                     </span>
-                </button>
+                </a>
             </div>
             <div data-popover id="{{ $aluno->user->id }}" role="tooltip"
                 class="absolute z-10 invisible inline-block w-80 h-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:bg-gray-800 dark:border-gray-600 overflow-auto">
