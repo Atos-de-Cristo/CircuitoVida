@@ -28,6 +28,7 @@ module.exports = {
             },
             fontFamily: {
                 inter: ['Inter', 'sans-serif'],
+                'roboto': ['Roboto', 'sans-serif'],
             },
             fontSize: {
                 xs: ['0.75rem', { lineHeight: '1.5' }],

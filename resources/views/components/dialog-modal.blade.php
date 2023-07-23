@@ -1,37 +1,28 @@
 @props(['id' => null, 'maxWidth' => null, 'closeModal'=>null])
 
 <x-modal :id="$id" :maxWidth="$maxWidth" {{ $attributes }}>
-    <!-- Cabeçalho do modal -->
-    <div class="relative">
-        <!-- Botão de fechar o modal -->
-        <div class="absolute p-2 top-2 right-2">
-            <button class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-                wire:click.prevent="{{$closeModal}}">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-6 w-6">
-                    <path fill-rule="evenodd"
-                        d="M13.414 6l3.293-3.293a1 1 0 0 0-1.414-1.414L12 4.586 8.707 1.293A1 1 0 0 0 7.293 2.707L10.586 6l-3.293 3.293a1 1 0 1 0 1.414 1.414L12 7.414l3.293 3.293a1 1 0 0 0 1.414-1.414L13.414 6z"
-                        clip-rule="evenodd" />
-                </svg>
-            </button>
-        </div>
-
-        <!-- Título do modal -->
-        <div class="text-lg font-medium p-2  bg-gray-100 dark:bg-gray-800 text-center text-gray-900 dark:text-gray-100">
-            {{ $title }}
-        </div>
-
-        <!-- Conteúdo do modal -->
-        <div class="overflow-auto ">
-            <div class="px-6 py-4">
-                <div class="mt-4 text-sm  text-gray-600 dark:text-gray-400">
-                    {{ $content }}
-                </div>
+    <div class="relative w-full max-w-2xl max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    {{ $title }}
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"  wire:click.prevent="{{$closeModal}}">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
             </div>
+            <!-- Modal body -->
+            <div class="p-6 space-y-6">
+                {{ $content }}
+            </div>
+            <!-- Modal footer -->
+            <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                {{ $footer }}
         </div>
-        <!-- Rodapé do modal -->
-        <div
-            class="flex flex-row px-6 py-4 bg-gray-100 dark:bg-gray-800 rounded dark:text-white sm:flex sm:flex-row-reverse">
-            {{ $footer }}
-        </div>
-    </div>
+    </div>   
 </x-modal>
