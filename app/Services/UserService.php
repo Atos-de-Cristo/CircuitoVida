@@ -28,6 +28,7 @@ class UserService
             $query->where('permission', 'monitor');
         })->get();
     }
+
     public function getMonitorsFiltered($search): Collection
     {
         return $this->repository->whereHas('permissions', function (Builder $query) use ($search) {

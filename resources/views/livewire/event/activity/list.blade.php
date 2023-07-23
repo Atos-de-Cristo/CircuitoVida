@@ -1,5 +1,12 @@
 <div class="overflow-auto ">
     @forelse ($activities as $activity)
+    @if ($activity->type == 'E')
+        @can('aluno')
+            @if (!$activity->users->find(Auth::user()->id))
+                @php continue; @endphp
+            @endif
+        @endcan
+    @endif
         <div class="flex items-center justify-between">
             <div class="flex justify-start items-baseline">
                 <x-icon-file-word />
@@ -7,6 +14,11 @@
                     href="{{ route('eventActivityQuestion', ['id' => $activity->id]) }}"
                     class="font-bold text-md text-blue-500 hover:underline  ml-2 flex flex-col"
                 >
+                    @if ($activity->type == 'E')
+                        @can('admin')
+                            <small>({{$activity->users->pluck('name')->implode(', ')}})</small>
+                        @endcan
+                    @endif
                     {{ $activity->title }}
                     <small>{{ $activity->description }}</small>
                 </a>
