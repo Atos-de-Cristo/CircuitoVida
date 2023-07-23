@@ -11,7 +11,7 @@ class UserAttachments extends Component
 {
     use WithFileUploads;
 
-    public $name, $attachment, $userId;
+    public $name, $attachment, $userId, $rand;
 
     public function mount($user=null)
     {
@@ -36,7 +36,7 @@ class UserAttachments extends Component
     private function resetInput()
     {
         $this->name = '';
-        $this->attachment = null;
+        $this->rand++;
     }
 
     public function store()
