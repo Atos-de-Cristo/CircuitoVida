@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\{Event, Lesson};
+use App\Models\{Activity, Event, Lesson, User};
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +18,13 @@ return new class extends Migration
             $table->foreignIdFor(Lesson::class)->nullable();
             $table->string('title');
             $table->text('description')->nullable();
+            $table->enum('type', ['G', 'E'])->default('G');
             $table->timestamps();
+        });
+
+        Schema::create('activity_user', function (Blueprint $table) {
+            $table->foreignIdFor(Activity::class)->nullable();
+            $table->foreignIdFor(User::class)->nullable();
         });
     }
 
@@ -28,5 +34,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('activities');
+        Schema::dropIfExists('activity_user');
     }
 };

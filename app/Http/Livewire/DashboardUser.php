@@ -28,7 +28,7 @@ class DashboardUser extends Component
                 'text' => 'Preecha seu Perfil completo' ,
                 'type' => 'error',
             ]);
-          
+
         }
 
         $data = [

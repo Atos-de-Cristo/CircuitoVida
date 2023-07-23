@@ -37,7 +37,7 @@ class EventSeeder extends Seeder
             'description' => 'Turma de Imersão total.<br />Início das aulas 10 de maio às 20h.',
             'tickets_limit' => '10',
             'value' => '0',
-            'status' => 'P'
+            'status' => 'E'
         ]);
 
         DB::table('event_user')->insert([

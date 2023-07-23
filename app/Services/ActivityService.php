@@ -15,12 +15,17 @@ class ActivityService
 
     public function getAll(array $filter = []): Collection
     {
-        return $this->repository->with('event', 'lesson')->where($filter)->get();
+        return $this->repository->with('lesson')->where($filter)->get();
     }
 
     public function find(string $id): Activity
     {
-        return $this->repository->with('event', 'lesson')->find($id);
+        return $this->repository->with('lesson', 'users')->find($id);
+    }
+
+    public function listStudents(string $id): Activity
+    {
+        return $this->repository->with('lesson.event.inscriptions.user')->find($id);
     }
 
     public function store(array $data): Activity | bool
@@ -33,13 +38,21 @@ class ActivityService
 
     private function create(array $data): Activity
     {
-        return $this->repository->create($data);
+        $activity = $this->repository->create($data);
+        if ($data['type'] === 'E') {
+            $activity->users()->sync($data['userListActivity']);
+        }
+        return $activity;
     }
 
     private function update(array $data, int $id): bool
     {
         $repo = $this->find($id);
-        return $repo->update($data);
+        $repo->update($data);
+        if ($data['type'] === 'E') {
+            $repo->users()->sync($data['userListActivity']);
+        }
+        return true;
     }
 
     public function delete(string $id): void

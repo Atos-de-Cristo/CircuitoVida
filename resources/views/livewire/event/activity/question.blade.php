@@ -194,7 +194,7 @@
             <div class="bg-white border-t-2 dark:border-indigo-900 dark:bg-slate-800 shadow-xl rounded-md">
                 <div class="bg-gray-50 dark:bg-gray-700 text-center rounded-t-md">
                     <h2 class="text-lg text-gray-800 dark:text-white font-bold p-2 mb-4">Correção</h2>
-                </div>                
+                </div>
                 <div class="relative ml-4 flex">
                     <x-search-form placeholder="Buscar aluno..."/>
                 </div>
