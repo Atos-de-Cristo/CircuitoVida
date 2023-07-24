@@ -17,7 +17,7 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <div class="p-6 space-y-6">
+            <div class="p-6 space-y-6 overflow-auto">
                 {{ $content }}
             </div>
             <!-- Modal footer -->

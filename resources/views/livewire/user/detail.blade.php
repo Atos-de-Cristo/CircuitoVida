@@ -161,12 +161,12 @@
             <div class="flex flex-col  gap-2 p-5 ">
                 @if ($tab == 'curso')
                 @forelse ($this->user->inscriptions as $inscription)
-                <header class="flex flex-col bg-white dark:bg-slate-800  rounded-md sm:flex-row  justify-start">
-                    <a href="{{ route('eventManager', $inscription->event->id) }}" class="sm:w-40 w-full rouded-l-md">
+                <a href="{{ route('eventManager', $inscription->event->id) }}" class="flex flex-col bg-white dark:bg-slate-800  rounded-md sm:flex-row  justify-start">
+                    <div  class="sm:w-40 w-full rouded-l-md">
                         <img src="{{ asset(!empty($inscription->event->image) ? $inscription->event->image : 'images/curso.png') }}"
                             alt="{{ $inscription->name }}"
                             class="hover:scale-105  object-cover h-32 w-full sm:rounded-l-md rounded-t-md">
-                    </a>
+                    </div>
 
                     <div class=" p-3 ">
                         <h2 class="hover:scale-105 font-bold text-xl">{{ $inscription->event->name }}</h2>
@@ -196,14 +196,14 @@
                             </div>
                         </div>
                     </div>
-                </header>
+                </a>
 
                 @empty
                 <span class="text-red-500">Nenhuma inscrição encontrada</span>
                 @endforelse
                 @endif
                 @if ($tab === 'atividades')
-                <div class="px-5 py-5">
+                <div class="">
                     <livewire:user-activity :user="$this->user->id" :key="rand()" />
                 </div>
                 @endif
