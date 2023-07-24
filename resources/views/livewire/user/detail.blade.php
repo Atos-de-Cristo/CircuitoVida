@@ -155,63 +155,39 @@
                     </li>
                 </ul>
             </div>
-            <div class="flex flex-wrap m-0 rounded">
+            <div class="flex flex-col  gap-2 p-5 ">
                 @if ($tab == 'curso')
                     @forelse ($this->user->inscriptions as $inscription)
-                        <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4" wire:key="{{ $inscription->id }}">
-                            <div class="bg-white dark:bg-slate-800 overflow-hidden shadow rounded-lg flex flex-col h-full">
-                                <div class="flex-grow flex flex-col items-center justify-center">
-                                    <a href="{{ route('eventManager', $inscription->event->id) }}">
-                                        <img src="{{ asset(!empty($inscription->event->image) ? $inscription->event->image : 'images/curso.png') }}"
-                                            alt="{{ $inscription->name }}" class="hover:scale-105 h-32 w-64 object-cover">
-                                    </a>
-                                </div>
-                                <div class="flex-grow p-4 flex flex-col justify-between">
-                                    <div class="mb-4">
-                                        <h3 class="text-lg font-medium text-gray-900 dark:text-white">{{
-                                            $inscription->event->name }}</h3>
-                                        <p class="text-sm text-gray-500 dark:text-white">Status: {{
-                                            getStatusInscription($inscription->status) }}</p>
-
-                                        <div class="relative">
-                                            <div class="mb-2">
-                                                <span class="text-gray-500 dark:text-white text-xs">Atividades:</span>
-                                            </div>
-                                            <div class="overflow-hidden h-4 text-xs flex bg-indigo-200 rounded">
-                                                <div style="width: {{ $this->activity[$inscription->event_id]['responseCount'] && $this->activity[$inscription->event_id]['activityCount'] ? ($this->activity[$inscription->event_id]['responseCount'] / $this->activity[$inscription->event_id]['activityCount'] * 100) : 0 }}%"
-                                                    class="shadow-none flex flex-col text-center whitespace-nowrap justify-center {{ $this->activity[$inscription->event_id] == $inscription->event->lessons->count() ? 'bg-green-500' : 'bg-indigo-500' }}">
-                                                </div>
-                                            </div>
-                                            <span
-                                                class="absolute right-0 top-1/2 transclassm -translate-y-1/2 pr-2 text-sm text-gray-500">
-                                                {{ $this->activity[$inscription->event_id]['responseCount'] }} / {{
-                                                $this->activity[$inscription->event_id]['activityCount'] }}
-                                            </span>
-                                        </div>
-                                        <div class="relative mt-2">
-                                            <div class="mb-2">
-                                                <span class="text-gray-500 text-xs dark:text-white">Frequência:</span>
-                                            </div>
-                                            @if ($inscription->event->lessons->count() > 0)
-                                            <div class="overflow-hidden h-4 text-xs flex bg-indigo-200 rounded">
-                                                <div style="width: {{ $inscription->frequencies->count() / $inscription->event->lessons->count() * 100 }}%"
-                                                    class="shadow-none flex flex-col text-center whitespace-nowrap justify-center {{ $inscription->frequencies->count() == $inscription->event->lessons->count() ? 'bg-green-500' : 'bg-indigo-500' }}">
-                                                </div>
-                                            </div>
-                                            <span
-                                                class="absolute right-0 top-1/2 transclassm -translate-y-1/2 pr-2 text-sm text-gray-500">
-                                                {{ $inscription->frequencies->count() }} / {{
-                                                $inscription->event->lessons->count() }}
-                                            </span>
-                                            @else
-                                            <span class="text-red-500">Nenhuma registrada</span>
-                                            @endif
-                                        </div>
-
-                                    </div>
-                                </div>
+                    <header class="flex flex-col bg-white dark:bg-slate-800  rounded-md sm:flex-row  justify-start">
+                        <a href="{{ route('eventManager', $inscription->event->id) }}" class="sm:w-40 w-full rouded-l-md">
+                            <img src="{{ asset(!empty($inscription->event->image) ? $inscription->event->image : 'images/curso.png') }}"
+                            alt="{{ $inscription->name }}" class="hover:scale-105  object-cover h-32 w-full sm:rounded-l-md rounded-t-md"
+                            >
+                        </a>
+                    
+                        <div class=" p-3 ">
+                            <h2 class="hover:scale-105 font-bold text-xl">{{ $inscription->event->name }}</h2>
+                            <p class="nome">{{getStatusInscription($inscription->status) }}</p>
+                    
+                            <div class="tags"> 
+                                <div class="flex flex-row justify-center items-center gap-2">
+                                    <p class="status information text-sm font-semibold">Atividades:</p>                     
+                                    <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                                       <div class="bg-blue-600 h-2.5 rounded-full" style="width:  {{ $this->activity[$inscription->event_id]['responseCount'] && $this->activity[$inscription->event_id]['activityCount'] ? ($this->activity[$inscription->event_id]['responseCount'] / $this->activity[$inscription->event_id]['activityCount'] * 100) : 0 }}%"></div>
+                                     </div>
+                                 </div>                          
+                                 <div class="flex flex-row justify-center items-center gap-2">
+                                    <p class="status information text-sm font-semibold">Frequência:</p>                     
+                                    <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                                       <div class="bg-blue-600 h-2.5 rounded-full" style="width:  {{ $inscription->frequencies->count() / $inscription->event->lessons->count() * 100  }}%"></div>
+                                     </div>
+                                 </div>
+                              
+                                
                             </div>
                         </div>
+                    </header>
+                    
                     @empty
                         <span class="text-red-500">Nenhuma inscrição encontrada</span>
                     @endforelse
