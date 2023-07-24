@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
             ActivitySeeder::class,
             QuestionSeeder::class,
             MonitorSeeder::class,
-            InscriptionSeeder::class
+            InscriptionSeeder::class,
+            FrequencySeeder::class,
         ]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
