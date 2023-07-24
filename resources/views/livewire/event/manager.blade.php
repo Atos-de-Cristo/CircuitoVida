@@ -4,7 +4,7 @@
     <x-alert-message :message="session('message')['text']" :messageType="session('message')['type']" />
     @endif
 
-    <div class="flex flex-col md:flex-row items-center justify-between mb-2">
+    <div class="flex flex-col md:flex-row items-start justify-between mb-2">
         <div class="flex items-center mb-2 md:mb-0">
             <x-icon-display class="w-6 h-6" />
             <div class="ml-2 text-xl font-bold">
