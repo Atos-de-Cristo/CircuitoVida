@@ -6,7 +6,7 @@
         @can('admin')
         <div>
             <div
-                class="flex items-center mt-4 {{ (count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2) ? 'bg-red-500 rounded-md p-2' : '' }}">
+                class="flex items-center mt-4 {{ (count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2) ? 'bg-infor p-2' : '' }}">
                 <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset($aluno->user->profile_photo_url) }}"
                     width="32" height="32" alt="{{ $aluno->user->name }}" />
                 @if (count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2)
@@ -14,8 +14,8 @@
                     data-popover-target="{{ $aluno->user->id }}" data-popover-trigger="click"
                     data-popover-placement="left">
                     <span
-                        class="truncate ml-1 text-sm font-medium group-hover:text-slate-800 
-                    {{ (count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2) ? 'text-white' : '' }}">
+                        class="truncate font-medium font-sans text-sm  group-hover:text-slate-800 
+                    {{ (count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2) ? 'text-gray-800  dark:text-white' : '' }}">
                         {{ $aluno->user->name }}
                     </span>
                 </a>

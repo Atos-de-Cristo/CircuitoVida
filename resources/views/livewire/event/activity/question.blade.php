@@ -199,7 +199,7 @@
                 </div>
                 <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     @forelse ($this->userQuestions as $user)
-                    <div class="flex  flex-row justify-start items-start mb-4 {{$user->porcentagem_acertos < 60 ? 'bg-red-100 border-red-300 dark:border-red-700 dark:bg-red-900' : ''}}">
+                    <div class="flex  flex-row justify-start items-start py-2 px-4 mb-2 {{$user->porcentagem_acertos < 60 ? 'bg-infor' : ''}}">
 
 
                         <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset($user->profile_photo_url) }}"
