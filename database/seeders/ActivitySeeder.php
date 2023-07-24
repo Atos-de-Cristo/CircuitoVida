@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Activity;
 use App\Models\Lesson;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ActivitySeeder extends Seeder
@@ -16,7 +15,6 @@ class ActivitySeeder extends Seeder
     {
         $lessons = Lesson::all();
 
-        // Para cada lição, cria uma atividade relacionada
         $lessons->each(function ($lesson) {
             Activity::factory()->create([
                 'lesson_id' => $lesson->id,

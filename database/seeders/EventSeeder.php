@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Event;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class EventSeeder extends Seeder
 {
@@ -12,7 +12,7 @@ class EventSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('events')->insert([
+        Event::factory()->create([
             'id' => 1,
             'type' => 'C',
             'category_id' => '1',
@@ -26,7 +26,7 @@ class EventSeeder extends Seeder
             'value' => '0',
             'status' => 'E'
         ]);
-        DB::table('events')->insert([
+        Event::factory()->create([
             'id' => 2,
             'type' => 'C',
             'category_id' => '1',
@@ -39,7 +39,7 @@ class EventSeeder extends Seeder
             'value' => '0',
             'status' => 'E'
         ]);
-        DB::table('events')->insert([
+        Event::factory()->create([
             'id' => 3,
             'type' => 'C',
             'category_id' => '2',
@@ -52,7 +52,7 @@ class EventSeeder extends Seeder
             'value' => '0',
             'status' => 'E'
         ]);
-        DB::table('events')->insert([
+        Event::factory()->create([
             'id' => 4,
             'type' => 'C',
             'category_id' => '3',

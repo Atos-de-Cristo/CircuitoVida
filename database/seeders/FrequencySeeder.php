@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Frequency;
 use App\Models\Lesson;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class FrequencySeeder extends Seeder
@@ -16,7 +15,6 @@ class FrequencySeeder extends Seeder
     {
         $lessons = Lesson::all();
 
-        // Para cada lição, cria uma atividade relacionada
         $lessons->each(function ($lesson) {
             $lesson->event->inscriptions->each(function ($inscription) use ($lesson) {
                 $test = rand(0,1);
