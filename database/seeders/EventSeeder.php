@@ -37,7 +37,7 @@ class EventSeeder extends Seeder
             'description' => 'Cadastro de curso teste via script',
             'tickets_limit' => '100',
             'value' => '0',
-            'status' => 'P'
+            'status' => 'E'
         ]);
         DB::table('events')->insert([
             'id' => 3,
@@ -50,7 +50,7 @@ class EventSeeder extends Seeder
             'description' => 'Cadastro de curso teste via script',
             'tickets_limit' => '100',
             'value' => '0',
-            'status' => 'A'
+            'status' => 'E'
         ]);
         DB::table('events')->insert([
             'id' => 4,
@@ -63,7 +63,7 @@ class EventSeeder extends Seeder
             'description' => 'Cadastro de curso teste via script',
             'tickets_limit' => '100',
             'value' => '0',
-            'status' => 'F'
+            'status' => 'E'
         ]);
     }
 }

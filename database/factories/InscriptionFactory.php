@@ -21,7 +21,7 @@ class InscriptionFactory extends Factory
      */
     public function definition(): array
     {
-        $statusOptions = ['P', 'L', 'C'];
+        $statusOptions = ['P', 'L'];
 
         return [
             'user_id' => User::inRandomOrder()->first()->id,

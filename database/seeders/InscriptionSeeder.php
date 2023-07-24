@@ -13,6 +13,6 @@ class InscriptionSeeder extends Seeder
      */
     public function run(): void
     {
-        Inscription::factory(50)->create();
+        Inscription::factory(200)->create();
     }
 }
