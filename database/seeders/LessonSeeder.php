@@ -25,7 +25,7 @@ class LessonSeeder extends Seeder
                     'description' => 'Aula de teste cadastrada via script',
                     'video' => 'MdO35UCxGxs',
                     'start_date' => '2023-07-01 08:00:00',
-                    'end_date' => '2023-12-01 08:00:00',
+                    'end_date' => '2023-07-01 08:00:00',
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
