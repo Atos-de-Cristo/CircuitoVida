@@ -79,11 +79,11 @@
                         </span>
                         <div class="flex items-center space-x-2">
                             @can('admin')
-                            <button wire:click.prevent="editModule({{ $module->id }})" class="mr-2 hover:scale-110"
+                            <button wire:click.prevent="editModule({{ $module->id }})" class="mr-2 btn-icon"
                                 @click.stop>
                                 <x-icon-pencil class="w-5 h-5" />
                             </button>
-                            <button wire:click.prevent="deleteItem({{ $module->id }})" class="mr-5 hover:scale-110"
+                            <button wire:click.prevent="deleteItem({{ $module->id }})" class="mr-5 btn-icon"
                                 @click.stop>
                                 <x-icon-trash class="w-5 h-5" />
                             </button>

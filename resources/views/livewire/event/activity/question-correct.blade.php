@@ -20,11 +20,11 @@
                         </div>
                         <div class="flex flex-col self-start space-y-2">
                             <button wire:click.prevent="checkQuestion('correto', {{$item->id}})" class="hover:bg-gray-100 rounded-full">
-                                <x-svg.corret />
+                                <x-icon-circle-check class="h-5 w-5"/>
                             </button>
 
                             <button wire:click.prevent="checkQuestion('errado', {{$item->id}})" class="hover:bg-gray-100 rounded-full">
-                                <x-svg.error />
+                                <x-icon-circle-xmark class="h-5 w-5"/>
                             </button>
                         </div>
                     </div>

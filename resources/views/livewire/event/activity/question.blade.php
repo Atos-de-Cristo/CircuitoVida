@@ -82,11 +82,10 @@
     </form>
     @endcan
     {{--Questões--}}
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <div
-            class="{{ auth()->check() && auth()->user()->hasPermissionTo('aluno') ? 'col-span-12' : 'sm:col-span-12 md:col-span-2' }}">
+    <div class="flex flex-col md:flex-row items-start justify-between gap-2">
+        <div class="{{ auth()->check() && auth()->user()->hasPermissionTo('aluno') ? 'col-span-12' : 'w-full ' }}">
             @if ($viewCorrectAnswers)
-            <livewire:event-activity-question-correct :userId="$userCorrectAnswer" :atvId="$atvId" :key="rand()"/>
+            <livewire:event-activity-question-correct :userId="$userCorrectAnswer" :atvId="$atvId" :key="rand()" />
             @else
             <form class="">
                 <div class="bg-white border-t-2 dark:border-indigo-900 dark:bg-slate-800 shadow-xl rounded-md ">
@@ -123,12 +122,12 @@
                             <div class="flex flex-row justify-between">
                                 <h3 class="text-lg font-semibold mb-4 mr-10">{{ $question->title }}</h3>
                                 @can('admin')
-                                <div class="flex flex-row">
-                                    <button wire:click.prevent="edit({{ $question->id }})" class="mr-2">
-                                        <x-icon-pencil />
+                                <div class="flex flex-row gap-1">
+                                    <button wire:click.prevent="edit({{ $question->id }})" class="mr-2 btn-icon">
+                                        <x-icon-pencil class="h-5 w-5" />
                                     </button>
-                                    <button wire:click.prevent="dell({{ $question->id }})">
-                                        <x-icon-trash />
+                                    <button wire:click.prevent="dell({{ $question->id }})" class=" btn-icon">
+                                        <x-icon-trash class="h-5 w-5" />
                                     </button>
                                 </div>
                                 @endcan
@@ -190,50 +189,76 @@
         </div>
         {{--Correção--}}
         @can('admin')
-        <div class="sm:col-span-12 md:col-span-1">
+        <div class="w-full sm:basis-1/2">
             <div class="bg-white border-t-2 dark:border-indigo-900 dark:bg-slate-800 shadow-xl rounded-md">
                 <div class="bg-gray-50 dark:bg-gray-700 text-center rounded-t-md">
                     <h2 class="text-lg text-gray-800 dark:text-white font-bold p-2 mb-4">Correção</h2>
                 </div>
                 <div class="relative ml-4 flex">
-                    <x-search-form placeholder="Buscar aluno..."/>
+                    <x-search-form placeholder="Buscar aluno..." />
                 </div>
                 <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     @forelse ($this->userQuestions as $user)
-                        <div class="flex flex-col xl:flex-row xl:items-center mb-4">
-                            <div class="md:flex-grow">
+                    <div class="flex  flex-row justify-start items-start mb-4 {{$user->porcentagem_acertos < 60 ? 'bg-red-100 border-red-300 dark:border-red-700 dark:bg-red-900' : ''}}">
+
+
+                        <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset($user->profile_photo_url) }}"
+                            width="32" height="32" alt="{{ $user->name }}" />
+                        <span class="flex-1 truncate ml-2 text-sm font-medium group-hover:text-slate-800">
+                            {{ $user->name }}
+                            <div class="flex flex-row mt-1">
                                 <div class="flex items-center">
-                                    <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset($user->profile_photo_url) }}"
-                                        width="32" height="32" alt="{{ $user->name }}" />
-                                    <span class="flex-1 truncate ml-2 text-sm font-medium group-hover:text-slate-800">
-                                        {{ $user->name }}
-                                        <div class="flex flex-row mt-1">
-                                            <small class="pr-2">Pendentes: {{ $user->respostas_pendente }}</small>
-                                            <small class="pr-2">Corretas: {{ $user->respostas_correta }}</small>
-                                            <small class="pr-2">Erradas: {{ $user->respostas_errado }}</small>
-                                        </div>
-                                    </span>
-                                </div>
-                            </div>
-                            @if ($user->respostas_pendente > 0)
-                                <div class="flex justify-end mt-1   md:mt-0">
-                                    <button type="button" wire:click.prevent="correctAnswers({{$user->id}})" class="btn-submit">
-                                        Corrigir
+                                    <button data-tooltip-target="tooltip-pendencias" type="button" class="btn-icon btn-tooltip">
+                                        <x-icon-circle-exclamation class="h-4 w-4 text-yellow-500" />
                                     </button>
-                                    <button data-tooltip-target="tooltip-default" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Default tooltip</button>
-<div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-    Tooltip content
-    <div class="tooltip-arrow" data-popper-arrow></div>
-</div>
+                                    <small class="pr-2 ml-1">{{ $user->respostas_pendente }}</small>
+                                    <div id="tooltip-pendencias" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                                         Pendência
+                                        <div class="tooltip-arrow" data-popper-arrow></div>
+                                    </div>
                                 </div>
-                            @else
-                                <div class="flex justify-end mt-1 md:mt-0">
-                                    {{ $user->porcentagem_acertos }}
+                                <div class="flex items-center">
+                                    <button data-tooltip-target="tooltip-corretas" type="button" class="btn-icon btn-tooltip">
+                                        <x-icon-circle-check class="h-4 w-4 text-green-500" />
+                                    </button>
+                                    <small class="pr-2 ml-1"> {{$user->respostas_correta }}</small>
+                                    <div id="tooltip-corretas" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                                         Corretas
+                                        <div class="tooltip-arrow" data-popper-arrow></div>
+                                    </div>
                                 </div>
-                            @endif
+                                <div class="flex items-center">
+                                    <button data-tooltip-target="tooltip-erradas" type="button" class="btn-icon btn-tooltip">
+                                        <x-icon-circle-xmark class="h-4 w-4 text-red-500" />
+                                    </button>
+                                    <small class="pr-2 ml-1"> {{$user->respostas_errado }}</small>
+                                    <div id="tooltip-erradas" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                                         Erradas
+                                        <div class="tooltip-arrow" data-popper-arrow></div>
+                                    </div>
+                                </div>                              
+
+                            </div>
+                        </span>
+
+                        @if ($user->respostas_pendente > 0)
+                        <div class="ml-3">
+                            
+                            <button 
+                                wire:click.prevent="correctAnswers({{$user->id}})" type="button"
+                                class="btn-primary">
+                                <x-icon-circle-check class="h-4 w-4 " /> <small class="pr-2 ml-1"> Corrigir</small>
+                            </button>
+                            
                         </div>
+                        @else
+                        <div class=" mt-1 md:mt-0">
+                            {{ $user->porcentagem_acertos }}
+                        </div>
+                        @endif
+                    </div>
                     @empty
-                        <span class="text-red-500">Nenhum usuário respondeu</span>
+                    <span class="text-red-500">Nenhum usuário respondeu</span>
                     @endforelse
                 </div>
             </div>
