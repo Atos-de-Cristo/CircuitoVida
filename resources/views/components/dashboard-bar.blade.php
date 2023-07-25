@@ -1,28 +1,41 @@
-<div class="w-80  rounded-lg p-4 flex-1">
-    <div id="chart" class="bg-white dark:bg-slate-800 p-5">
-    </div>
-
-    @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script>
-
-var options = {
-  chart: {
-    type: 'bar'
-  },
-  series: [{
-    name: 'sales',
-    data: [30,40,45,50,49,60,70,91,125]
-  }],
-  xaxis: {
-    categories: [1991,1992,1993,1994,1995,1996,1997, 1998,1999]
-  }
-}
-
-var chart = new ApexCharts(document.querySelector("#chart"), options);
-
-chart.render();
-    </script>
-    @endpush
-
+<div 
+    x-data="{ labels: @entangle('labels'), data: @entangle('data') }"
+    x-init="new Chart($refs.myChart, {
+        type: '{{$type}}',
+        data: {
+            labels,
+            datasets: [{
+                label: '{{$title}}',
+                data: data,
+                borderWidth: 1,
+                backgroundColor: [
+                    'rgb(255, 99, 132 )',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 206, 86)',
+                    'rgb(75, 192, 192)',
+                ],
+                hoverOffset: 4
+            }],
+        },
+        options: {
+          
+            scales: {
+              
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });"
+>
+  
+        <canvas id="myChart" width="400" height="200" x-ref="myChart"></canvas>
+   
 </div>
+
+
+@push('scripts')
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+ 
+@endpush
