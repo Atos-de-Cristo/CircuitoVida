@@ -83,7 +83,7 @@
     @endcan
     {{--Questões--}}
     <div class="flex flex-col md:flex-row items-start justify-between gap-2">
-        <div class="{{ auth()->check() && auth()->user()->hasPermissionTo('aluno') ? 'col-span-12' : 'w-full ' }}">
+        <div class=" w-full">
             @if ($viewCorrectAnswers)
             <livewire:event-activity-question-correct :userId="$userCorrectAnswer" :atvId="$atvId" :key="rand()" />
             @else

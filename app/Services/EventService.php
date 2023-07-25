@@ -18,6 +18,14 @@ class EventService
     {
         return $this->repository->with('inscriptions')->where($filter)->get();
     }
+    public function getLessonsWithCounts(array $filter = []): Collection
+    {
+        return $this->repository
+            ->withCount(['inscriptions', 'lessons'])
+            ->where($filter)
+            ->get();
+    }
+
 
     public function listActive(): Collection
     {

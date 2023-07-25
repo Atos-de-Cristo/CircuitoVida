@@ -1,5 +1,5 @@
 <div>
-    <div class="flex flex-col md:flex-row items-center justify-between mb-2">
+    <div class="flex flex-col md:flex-row items-start justify-between mb-2">
         <div class="flex items-center mb-2 md:mb-0">
             <x-icon-cubes class="w-8 h-8" />
             <div class="ml-2 text-xl font-bold">

@@ -48,11 +48,14 @@
           </div>          
         </div>
       </div>
+      <livewire:dashboard-admin :key="rand()" />
+      
      
     </div>
-    <div class="py-2 flex flex-col">
-      <x-dashboard-bar/>      
-    </div>
+
+   
+     
+
    
 
 
