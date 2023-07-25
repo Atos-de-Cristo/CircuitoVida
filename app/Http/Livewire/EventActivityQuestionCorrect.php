@@ -7,7 +7,6 @@ use Livewire\Component;
 
 class EventActivityQuestionCorrect extends Component
 {
-    private $serviceResponse;
     public $userId, $atvId;
     public $checkResponse = [];
 
@@ -15,9 +14,9 @@ class EventActivityQuestionCorrect extends Component
         'refreshActivityQuestionCheck' => '$refresh'
     ];
 
-    public function __construct()
+    public function getServiceResponseProperty()
     {
-        $this->serviceResponse = new ResponseService;
+        return new ResponseService;
     }
 
     public function getQuestionsProperty()

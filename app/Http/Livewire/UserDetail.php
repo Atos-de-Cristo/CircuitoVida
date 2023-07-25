@@ -7,13 +7,12 @@ use Livewire\Component;
 
 class UserDetail extends Component
 {
-    private $service;
     public $tab = 'curso';
     public $userId;
 
-    public function __construct()
+    public function getUserServiceProperty()
     {
-        $this->service = new UserService;
+        return new UserService;
     }
 
     public function mount()
@@ -23,7 +22,7 @@ class UserDetail extends Component
 
     public function getUserProperty()
     {
-        return $this->service->find($this->userId);
+        return $this->userService->find($this->userId);
     }
 
     public function render()
@@ -33,6 +32,6 @@ class UserDetail extends Component
 
     public function getActivityProperty()
     {
-        return $this->service->resumeActivity($this->userId);
+        return $this->userService->resumeActivity($this->userId);
     }
 }

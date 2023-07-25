@@ -15,7 +15,6 @@ class EventActivityQuestion extends Component
     public $type = 'aberta';
     public $options = [];
     public $answers = [];
-    private $service, $serviceResponse, $serviceUser;
     public $userCorrectAnswer;
     public $viewCorrectAnswers = false;
     public $search = '';
@@ -25,11 +24,19 @@ class EventActivityQuestion extends Component
         'closeCorrectAnswers' => 'closeCorrectAnswers'
     ];
 
-    public function __construct()
+    public function getServiceProperty()
     {
-        $this->service = new QuestionService;
-        $this->serviceResponse = new ResponseService;
-        $this->serviceUser = new UserService;
+        return new QuestionService;
+    }
+
+    public function getServiceResponseProperty()
+    {
+        return new ResponseService;
+    }
+
+    public function getServiceUserProperty()
+    {
+        return new UserService;
     }
 
     public function getQuestionsProperty()
@@ -37,10 +44,8 @@ class EventActivityQuestion extends Component
         return $this->service->getQuestionsCorrect($this->atvId);
     }
 
-
     public function getUserQuestionsProperty()
     {
-
         $questionIds = $this->questions['data']->pluck('id')->toArray();
 
         if (!empty($this->search)) {
@@ -112,7 +117,7 @@ class EventActivityQuestion extends Component
             'text' => 'A pergunta foi salva com sucesso!' ,
             'type' => 'success',
         ]);
-      
+
     }
 
     public function resetInputCreate()
@@ -142,7 +147,7 @@ class EventActivityQuestion extends Component
             'text' => 'As respostas foram salvas com sucesso!' ,
             'type' => 'success',
         ]);
-        
+
     }
 
     public function resetInputAnswers()

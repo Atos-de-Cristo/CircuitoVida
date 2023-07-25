@@ -37,6 +37,14 @@ class SendMessage extends Component
         return view('livewire.shared.send-message');
     }
 
+    public function closeModal()
+    {
+        $this->message = null;
+        $this->forUser = null;
+        $this->forEvent = null;
+        $this->isOpenMessage = false;
+    }
+
     public function openSendMessage($id)
     {
         $this->forUser = $this->userService->find($id);

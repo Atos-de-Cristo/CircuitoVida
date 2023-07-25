@@ -47,7 +47,7 @@
                 <div class="flex justify-center flex-wrap gap-2">
                     <livewire:event-module :eventId='$eventId' :key="rand()"/>
                     <livewire:event-monitors :eventId='$eventId' :key="rand()">
-                    <button wire:click="sendRoom" class="btn-primary sm:px-2">
+                    <button wire:click.prevent="sendRoom" class="btn-primary sm:px-2">
                         <x-icon-bell class="w-4 h-4" />
                         <span class="ml-2">Notificação</span>
                     </button>

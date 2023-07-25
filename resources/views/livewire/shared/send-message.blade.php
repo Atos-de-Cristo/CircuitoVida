@@ -1,6 +1,6 @@
 <div>
     @if ($isOpenMessage)
-        <x-dialog-modal id="isOpenMessage" wire:model="isOpenMessage" maxWidth="xl" closeModal="$set('isOpenMessage', false)">
+        <x-dialog-modal id="isOpenMessage" wire:model="isOpenMessage" maxWidth="xl" closeModal="closeModal()">
             <x-slot name="title">
                 Enviar Mensagem
             </x-slot>
@@ -43,7 +43,7 @@
                     </button>
                 </span>
                 <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                    <button wire:click="$set('isOpenMessage', false)" type="button" class="btn-default">
+                    <button wire:click="closeModal()" type="button" class="btn-default">
                         Cancelar
                     </button>
                 </span>
