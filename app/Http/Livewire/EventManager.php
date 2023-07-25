@@ -18,10 +18,7 @@ class EventManager extends Component
     ];
 
     public $eventId, $nameModule;
-    public $user_id, $event_id, $module_id, $title, $description, $video, $date, $itemdelete;
-    public $moduleSelected;
-    public $showConfirmationPopup = false;
-    public $isOpenModule = false;
+    public $user_id, $event_id, $date;
 
     public function mount(Request $request)
     {
@@ -33,97 +30,6 @@ class EventManager extends Component
         $event = $eventService->find($this->eventId);
         $modules = $moduleService->getAll(['event_id' => $this->eventId]);
         return view('livewire.event.manager', compact('event', 'modules'));
-    }
-
-    public function approveInscription(string $id, InscriptionService $inscriptionService)
-    {
-        $inscriptionService->update([
-            'status' => InscriptionStatus::G->name,
-        ], $id);
-
-        $this->emit('refreshManage');
-    }
-
-    public function disapproveInscription(string $id, InscriptionService $inscriptionService)
-    {
-        $inscriptionService->update([
-            'status' => InscriptionStatus::C->name,
-        ], $id);
-
-        $this->emit('refreshManage');
-    }
-
-    public function createModule()
-    {
-        $this->resetInputModule();
-        $this->openModalModule();
-    }
-
-    public function editModule(string $id, ModuleService $service)
-    {
-        $this->resetInputModule();
-        $this->module_id = $id;
-
-        $moduleData = $service->find($id);
-
-        $this->moduleSelected = $id;
-        $this->nameModule = $moduleData->name;
-
-        $this->openModalModule();
-    }
-
-    public function deleteItem(string $id)
-    {
-        $this->showConfirmationPopup = true;
-        $this->itemdelete = $id;
-    }
-
-    public function confirmDelete(ModuleService $service)
-    {
-        $service->delete($this->itemdelete);
-        $this->showConfirmationPopup = false;
-    }
-
-    public function openModalModule()
-    {
-        $this->isOpenModule = true;
-    }
-
-    public function closeModalModule()
-    {
-        $this->isOpenModule = false;
-    }
-
-    private function resetInputModule()
-    {
-        $this->moduleSelected = null;
-        $this->nameModule = '';
-    }
-
-    public function storeModule(ModuleService $service)
-    {
-        $this->validate([
-            'nameModule' => 'required'
-        ]);
-
-        $request = [
-            'name' => $this->nameModule,
-            'event_id' => $this->eventId
-        ];
-
-        if ($this->moduleSelected) {
-            $service->update($request, $this->moduleSelected);
-        } else {
-            $service->create($request);
-        }
-        session()->flash('message', [
-            'text' => 'Modulo cadastrado com sucesso.' ,
-            'type' => 'success',
-        ]);        
-       
-
-        $this->closeModalModule();
-        $this->resetInputModule();
     }
 
     public function sendMessage($idSend)

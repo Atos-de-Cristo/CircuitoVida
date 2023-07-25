@@ -20,27 +20,22 @@ class MessageService
         return $this->repository->find($id);
     }
 
-    public function listMessageUser(int | null $id = null, string $search = ''): LengthAwarePaginator
+    public function listMessageUser(?int $id = null, ?string $search = null): LengthAwarePaginator
     {
         $query = $this->repository
             ->with('userSend', 'userFor')
             ->orderBy('date_send', 'desc');
-    
-        if ($id) {
-            $query->where('user_for', $id);
-        } else {
-            $query->where('user_for', Auth::user()->id);
-        }
-    
+
+        $query->where('user_for', $id ?? Auth::user()->id);
+
         if ($search) {
             $query->whereHas('userSend', function ($query) use ($search) {
                 $query->where('name', 'LIKE', '%' . $search . '%');
             });
         }
-    
+
         return $query->paginate(10);
     }
-    
 
     public function listMessageUnread(): Collection
     {

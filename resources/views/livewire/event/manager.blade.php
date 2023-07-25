@@ -1,9 +1,7 @@
 <div>
-
     @if (session()->has('message'))
-    <x-alert-message :message="session('message')['text']" :messageType="session('message')['type']" />
+        <x-alert-message :message="session('message')['text']" :messageType="session('message')['type']" />
     @endif
-
     <div class="flex flex-col md:flex-row items-center justify-between mb-2">
         <div class="flex items-center mb-2 md:mb-0">
             <x-icon-display class="w-6 h-6" />
@@ -21,8 +19,6 @@
             </ol>
         </div>
     </div>
-
-
     <div class="card-white">
         <div class="flex flex-col sm:flex-row justify-between items-center">
             <div>
@@ -47,163 +43,120 @@
                 </div>
             </div>
             @can('admin')
-            <div class="flex justify-center flex-wrap gap-2">
-                <button wire:click.prevent="createModule()" class="btn-primary ">
-                    <x-icon-folder class="w-4 h-4" />
-                          <span class="ml-2">Módulos</span>
-                    </button>
-                <div>
+                <div class="flex justify-center flex-wrap gap-2">
+                    <livewire:event-module :eventId='$eventId' :key="rand()"/>
                     <livewire:event-monitors :eventId='$eventId' :key="rand()">
-                </div>
-                <button wire:click="sendRoom" class="btn-primary sm:px-2">
-                    <x-icon-bell class="w-4 h-4" />
+                    <button wire:click="sendRoom" class="btn-primary sm:px-2">
+                        <x-icon-bell class="w-4 h-4" />
                         <span class="ml-2">Notificação</span>
                     </button>
-            </div>
-
+                </div>
             @endcan
         </div>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div class="sm:col-span-2 md:col-span-2">
-            <div class="text-xl font-bold mb-4 flex items-center">                
+            <div class="text-xl font-bold mb-4 flex items-center">
                 <x-icon-cubes class="w-8 h-8" />
                 <span class="ml-2">MODULOS</span>
             </div>
             @forelse ($event->modules as $module)
-            <div x-data="{ open: false }" class="card-white py-4">
-                <div @click="open = !open" class="cursor-pointer">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xl">
-                            {{ $module->name }}
-                        </span>
-                        <div class="flex items-center space-x-2">
-                            @can('admin')
-                            <button wire:click.prevent="editModule({{ $module->id }})" class="mr-2 btn-icon"
-                                @click.stop>
-                                <x-icon-pencil class="w-5 h-5" />
-                            </button>
-                            <button wire:click.prevent="deleteItem({{ $module->id }})" class="mr-5 btn-icon"
-                                @click.stop>
-                                <x-icon-trash class="w-5 h-5" />
-                            </button>
-                            @endcan
-                            <div class="border-r border-gray-400 h-4"></div>                          
-                            <x-icon-angle-down x-show="!open" class="w-6 h-6" />
-                            <x-icon-angle-up x-show="open" class="w-6 h-6" />
+                <div x-data="{ open: false }" class="card-white py-4">
+                    <div @click="open = !open" class="cursor-pointer">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xl">
+                                {{ $module->name }}
+                            </span>
+                            <div class="flex items-center space-x-2">
+                                @can('admin')
+                                    <livewire:event-module :eventId='$eventId' :moduleId='$module->id' :key="rand()"/>
+                                @endcan
+                                <div class="border-r border-gray-400 h-4"></div>
+                                <x-icon-angle-down x-show="!open" class="w-6 h-6" />
+                                <x-icon-angle-up x-show="open" class="w-6 h-6" />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div x-show="open"
-                    class="bg-gray-50 dark:bg-slate-600 p-2 transition-all mt-4 duration-300 ease-in-out rounded">
-                    <div class="flex items-center mb-2 justify-between">
-                        <h3 class="font-bold text-black dark:text-white mr-2">Título da Aula</h3>
-                        @can('admin')
-                        <livewire:event-lesson :eventId="$eventId" :moduleId="$module->id" :key="rand().$module->id" />
-                        @endcan
-                    </div>
-                    <div class="border-t border-gray-200 pb-2">
-                        @forelse ($module->lessons as $lesson)
-                        <div class="border-t border-gray-200 pb-2 py-2 flex items-center justify-between">
-                            <div class="flex items-center">
-                                <x-icon-circle-play class="w-5 h-5" />
-                                <div class="flex flex-col">
-                                    @if ($lesson->start_date && $lesson->end_date)
-                                    @if (
-                                    Carbon\Carbon::parse($lesson->start_date) <= Carbon\Carbon::parse(date('Y-m-d
-                                        H:i:s')) && Carbon\Carbon::parse($lesson->end_date) >
-                                        Carbon\Carbon::parse(date('Y-m-d H:i:s'))
-                                        )
-                                        <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
-                                            class="font-bold text-md text-blue-500 hover:underline ml-2"
-                                            x-data="{ open: null }">
-                                            {{ $lesson->title }}
-                                        </a>
-                                        @else
-                                        @can('admin')
-                                        <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
-                                            class="font-bold text-md text-blue-500 hover:underline ml-2"
-                                            x-data="{ open: null }">
-                                            {{ $lesson->title }} <span class="italic text-sm text-blue-400">liberada {{
-                                                \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:m:s')}} à {{
-                                                \Carbon\Carbon::parse($lesson->end_date)->format('d/m/Y H:m:s')}}</span>
-                                        </a>
-                                        @else
-                                        <p class="ml-2">{{ $lesson->title }} <span
-                                                class="italic text-sm text-blue-400">{{
-                                                \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:m:s')}} à {{
-                                                \Carbon\Carbon::parse($lesson->end_date)->format('d/m/Y H:m:s')}}</span>
-                                        </p>
-                                        @endcan
-                                        @endif
-                                        @else
-                                        <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
-                                            class="font-bold text-md text-blue-500 hover:underline ml-2"
-                                            x-data="{ open: null }">
-                                            {{ $lesson->title }}
-                                        </a>
-                                        @endif
-                                        
+                    <div x-show="open"
+                        class="bg-gray-50 dark:bg-slate-600 p-2 transition-all mt-4 duration-300 ease-in-out rounded">
+                        <div class="flex items-center mb-2 justify-between">
+                            <h3 class="font-bold text-black dark:text-white mr-2">Título da Aula</h3>
+                            @can('admin')
+                            <livewire:event-lesson :eventId="$eventId" :moduleId="$module->id" :key="rand().$module->id" />
+                            @endcan
+                        </div>
+                        <div class="border-t border-gray-200 pb-2">
+                            @forelse ($module->lessons as $lesson)
+                            <div class="border-t border-gray-200 pb-2 py-2 flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <x-icon-circle-play class="w-5 h-5" />
+                                    <div class="flex flex-col">
+                                        @if ($lesson->start_date && $lesson->end_date)
+                                        @if (
+                                        Carbon\Carbon::parse($lesson->start_date) <= Carbon\Carbon::parse(date('Y-m-d
+                                            H:i:s')) && Carbon\Carbon::parse($lesson->end_date) >
+                                            Carbon\Carbon::parse(date('Y-m-d H:i:s'))
+                                            )
+                                            <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
+                                                class="font-bold text-md text-blue-500 hover:underline ml-2"
+                                                x-data="{ open: null }">
+                                                {{ $lesson->title }}
+                                            </a>
+                                            @else
+                                            @can('admin')
+                                            <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
+                                                class="font-bold text-md text-blue-500 hover:underline ml-2"
+                                                x-data="{ open: null }">
+                                                {{ $lesson->title }} <span class="italic text-sm text-blue-400">liberada {{
+                                                    \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:m:s')}} à {{
+                                                    \Carbon\Carbon::parse($lesson->end_date)->format('d/m/Y H:m:s')}}</span>
+                                            </a>
+                                            @else
+                                            <p class="ml-2">{{ $lesson->title }} <span
+                                                    class="italic text-sm text-blue-400">{{
+                                                    \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:m:s')}} à {{
+                                                    \Carbon\Carbon::parse($lesson->end_date)->format('d/m/Y H:m:s')}}</span>
+                                            </p>
+                                            @endcan
+                                            @endif
+                                            @else
+                                            <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
+                                                class="font-bold text-md text-blue-500 hover:underline ml-2"
+                                                x-data="{ open: null }">
+                                                {{ $lesson->title }}
+                                            </a>
+                                            @endif
+
+                                    </div>
                                 </div>
+                                @can('admin')
+                                <div class="flex items-center mr-2">
+                                    <livewire:event-lesson :eventId="$eventId" :moduleId="$module->id"
+                                        :lessonId="$lesson->id" :key="rand().$lesson->id" />
+                                </div>
+                                @endcan
                             </div>
-                            @can('admin')
-                            <div class="flex items-center mr-2">
-                                <livewire:event-lesson :eventId="$eventId" :moduleId="$module->id"
-                                    :lessonId="$lesson->id" :key="rand().$lesson->id" />
-                            </div>
-                            @endcan
+                            @empty
+                                <span class="text-red-500">Nenhuma aula cadastrada</span>
+                            @endforelse
                         </div>
-                        @empty
-                        <span class="text-red-500">Nenhuma aula cadastrada</span>
-                        @endforelse
                     </div>
                 </div>
-            </div>
             @empty
-            <div class="card-white  py-4">
-                <span class="text-red-500">Nenhum módulo cadastrado</span>
-            </div>
+                <div class="card-white  py-4">
+                    <span class="text-red-500">Nenhum módulo cadastrado</span>
+                </div>
             @endforelse
-        </div>        
+        </div>
         <div class="sm:col-span-2 md:col-span-1">
             <div class="text-xl font-bold mb-4 flex items-center justify-between">
                 <div class="flex">
-                 
+
                     <x-icon-graduation-cap class="w-8 h-8" />
                     <span class="ml-2">ALUNOS</span>
                 </div>
-
-
             </div>
             <livewire:event-alunos :id="$event->id" :key="rand()" />
         </div>
     </div>
-    @if ($isOpenModule)
-    @include('livewire.event.module-create')
-    @endif
-    @if ($showConfirmationPopup)
-    <div class="fixed z-40 inset-0 overflow-y-auto ease-out duration-400">
-        <div class="flex items-end justify-start min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 transition-opacity">
-                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-            </div>
-
-            <!-- This element is to trick the browser into centering the modal contents. -->
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
-
-            <div class="fixed inset-0 flex flex-col items-center justify-start z-50 mt-8">
-                <div class="bg-slate-800 p-4  rounded-md shadow-lg top-0">
-                    <h2 class="text-lg text-white font-bold mb-4">Confirmação</h2>
-                    <p class="text-white">Deseja realmente excluir este item?</p>
-                    <div class="flex justify-end mt-4">
-                        <button wire:click="confirmDelete"
-                            class="px-4 py-2 bg-red-500 text-white rounded">Confirmar</button>
-                        <button wire:click="$set('showConfirmationPopup', false)"
-                            class=" ml-3 px-4 py-2 bg-gray-300 rounded">Cancelar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
 </div>

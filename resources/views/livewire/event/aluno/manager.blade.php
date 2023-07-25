@@ -1,7 +1,7 @@
 <div class="card-white">
     <x-search-form placeholder="Buscar aluno..." />
 
-    @forelse ($inscriptions as $aluno)
+    @forelse ($inscriptions as $key => $aluno)
     <div>
         @can('admin')
         <div>
@@ -11,10 +11,10 @@
                     width="32" height="32" alt="{{ $aluno->user->name }}" />
                 @if (count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2)
                 <a class="font-bold text-md text-blue-500 hover:underline ml-2 cursor-pointer"
-                    data-popover-target="{{ $aluno->user->id }}" data-popover-trigger="click"
+                    data-popover-target="tooltip-{{ $aluno->user->id }}-{{ $key }}" data-popover-trigger="click"
                     data-popover-placement="left">
                     <span
-                        class="truncate font-medium font-sans text-sm  group-hover:text-slate-800 
+                        class="truncate font-medium font-sans text-sm  group-hover:text-slate-800
                     {{ (count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2) ? 'text-gray-800  dark:text-white' : '' }}">
                         {{ $aluno->user->name }}
                     </span>
@@ -23,14 +23,14 @@
                 <a class="font-bold text-md text-blue-500 hover:underline ml-2 cursor-pointer"
                     href="{{route('userDetails', $aluno->user->id)}}">
                     <span
-                        class="truncate ml-1 text-sm font-medium group-hover:text-slate-800 
+                        class="truncate ml-1 text-sm font-medium group-hover:text-slate-800
                     {{ (count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2) ? 'text-white' : '' }}">
                         {{ $aluno->user->name }}
                     </span>
                 </a>
                 @endif
             </div>
-            <div data-popover id="{{ $aluno->user->id }}" role="tooltip"
+            <div data-popover id="tooltip-{{ $aluno->user->id }}-{{ $key }}" role="tooltip"
                 class="absolute z-10 invisible inline-block w-80 h-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:bg-gray-800 dark:border-gray-600 overflow-auto">
                 <div class="p-3">
                     <div class="flex items-center justify-start gap-2">
@@ -42,15 +42,12 @@
                             <a href="{{ route('userDetails', $aluno->user->id) }}">{{ $aluno->user->name }}</a>
                         </p>
                     </div>
-
-
                     @if (count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2)
                     <div class="mt-5">
                         <strong class="font-roboto">Pendências:</strong>
-
                         <div
-                            class="relative ml-5 mt-4 text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
-
+                            class="relative ml-5 mt-4 text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400"
+                        >
                             @if ($aluno->user->absenceCount > 2)
                             <div class="mb-5 ml-6">
                                 <span
@@ -62,11 +59,11 @@
                                     </svg>
                                 </span>
                                 <h3 class="font-bold leading-tight">Faltas:</h3>
-                                <p class="text-sm">{{ $aluno->user->absenceCount }} <span
-                                        class="text-xs italic">faltas</span></p>
+                                <p class="text-sm">{{ $aluno->user->absenceCount }}
+                                    <span class="text-xs italic">faltas</span>
+                                </p>
                             </div>
                             @endif
-
                             @foreach ($aluno->user->activityStatus as $activityPendent)
                             <div class="mb-5 ml-6">
                                 <span
@@ -86,10 +83,8 @@
                     </div>
                     @endif
                 </div>
-
             </div>
         </div>
-
         @elsecan('aluno')
         <div class="flex items-center mt-5 mb-4">
             <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset($aluno->user->profile_photo_url) }}"
