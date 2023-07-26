@@ -1,4 +1,4 @@
-<div class="card-white">
+<div class="card-white py-2 px-4">
     <x-search-form placeholder="Buscar aluno..." />
 
     @forelse ($inscriptions as $key => $aluno)

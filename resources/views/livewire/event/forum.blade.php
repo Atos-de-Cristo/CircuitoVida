@@ -104,7 +104,11 @@
     @endif
   </li>
   @empty
-      <li>Nenhuma mensagem enviada!</li>
+  <div class="flex flex-col items-center">
+    <x-icon-message-not />
+    <li>Nenhuma mensagem enviada!</li>
+  </div>
+
   @endforelse
 </ul>
 

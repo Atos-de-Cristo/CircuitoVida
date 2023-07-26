@@ -20,7 +20,7 @@
             </ol>
         </div>
     </div>
-    <div class="card-white">
+    <div class="card-white px-4 py-2">
         <div class="flex flex-col sm:flex-row justify-between items-center">
             <div>
                 <div class="font-bold px-4 mb-2 flex items-center">
@@ -62,7 +62,7 @@
                 <span class="ml-2">MODULOS</span>
             </div>
             @forelse ($event->modules as $module)
-                <div x-data="{ open: false }" class="card-white py-4">
+                <div x-data="{ open: false }" class="card-white py-2 px-4">
                     <div @click="open = !open" class="cursor-pointer">
                         <div class="flex items-center justify-between">
                             <span class="text-xl">
@@ -144,7 +144,7 @@
                     </div>
                 </div>
             @empty
-                <div class="card-white  py-4">
+                <div class="card-white  py-2 px-4">
                     <span class="text-red-500">Nenhum módulo cadastrado</span>
                 </div>
             @endforelse
