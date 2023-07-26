@@ -7,7 +7,7 @@
             </div>
         </div>       
     </div>
-    <div class="card-white">
+    <div class="card-white p-4">
         <div class="flex flex-wrap m-0 rounded-md flex-col">
             @forelse ($this->list as $item)
                 <p>

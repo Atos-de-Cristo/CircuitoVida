@@ -8,10 +8,10 @@
         </div>
     </div>
 
-    <div class="card-white overflow-hidden shadow-xl sm:rounded-lg">
-        <div class="flex flex-wrap gap-4 sm:flex-row lg:flex-row">
+    <div class="card-white p-4 overflow-hidden shadow-xl sm:rounded-lg">
+     
             @foreach ($this->inscriptions as $modules)
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-4 mt-2">
+            <div class="flex flex-wrap gap-3">
                 @foreach ($modules['lessons'] as $lesson)
                 <div
                     class="relative flex flex-col p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 group">
@@ -31,7 +31,7 @@
                 @endforeach
             </div>
             @endforeach
-        </div>
+        
     </div>
 
     @endif
