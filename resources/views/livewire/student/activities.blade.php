@@ -7,7 +7,7 @@
             </div>
         </div>       
     </div>
-    <div class="card-white">
+    <div class="card-white p-4">
         <div >
             <ul>
                 @forelse ($this->user->activities as $activity)

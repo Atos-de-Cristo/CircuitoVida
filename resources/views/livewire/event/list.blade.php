@@ -2,8 +2,8 @@
      @if (session()->has('message'))
     <x-alert-message :message="session('message')['text']" :messageType="session('message')['type']" />
     @endif
-    <div class="flex flex-col md:flex-row items-center justify-between mb-2">
-        <div class="flex items-center mb-2 md:mb-0">
+    <div class="flex flex-col md:flex-row items-start   justify-between mb-2">
+        <div class="flex items-start mb-2 md:mb-0">
             <div class="ml-2 text-xl font-bold">
                 Lista de Eventos
             </div>
@@ -18,8 +18,8 @@
             </ol>
         </div>
     </div>
-    <div class="card-white">
-        <div class="flex flex-col mb-4 sm:flex-row justify-between items-center">
+    <x-card>
+        <x-slot name="headerCard">
             <x-search-form placeholder="Buscar eventos..."/>
             @can('admin')
             <div class="mt-2 sm:mt-0 flex space-x-2">
@@ -29,8 +29,9 @@
                 </button>
             </div>
             @endcan
-        </div>
-        <div class="flex flex-wrap m-0  rounded-md">
+        </x-slot>
+
+        <x-slot name="contentCard">
             @foreach ($dataAll as $data)
             <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-2">
                 <div class="bg-gray-100  max-w-sm  dark:bg-slate-800 overflow-hidden shadow rounded-lg flex flex-col ">
@@ -63,11 +64,11 @@
                 </div>
             </div>
             @endforeach
-        </div>
-        <div class="mt-4">
+        </x-slot>
+        <x-slot name="footerCard">
             {{ $dataAll->links() }}
-        </div>
-    </div>
+        </x-slot>
+    </x-card>
     @if ($isOpen)
     @include('livewire.event.create')
     @endif

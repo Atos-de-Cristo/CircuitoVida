@@ -1,14 +1,15 @@
 <div>
     <div class="flex flex-col md:flex-row items-center justify-between mb-2">
-        <h1 class="float-left py-4 font-bold text-xl">Lista de Mensagens</h1>
+        <h1 class="float-left  font-bold text-xl">Lista de Mensagens</h1>
     </div>
-    <div class="card-white">
-        <div class="flex flex-col mb-4 sm:flex-row justify-between items-center">
-            <x-search-form placeholder="Buscar usuário..."/>
-        </div>
-        <ul>
+<x-card>
+    <x-slot name="headerCard">
+        <x-search-form placeholder="Buscar usuário..."/>
+    </x-slot>
+    <x-slot name="contentCard">
+       
             @forelse ($this->listMessage as $message)
-            <li class="flex items-start mb-2">
+            <div class="flex w-full flex-row items-start mb-2">
                 <div>
                     <img class="w-12 h-12 bg-black rounded-full mr-2"
                         src="{{ asset($message->userSend->profile_photo_url) }}" width="32" height="32"
@@ -64,14 +65,19 @@
                         </div>
                     </div>
                 </div>
-            </li>
+            </div>
             @empty
-            <li>
+            <div>
                 <p>Nenhuma mensagem encontrada</p>
-            </li>
+            </div>
             @endforelse
-        </ul>
+      
+    </x-slot>
+    <x-slot name="footerCard">
         {{ $this->listMessage->links() }}
-    </div>
+    </x-slot>
+</x-card>
+
+    
   
 </div>
