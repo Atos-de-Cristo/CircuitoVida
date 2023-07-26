@@ -1,4 +1,5 @@
 <div>
+    <button type="button" class="text-white bg-gradient-to-r rounded-full from-indigo-500 via-indigo-600 to-indigo-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:focus:ring-indigo-800 shadow-lg shadow-indigo-500/50 dark:shadow-lg dark:shadow-indigo-800/80 font-medium  text-sm px-5 py-2.5 text-center mr-2 mb-2">Purple</button>
     <div class="flex flex-col md:flex-row items-center justify-between mb-2">
         <div class="flex items-center mb-2 md:mb-0">
             <div class="ml-2 text-xl font-bold">

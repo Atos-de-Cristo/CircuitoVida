@@ -20,7 +20,7 @@
 /* Estilos para o card branco */
 .card-white {
     /* Aplica os estilos para o fundo branco */
-    @apply bg-white border-t-2 dark:border-indigo-900 dark:bg-slate-700 overflow-hidden shadow-xl rounded-md px-4 py-4 mt-2 mb-4;
+    @apply bg-white border-t-2 dark:border-indigo-900 dark:bg-slate-700 overflow-hidden shadow-xl rounded-md  mt-2 mb-4;
 }
 
 /* Estilos para o campo de input */
