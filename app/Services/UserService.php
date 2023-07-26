@@ -104,23 +104,24 @@ class UserService
                 $query->whereIn('question_id', $questions);
             })
             ->with('responses')
-            ->withCount(['responses as respostas_pendente' => function ($query) use ($questions) {
+            ->withCount(['responses as pending_answers' => function ($query) use ($questions) {
                 $query->whereIn('question_id', $questions);
                 $query->where('status', 'pendente');
             }])
-            ->withCount(['responses as respostas_correta' => function ($query) use ($questions) {
+            ->withCount(['responses as correct_answers' => function ($query) use ($questions) {
                 $query->whereIn('question_id', $questions);
                 $query->where('status', 'correto');
             }])
-            ->withCount(['responses as respostas_errado' => function ($query) use ($questions) {
+            ->withCount(['responses as wrong_answers' => function ($query) use ($questions) {
                 $query->whereIn('question_id', $questions);
                 $query->where('status', 'errado');
             }])
             ->get();
 
         return $results->map(function ($item) {
-            $totalAnswers = $item->respostas_correta + $item->respostas_errado;
-            $item->porcentagem_acertos = $totalAnswers > 0 ? round(($item->respostas_correta / $totalAnswers) * 100, 2).'%' : 'Pendente correção!';
+            $totalAnswers = $item->correct_answers + $item->wrong_answers;
+            $item->status_correct = $totalAnswers > 0;
+            $item->correct_percentage = $totalAnswers > 0 ? round(($item->correct_answers / $totalAnswers) * 100, 2) : null;
             return $item;
         });
     }

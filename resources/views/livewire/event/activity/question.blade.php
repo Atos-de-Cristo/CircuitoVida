@@ -199,7 +199,7 @@
                 </div>
                 <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     @forelse ($this->userQuestions as $user)
-                    <div class="flex  flex-row justify-start items-start py-2 px-4 mb-2 {{$user->porcentagem_acertos < 60 ? 'bg-infor' : ''}}">
+                    <div class="flex  flex-row justify-start items-start py-2 px-4 mb-2 {{$user->correct_percentage < 60 ? 'bg-infor' : ''}}">
 
 
                         <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset($user->profile_photo_url) }}"
@@ -211,7 +211,7 @@
                                     <button data-tooltip-target="tooltip-pendencias" type="button" class="btn-icon btn-tooltip">
                                         <x-icon-circle-exclamation class="h-4 w-4 text-yellow-500" />
                                     </button>
-                                    <small class="pr-2 ml-1">{{ $user->respostas_pendente }}</small>
+                                    <small class="pr-2 ml-1">{{ $user->pending_answers }}</small>
                                     <div id="tooltip-pendencias" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                                          Pendência
                                         <div class="tooltip-arrow" data-popper-arrow></div>
@@ -221,7 +221,7 @@
                                     <button data-tooltip-target="tooltip-corretas" type="button" class="btn-icon btn-tooltip">
                                         <x-icon-circle-check class="h-4 w-4 text-green-500" />
                                     </button>
-                                    <small class="pr-2 ml-1"> {{$user->respostas_correta }}</small>
+                                    <small class="pr-2 ml-1"> {{$user->correct_answers }}</small>
                                     <div id="tooltip-corretas" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                                          Corretas
                                         <div class="tooltip-arrow" data-popper-arrow></div>
@@ -231,29 +231,29 @@
                                     <button data-tooltip-target="tooltip-erradas" type="button" class="btn-icon btn-tooltip">
                                         <x-icon-circle-xmark class="h-4 w-4 text-red-500" />
                                     </button>
-                                    <small class="pr-2 ml-1"> {{$user->respostas_errado }}</small>
+                                    <small class="pr-2 ml-1"> {{$user->wrong_answers }}</small>
                                     <div id="tooltip-erradas" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                                          Erradas
                                         <div class="tooltip-arrow" data-popper-arrow></div>
                                     </div>
-                                </div>                              
+                                </div>
 
                             </div>
                         </span>
 
-                        @if ($user->respostas_pendente > 0)
+                        @if ($user->pending_answers > 0)
                         <div class="ml-3">
-                            
-                            <button 
+
+                            <button
                                 wire:click.prevent="correctAnswers({{$user->id}})" type="button"
                                 class="btn-primary">
                                 <x-icon-circle-check class="h-4 w-4 " /> <small class="pr-2 ml-1"> Corrigir</small>
                             </button>
-                            
+
                         </div>
                         @else
                         <div class=" mt-1 md:mt-0">
-                            {{ $user->porcentagem_acertos }}
+                            {{ ($user->status_correct) ? $user->correct_percentage : 'Pendente de correção' }}
                         </div>
                         @endif
                     </div>
