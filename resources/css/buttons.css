@@ -14,13 +14,13 @@
 
 .btn-submit {
     /* Aplica os estilos para o fundo, cor do texto e demais propriedades do botão de envio */
-    @apply inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:ring-green-700 focus:ring-2 transition ease-in-out duration-150 sm:text-sm sm:leading-5;
+    @apply inline-flex justify-center w-full text-sm  sm:text-base rounded-md border border-transparent px-4 py-2 bg-green-600 leading-6 font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:ring-green-700 focus:ring-2 transition ease-in-out duration-150 sm:text-sm sm:leading-5;
 }
 
 /* Estilos para o botão padrão */
 .btn-default {
     /* Aplica os estilos para o fundo, cor do texto e demais propriedades do botão padrão */
-    @apply inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:ring-blue-300 transition ease-in-out duration-150 sm:text-sm sm:leading-5;
+    @apply inline-flex justify-center text-sm  sm:text-base w-full rounded-md border border-gray-300 px-4 py-2 bg-white leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:ring-blue-300 transition ease-in-out duration-150 sm:text-sm sm:leading-5;
 }
 
 .btn-icon {

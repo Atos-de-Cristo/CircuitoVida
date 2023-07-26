@@ -12,7 +12,7 @@
                 @if (count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2)
                 <a class="font-bold text-md text-blue-500 hover:underline ml-2 cursor-pointer"
                     data-popover-target="tooltip-{{ $aluno->user->id }}-{{ $key }}" data-popover-trigger="click"
-                    data-popover-placement="left">
+                    data-popover-placement="top">
                     <span
                         class="truncate font-medium font-sans text-sm  group-hover:text-slate-800
                     {{ (count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2) ? 'text-gray-800  dark:text-white' : '' }}">
