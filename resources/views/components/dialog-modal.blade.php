@@ -21,7 +21,7 @@
                 {{ $content }}
             </div>
             <!-- Modal footer -->
-            <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+            <div class="flex items-center  justify-start p-4 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
                 {{ $footer }}
         </div>
     </div>   

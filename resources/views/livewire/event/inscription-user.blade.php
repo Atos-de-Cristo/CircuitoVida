@@ -39,7 +39,7 @@
 
     <x-slot name="footer">
 
-        <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
+        <span class="flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
 
             <button wire:click.prevent="closeModal()" type="button"
                 class="btn-default">

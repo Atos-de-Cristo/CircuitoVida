@@ -154,7 +154,7 @@
     </x-slot>
 
     <x-slot name="footer">
-        <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
+        <span class="flex w-full rounded-md shadow-sm  sm:w-auto">
             <button wire:click.prevent="store()" type="button"
                 class="btn-submit">
                 @if (!empty($_id))
@@ -164,8 +164,7 @@
                 @endif
             </button>
         </span>
-        <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-
+        <span class="flex w-full rounded-md shadow-sm sm:w-auto">
             <button wire:click.prevent="closeModal()" type="button"
                 class="btn-default">
                 Cancel

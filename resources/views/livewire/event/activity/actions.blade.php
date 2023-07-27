@@ -93,7 +93,7 @@
                         @endif
                     </button>
                 </span>
-                <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
+                <span class="flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
                     <button wire:click="$set('isOpenActivity', false)" type="button" class="btn-default">
                         Cancelar
                     </button>
