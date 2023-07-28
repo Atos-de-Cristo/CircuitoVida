@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified' ])->group(function () {
     Route::get('/', function () { return view('dashboard'); })->name('dashboard');
-    Route::get('/event/classroom/{id}', Classroom::class)->name('classroom');
-    Route::get('/event/manager/{id}', EventManager::class)->name('eventManager');
-    Route::get('/event/question/{id}', EventActivityQuestion::class)->name('eventActivityQuestion');
+    Route::get('/event/{eventId}/manager', EventManager::class)->name('eventManager');
+    Route::get('/event/{eventId}/classroom/{id}', Classroom::class)->name('classroom');
+    Route::get('/event/{eventId}/question/{id}', EventActivityQuestion::class)->name('eventActivityQuestion');
     Route::get('/messages', ListMessages::class)->name('listMessages');
 
     Route::middleware('can:admin,monitor')->group(function () {
@@ -28,7 +28,7 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
         Route::get('/event/category', EventCategory::class)->name('eventCategory');
         Route::get('/event/inscription', EventInscription::class)->name('eventInscription');
         Route::get('/users', User::class)->name('users');
-        Route::get('/users/details/{id}', UserDetail::class)->name('userDetails');
+        Route::get('/users/{id}/details', UserDetail::class)->name('userDetails');
     });
 
     Route::middleware('can:aluno')->group(function () {

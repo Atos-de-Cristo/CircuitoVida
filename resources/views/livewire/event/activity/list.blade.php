@@ -11,7 +11,7 @@
             <div class="flex justify-start items-baseline">
                 <x-icon-file-word />
                 <a
-                    href="{{ route('eventActivityQuestion', ['id' => $activity->id]) }}"
+                    href="{{ route('eventActivityQuestion', ['eventId' => $activity->lesson->event->id, 'id' => $activity->id]) }}"
                     class="font-bold text-md text-blue-500 hover:underline  ml-2 flex flex-col"
                 >
                     @if ($activity->type == 'E')

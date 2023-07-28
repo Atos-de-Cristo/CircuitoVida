@@ -22,7 +22,7 @@ class EventManager extends Component
 
     public function mount(Request $request)
     {
-        $this->eventId = $request->id;
+        $this->eventId = $request->eventId;
     }
 
     public function render(EventService $eventService, ModuleService $moduleService)
