@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Collection;
 class AttachmentService
 {
     protected $repository;
+    protected $messageService;
 
     public function __construct()
     {
         $this->repository = new Attachment();
+        $this->messageService = new MessageService();
     }
 
     public function getAll(array $filter = []): Collection
@@ -33,13 +35,25 @@ class AttachmentService
 
     private function create(array $data): Attachment
     {
-        return $this->repository->create($data);
+        $data = $this->repository->create($data);
+        $this->messageService->send([
+            'message' => 'Novo anexo adicionado ao seu perfil.',
+            'user_for' => $data['user_id']
+        ]);
+
+        return $data;
     }
 
     private function update(array $data, int $id): bool
     {
         $repo = $this->find($id);
-        return $repo->update($data);
+        $data = $repo->update($data);
+        $this->messageService->send([
+            'message' => 'Novo anexo editado no seu perfil.',
+            'user_for' => $data['user_id']
+        ]);
+
+        return $data;
     }
 
     public function delete(string $id): void
