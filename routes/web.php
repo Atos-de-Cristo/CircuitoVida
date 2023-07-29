@@ -18,10 +18,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified' ])->group(function () {
     Route::get('/', function () { return view('dashboard'); })->name('dashboard');
-    Route::get('/event/{eventId}/manager', EventManager::class)->name('eventManager');
-    Route::get('/event/{eventId}/classroom/{id}', Classroom::class)->name('classroom');
-    Route::get('/event/{eventId}/question/{id}', EventActivityQuestion::class)->name('eventActivityQuestion');
     Route::get('/messages', ListMessages::class)->name('listMessages');
+
+    Route::middleware(['check.inscription'])->group(function () {
+        Route::get('/event/{eventId}/manager', EventManager::class)->name('eventManager');
+        Route::get('/event/{eventId}/classroom/{id}', Classroom::class)->name('classroom');
+        Route::get('/event/{eventId}/question/{id}', EventActivityQuestion::class)->name('eventActivityQuestion');
+    });
 
     Route::middleware('can:admin,monitor')->group(function () {
         Route::get('/event', Event::class)->name('event');
