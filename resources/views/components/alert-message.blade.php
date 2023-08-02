@@ -6,7 +6,7 @@
     x-transition:enter-start="opacity-0 transform -translate-y-4"
     x-transition:enter-end="opacity-100 transform translate-y-0"
     x-transition:leave="transform-gpu ease-in duration-100"
-    class="flex absolute w-3/4  z-50 rounded-lg items-center p-4 mb-4 
+    class="flex absolute w-3/4  z-50 rounded-lg items-center p-4 mb-4
     {{ $messageType === 'success' ? 'text-green-800 dark:bg-green-700 bg-green-50 dark:text-green-50' : 'text-red-800 dark:bg-red-700 bg-red-50 dark:text-red-50' }}"
     role="alert"
 >
@@ -23,7 +23,6 @@
             class="ml-auto -mx-1.5 -my-1.5 p-1.5
             {{ $messageType === 'success' ? 'bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 hover:bg-green-200 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700' : 'bg-red-50  text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 hover:bg-red-200 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700'
             }}"
-            data-dismiss-target="#alert-2"
             aria-label="Close"
             @click="showMessage = false"
         >

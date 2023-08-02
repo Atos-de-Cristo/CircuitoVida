@@ -51,8 +51,7 @@ class ProfileService extends BaseService
 
     public function store(array $data): Profile | bool
     {
-        dd($data);
-        $this->validateForm($data);
+        // $this->validateForm($data);
 
         $getData = $this->find();
         if ($getData == null) {

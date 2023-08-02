@@ -176,9 +176,10 @@ class InscriptionService extends BaseService
 
     public function create(array $data): Inscription
     {
-        if (Auth::user()->profile === null) {
-            throw new Error('Preencha seu perfil!');
-        }
+        // TODO: desativado ate cad de perfil estar 100%
+        // if (Auth::user()->profile === null) {
+        //     throw new Error('Preencha seu perfil!');
+        // }
 
         $getInsc = $this->repository
             ->where('user_id', $data['user_id'])
