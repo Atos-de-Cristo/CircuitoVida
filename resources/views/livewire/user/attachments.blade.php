@@ -1,6 +1,6 @@
 <div>
     <form>
-        <div class="grid gap-2 mb-6 md:grid-cols-5">
+        <div class="grid gap-2 mb-2 md:grid-cols-5">
             <div class="col-span-2">
                 <input  wire:model.lazy="name" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Entre com o nome" >
                 @error('name')
@@ -20,10 +20,11 @@
             </div>
         </div>
 
-        <div class="mt-4">
-            <hr class="my-2 border-gray-300">
+        <div class="mt-2">
+            <hr class="py-2 border-gray-300">
             @forelse ($this->list as $item)
-                <p>
+                <p class="flex gap-2 items-center">
+                 <x-icon-paperclip  />
                     <a href="{{$item->path}}" target="_blank" class="font-bold text-md text-blue-500 hover:underline ">
                         {{$item->name}}.{{$item->type}}
                     </a>

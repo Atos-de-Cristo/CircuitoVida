@@ -10,7 +10,8 @@
     <div class="card-white p-4">
         <div class="flex flex-wrap m-0 rounded-md flex-col">
             @forelse ($this->list as $item)
-                <p>
+                <p class="flex gap-2 items-center">
+                  <x-icon-paperclip  />
                     <a
                         href="{{$item->path}}"
                         target="_blank"
