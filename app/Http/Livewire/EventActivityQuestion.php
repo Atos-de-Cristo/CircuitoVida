@@ -2,11 +2,10 @@
 
 namespace App\Http\Livewire;
 
-use App\Services\QuestionService;
-use App\Services\ResponseService;
-use App\Services\UserService;
+use App\Services\{QuestionService, ResponseService, UserService};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 class EventActivityQuestion extends Component
@@ -92,32 +91,43 @@ class EventActivityQuestion extends Component
 
     public function store()
     {
-        $this->validate([
-            'type' => 'required',
-            'title' => 'required',
-            'options.*.text' => 'required_if:type,multi',
-        ]);
+        try {
+            $this->validate([
+                'type' => 'required',
+                'title' => 'required',
+                'options.*.text' => 'required_if:type,multi',
+            ]);
 
-        $request = [
-            'activity_id' => $this->atvId,
-            'type' => $this->type,
-            'title' => $this->title,
-            'options' => $this->options
-        ];
+            $request = [
+                'activity_id' => $this->atvId,
+                'type' => $this->type,
+                'title' => $this->title,
+                'options' => $this->options
+            ];
 
-        if ($this->questionId) {
-            $request['id'] = $this->questionId;
+            if ($this->questionId) {
+                $request['id'] = $this->questionId;
+            }
+
+            $this->service->store($request);
+
+            $this->resetInputCreate();
+
+            session()->flash('message', [
+                'text' => 'A pergunta foi salva com sucesso!' ,
+                'type' => 'success',
+            ]);
+        } catch (ValidationException $e) {
+            $errors = $e->validator->errors();
+
+            $this->resetErrorBag();
+
+            foreach ($errors->messages() as $field => $fieldErrors) {
+                foreach ($fieldErrors as $error) {
+                    $this->addError($field, $error);
+                }
+            }
         }
-
-        $this->service->store($request);
-
-        $this->resetInputCreate();
-
-        session()->flash('message', [
-            'text' => 'A pergunta foi salva com sucesso!' ,
-            'type' => 'success',
-        ]);
-
     }
 
     public function resetInputCreate()

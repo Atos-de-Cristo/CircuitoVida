@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Services\ModuleService;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 class EventModule extends Component
@@ -45,23 +46,28 @@ class EventModule extends Component
 
     public function storeModule()
     {
-        $this->validate([
-            'nameModule' => 'required'
-        ]);
+        try {
+            $request = [
+                'id' => $this->moduleId ?? null,
+                'name' => $this->nameModule,
+                'event_id' => $this->eventId
+            ];
 
-        $request = [
-            'name' => $this->nameModule,
-            'event_id' => $this->eventId
-        ];
+            $this->moduleService->store($request);
 
-        if ($this->moduleId) {
-            $this->moduleService->update($request, $this->moduleId);
-        } else {
-            $this->moduleService->create($request);
+            $this->closeModalModule();
+            $this->emit('refreshManage');
+        } catch (ValidationException $e) {
+            $errors = $e->validator->errors();
+
+            $this->resetErrorBag();
+
+            foreach ($errors->messages() as $field => $fieldErrors) {
+                foreach ($fieldErrors as $error) {
+                    $this->addError($field, $error);
+                }
+            }
         }
-
-        $this->closeModalModule();
-        $this->emit('refreshManage');
     }
 
     public function deleModule()

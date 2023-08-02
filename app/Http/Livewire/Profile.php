@@ -4,38 +4,12 @@ namespace App\Http\Livewire;
 
 use App\Enums\{ChurchRelationship, HouMeet, MaritalStatus, Schooling};
 use App\Services\ProfileService;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 class Profile extends Component
 {
     public $form;
-
-    protected $rules = [
-        'form.cpf'=> 'required',
-        'form.rg'=> 'required',
-        'form.sex'=> 'required',
-        'form.birth'=> 'required',
-        'form.marital_status'=> 'required',
-        'form.date_wedding'=> 'required',
-        'form.marital_status'=> 'required',
-        'form.zip_code'=> 'required',
-        'form.address'=> 'required',
-        'form.number'=> 'required',
-        'form.complement'=> 'required',
-        'form.district'=> 'required',
-        'form.city'=> 'required',
-        'form.uf'=> 'required',
-        'form.cell_phone'=> 'required',
-        'form.church_relationship'=> 'required',
-        'form.entry_date'=> 'required',
-        'form.hou_meet'=> 'required',
-        'form.baptized'=> 'required',
-        'form.accepted_jesus'=> 'required',
-        'form.leader'=> 'required',
-        'form.pastor'=> 'required',
-        'form.Schooling'=> 'required',
-        'form.profession'=> 'required',
-    ];
 
     public function getProfileServiceProperty()
     {
@@ -74,13 +48,23 @@ class Profile extends Component
 
     public function store()
     {
-        $this->validate();
+        try {
+            $this->profileService->store($this->form);
 
-        $this->profileService->store($this->form);
+            session()->flash('message', [
+                'text' => 'Perfil atualizado com sucesso.' ,
+                'type' => 'success',
+            ]);
+        } catch (ValidationException $e) {
+            $errors = $e->validator->errors();
 
-        session()->flash('message', [
-            'text' => 'Perfil atualizado com sucesso.' ,
-            'type' => 'success',
-        ]);
+            $this->resetErrorBag();
+
+            foreach ($errors->messages() as $field => $fieldErrors) {
+                foreach ($fieldErrors as $error) {
+                    $this->addError($field, $error);
+                }
+            }
+        }
     }
 }

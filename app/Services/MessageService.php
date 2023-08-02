@@ -6,9 +6,15 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
-class MessageService
+class MessageService extends BaseService
 {
     protected $repository;
+
+    protected $rules = [
+        'user_send' => 'required|numeric',
+        'user_for' => 'required|numeric',
+        'message' => 'required|max:191'
+    ];
 
     public function __construct()
     {
@@ -52,6 +58,9 @@ class MessageService
         $data['user_send'] = Auth::user()->id;
         $data['date_send'] = date('Y-m-d H:i:s');
         $data['read'] = false;
+
+        $this->validateForm($data);
+
         return $this->repository->create($data);
     }
 

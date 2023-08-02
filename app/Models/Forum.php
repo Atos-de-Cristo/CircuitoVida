@@ -10,7 +10,7 @@ class Forum extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $fillable = [ 'lesson_id', 'user_id', 'message' ];
 
     public function userSend(): BelongsTo
     {

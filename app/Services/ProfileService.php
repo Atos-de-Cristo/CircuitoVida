@@ -2,12 +2,38 @@
 namespace App\Services;
 
 use App\Models\Profile;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
-class ProfileService
+class ProfileService extends BaseService
 {
     protected $repository;
+
+    protected $rules = [
+        'cpf'=> 'required',
+        'rg'=> 'required',
+        'sex'=> 'required',
+        'birth'=> 'required',
+        'marital_status'=> 'required',
+        'date_wedding'=> 'required',
+        'marital_status'=> 'required',
+        'zip_code'=> 'required',
+        'address'=> 'required',
+        'number'=> 'required',
+        'complement'=> 'required',
+        'district'=> 'required',
+        'city'=> 'required',
+        'uf'=> 'required',
+        'cell_phone'=> 'required',
+        'church_relationship'=> 'required',
+        'entry_date'=> 'required',
+        'hou_meet'=> 'required',
+        'baptized'=> 'required',
+        'accepted_jesus'=> 'required',
+        'leader'=> 'required',
+        'pastor'=> 'required',
+        'Schooling'=> 'required',
+        'profession'=> 'required',
+    ];
 
     public function __construct()
     {
@@ -25,6 +51,9 @@ class ProfileService
 
     public function store(array $data): Profile | bool
     {
+        dd($data);
+        $this->validateForm($data);
+
         $getData = $this->find();
         if ($getData == null) {
             $data['user_id'] = Auth::user()->id;

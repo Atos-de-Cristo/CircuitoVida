@@ -10,7 +10,16 @@ class Message extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'user_send',
+        'user_for',
+        'event_id',
+        'lesson_id',
+        'message',
+        'read',
+        'data_send',
+        'data_read'
+    ];
 
     public function userSend(): BelongsTo
     {

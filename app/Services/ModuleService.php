@@ -4,9 +4,14 @@ namespace App\Services;
 use App\Models\Module;
 use Illuminate\Database\Eloquent\Collection;
 
-class ModuleService
+class ModuleService extends BaseService
 {
     protected $repository;
+
+    protected $rules = [
+        'name' => 'required|max:191|min:3',
+        'event_id' => 'required|numeric'
+    ];
 
     public function __construct()
     {
@@ -23,12 +28,23 @@ class ModuleService
         return $this->repository->with('event')->find($id);
     }
 
-    public function create(array $data): Module
+    public function store(array $data): Module | bool
+    {
+        $this->validateForm($data);
+
+        if (isset($data['id']) && !empty($data['id'])) {
+            return $this->update($data, $data['id']);
+        }
+
+        return $this->create($data);
+    }
+
+    private function create(array $data): Module
     {
         return $this->repository->create($data);
     }
 
-    public function update(array $data, int $id): bool
+    private function update(array $data, int $id): bool
     {
         $repo = $this->find($id);
         return $repo->update($data);

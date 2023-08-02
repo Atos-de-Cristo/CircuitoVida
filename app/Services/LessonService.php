@@ -4,9 +4,15 @@ namespace App\Services;
 use App\Models\Lesson;
 use Illuminate\Database\Eloquent\Collection;
 
-class LessonService
+class LessonService extends BaseService
 {
     protected $repository;
+
+    protected $rules = [
+        'event_id' => 'required|numeric',
+        'module_id' => 'required|numeric',
+        'title' => 'required|max:191'
+    ];
 
     public function __construct()
     {
@@ -25,6 +31,8 @@ class LessonService
 
     public function store(array $data): Lesson | bool
     {
+        $this->validateForm($data);
+
         if (isset($data['id']) && !empty($data['id'])) {
             return $this->update($data, $data['id']);
         }

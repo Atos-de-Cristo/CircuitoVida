@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Services\LessonService;
 use Livewire\Component;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class EventLesson extends Component
 {
@@ -46,28 +47,40 @@ class EventLesson extends Component
 
     public function store(LessonService $service)
     {
-        $this->validate([
-            'title' => 'required'
-        ]);
+        try {
+            $this->validate([
+                'title' => 'required'
+            ]);
 
-        $request = [
-            'event_id' => $this->eventId,
-            'module_id' => $this->moduleId,
-            'title' => $this->title,
-            'description' => $this->description,
-            'video' => $this->video,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
-        ];
+            $request = [
+                'event_id' => $this->eventId,
+                'module_id' => $this->moduleId,
+                'title' => $this->title,
+                'description' => $this->description,
+                'video' => $this->video,
+                'start_date' => $this->start_date,
+                'end_date' => $this->end_date,
+            ];
 
-        if ($this->lessonId) {
-            $request['id'] = $this->lessonId;
+            if ($this->lessonId) {
+                $request['id'] = $this->lessonId;
+            }
+
+            $service->store($request);
+
+            $this->isOpenLesson = false;
+            $this->emit('refreshManage');
+        } catch (ValidationException $e) {
+            $errors = $e->validator->errors();
+
+            $this->resetErrorBag();
+
+            foreach ($errors->messages() as $field => $fieldErrors) {
+                foreach ($fieldErrors as $error) {
+                    $this->addError($field, $error);
+                }
+            }
         }
-
-        $service->store($request);
-
-        $this->isOpenLesson = false;
-        $this->emit('refreshManage');
     }
 
     public function dellLesson(LessonService $service)

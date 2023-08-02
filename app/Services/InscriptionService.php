@@ -9,9 +9,17 @@ use Error;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
-class InscriptionService
+class InscriptionService extends BaseService
 {
     protected $repository;
+
+    protected $rules = [
+        'event_id' => 'required|numeric',
+        'user_id' => 'required|numeric',
+        'quantity' => 'required|numeric',
+        'amount' => 'required',
+        'status' => 'required'
+    ];
 
     public function __construct()
     {
@@ -153,7 +161,7 @@ class InscriptionService
         return $results;
     }
 
-    public function getFrequency(string $eventId, string $lessonId): Collection
+    public function getFrequency(string $eventId): Collection
     {
         return $this->repository
             ->with('event', 'user', 'frequencies')
@@ -188,6 +196,8 @@ class InscriptionService
         if ($getInscTotal >= $limitInsc) {
             throw new Error('Vagas esgotadas!');
         }
+
+        $this->validateForm($data);
 
         return $this->repository->create($data);
     }

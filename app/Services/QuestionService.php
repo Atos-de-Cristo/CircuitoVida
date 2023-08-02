@@ -5,9 +5,15 @@ use App\Models\Question;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
-class QuestionService
+class QuestionService extends BaseService
 {
     protected $repository;
+
+    protected $rules = [
+        'activity_id' => 'required|numeric',
+        'type' => 'required',
+        'title' => 'required|max:191'
+    ];
 
     public function __construct()
     {
@@ -35,7 +41,7 @@ class QuestionService
             ->get();
     }
 
-    public function getQuestionsCorrect(string $activityId, string | null $userId = null): array
+    public function getQuestionsCorrect(string $activityId, ?string $userId = null): array
     {
         if ($userId == null) {
             $userId = Auth::user()->id;
@@ -87,6 +93,8 @@ class QuestionService
 
     public function store(array $data): Question | bool
     {
+        $this->validateForm($data);
+
         if (isset($data['id'])) {
             return $this->update($data, $data['id']);
         }
