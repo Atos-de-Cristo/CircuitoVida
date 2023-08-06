@@ -12,7 +12,7 @@ class QuestionService extends BaseService
     protected $rules = [
         'activity_id' => 'required|numeric',
         'type' => 'required',
-        'title' => 'required|max:191',
+        'title' => 'required',
         'options' => 'array'
     ];
 
