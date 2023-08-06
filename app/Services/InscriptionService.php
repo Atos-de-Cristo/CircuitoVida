@@ -198,15 +198,16 @@ class InscriptionService extends BaseService
             throw new Error('Vagas esgotadas!');
         }
 
-        $this->validateForm($data);
+        $dataValidate = $this->validateForm($data);
 
-        return $this->repository->create($data);
+        return $this->repository->create($dataValidate);
     }
 
     public function update(array $data, int $id): bool
     {
         $repo = $this->find($id);
-        return $repo->update($data);
+        $dataValidate = $this->validateForm($data);
+        return $repo->update($dataValidate);
     }
 
     public function delete(string $id): void

@@ -30,13 +30,13 @@ class ModuleService extends BaseService
 
     public function store(array $data): Module | bool
     {
-        $this->validateForm($data);
+        $dataValid = $this->validateForm($data);
 
         if (isset($data['id']) && !empty($data['id'])) {
-            return $this->update($data, $data['id']);
+            return $this->update($dataValid, $data['id']);
         }
 
-        return $this->create($data);
+        return $this->create($dataValid);
     }
 
     private function create(array $data): Module

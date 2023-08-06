@@ -13,7 +13,10 @@ class MessageService extends BaseService
     protected $rules = [
         'user_send' => 'required|numeric',
         'user_for' => 'required|numeric',
-        'message' => 'required|max:191'
+        'message' => 'required|max:191',
+        'date_send' => 'required|date',
+        'date_read' => 'date',
+        'read' => 'numeric'
     ];
 
     public function __construct()
@@ -59,9 +62,8 @@ class MessageService extends BaseService
         $data['date_send'] = date('Y-m-d H:i:s');
         $data['read'] = false;
 
-        $this->validateForm($data);
-
-        return $this->repository->create($data);
+        $dataValid = $this->validateForm($data);
+        return $this->repository->create($dataValid);
     }
 
     public function sendGroup(array $data): void

@@ -4,9 +4,16 @@ namespace App\Services;
 use App\Models\Frequency;
 use Illuminate\Database\Eloquent\Collection;
 
-class FrequencyService
+class FrequencyService extends BaseService
 {
     protected $repository;
+
+    protected $rules = [
+        'event_id' => 'required|numeric',
+        'lesson_id' => 'required|numeric',
+        'user_id' => 'required|numeric',
+        'inscription_id' => 'required|numeric'
+    ];
 
     public function __construct()
     {
@@ -25,13 +32,15 @@ class FrequencyService
 
     public function create(array $data): bool
     {
-        return $this->repository->insert($data);
+        $dataValidate = $this->validateForm($data);
+        return $this->repository->insert($dataValidate);
     }
 
     public function update(array $data, int $id): bool
     {
         $repo = $this->find($id);
-        return $repo->update($data);
+        $dataValidate = $this->validateForm($data);
+        return $repo->update($dataValidate);
     }
 
     public function delete(string $id): void

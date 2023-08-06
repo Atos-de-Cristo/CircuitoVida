@@ -12,7 +12,8 @@ class QuestionService extends BaseService
     protected $rules = [
         'activity_id' => 'required|numeric',
         'type' => 'required',
-        'title' => 'required|max:191'
+        'title' => 'required|max:191',
+        'options' => 'array'
     ];
 
     public function __construct()
@@ -93,12 +94,12 @@ class QuestionService extends BaseService
 
     public function store(array $data): Question | bool
     {
-        $this->validateForm($data);
+        $dataValidate = $this->validateForm($data);
 
         if (isset($data['id'])) {
-            return $this->update($data, $data['id']);
+            return $this->update($dataValidate, $data['id']);
         }
-        return $this->create($data);
+        return $this->create($dataValidate);
     }
 
     private function create(array $data): Question

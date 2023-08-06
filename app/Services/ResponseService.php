@@ -4,9 +4,16 @@ namespace App\Services;
 use App\Models\Response;
 use Illuminate\Database\Eloquent\Collection;
 
-class ResponseService
+class ResponseService extends BaseService
 {
     protected $repository;
+
+    protected $rules = [
+        'user_id' => 'required|numeric',
+        'question_id' => 'required|numeric',
+        'response' => 'required|min:1',
+        'status' => 'required'
+    ];
 
     public function __construct()
     {
@@ -28,10 +35,13 @@ class ResponseService
 
     public function store(array $data): Response | bool
     {
-        if (isset($data['id']) && !empty($data['id'])) {
-            return $this->update($data, $data['id']);
+        $id = $data['id'];
+        $dataValidate = $this->validateForm($data);
+
+        if (isset($id) && !empty($id)) {
+            return $this->update($dataValidate, $id);
         }
-        return $this->create($data);
+        return $this->create($dataValidate);
     }
 
     private function create(array $data): Response

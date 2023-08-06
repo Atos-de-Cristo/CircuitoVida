@@ -11,7 +11,11 @@ class LessonService extends BaseService
     protected $rules = [
         'event_id' => 'required|numeric',
         'module_id' => 'required|numeric',
-        'title' => 'required|max:191'
+        'title' => 'required|max:191',
+        'description' => 'min:3',
+        'video' => 'max:191',
+        'start_date' => 'required|date',
+        'end_date' => 'required|date',
     ];
 
     public function __construct()
@@ -31,12 +35,13 @@ class LessonService extends BaseService
 
     public function store(array $data): Lesson | bool
     {
-        $this->validateForm($data);
+        $id = $data['id'] ?? null;
+        $dataValidate = $this->validateForm($data);
 
-        if (isset($data['id']) && !empty($data['id'])) {
-            return $this->update($data, $data['id']);
+        if (isset($id) && !empty($id)) {
+            return $this->update($dataValidate, $id);
         }
-        return $this->create($data);
+        return $this->create($dataValidate);
     }
 
     private function create(array $data): Lesson
