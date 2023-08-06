@@ -14,7 +14,7 @@
     @endif
 
     @if ($isOpen)
-        <x-dialog-modal id="myModal" maxWidth="lg" closeModal="$set('isOpen', false)">
+        <x-dialog-modal id="isOpen" wire:model="isOpen" maxWidth="lg" closeModal="$set('isOpen', false)">
             <x-slot name="title">
                 @if (!empty($categoryId))
                     Atualizar Categoria
