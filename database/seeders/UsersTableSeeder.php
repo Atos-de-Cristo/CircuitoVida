@@ -34,11 +34,12 @@ class UsersTableSeeder extends Seeder
             'updated_at' => now()
         ]);
 
-        User::factory()->count(55)->hasAttached(Permission::find(3))->create();
         User::find(1)->givePermissionTo('admin');
         User::find(2)->givePermissionTo('admin');
-        User::find(3)->givePermissionTo('monitor');
-        User::find(4)->givePermissionTo('monitor');
-        User::find(5)->givePermissionTo('monitor');
+
+        // User::factory()->count(55)->hasAttached(Permission::find(3))->create();
+        // User::find(3)->givePermissionTo('monitor');
+        // User::find(4)->givePermissionTo('monitor');
+        // User::find(5)->givePermissionTo('monitor');
     }
 }

@@ -20,16 +20,16 @@ class DatabaseSeeder extends Seeder
         $this->call([
             PermissionSeeder::class,
             UsersTableSeeder::class,
-            CategorySeeder::class,
-            EventSeeder::class,
-            ModuleSeeder::class,
-            LessonSeeder::class,
-            ActivitySeeder::class,
-            QuestionSeeder::class,
-            MonitorSeeder::class,
-            InscriptionSeeder::class,
-            FrequencySeeder::class,
-            ResponseSeeder::class,
+            // CategorySeeder::class,
+            // EventSeeder::class,
+            // ModuleSeeder::class,
+            // LessonSeeder::class,
+            // ActivitySeeder::class,
+            // QuestionSeeder::class,
+            // MonitorSeeder::class,
+            // InscriptionSeeder::class,
+            // FrequencySeeder::class,
+            // ResponseSeeder::class,
         ]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
