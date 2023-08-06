@@ -36,7 +36,7 @@ class ResponseService extends BaseService
 
     public function store(array $data): Response | bool
     {
-        $id = $data['id'];
+        $id = $data['id'] ?? null;
 
         if (isset($id) && !empty($id)) {
             return $this->update($data, $id);
