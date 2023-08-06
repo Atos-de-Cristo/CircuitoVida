@@ -94,11 +94,12 @@ class QuestionService extends BaseService
 
     public function store(array $data): Question | bool
     {
-        $dataValidate = $this->validateForm($data);
 
         if (isset($data['id'])) {
-            return $this->update($dataValidate, $data['id']);
+            return $this->update($data, $data['id']);
         }
+
+        $dataValidate = $this->validateForm($data);
         return $this->create($dataValidate);
     }
 

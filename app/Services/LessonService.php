@@ -36,11 +36,12 @@ class LessonService extends BaseService
     public function store(array $data): Lesson | bool
     {
         $id = $data['id'] ?? null;
-        $dataValidate = $this->validateForm($data);
 
         if (isset($id) && !empty($id)) {
-            return $this->update($dataValidate, $id);
+            return $this->update($data, $id);
         }
+
+        $dataValidate = $this->validateForm($data);
         return $this->create($dataValidate);
     }
 

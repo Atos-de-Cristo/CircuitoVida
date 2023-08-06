@@ -206,7 +206,7 @@ class InscriptionService extends BaseService
     public function update(array $data, int $id): bool
     {
         $repo = $this->find($id);
-        $dataValidate = $this->validateForm($data);
+        $dataValidate = $data;
         return $repo->update($dataValidate);
     }
 

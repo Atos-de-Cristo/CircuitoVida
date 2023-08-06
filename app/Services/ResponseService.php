@@ -36,11 +36,12 @@ class ResponseService extends BaseService
     public function store(array $data): Response | bool
     {
         $id = $data['id'];
-        $dataValidate = $this->validateForm($data);
 
         if (isset($id) && !empty($id)) {
-            return $this->update($dataValidate, $id);
+            return $this->update($data, $id);
         }
+
+        $dataValidate = $this->validateForm($data);
         return $this->create($dataValidate);
     }
 
