@@ -9,10 +9,11 @@ class ResponseService extends BaseService
     protected $repository;
 
     protected $rules = [
+        'id' => 'required',
         'user_id' => 'required|numeric',
         'question_id' => 'required|numeric',
         'response' => 'required|min:1',
-        'status' => 'required'
+        'status' => 'required',
     ];
 
     public function __construct()
