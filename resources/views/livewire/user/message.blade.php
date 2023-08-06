@@ -95,7 +95,7 @@
                     </div>
                     <div class="sm:ml-4">
                         <small class="sm:block italic">Publicado
-                            <span>{{\Carbon\Carbon::parse($message->created_at)->format('d/m/Y H:m:s')}}</span>
+                            <span>{{\Carbon\Carbon::parse($message->created_at)->format('d/m/Y H:i:s')}}</span>
                         </small>
                     </div>
                 </div>

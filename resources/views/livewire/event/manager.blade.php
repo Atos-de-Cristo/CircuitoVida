@@ -109,14 +109,14 @@
                                                 class="font-bold text-md text-blue-500 hover:underline ml-2"
                                                 x-data="{ open: null }">
                                                 {{ $lesson->title }} <span class="italic text-sm text-blue-400">liberada {{
-                                                    \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:m:s')}} à {{
-                                                    \Carbon\Carbon::parse($lesson->end_date)->format('d/m/Y H:m:s')}}</span>
+                                                    \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:i:s')}} à {{
+                                                    \Carbon\Carbon::parse($lesson->end_date)->format('d/m/Y H:i:s')}}</span>
                                             </a>
                                             @else
                                             <p class="ml-2">{{ $lesson->title }} <span
                                                     class="italic text-sm text-blue-400">{{
-                                                    \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:m:s')}} à {{
-                                                    \Carbon\Carbon::parse($lesson->end_date)->format('d/m/Y H:m:s')}}</span>
+                                                    \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:i:s')}} à {{
+                                                    \Carbon\Carbon::parse($lesson->end_date)->format('d/m/Y H:i:s')}}</span>
                                             </p>
                                             @endcan
                                             @endif

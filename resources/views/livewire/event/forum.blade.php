@@ -54,8 +54,8 @@
           </button>
         </div>
     </form>
-   
- 
+
+
 </div>
 <ul class="py-6">
   @forelse ($this->listForum as $item)
@@ -71,11 +71,11 @@
               <small class="font-sans">{{$item->userSend->name}}</small>
             </div>
             <div class="sm:ml-4">
-              <small class="sm:block italic">Publicado <span>{{\Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:m:s')}}</span></small>            
+              <small class="sm:block italic">Publicado <span>{{\Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i:s')}}</span></small>
             </div>
           </div>
         </div>
-        
+
       </div>
       <div>
         <img class="w-12 h-12 bg-black rounded-full ml-2" src="{{ asset($item->userSend->profile_photo_url) }}"
@@ -96,10 +96,10 @@
               <small class="font-sans">{{$item->userSend->name}}</small>
             </div>
             <div class="sm:ml-4">
-              <small class="sm:block italic">Publicado <span>{{\Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:m:s')}}</span></small> 
+              <small class="sm:block italic">Publicado <span>{{\Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i:s')}}</span></small>
           </div>
         </div>
-        
+
       </div>
     @endif
   </li>

@@ -7,7 +7,7 @@
         <x-search-form placeholder="Buscar usuário..."/>
     </x-slot>
     <x-slot name="contentCard">
-       
+
             @forelse ($this->listMessage as $message)
             <div class="flex w-full flex-row items-start mb-2">
                 <div>
@@ -36,9 +36,9 @@
                             </button>
                             @else
                             <button wire:click.prevent="sendMessage({{$message->user_send}})" class="flex justify-center mt-2 sm:mt-0 items-center space-x-1">
-                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" 
+                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none"
                                     transform="rotate(270)">
-                                    
+
                                         <path fill="currentColor"
                                             d="M12 4.5L17 9.5M12 4.5L7 9.5M12 4.5L12 11M12 14.5C12 16.1667 11 19.5 7 19.5"
                                             stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
@@ -59,7 +59,7 @@
                             </div>
                             <div class="sm:ml-4">
                                 <small class="sm:block italic">Publicado
-                                    <span>{{\Carbon\Carbon::parse($message->created_at)->format('d/m/Y H:m:s')}}</span>
+                                    <span>{{\Carbon\Carbon::parse($message->created_at)->format('d/m/Y H:i:s')}}</span>
                                 </small>
                             </div>
                         </div>
@@ -71,13 +71,13 @@
                 <p>Nenhuma mensagem encontrada</p>
             </div>
             @endforelse
-      
+
     </x-slot>
     <x-slot name="footerCard">
         {{ $this->listMessage->links() }}
     </x-slot>
 </x-card>
 
-    
-  
+
+
 </div>
