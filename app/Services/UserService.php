@@ -29,6 +29,14 @@ class UserService
         })->get();
     }
 
+    public function getStudents( ): Collection
+    {
+        return $this->repository->whereHas('permissions', function (Builder $query) {
+            $query->where('permission', 'aluno');
+        })->get();
+    }
+
+
     public function getMonitorsFiltered($search): Collection
     {
         return $this->repository->whereHas('permissions', function (Builder $query) use ($search) {

@@ -3,6 +3,8 @@
 namespace App\Http\Livewire;
 
 use App\Services\EventService;
+use App\Services\LessonService;
+use App\Services\UserService;
 use Livewire\Component;
 
 class DashboardAdmin extends Component
@@ -11,10 +13,18 @@ class DashboardAdmin extends Component
     {
         return new EventService;
     }
-
+    public function getUserServiceProperty()
+    {
+        return new UserService;
+    }
+    public function getLessonServiceProperty()
+    {
+        return new LessonService;
+    }
     public array $labels =[];
     public array $data =[];
     public array $lessons =[];
+   
     public function mount()
     {
         $events = $this->eventService->getLessonsWithCounts();
@@ -33,6 +43,32 @@ class DashboardAdmin extends Component
         
     }
     
+
+    public function getMonitoresProperty()
+    {
+        $monitores = $this->userService->getMonitors();
+        return $monitores->count();
+    }
+
+    public function getLessonsProperty()
+    {
+        $lessons = $this->lessonService->getAll();
+
+        return $lessons->count();
+    }
+
+    public function getStudentsProperty()
+    {
+        $students = $this->userService->getStudents();
+        return $students->count();
+    }
+    public function getEventsProperty()
+    {
+        $events = $this->eventService->getAll();
+        return $events->count();
+    }
+
+
 
     
 
