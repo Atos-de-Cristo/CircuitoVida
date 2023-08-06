@@ -42,8 +42,8 @@ class ResponseService extends BaseService
             return $this->update($data, $id);
         }
 
-        $dataValidate = $this->validateForm($data);
-        return $this->create($dataValidate);
+        // $dataValidate = $this->validateForm($data);
+        return $this->create($data);
     }
 
     private function create(array $data): Response
