@@ -6,8 +6,10 @@
     x-transition:enter-start="opacity-0 transform -translate-y-4"
     x-transition:enter-end="opacity-100 transform translate-y-0"
     x-transition:leave="transform-gpu ease-in duration-100"
-    class="flex absolute w-3/4  z-50 rounded-lg items-center p-4 mb-4
-    {{ $messageType === 'success' ? 'text-green-800 dark:bg-green-700 bg-green-50 dark:text-green-50' : 'text-red-800 dark:bg-red-700 bg-red-50 dark:text-red-50' }}"
+    class="
+        flex w-auto absolute z-50 rounded-lg items-center p-4 mb-4
+        {{ $messageType === 'success' ? 'text-green-800 dark:bg-green-700 bg-green-50 dark:text-green-50' : 'text-red-800 dark:bg-red-700 bg-red-50 dark:text-red-50' }}
+    "
     role="alert"
 >
     <div class="flex items-center w-full">

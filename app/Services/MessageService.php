@@ -13,7 +13,7 @@ class MessageService extends BaseService
     protected $rules = [
         'user_send' => 'required|numeric',
         'user_for' => 'required|numeric',
-        'message' => 'required|max:191',
+        'message' => 'required|max:191|min:2',
         'date_send' => 'required|date',
         'date_read' => 'date',
         'read' => 'boolean'

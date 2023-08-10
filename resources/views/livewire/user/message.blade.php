@@ -39,16 +39,18 @@
       >
         <textarea
           id="messageTextarea"
-          wire:model="message"
+          wire:model="form.message"
           rows="2"
           placeholder="Enviar uma mensagem"
           class="m-0 w-full resize-none border-0 bg-transparent p-0 pr-10 focus:ring-0 focus-visible:ring-0 dark:bg-transparent md:pr-12 pl-3 md:pl-0"
           x-bind:style="{ height: textareaHeight }"
           style="overflow-y: auto; scrollbar-width: thin; scrollbar-color: transparent transparent; resize: vertical;"
         ></textarea>
+        @error('form.message')
+            <span class="text-red-500">{{ $message }}</span>
+        @enderror
         <button
           wire:click.prevent="send()"
-          {{$message == null||$message == '' ? 'disabled' : ''}}
           class="absolute p-1 rounded-md md:bottom-3 md:p-2 md:right-3 enabled:bg-green-600 dark:disabled:hover:bg-transparent right-2 disabled:text-gray-400  enabled:bg-green-purple text-white bottom-1.5 transition-colors disabled:opacity-10"
         >
           <span class="" data-state="closed">
