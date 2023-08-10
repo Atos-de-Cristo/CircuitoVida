@@ -1,4 +1,9 @@
 <div>
+    @if (session()->has('message'))
+        @foreach (session()->get('message') as $error)
+            <x-alert-message :message="$error" :messageType="$error" />
+        @endforeach
+    @endif
     @can('admin')
     <form>
       <div

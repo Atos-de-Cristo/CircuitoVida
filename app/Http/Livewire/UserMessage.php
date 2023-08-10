@@ -3,6 +3,8 @@
 namespace App\Http\Livewire;
 
 use App\Services\MessageService;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 class UserMessage extends Component
@@ -31,11 +33,24 @@ class UserMessage extends Component
 
     public function send()
     {
-        $this->messageService->send([
-            'message' => $this->message,
-            'user_for' => $this->userId
-        ]);
-        $this->message = '';
+        try {
+            $this->messageService->send([
+                'message' => $this->message,
+                'user_for' => $this->userId
+            ]);
+            $this->message = '';
+        } catch (ValidationException $e) {
+            $errors = $e->validator->errors();
+            $this->resetErrorBag();
+            foreach ($errors->messages() as $field => $fieldErrors) {
+                if ($field != 'message') {
+                    Session::flash('message', $fieldErrors);
+                }
+                foreach ($fieldErrors as $error) {
+                    $this->addError($field, $error);
+                }
+            }
+        }
     }
 
     public function read(int $id)

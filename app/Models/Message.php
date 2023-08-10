@@ -17,8 +17,8 @@ class Message extends Model
         'lesson_id',
         'message',
         'read',
-        'data_send',
-        'data_read'
+        'date_send',
+        'date_read'
     ];
 
     public function userSend(): BelongsTo

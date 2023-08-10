@@ -16,7 +16,7 @@ class MessageService extends BaseService
         'message' => 'required|max:191',
         'date_send' => 'required|date',
         'date_read' => 'date',
-        'read' => 'numeric'
+        'read' => 'boolean'
     ];
 
     public function __construct()
@@ -63,6 +63,7 @@ class MessageService extends BaseService
         $data['read'] = false;
 
         $dataValid = $this->validateForm($data);
+
         return $this->repository->create($dataValid);
     }
 
