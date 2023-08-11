@@ -23,7 +23,7 @@
         <x-slot name="headerCard">
             <x-search-form placeholder="Buscar usuário..."/>
             <div class="mt-2 sm:mt-0 flex space-x-2">
-                
+
                 @can('admin')
                 @include('livewire.user.create')
                 @endcan
@@ -55,7 +55,7 @@
                         </div>
                         <div>
 
-                            <div class="dark:bg-slate-900 bg-slate-200 rounded-md py-3">                                
+                            <div class="dark:bg-slate-900 bg-slate-200 rounded-md py-3">
                                 <div class="flex justify-between px-5 ">
                                     <button wire:click.prevent="manager({{ $data->id }})" class="hover:scale-125">
                                         <x-icon-eye class="w-6 h-6" />

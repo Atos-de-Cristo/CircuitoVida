@@ -88,9 +88,9 @@ class UserService
             $activityCount = 0;
             $responseCount = 0;
             foreach ($lessons as $lesson) {
-                $activityCount += $lesson->activities->count();
+                $activityCount += $lesson->activities->where('type', 'G')->count();
 
-                $activities = $lesson->activities;
+                $activities = $lesson->activities->where('type', 'G');
                 foreach ($activities as $activity) {
                     $questionData = $questionService->getAll($activity->id, $user->id);
                     if (isset($questionData[0]['response'])) {
