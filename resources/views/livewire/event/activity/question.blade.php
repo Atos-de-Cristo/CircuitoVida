@@ -133,55 +133,63 @@
                                 @endcan
                             </div>
                             @if ($question->type === 'aberta')
-                            @if ($question->response)
-                            {{ $question->response }}
-                            @else
-                            <textarea {{ auth()->check() && auth()->user()->hasPermissionTo('admin') ? 'disabled' : '' }} type="text" wire:model.lazy="answers.{{ $question->id }}" class="input-form"
-                                                placeholder="Sua resposta"> </textarea>
-                            @endif
-                            @error("answers.{$question->id}")
-                            <span class="text-red-500">{{ $message }}</span>
-                            @enderror
+                                @if ($question->response)
+                                    {{ $question->response }}
+                                @else
+                                    <textarea
+                                        {{ auth()->check() && auth()->user()->hasPermissionTo('admin') ? 'disabled' : '' }}
+                                        type="text"
+                                        wire:model.lazy="answers.{{ $question->id }}"
+                                        class="input-form"
+                                        placeholder="Sua resposta"
+                                    ></textarea>
+                                @endif
+                                @error("answers.{$question->id}")
+                                    <span class="text-red-500">{{ $message }}</span>
+                                @enderror
                             @elseif ($question->type === 'multi')
-                            @if ($question->response)
-                            {{ $question->response }}
-                            @else
-                            @forelse (json_decode($question->options) as $index => $option)
-                            <label class="flex items-center">
-                                <input {{ auth()->check() && auth()->user()->hasPermissionTo('admin') ? 'disabled' : ''
-                                }}
-                                type="radio"
-                                name="question_{{ $question->id }}"
-                                wire:model="answers.{{ $question->id }}"
-                                value="{{ $option->text }}"
-                                class="mr-2" {{ $question->response == $option->text ? 'checked' : '' }}
-                                >
-                                <span class="text-sm">{{ $option->text }}</span>
-                            </label>
-                            @empty
-                            <span class="text-red-500">Nenhuma opção cadastrada</span>
-                            @endforelse
-                            @endif
-                            @error("answers.{$question->id}")
-                            <span class="text-red-500">{{ $message }}</span>
-                            @enderror
+                                @if ($question->response)
+                                    <p>Resposta: {{ $question->response }}</p>
+                                    @if ($question->response_status == 'errado')
+                                        <small>Correta: {{ $this->getCorrectOption($question->options) }}</small>
+                                    @endif
+                                @else
+                                    @forelse (json_decode($question->options) as $index => $option)
+                                        <label class="flex items-center">
+                                            <input
+                                                {{ auth()->check() && auth()->user()->hasPermissionTo('admin') ? 'disabled' : '' }}
+                                                type="radio"
+                                                name="question_{{ $question->id }}"
+                                                wire:model="answers.{{ $question->id }}"
+                                                value="{{ $option->text }}"
+                                                class="mr-2" {{ $question->response == $option->text ? 'checked' : '' }}
+                                            >
+                                            <span class="text-sm">{{ $option->text }}</span>
+                                        </label>
+                                    @empty
+                                        <span class="text-red-500">Nenhuma opção cadastrada</span>
+                                    @endforelse
+                                @endif
+                                @error("answers.{$question->id}")
+                                    <span class="text-red-500">{{ $message }}</span>
+                                @enderror
                             @endif
                         </div>
                         @empty
-                        <span class="text-red-500">Nenhuma questão cadastrada</span>
+                            <span class="text-red-500">Nenhuma questão cadastrada</span>
                         @endforelse
                     </div>
                     @can('aluno')
-                    <div class="bg-gray-50 dark:bg-gray-700 px-4 rounded py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                        <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                            <button type="button" wire:click.prevent="storeQuestion()" {{
-                                $this->questions['checkResponse']==true
-                                ? 'disabled' : '' }} class="btn-submit {{ $this->questions['checkResponse']==true ?
-                                'opacity-50' : '' }}" >
-                                Salvar
-                            </button>
-                        </span>
-                    </div>
+                        <div class="bg-gray-50 dark:bg-gray-700 px-4 rounded py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                            <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
+                                <button type="button" wire:click.prevent="storeQuestion()" {{
+                                    $this->questions['checkResponse']==true
+                                    ? 'disabled' : '' }} class="btn-submit {{ $this->questions['checkResponse']==true ?
+                                    'opacity-50' : '' }}" >
+                                    Salvar
+                                </button>
+                            </span>
+                        </div>
                     @endcan
                 </div>
             </form>

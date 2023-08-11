@@ -179,4 +179,11 @@ class EventActivityQuestion extends Component
     {
         $this->service->delete($id);
     }
+
+    public function getCorrectOption($options)
+    {
+        $data = json_decode($options);
+        $correctOption = collect($data)->firstWhere('correct', true);
+        return $correctOption ? $correctOption->text : '';
+    }
 }
