@@ -47,7 +47,7 @@
                 <div class="flex justify-center flex-wrap gap-2">
                     <livewire:event-module :eventId='$eventId' :key="rand()"/>
                     <livewire:event-monitors :eventId='$eventId' :key="rand()">
-                    <button wire:click.prevent="sendRoom" class="btn-primary sm:px-2">
+                    <button wire:click="$emit('openSendMessageRoom', {{$eventId}})" class="btn-primary sm:px-2">
                         <x-icon-bell class="w-4 h-4" />
                         <span class="ml-2">Notificação</span>
                     </button>
@@ -70,7 +70,7 @@
                             </span>
                             <div class="flex items-center space-x-2">
                                 @can('admin')
-                                    <livewire:event-module :eventId='$eventId' :moduleId='$module->id' :key="rand()"/>
+                                    <livewire:event-module :eventId='$eventId' :moduleId='$module->id' :key='$module->id'/>
                                 @endcan
                                 <div class="border-r border-gray-400 h-4"></div>
                                 <x-icon-angle-down x-show="!open" class="w-6 h-6" />
@@ -152,7 +152,6 @@
         <div class="sm:col-span-2 md:col-span-1">
             <div class="text-xl font-bold mb-4 flex items-center justify-between">
                 <div class="flex">
-
                     <x-icon-graduation-cap class="w-8 h-8" />
                     <span class="ml-2">ALUNOS</span>
                 </div>
