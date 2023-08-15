@@ -23,7 +23,7 @@
     <div class="card-white px-4 py-2">
         <div class="flex flex-col sm:flex-row justify-between items-center">
             <div>
-                <div class="font-bold px-4 mb-2 flex items-center">
+                <div class="font-bold px-2 mb-2 flex items-center">
                     <x-icon-person-chalkboard class="w-6 h-6" />
                     <span class="ml-2 font-bold">Monitores</span>
                 </div>
