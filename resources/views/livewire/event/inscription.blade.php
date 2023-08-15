@@ -20,7 +20,7 @@
     </div>
     <x-card>
         <x-slot name="headerCard">
-            <x-search-form placeholder="Buscar eventos..."/>            
+            <x-search-form placeholder="Buscar eventos..."/>
         </x-slot>
 
         <x-slot name="contentCard">
@@ -29,11 +29,11 @@
                 <div
                     class="bg-gray-100  max-w-sm  dark:bg-slate-800  overflow-hidden shadow rounded-lg flex flex-col h-full">
                     <div class="flex-shrink-0">
-                        <img src="{{ asset(!empty($data->image) ? $data->image : 'images/curso.png') }}"
+                        <img
+                            src="{{ asset(!empty($data->image) ? $data->image : 'images/curso.png') }}"
                             alt="Logo Evento {{ $data->name }}"
-                            class="hover:scale-110 h-52 w-full object-cover rounded-t-lg cursor-pointer"
-                            wire:click="manager({{ $data->id }})">
-
+                            class="hover:scale-110 h-52 w-full object-cover rounded-t-lg"
+                        />
                     </div>
                     <div class="flex-grow p-4 flex flex-col justify-between">
                         <div class="mb-4">
