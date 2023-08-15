@@ -70,7 +70,7 @@
                             </span>
                             <div class="flex items-center space-x-2">
                                 @can('admin')
-                                    <livewire:event-module :eventId='$eventId' :moduleId='$module->id' :key="rand()"/>
+                                    <livewire:event-module :eventId='$eventId' :moduleId='$module->id' :key='$module->id'/>
                                 @endcan
                                 <div class="border-r border-gray-400 h-4"></div>
                                 <x-icon-angle-down x-show="!open" class="w-6 h-6" />
