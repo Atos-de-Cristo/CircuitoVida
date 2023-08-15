@@ -60,9 +60,9 @@
                 <x-input-error for="form.date_baptism" class="mt-2" />
             </div>
             <div class="col-span-6 sm:col-span-3">
-                <x-label for="igreja" value="{{ __('Qual igreja você foi batizado?') }}" />
-                <x-input id="igreja" type="text" class="mt-1 block w-full" wire:model.defer="form.igreja" />
-                <x-input-error for="form.igreja" class="mt-2" />
+                <x-label for="church" value="{{ __('Qual igreja você foi batizado?') }}" />
+                <x-input id="church" type="text" class="mt-1 block w-full" wire:model.defer="form.church" />
+                <x-input-error for="form.church" class="mt-2" />
             </div>
             <div class="col-span-6 sm:col-span-3">
                 <x-label for="deficiency" value="{{ __('Possui alguma deficiência qual?') }}" />

@@ -10,29 +10,12 @@ class ProfileService extends BaseService
 
     protected $rules = [
         'cpf'=> 'required',
-        'rg'=> 'required',
         'sex'=> 'required',
         'birth'=> 'required',
         'marital_status'=> 'required',
         'date_wedding'=> 'required',
         'marital_status'=> 'required',
-        'zip_code'=> 'required',
-        'address'=> 'required',
-        'number'=> 'required',
-        'complement'=> 'required',
-        'district'=> 'required',
-        'city'=> 'required',
-        'uf'=> 'required',
-        'cell_phone'=> 'required',
-        'church_relationship'=> 'required',
-        'entry_date'=> 'required',
-        'hou_meet'=> 'required',
-        'baptized'=> 'required',
-        'accepted_jesus'=> 'required',
-        'leader'=> 'required',
-        'pastor'=> 'required',
-        'Schooling'=> 'required',
-        'profession'=> 'required',
+        'phone'=> 'required',
     ];
 
     public function __construct()
