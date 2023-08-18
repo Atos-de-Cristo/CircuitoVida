@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Enums\InscriptionStatus;
 use App\Models\Attachment;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -28,6 +29,23 @@ class AttachmentService extends BaseService
     public function getAll(array $filter = []): Collection
     {
         return $this->repository->with('lesson')->where($filter)->get();
+    }
+
+    public function getAllCourseActive(int $userId): Collection
+    {
+        return $this->repository
+            ->whereHas('lesson', function($query) use ($userId) {
+                $query->whereHas('event', function ($query) use ($userId) {
+                    $query->whereHas('inscriptions', function ($query) use ($userId) {
+                        $query
+                            ->where('status', InscriptionStatus::L->name)
+                            ->where('user_id', $userId);
+                    });
+                });
+            })
+            ->where('after_class', 1)
+            ->with('lesson:id,title')
+            ->get();
     }
 
     public function find(string $id): Attachment

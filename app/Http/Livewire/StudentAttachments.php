@@ -18,8 +18,14 @@ class StudentAttachments extends Component
         return $this->attachmentService->getAll(['user_id' => Auth::user()->id]);
     }
 
+    public function getListLessonProperty()
+    {
+        return $this->attachmentService->getAllCourseActive(Auth::user()->id);
+    }
+
     public function render()
     {
+        $this->listLesson;
         return view('livewire.student.attachments');
     }
 }
