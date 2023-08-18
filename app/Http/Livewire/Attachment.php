@@ -3,17 +3,17 @@
 namespace App\Http\Livewire;
 
 use App\Services\AttachmentService;
+use Exception;
 use Illuminate\Support\Facades\Storage;
-use Livewire\Component;
+use Illuminate\Validation\ValidationException;
 use Livewire\WithFileUploads;
 
-class Attachment extends Component
+class Attachment extends Base
 {
     use WithFileUploads;
 
     public string | null $attachmentId;
-
-    public $attachment, $name, $lessonId;
+    public $attachment, $lessonId;
     public $isOpenAttachment = false;
 
     protected $listeners = [
@@ -27,7 +27,8 @@ class Attachment extends Component
 
         if ($attachmentId) {
             $data = $service->find($attachmentId);
-            $this->name = $data->name;
+            $this->form['name'] = $data->name;
+            $this->form['after_class'] = $data->after_class;
         }
     }
 
@@ -38,40 +39,31 @@ class Attachment extends Component
 
     public function store(AttachmentService $service)
     {
-        $this->validate([
-            'name' => 'required',
-            'attachment'=> 'required',
-        ]);
+        try {
+            if ($this->lessonId) {
+                $this->form['lesson_id'] = $this->lessonId;
+            }
 
-        $request = [
-            'name' => $this->name
-        ];
+            if (isset($this->attachmentId)) {
+                $this->form['id'] = $this->attachmentId;
+            }
 
-        if ($this->lessonId) {
-            $request['lesson_id'] = $this->lessonId;
+            if ($this->attachment) {
+                $attachment = $this->attachment->store('attachment', 'public');
+                $this->form['type'] = $this->attachment->extension();
+                $this->form['path'] = Storage::url($attachment);
+            }
+
+            $service->store($this->form);
+
+            $this->emit('refreshClassroom');
+            $this->emit('refreshAttachment');
+            $this->isOpenAttachment = false;
+        } catch (ValidationException $e) {
+            $this->setErrorMessages($e->validator->errors());
+        } catch (Exception $e) {
+            dd('Exception', $e);
         }
-
-        if (isset($this->attachmentId)) {
-            $request['id'] = $this->attachmentId;
-        }
-
-        if ($this->attachment) {
-            $request['type'] = $this->attachment->extension();
-            $attachment = $this->attachment->store('attachment', 'public');
-            $request['path'] = Storage::url($attachment);
-        }
-
-        $service->store($request);
-
-        $this->emit('refreshClassroom');
-        $this->emit('refreshAttachment');
-        $this->isOpenAttachment = false;
-    }
-
-    private function resetInput()
-    {
-        $this->attachment = '';
-        $this->name = '';
     }
 
     public function dellAttachment(AttachmentService $service)

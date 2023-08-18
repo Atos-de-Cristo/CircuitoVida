@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('name');
             $table->string('path');
+            $table->boolean('after_class')->default(false);
             $table->timestamps();
         });
     }

@@ -10,7 +10,7 @@ class Attachment extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 'lesson_id', 'event_id', 'user_id', 'type', 'name', 'path' ];
+    protected $guarded = ['id'];
 
     public function lesson(): BelongsTo
     {

@@ -4,10 +4,20 @@ namespace App\Services;
 use App\Models\Attachment;
 use Illuminate\Database\Eloquent\Collection;
 
-class AttachmentService
+class AttachmentService extends BaseService
 {
     protected $repository;
     protected $messageService;
+
+    protected $rules = [
+        'lesson_id' => 'numeric',
+        'event_id' => 'numeric',
+        'user_id' => 'numeric',
+        'type' => 'required|string',
+        'name' => 'required|string',
+        'path' => 'required|string',
+        'after_class' => 'boolean',
+    ];
 
     public function __construct()
     {
@@ -35,10 +45,12 @@ class AttachmentService
 
     private function create(array $data): Attachment
     {
-        $data = $this->repository->create($data);
-        $this->messageService->send([
-            'message' => 'Novo anexo adicionado ao seu perfil.',
-            'user_for' => $data['user_id']
+        $dataValidate = $this->validateForm($data);
+        $data = $this->repository->create($dataValidate);
+
+        $this->messageService->sendGroup([
+            'message' => 'Novo anexo cadastrado em '.$data->lesson->title,
+            'list_for' => $data->lesson->event->inscriptions->pluck('user_id')
         ]);
 
         return $data;
@@ -48,9 +60,10 @@ class AttachmentService
     {
         $repo = $this->find($id);
         $data = $repo->update($data);
-        $this->messageService->send([
-            'message' => 'Novo anexo editado no seu perfil.',
-            'user_for' => $data['user_id']
+
+        $this->messageService->sendGroup([
+            'message' => 'Anexo modificado em '.$repo->lesson->title,
+            'list_for' => $repo->lesson->event->inscriptions->pluck('user_id')
         ]);
 
         return $data;

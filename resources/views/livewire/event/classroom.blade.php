@@ -3,7 +3,7 @@
         <div class="flex items-center mb-2 md:mb-0">
             <x-icon-cubes class="w-8 h-8" />
             <div class="ml-2 text-xl font-bold">
-               <strong>{{ $lessonData->module->name }}</strong> 
+               <strong>{{ $lessonData->module->name }}</strong>
             </div>
         </div>
         <div class=" hidden md:inline">
@@ -20,7 +20,7 @@
         <div class="flex flex-col sm:flex-row justify-between items-center">
             <div class="font-bold  flex items-center">
                 <x-icon-circle-play class="w-5 h-5" />
-               <strong class="ml-2">{{ $lessonData->title }}</strong> 
+               <strong class="ml-2">{{ $lessonData->title }}</strong>
             </div>
             @can('admin')
             @livewire('event-frequency', [$eventId, $lessonId])
@@ -100,7 +100,7 @@
                     <svg class="w-6 h-6 text-slate-600 dark:text-slate-200 mr-2" viewBox="0 0 16 16" version="1.1">
                         <path fill="currentColor" d="M8 0c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zM8.9 13h-2v-2h2v2zM11 8.1c-0.4 0.4-0.8 0.6-1.2 0.7-0.6 0.4-0.8 0.2-0.8 1.2h-2c0-2 1.2-2.6 2-3 0.3-0.1 0.5-0.2 0.7-0.4 0.1-0.1 0.3-0.3 0.1-0.7-0.2-0.5-0.8-1-1.7-1-1.4 0-1.6 1.2-1.7 1.5l-2-0.3c0.1-1.1 1-3.2 3.6-3.2 1.6 0 3 0.9 3.6 2.2 0.4 1.1 0.2 2.2-0.6 3z"></path>
                       </svg>
-                      
+
                     Dúvidas?
                     <small class="ml-2">Deixe seu comentário</small>
                 </h3>
