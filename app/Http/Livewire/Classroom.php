@@ -12,9 +12,7 @@ class Classroom extends Component
     public $isOpenFrequency = false;
 
     protected $listeners = [
-        'refreshClassroom' => '$refresh',
-        'closeModalFrequency' => 'closeModalFrequency',
-        'closeModalAttachment' => 'closeModalAttachment'
+        'refreshClassroom' => '$refresh'
     ];
 
     public function getLessonServiceProperty()
@@ -31,8 +29,6 @@ class Classroom extends Component
     public function render()
     {
         $lessonData = $this->lessonService->find($this->lessonId);
-        return view('livewire.event.classroom', compact('lessonData'));
+        return view('livewire.event.classroom.index', compact('lessonData'));
     }
-
-
 }

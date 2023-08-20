@@ -31,10 +31,7 @@
     <div class="card-white py-2 px-4">
         <div class="w-full">
             <div style="position: relative; padding-bottom: 56.25%; height: 0;">
-                <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
-                    src="https://www.youtube.com/embed/{{ $lessonData->video }}" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen></iframe>
+                <livewire:video-manager :videoId="$lessonData->video"/>
             </div>
         </div>
     </div>

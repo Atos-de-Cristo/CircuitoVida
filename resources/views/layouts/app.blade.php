@@ -25,6 +25,7 @@
                 document.querySelector('html').style.colorScheme = 'dark';
             }
         </script>
+        <script src="https://www.youtube.com/iframe_api"></script>
     </head>
     <body
         class="font-inter antialiased bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-200"
