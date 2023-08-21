@@ -22,8 +22,8 @@
                 <x-icon-circle-play class="w-5 h-5" />
                <strong class="ml-2">{{ $lessonData->title }}</strong>
             </div>
-            @can('admin')
-            @livewire('event-frequency', [$eventId, $lessonId])
+            @cannot('aluno')
+                @livewire('event-frequency', [$eventId, $lessonId])
             @endcan
         </div>
     </div>
@@ -60,7 +60,7 @@
                     <x-icon-cloud-arrow-up  />
                     <span class="ml-2">Materiais</span>
                 </div>
-                @can('admin')
+                @cannot('aluno')
                 <livewire:attachment :lessonId='$lessonId' :attachmentId='null' :key="rand()" />
                 @endCan
             </div>

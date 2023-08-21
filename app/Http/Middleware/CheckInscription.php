@@ -27,6 +27,14 @@ class CheckInscription
             return $next($request);
         }
 
+        if ($dataUser->hasPermissionTo('monitor')) {
+            if (!$dataUser->monitors->pluck('id')->contains($eventId)) {
+                throw new HttpException(Response::HTTP_FORBIDDEN);
+            }
+
+            return $next($request);
+        }
+
         $inscription = Inscription::where('event_id', $eventId)
             ->where('user_id', $userId)
             ->where('status', InscriptionStatus::L->name)

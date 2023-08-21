@@ -85,7 +85,7 @@
                 </div>
             </div>
         </div>
-        @elsecan('aluno')
+        @else
         <div class="flex items-center mt-5 mb-4">
             <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset($aluno->user->profile_photo_url) }}"
                 width="32" height="32" alt="{{ $aluno->user->name }}" />

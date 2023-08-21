@@ -53,6 +53,14 @@
                     </button>
                 </div>
             @endcan
+            @can('monitor')
+                <div class="flex justify-center flex-wrap gap-2">
+                    <button wire:click="$emit('openSendMessageRoom', {{$eventId}})" class="btn-primary sm:px-2">
+                        <x-icon-bell class="w-4 h-4" />
+                        <span class="ml-2">Notificação</span>
+                    </button>
+                </div>
+            @endcan
         </div>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -112,12 +120,22 @@
                                                     \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:i:s')}} à {{
                                                     \Carbon\Carbon::parse($lesson->end_date)->format('d/m/Y H:i:s')}}</span>
                                             </a>
-                                            @else
-                                            <p class="ml-2">{{ $lesson->title }} <span
+                                            @endcan
+                                            @can('monitor')
+                                            <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
+                                                class="font-bold text-md text-blue-500 hover:underline ml-2"
+                                                x-data="{ open: null }">
+                                                {{ $lesson->title }} <span class="italic text-sm text-blue-400">liberada {{
+                                                    \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:i:s')}} à {{
+                                                    \Carbon\Carbon::parse($lesson->end_date)->format('d/m/Y H:i:s')}}</span>
+                                            </a>
+                                            @endcan
+                                            @can('aluno')
+                                                <p class="ml-2">{{ $lesson->title }} <span
                                                     class="italic text-sm text-blue-400">{{
                                                     \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:i:s')}} à {{
                                                     \Carbon\Carbon::parse($lesson->end_date)->format('d/m/Y H:i:s')}}</span>
-                                            </p>
+                                                </p>
                                             @endcan
                                             @endif
                                             @else

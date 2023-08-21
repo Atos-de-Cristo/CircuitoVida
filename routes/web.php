@@ -26,7 +26,7 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
         Route::get('/event/{eventId}/question/{id}', EventActivityQuestion::class)->name('eventActivityQuestion');
     });
 
-    Route::middleware('can:admin,monitor')->group(function () {
+    Route::middleware('can:admin')->group(function () {
         Route::get('/event', Event::class)->name('event');
         Route::get('/event/category', EventCategory::class)->name('eventCategory');
         Route::get('/event/inscription', EventInscription::class)->name('eventInscription');
