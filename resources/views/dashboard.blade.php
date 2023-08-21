@@ -7,9 +7,13 @@
 
   <div>
     @can('aluno')
-    <livewire:dashboard-user :key="rand()" />
-    @else   
-      <livewire:dashboard-admin :key="rand()" />      
+        <livewire:dashboard-user :key="rand()" />
+    @endcan
+    @can('admin')
+        <livewire:dashboard-admin :key="rand()" />
+    @endcan
+    @can('monitor')
+        <livewire:dashboard-monitor :key="rand()" />
     @endcan
   </div>
 </x-app-layout>

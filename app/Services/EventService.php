@@ -18,6 +18,7 @@ class EventService
     {
         return $this->repository->with('inscriptions')->where($filter)->get();
     }
+
     public function getLessonsWithCounts(array $filter = []): Collection
     {
         return $this->repository
@@ -25,7 +26,6 @@ class EventService
             ->where($filter)
             ->get();
     }
-
 
     public function listActive(): Collection
     {
@@ -78,8 +78,6 @@ class EventService
         }
         return $repo->update($data);
     }
-
-
 
     public function delete(string $id): void
     {

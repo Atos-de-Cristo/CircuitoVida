@@ -88,6 +88,10 @@ class User extends Authenticatable
         return $this->hasMany(Response::class);
     }
 
+    public function monitors(): BelongsToMany {
+        return $this->belongsToMany(Event::class);
+    }
+
     public function givePermissionTo(string $permission): void {
         $p = Permission::getPermission($permission);
         $this->permissions()->attach($p);
