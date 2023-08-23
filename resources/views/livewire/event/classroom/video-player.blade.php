@@ -32,6 +32,8 @@
             }
 
             function onPlayerStateChange(event) {
+                console.info(event.target.getCurrentTime())
+                console.info(player.getCurrentTime())
                 switch (event.data) {
                     case YT.PlayerState.PLAYING:
                         window.livewire.emit('playerStateChanged', 'executando');
@@ -47,6 +49,12 @@
                         break;
                 }
             }
+
+            // window.addEventListener('beforeunload', function (event) {
+            //     // Este código será executado quando o usuário estiver prestes a sair da página
+            //     // ou mudar para outra página
+            //     console.info('FECHOU')
+            // });
         </script>
     @endpush
 </div>
