@@ -27,11 +27,7 @@ class CheckInscription
             return $next($request);
         }
 
-        if ($dataUser->hasPermissionTo('monitor')) {
-            if (!$dataUser->monitors->pluck('id')->contains($eventId)) {
-                throw new HttpException(Response::HTTP_FORBIDDEN);
-            }
-
+        if ($dataUser->hasPermissionTo('monitor') && $dataUser->monitors->pluck('id')->contains($eventId)) {
             return $next($request);
         }
 
