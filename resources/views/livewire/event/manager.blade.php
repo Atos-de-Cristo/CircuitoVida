@@ -53,7 +53,7 @@
                     </button>
                 </div>
             @endcan
-            @can('monitor')
+            @can('monitorEvent', $eventId)
                 <div class="flex justify-center flex-wrap gap-2">
                     <button wire:click="$emit('openSendMessageRoom', {{$eventId}})" class="btn-primary sm:px-2">
                         <x-icon-bell class="w-4 h-4" />
@@ -100,52 +100,57 @@
                                 <div class="flex items-center">
                                     <x-icon-circle-play class="w-5 h-5" />
                                     <div class="flex flex-col">
-                                        @if ($lesson->start_date && $lesson->end_date)
                                         @if (
-                                        Carbon\Carbon::parse($lesson->start_date) <= Carbon\Carbon::parse(date('Y-m-d
-                                            H:i:s')) && Carbon\Carbon::parse($lesson->end_date) >
-                                            Carbon\Carbon::parse(date('Y-m-d H:i:s'))
-                                            )
+                                            Carbon\Carbon::parse($lesson->start_date) <= Carbon\Carbon::parse(date('Y-m-d H:i:s'))
+                                            && Carbon\Carbon::parse($lesson->end_date) > Carbon\Carbon::parse(date('Y-m-d H:i:s'))
+                                        )
                                             <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
                                                 class="font-bold text-md text-blue-500 hover:underline ml-2"
                                                 x-data="{ open: null }">
                                                 {{ $lesson->title }}
                                             </a>
-                                            @else
+                                        @else
                                             @can('admin')
-                                            <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
-                                                class="font-bold text-md text-blue-500 hover:underline ml-2"
-                                                x-data="{ open: null }">
-                                                {{ $lesson->title }} <span class="italic text-sm text-blue-400">liberada {{
-                                                    \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:i:s')}} à {{
-                                                    \Carbon\Carbon::parse($lesson->end_date)->format('d/m/Y H:i:s')}}</span>
-                                            </a>
-                                            @endcan
-                                            @can('monitor')
-                                            <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
-                                                class="font-bold text-md text-blue-500 hover:underline ml-2"
-                                                x-data="{ open: null }">
-                                                {{ $lesson->title }} <span class="italic text-sm text-blue-400">liberada {{
-                                                    \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:i:s')}} à {{
-                                                    \Carbon\Carbon::parse($lesson->end_date)->format('d/m/Y H:i:s')}}</span>
-                                            </a>
-                                            @endcan
-                                            @can('aluno')
-                                                <p class="ml-2">{{ $lesson->title }} <span
-                                                    class="italic text-sm text-blue-400">{{
-                                                    \Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:i:s')}} à {{
-                                                    \Carbon\Carbon::parse($lesson->end_date)->format('d/m/Y H:i:s')}}</span>
-                                                </p>
-                                            @endcan
-                                            @endif
+                                                <a
+                                                    href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
+                                                    class="font-bold text-md text-blue-500 hover:underline ml-2"
+                                                    x-data="{ open: null }"
+                                                >
+                                                    {{ $lesson->title }}
+                                                    <span class="italic text-sm text-blue-400">
+                                                        liberada
+                                                        {{\Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:i:s')}}
+                                                            à
+                                                        {{\Carbon\Carbon::parse($lesson->end_date)->format('d/m/Y H:i:s')}}
+                                                    </span>
+                                                </a>
                                             @else
-                                            <a href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
-                                                class="font-bold text-md text-blue-500 hover:underline ml-2"
-                                                x-data="{ open: null }">
-                                                {{ $lesson->title }}
-                                            </a>
-                                            @endif
-
+                                                @can('monitorEvent', $eventId)
+                                                    <a
+                                                        href="{{ route('classroom', ['id' => $lesson->id, 'eventId' => $eventId]) }}"
+                                                        class="font-bold text-md text-blue-500 hover:underline ml-2"
+                                                        x-data="{ open: null }"
+                                                    >
+                                                        {{ $lesson->title }}
+                                                        <span class="italic text-sm text-blue-400">
+                                                            liberada
+                                                            {{\Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:i:s')}}
+                                                                à
+                                                            {{\Carbon\Carbon::parse($lesson->end_date)->format('d/m/Y H:i:s')}}
+                                                        </span>
+                                                    </a>
+                                                @else
+                                                    <p class="ml-2">
+                                                        {{ $lesson->title }}
+                                                        <span class="italic text-sm text-blue-400">
+                                                            {{\Carbon\Carbon::parse($lesson->start_date)->format('d/m/Y H:i:s')}}
+                                                                à
+                                                            {{\Carbon\Carbon::parse($lesson->end_date)->format('d/m/Y H:i:s')}}
+                                                        </span>
+                                                    </p>
+                                                @endcan
+                                            @endcan
+                                        @endif
                                     </div>
                                 </div>
                                 @can('admin')
