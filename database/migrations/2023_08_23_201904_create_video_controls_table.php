@@ -17,9 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Lesson::class);
-            $table->integer('time_start');
-            $table->integer('time_end');
-            $table->integer('time_assisted');
+            $table->integer('time_assisted')->default(0);
             $table->integer('time_video');
             $table->timestamps();
         });

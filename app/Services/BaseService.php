@@ -8,6 +8,7 @@ use Illuminate\Validation\ValidationException;
 class BaseService
 {
     protected $rules;
+    protected $repository;
 
     protected function validateForm(array $data): array
     {

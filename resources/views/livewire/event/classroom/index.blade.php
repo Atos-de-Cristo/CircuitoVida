@@ -30,9 +30,10 @@
     @if ($lessonData->video)
     <div class="card-white py-2 px-4">
         <div class="w-full">
-            <div style="position: relative; padding-bottom: 56.25%; height: 0;">
-                <livewire:video-manager :videoId="$lessonData->video"/>
-            </div>
+            <livewire:video-manager
+                :lesson="$lessonData"
+                :eventId="$eventId"
+            />
         </div>
     </div>
     @endif

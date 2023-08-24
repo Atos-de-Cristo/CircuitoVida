@@ -2,8 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Enums\InscriptionStatus;
-use App\Services\{EventService, InscriptionService, ModuleService};
+use App\Services\{EventService, ModuleService};
 use Livewire\Component;
 use Illuminate\Http\Request;
 use Livewire\WithFileUploads;

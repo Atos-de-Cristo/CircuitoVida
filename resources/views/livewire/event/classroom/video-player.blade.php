@@ -7,7 +7,7 @@
 
             function onYouTubeIframeAPIReady() {
                 player = new YT.Player('{{ $playerId }}', {
-                    height: '490px',
+                    height: '600px',
                     width: '100%',
                     videoId: '{{ $videoId }}',
                     events: {
@@ -32,29 +32,25 @@
             }
 
             function onPlayerStateChange(event) {
-                console.info(event.target.getCurrentTime())
-                console.info(player.getCurrentTime())
                 switch (event.data) {
                     case YT.PlayerState.PLAYING:
-                        window.livewire.emit('playerStateChanged', 'executando');
+                        window.livewire.emit('playerStateChanged', '01');
                         break;
                     case YT.PlayerState.PAUSED:
-                        window.livewire.emit('playerStateChanged', 'pausada');
+                        window.livewire.emit('playerStateChanged', '02');
                         break;
                     case YT.PlayerState.ENDED:
-                        window.livewire.emit('playerStateChanged', 'finalizada');
+                        window.livewire.emit('playerStateChanged', '03');
                         break;
                     default:
-                        window.livewire.emit('playerStateChanged', 'processando...');
+                        window.livewire.emit('playerStateChanged', '04');
                         break;
                 }
             }
 
-            // window.addEventListener('beforeunload', function (event) {
-            //     // Este código será executado quando o usuário estiver prestes a sair da página
-            //     // ou mudar para outra página
-            //     console.info('FECHOU')
-            // });
+            window.addEventListener('beforeunload', function (event) {
+                window.livewire.emit('playerStateChanged', '03');
+            });
         </script>
     @endpush
 </div>
