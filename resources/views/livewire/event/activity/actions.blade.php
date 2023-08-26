@@ -33,7 +33,6 @@
                             <span class="text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
-
                         <div class="mb-4">
                             <label for="campDescription" class="label-input-form">Descrição:</label>
                             <textarea class="input-form" id="campDescription" wire:model.prevent="description"
@@ -42,23 +41,26 @@
                             <span class="text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
-
                         <div class="mb-4">
                             <label class="relative inline-flex items-center mr-5 cursor-pointer">
                                 <input type="checkbox" class="sr-only peer" wire:model.prevent="type">
-                                <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
+                                <div class="w-11 h-6 bg-gray-200 dark:bg-gray-700 rounded-full peer peer-focus:ring-4 peer-focus:ring-violet-300 dark:peer-focus:ring-violet-800 dark:bg-gray-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-violet-600"></div>
                                 <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
-                                    {{($this->type) ? 'Pessoal' : 'Geral'}}
+                                    {{ ($this->type) ? 'Pessoal' : 'Geral' }}
                                 </span>
                             </label>
-                        </div>
-
-                        @if ($this->type)
+                        </div> 
+                         @if ($this->type)
                             <div class="mb-4">
-                                <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">Alunos</h3>
-                                <ul class="w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                <div class="font-bold py-2 flex items-center justify-between">
+                                    <h3 class="font-semibold text-gray-900 dark:text-white">Alunos</h3>
+                                    <x-search-form placeholder="Buscar Aluno..."/>
+                                </div>
+                                
+                                <ul class=" max-h-80 overflow-y-auto text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                                     @forelse ($inscriptions as $insc)
-                                        <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                                    @if (str_contains(strtolower($insc->user->name), strtolower($search)) || str_contains(strtolower($insc->user->email), strtolower($search)))
+                                        <li class=" border-b border-gray-200 rounded-t-lg dark:border-gray-600" wire:key="inscription-{{ $insc->id }}">
                                             <div class="flex items-center pl-3">
                                                 <input
                                                     id="user-{{$insc->user->id}}"
@@ -73,6 +75,7 @@
                                                 </label>
                                             </div>
                                         </li>
+                                        @endif
                                     @empty
                                         <span class="text-red-500">Nenhuma inscrição encontrada!</span>
                                     @endforelse

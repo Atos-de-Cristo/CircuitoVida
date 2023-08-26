@@ -10,7 +10,7 @@ use Livewire\WithFileUploads;
 class EventActivityActions extends Component
 {
     use WithFileUploads;
-
+    public $search = '';
     private $service;
     public $lessonId, $activityId;
     public $title, $description;
