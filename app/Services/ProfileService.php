@@ -31,14 +31,29 @@ class ProfileService extends BaseService
         }
         return $data->toArray();
     }
+    public function findUser(int $id): array | null
+    {
+        $data = $this->repository->where('user_id', $id)->first();
+        if ($data == null) {
+            return null;
+        }
+        return $data->toArray();
+    }
 
     public function store(array $data): Profile | bool
     {
         // $this->validateForm($data);
-
         $getData = $this->find();
+        if(isset($data['userId']) && $data['userId'] !== null){            
+            $getData = $this->findUser($data['userId']);
+           }
         if ($getData == null) {
             $data['user_id'] = Auth::user()->id;
+            if(isset($data['userId']) && $data['userId'] !== null){            
+             $data['user_id'] = $data['userId'];
+             unset($data['userId']);
+            }
+
             return $this->create($data);
         }
         return $this->update($data, $getData['id']);

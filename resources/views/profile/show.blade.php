@@ -8,7 +8,7 @@
         </h2>
     </x-slot>
 
-    <div>
+    <div class="w-2/3">
         @if (Laravel\Fortify\Features::canUpdateProfileInformation())
             @livewire('profile.update-profile-information-form')
 

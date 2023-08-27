@@ -1,11 +1,11 @@
-<div>
+<div >
     <x-form-section submit="store">
         <x-slot name="title">
             {{ __('Perfil') }}
         </x-slot>
 
         <x-slot name="description">
-            {{ __('Complete seu perfil.') }}
+        
         </x-slot>
 
         <x-slot name="form">

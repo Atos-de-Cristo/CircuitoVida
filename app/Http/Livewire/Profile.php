@@ -9,18 +9,22 @@ use Livewire\Component;
 
 class Profile extends Component
 {
-    public $form;
+    public $form, $userId;
 
     public function getProfileServiceProperty()
     {
         return new ProfileService;
     }
 
-    public function booted()
+    public function mount($userId = null)
     {
-        $this->form = $this->profileService->find();
+        $this->userId = $userId;
+        if ($userId) {
+            $this->form = $this->profileService->findUser($userId);
+        } else {
+            $this->form = $this->profileService->find();
+        }
     }
-
     public function render()
     {
         return view('livewire.user.profile');
@@ -49,6 +53,10 @@ class Profile extends Component
     public function store()
     {
         try {
+            if($this->userId != null)
+            {
+                $this->form['userId'] = $this->userId;
+            }
             $this->profileService->store($this->form);
 
             session()->flash('message', [
