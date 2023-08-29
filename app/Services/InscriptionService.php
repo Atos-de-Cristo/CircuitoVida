@@ -128,6 +128,9 @@ class InscriptionService extends BaseService
                                     'totalQuestions' => $totalQuestions,
                                 ];
                             }else{
+                                dump($totalPendent);
+                                dump($totalCorrect);
+                                dump($totalIncorrect);
                                 $percent = ($totalCorrect/$totalQuestions)*100;
                                 if ($percent <= 70) {
                                     $statusActivity[] = [
