@@ -128,22 +128,20 @@ class InscriptionService extends BaseService
                                     'totalQuestions' => $totalQuestions,
                                 ];
                             }else{
-                                dump($totalPendent);
-                                dump($totalCorrect);
-                                dump($totalIncorrect);
-                                $percent = 0;
-                                // $percent = ($totalCorrect/$totalQuestions)*100;
-                                if ($percent <= 70) {
-                                    $statusActivity[] = [
-                                        'lesson' => $lesson->title,
-                                        'activity' => $activity->title,
-                                        'pendent' => $totalPendent,
-                                        'correct' => $totalCorrect,
-                                        'incorrect' => $totalIncorrect,
-                                        'percent' => number_format($percent, 2, '.', ''),
-                                        'status' => $totalPendent > 0 ? 'Pendentes de correção' : 'Reprovado',
-                                        'totalQuestions' => $totalQuestions,
-                                    ];
+                                if ($totalCorrect > 0 && $totalQuestions > 0) {
+                                    $percent = ($totalCorrect/$totalQuestions)*100;
+                                    if ($percent <= 70) {
+                                        $statusActivity[] = [
+                                            'lesson' => $lesson->title,
+                                            'activity' => $activity->title,
+                                            'pendent' => $totalPendent,
+                                            'correct' => $totalCorrect,
+                                            'incorrect' => $totalIncorrect,
+                                            'percent' => number_format($percent, 2, '.', ''),
+                                            'status' => $totalPendent > 0 ? 'Pendentes de correção' : 'Reprovado',
+                                            'totalQuestions' => $totalQuestions,
+                                        ];
+                                    }
                                 }
                             }
                         }else{
