@@ -131,7 +131,8 @@ class InscriptionService extends BaseService
                                 dump($totalPendent);
                                 dump($totalCorrect);
                                 dump($totalIncorrect);
-                                $percent = ($totalCorrect/$totalQuestions)*100;
+                                $percent = 0;
+                                // $percent = ($totalCorrect/$totalQuestions)*100;
                                 if ($percent <= 70) {
                                     $statusActivity[] = [
                                         'lesson' => $lesson->title,
