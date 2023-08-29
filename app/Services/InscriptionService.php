@@ -114,7 +114,9 @@ class InscriptionService extends BaseService
                             $totalCorrect += $question->response->where('user_id', $item->user_id)->where('status', 'correto')->count();
                             $totalIncorrect += $question->response->where('user_id', $item->user_id)->where('status', 'errado')->count();
                         });
-
+                        dump($totalPendent);
+                        dump($totalCorrect);
+                        dump($totalIncorrect);
                         // TODO: melhorar ifs
                         if ($notResponse == false) {
                             $percent = ($totalCorrect/$totalQuestions)*100;
