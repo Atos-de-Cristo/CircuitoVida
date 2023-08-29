@@ -114,24 +114,33 @@ class InscriptionService extends BaseService
                             $totalCorrect += $question->response->where('user_id', $item->user_id)->where('status', 'correto')->count();
                             $totalIncorrect += $question->response->where('user_id', $item->user_id)->where('status', 'errado')->count();
                         });
-                        dump($totalPendent);
-                        dump($totalCorrect);
-                        dump($totalIncorrect);
                         // TODO: melhorar ifs
                         if ($notResponse == false) {
-                            // $percent = ($totalCorrect/$totalQuestions)*100;
-                            $percent = 0;
-                            if ($percent <= 70 || $totalPendent > 0) {
+                            if ($totalPendent > 0) {
                                 $statusActivity[] = [
                                     'lesson' => $lesson->title,
                                     'activity' => $activity->title,
                                     'pendent' => $totalPendent,
                                     'correct' => $totalCorrect,
                                     'incorrect' => $totalIncorrect,
-                                    'percent' => number_format($percent, 2, '.', ''),
-                                    'status' => $totalPendent > 0 ? 'Pendentes de correção' : 'Reprovado',
+                                    'percent' => 0,
+                                    'status' => 'Pendentes de correção',
                                     'totalQuestions' => $totalQuestions,
                                 ];
+                            }else{
+                                $percent = ($totalCorrect/$totalQuestions)*100;
+                                if ($percent <= 70) {
+                                    $statusActivity[] = [
+                                        'lesson' => $lesson->title,
+                                        'activity' => $activity->title,
+                                        'pendent' => $totalPendent,
+                                        'correct' => $totalCorrect,
+                                        'incorrect' => $totalIncorrect,
+                                        'percent' => number_format($percent, 2, '.', ''),
+                                        'status' => $totalPendent > 0 ? 'Pendentes de correção' : 'Reprovado',
+                                        'totalQuestions' => $totalQuestions,
+                                    ];
+                                }
                             }
                         }else{
                             $statusActivity[] = [
