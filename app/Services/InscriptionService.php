@@ -39,34 +39,25 @@ class InscriptionService extends BaseService
                 'user_id' => Auth::user()->id,
                 'status' => 'L'
             ])
-            ->get();
+            ->first();
 
         $lessonActivity = [];
-        if ($req->isNotEmpty() && $req->first()->event !== null) {
-            $event = $req
-                ->first()
-                ->event
-                    ->where('status', '!=', EventStatus::P->name)
-                    ->where('status', '!=', EventStatus::F->name)
-                    ->first();
-            if ($event !== null && $event->modules !== null) {
-                $modules = $event->modules;
-                foreach ($modules as $mod) {
-                    $lessonActivity[$mod->id]['event_id'] = $req->first()->event->first()->id;
-                    $lessonActivity[$mod->id]['event'] = $req->first()->event->first()->name;
-                    $lessonActivity[$mod->id]['module'] = $mod->name;
+        if ($req->event !== null && $req->event->modules !== null) {
+            foreach ($req->event->modules as $mod) {
+                $lessonActivity[$mod->id]['event_id'] = $req->event->id;
+                $lessonActivity[$mod->id]['event'] = $req->event->name;
+                $lessonActivity[$mod->id]['module'] = $mod->name;
 
-                    foreach ($mod->lessons as $lesson) {
-                        if ($lesson->start_date && $lesson->end_date) {
-                            if (
-                                Carbon::parse($lesson->start_date) <= Carbon::parse(date('Y-m-d H:i:s'))
-                                && Carbon::parse($lesson->end_date) > Carbon::parse(date('Y-m-d H:i:s'))
-                            ) {
-                                $lessonActivity[$mod->id]['lessons'][$lesson->id] = $lesson->toArray();
-                            }
-                        }else{
+                foreach ($mod->lessons as $lesson) {
+                    if ($lesson->start_date && $lesson->end_date) {
+                        if (
+                            Carbon::parse($lesson->start_date) <= Carbon::parse(date('Y-m-d H:i:s'))
+                            && Carbon::parse($lesson->end_date) > Carbon::parse(date('Y-m-d H:i:s'))
+                        ) {
                             $lessonActivity[$mod->id]['lessons'][$lesson->id] = $lesson->toArray();
                         }
+                    }else{
+                        $lessonActivity[$mod->id]['lessons'][$lesson->id] = $lesson->toArray();
                     }
                 }
             }
