@@ -1,6 +1,7 @@
 <div>
     @if (session()->has('message'))
-        <x-alert-message :message="session('message')['text']" :messageType="session('message')['type']" />
+    {{dd(session('message'))}}
+        {{-- <x-alert-message :message="session('message')" :messageType="session('message')" /> --}}
     @endif
     <livewire:video-player :videoId="$lesson->video"/>
     {{-- <p>Estado do video: {{$videoState}}</p>

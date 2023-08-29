@@ -39,7 +39,6 @@ class VideoManager extends Base
     public function onPlayerStateChange($state)
     {
         try {
-            // $this->videoState = $state;
             if ($state == '01') {
                 $this->timeInit = Carbon::now();
             }
@@ -52,7 +51,7 @@ class VideoManager extends Base
                     'time_assisted' => $this->timeTotal
                 ]);
             }
-            if ($state == '03') {
+            if ($state == '03' && $this->timeTotal > 0) {
                 $timePause = Carbon::now();
                 $this->timeTotal += $timePause->diffInSeconds($this->timeInit);
                 if ($this->timeTotal < $this->videoDuration) {
