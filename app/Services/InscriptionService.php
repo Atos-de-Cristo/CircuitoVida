@@ -119,7 +119,8 @@ class InscriptionService extends BaseService
                         dump($totalIncorrect);
                         // TODO: melhorar ifs
                         if ($notResponse == false) {
-                            $percent = ($totalCorrect/$totalQuestions)*100;
+                            // $percent = ($totalCorrect/$totalQuestions)*100;
+                            $percent = 0;
                             if ($percent <= 70 || $totalPendent > 0) {
                                 $statusActivity[] = [
                                     'lesson' => $lesson->title,
