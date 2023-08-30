@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\EventStatus;
+use App\Enums\InscriptionStatus;
 use App\Models\Inscription;
 use Carbon\Carbon;
 use Error;
@@ -37,7 +38,7 @@ class InscriptionService extends BaseService
             ->with('event.modules.lessons')
             ->where([
                 'user_id' => Auth::user()->id,
-                'status' => 'L'
+                'status' => InscriptionStatus::L->name
             ])
             ->first();
 
@@ -75,6 +76,7 @@ class InscriptionService extends BaseService
         $today = Carbon::now()->toDateString();
 
         $results = Inscription::where('event_id', $eventId)
+            ->where('status', InscriptionStatus::L->name)
             ->with([
                 'user' => function ($query) use ($search) {
                     $query->where('name', 'LIKE', '%' . $search . '%');
