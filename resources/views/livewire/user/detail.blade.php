@@ -1,13 +1,15 @@
 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-
     <div class="sm:col-span-2 md:col-span-1">
         <div
             class="bg-white border-t-2 dark:border-indigo-900 dark:bg-slate-700 overflow-hidden shadow-xl rounded-md   mt-2 mb-4  ">
             <div class="dark:bg-gradient-to-r from-indigo-900 to-indigo-600 h-16 rounded-t-lg p-2">
                 <div class="  bg-slate-700 w-20 h-20 rounded-full flex items-center justify-center">
                     <div class="w-16 h-16 flex  border-2 border-white rounded-full overflow-hidden">
-                        <img src="{{ asset($this->user->profile_photo_url) }}" alt="{{ $this->user->name }}"
-                            class="object-cover h-full w-full cursor-pointer">
+                        <img
+                            src="{{ asset($this->user->profile_photo_url) }}"
+                            alt="{{ $this->user->name }}"
+                            class="object-cover h-full w-full cursor-pointer"
+                        >
                     </div>
                 </div>
             </div>
@@ -16,7 +18,6 @@
                 <p class="">{{ $this->user->email }}</p>
             </div>
         </div>
-       
         <div class="">
             <livewire:profile :userId="$this->user->id" />
         </div>
@@ -47,7 +48,10 @@
             <div class="flex flex-col  gap-2 p-5 ">
                 @if ($tab == 'curso')
                 @forelse ($this->user->inscriptions as $inscription)
-                <a href="{{ route('eventManager', $inscription->event->id) }}" class="flex flex-col bg-white dark:bg-slate-800  rounded-md sm:flex-row  justify-start">
+                <a
+                    href="{{ route('eventManager', $inscription->event->id) }}"
+                    class="flex flex-col bg-white dark:bg-slate-800 rounded-md sm:flex-row justify-start"
+                >
                     <div  class="sm:w-40 w-full rouded-l-md">
                         <img src="{{ asset(!empty($inscription->event->image) ? $inscription->event->image : 'images/curso.png') }}"
                             alt="{{ $inscription->name }}"
@@ -56,8 +60,7 @@
 
                     <div class=" p-3 ">
                         <h2 class="hover:scale-105 font-bold text-xl">{{ $inscription->event->name }}</h2>
-                        <p class="nome">{{getStatusInscription($inscription->status) }}</p>
-
+                        <p class="nome">Status: {{getStatusInscription($inscription->status) }}</p>
                         <div class="tags">
                             <div class="flex flex-row justify-center items-center gap-2">
                                 <p class="status information text-sm font-semibold">Atividades:</p>
@@ -69,7 +72,6 @@
                                         $this->activity[$inscription->event_id]['activityCount'] * 100) : 0 }}%
                                     </div>
                                 </div>
-                                
                             </div>
                             <div class="flex flex-row justify-center items-center gap-2">
                                 <p class="status information text-sm font-semibold">Frequência:</p>
