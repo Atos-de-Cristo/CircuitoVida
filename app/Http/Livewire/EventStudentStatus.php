@@ -30,4 +30,9 @@ class EventStudentStatus extends Component
         // $aluno = $this->service->getAllStudent('', null, $this->inscriptionId);
         return view('livewire.event.student.status', compact('key'));
     }
+
+    public function handleShutdown()
+    {
+        $this->isOpen = false;
+    }
 }
