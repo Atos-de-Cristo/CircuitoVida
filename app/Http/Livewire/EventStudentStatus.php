@@ -2,13 +2,16 @@
 
 namespace App\Http\Livewire;
 
+use App\Enums\InscriptionStatus;
 use App\Services\InscriptionService;
+use App\Services\MessageService;
 use Livewire\Component;
 
 class EventStudentStatus extends Component
 {
     public $user;
     public $isOpen = false;
+    public $inscriptionId;
     public $activityStatus;
     public $absenceCount;
 
@@ -17,22 +20,32 @@ class EventStudentStatus extends Component
         return new InscriptionService;
     }
 
-    public function mount($aluno, $activityStatus, $absenceCount)
+    public function getMessageServiceProperty()
     {
-        $this->user = $aluno;
+        return new MessageService;
+    }
+
+    public function mount($student, $activityStatus, $absenceCount, $inscriptionId)
+    {
+        $this->user = $student;
         $this->activityStatus = $activityStatus;
         $this->absenceCount = $absenceCount;
+        $this->inscriptionId = $inscriptionId;
     }
 
     public function render()
     {
         $key = rand();
-        // $aluno = $this->service->getAllStudent('', null, $this->inscriptionId);
         return view('livewire.event.student.status', compact('key'));
     }
 
     public function handleShutdown()
     {
+        $this->service->update(['status' => InscriptionStatus::C->name], $this->inscriptionId);
+        $this->messageService->sendAdmin(
+            'Cancelado a inscrição do aluno '.$this->user->name
+        );
+        $this->emit('refreshManage');
         $this->isOpen = false;
     }
 }

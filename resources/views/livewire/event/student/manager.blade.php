@@ -12,7 +12,8 @@
                         width="32" height="32" alt="{{ $aluno->user->name }}" />
                     @if (count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2)
                         <livewire:event-student-status
-                            :aluno="$aluno->user"
+                            :inscriptionId="$aluno->id"
+                            :student="$aluno->user"
                             :activityStatus="$aluno->user->activityStatus"
                             :absenceCount="$aluno->user->absenceCount"
                             :key="rand().$aluno->id"

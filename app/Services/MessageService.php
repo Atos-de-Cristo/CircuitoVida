@@ -2,13 +2,14 @@
 namespace App\Services;
 
 use App\Models\Message;
+use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class MessageService extends BaseService
 {
-    protected $repository;
+    protected $repository, $repositoryUser;
 
     protected $rules = [
         'user_send' => 'required|numeric',
@@ -22,6 +23,7 @@ class MessageService extends BaseService
     public function __construct()
     {
         $this->repository = new Message();
+        $this->repositoryUser = new User();
     }
 
     public function find(int $id): Message
@@ -84,5 +86,21 @@ class MessageService extends BaseService
             'read' => true,
             'date_read' => date('Y-m-d H:i:s')
         ]);
+    }
+
+    public function sendAdmin(string $msn): bool
+    {
+        $users = $this->repositoryUser->whereHas('permissions', function ($query) {
+            $query->where('permission', 'admin');
+        })->pluck('id');
+
+        foreach ($users as $forId) {
+            $this->send([
+                'message' => $msn,
+                'user_for' => $forId
+            ]);
+        }
+
+        return true;
     }
 }
