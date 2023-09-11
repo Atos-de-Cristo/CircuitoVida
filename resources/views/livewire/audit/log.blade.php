@@ -43,15 +43,19 @@
                         <th class="p-2 border">Usuário</th>
                         <th class="p-2 border">Módulo</th>
                         <th class="p-2 border">Data e Hora</th>
+                        <td></td>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($audits as $audit)
                         <tr>
-                            <td class="p-2 border">{{ $audit->old_values }}</td>
+                            <td class="p-2 border">{{ $audit->event }}</td>
                             <td class="p-2 border">{{ $audit->user->name }}</td>
                             <td class="p-2 border">{{ $audit->auditable_type }}</td>
                             <td class="p-2 border">{{ $audit->created_at->format('d/m/Y H:i:s') }}</td>
+                            <td class="p-2 border">
+                                <livewire:audit-log-detail :old_values="$audit->old_values" :new_values="$audit->new_values" />
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

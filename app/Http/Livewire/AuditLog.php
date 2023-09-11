@@ -5,10 +5,13 @@ namespace App\Http\Livewire;
 use App\Models\User;
 use App\Services\AuditService;
 use Livewire\Component;
+use Livewire\WithPagination;
 use OwenIt\Auditing\Models\Audit;
 
 class AuditLog extends Component
 {
+    use WithPagination;
+
     public $type = '';
     public $userId = '';
     public $module = '';
@@ -30,9 +33,8 @@ class AuditLog extends Component
             ->when($this->module, function ($query) {
                 $query->where('auditable_type', $this->module);
             })
-            ->latest()
             ->paginate(10);
 
-        return view('livewire.shared.audit-log', compact('audits', 'users', 'models'));
+        return view('livewire.audit.log', compact('audits', 'users', 'models'));
     }
 }

@@ -28,7 +28,7 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
     });
 
     Route::middleware('can:admin')->group(function () {
-        Route::get('/audit-log', AuditLog::class);
+        Route::get('/audit-log', AuditLog::class)->name('audit');
         Route::get('/event', Event::class)->name('event');
         Route::get('/event/category', EventCategory::class)->name('eventCategory');
         Route::get('/event/inscription', EventInscription::class)->name('eventInscription');
