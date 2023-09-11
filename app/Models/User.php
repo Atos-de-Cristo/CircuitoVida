@@ -10,9 +10,12 @@ use Illuminate\Support\Facades\Cache;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\{HasProfilePhoto, HasTeams};
 use Laravel\Sanctum\HasApiTokens;
+use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Auditable as AuditableTrait;
 
-class User extends Authenticatable
+class User extends Authenticatable implements Auditable
 {
+    use AuditableTrait;
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;

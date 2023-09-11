@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany, HasMany};
+use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Auditable as AuditableTrait;
 
-class Activity extends Model
+class Activity extends Model implements Auditable
 {
+    use AuditableTrait;
     use HasFactory;
 
     protected $fillable = [ 'lesson_id', 'event_id', 'title', 'description', 'type' ];
