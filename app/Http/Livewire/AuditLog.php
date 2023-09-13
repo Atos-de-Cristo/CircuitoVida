@@ -16,24 +16,22 @@ class AuditLog extends Component
     public $userId = '';
     public $module = '';
 
+    public function getServiceProperty()
+    {
+        return new AuditService;
+    }
+
     public function render()
     {
         $users = User::all();
 
-        $models = AuditService::getAuditableModels();
+        $models = $this->service->getAuditableModels();
 
-        $audits = Audit::query()
-            ->with('user')
-            ->where(function ($query) {
-                $query
-                    ->where('event', 'like', '%' . $this->type . '%')
-                    ->where('user_id', 'like', '%' . $this->userId . '%')
-                    ;
-            })
-            ->when($this->module, function ($query) {
-                $query->where('auditable_type', $this->module);
-            })
-            ->paginate(10);
+        $audits = $this->service->getAll([
+            'type' => $this->type,
+            'userId' => $this->userId,
+            'module' => $this->module
+        ]);
 
         return view('livewire.audit.log', compact('audits', 'users', 'models'));
     }

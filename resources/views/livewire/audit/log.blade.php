@@ -54,19 +54,15 @@
                             <td class="p-2 border">{{ $audit->auditable_type }}</td>
                             <td class="p-2 border">{{ $audit->created_at->format('d/m/Y H:i:s') }}</td>
                             <td class="p-2 border">
-                                <livewire:audit-log-detail :old_values="$audit->old_values" :new_values="$audit->new_values" />
+                                <livewire:audit-log-detail :old_values="$audit->old_values" :new_values="$audit->new_values" :key="$audit->id" />
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-
-            <div class="mt-4">
-                {{ $audits->links() }}
-            </div>
         </x-slot>
         <x-slot name="footerCard">
-
+            {{ $audits->links() }}
         </x-slot>
     </x-card>
 </div>

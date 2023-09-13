@@ -1,14 +1,36 @@
 <?php
 namespace App\Services;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
-use ReflectionClass;
-use ReflectionException;
+use OwenIt\Auditing\Models\Audit;
 
 class AuditService
 {
+    protected $repository;
+
+    public function __construct()
+    {
+        $this->repository = new Audit();
+    }
+
+    public function getAll(array $filter = []): LengthAwarePaginator
+    {
+        return $this->repository
+            ->query()
+            ->with('user')
+            ->where(function ($query) use ($filter) {
+                $query
+                    ->where('event', 'like', '%' . $filter['type'] . '%')
+                    ->where('user_id', 'like', '%' . $filter['userId'] . '%')
+                    ;
+            })
+            ->when( $filter['module'], function ($query) use ($filter) {
+                $query->where('auditable_type',  $filter['module']);
+            })
+            ->paginate(10);
+    }
+
     public static function getAuditableModels()
     {
         $models = [];
