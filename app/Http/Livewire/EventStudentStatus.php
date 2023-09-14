@@ -14,6 +14,7 @@ class EventStudentStatus extends Component
     public $inscriptionId;
     public $activityStatus;
     public $absenceCount;
+    public $isCancelled = false;
 
     public function getServiceProperty()
     {

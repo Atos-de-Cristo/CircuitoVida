@@ -66,11 +66,25 @@
                     </div>
                 </div>
                 @endif
+
             </x-slot>
             <x-slot name="footer">
+                @if ($isCancelled)
+
+                    <textarea
+                    id="messageTextarea"
+                    wire:model="form.message"
+                   rows="2"
+                   placeholder="Enviar uma mensagem"
+                   class="m-0 w-full resize-none border-0 bg-transparent p-0 pr-10 focus:ring-0 focus-visible:ring-0 dark:bg-gray-100 md:pr-12 pl-3 md:pl-0"
+                   x-bind:style="{ height: textareaHeight }"
+                  style="overflow-y: auto; scrollbar-width: thin; scrollbar-color: transparent transparent; resize: vertical;"
+               ></textarea>
+
+                @endif
                 <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                    <button wire:click.prevent="handleShutdown()" type="button" class="btn-danger">
-                        Solicitar Desligamento
+                    <button wire:click="$set('isCancelled', '!isCancelled')" type="button" class="btn-danger">
+                        Desligamento
                     </button>
                 </span>
                 <span class="flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
