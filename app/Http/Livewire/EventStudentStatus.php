@@ -7,7 +7,7 @@ use App\Services\InscriptionService;
 use App\Services\MessageService;
 use Livewire\Component;
 
-class EventStudentStatus extends Component
+class EventStudentStatus extends Base
 {
     public $user;
     public $isOpen = false;
@@ -39,12 +39,17 @@ class EventStudentStatus extends Component
         $key = rand();
         return view('livewire.event.student.status', compact('key'));
     }
+    public function toggleCancellation(){
+        $this->isCancelled = true;
+    }
 
     public function handleShutdown()
     {
-        $this->service->update(['status' => InscriptionStatus::C->name], $this->inscriptionId);
+        $this->service->update([
+            'cancellation_reason'=>$this->form['message'],
+            'status' => InscriptionStatus::C->name], $this->inscriptionId);
         $this->messageService->sendAdmin(
-            'Cancelado a inscrição do aluno '.$this->user->name
+            'Cancelado a inscrição do aluno '.$this->user->name. ', motivo: '.$this->form['message']
         );
         $this->emit('refreshManage');
         $this->isOpen = false;
