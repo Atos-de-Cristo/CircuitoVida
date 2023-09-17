@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Enums\EventStatus;
 use App\Enums\InscriptionStatus;
 use App\Models\Inscription;
 use Carbon\Carbon;
@@ -19,7 +18,8 @@ class InscriptionService extends BaseService
         'user_id' => 'required|numeric',
         'quantity' => 'required|numeric',
         'amount' => 'required',
-        'status' => 'required'
+        'status' => 'required',
+        'cancellation_reason' => 'string|min:3'
     ];
 
     public function __construct()

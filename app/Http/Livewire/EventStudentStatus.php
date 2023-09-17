@@ -46,8 +46,11 @@ class EventStudentStatus extends Base
     public function handleShutdown()
     {
         $this->service->update([
-            'cancellation_reason'=>$this->form['message'],
-            'status' => InscriptionStatus::C->name], $this->inscriptionId);
+            'cancellation_reason' => $this->form['message'],
+            'status' => InscriptionStatus::C->name
+        ],
+            $this->inscriptionId
+        );
         $this->messageService->sendAdmin(
             'Cancelado a inscrição do aluno '.$this->user->name. ', motivo: '.$this->form['message']
         );

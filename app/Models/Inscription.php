@@ -19,7 +19,8 @@ class Inscription extends Model implements Auditable
         'user_id',
         'quantity',
         'amount',
-        'status'
+        'status',
+        'cancellation_reason'
     ];
 
     public function event(): BelongsTo
