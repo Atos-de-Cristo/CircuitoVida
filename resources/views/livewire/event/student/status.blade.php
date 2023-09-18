@@ -68,12 +68,9 @@
         </x-slot>
         <x-slot name="footer">
             @if ($isCancelled)
-
             <textarea id="messageTextarea" wire:model="form.message" rows="2" placeholder="Motivo do cancelamento"
                 class="m-0 w-full resize-none border-0 bg-gray-100 p-2  focus:ring-0 focus-visible:ring-0 dark:bg-gray-900 "
-                x-bind:style="{ height: textareaHeight }"
                 style="overflow-y: auto; resize: vertical; height: auto;"></textarea>
-
             @endif
             <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
                 <button wire:click="{{$isCancelled ? 'handleShutdown()' :'toggleCancellation()'}}" type="button"
