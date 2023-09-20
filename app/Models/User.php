@@ -12,8 +12,8 @@ use Laravel\Jetstream\{HasProfilePhoto, HasTeams};
 use Laravel\Sanctum\HasApiTokens;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
-
-class User extends Authenticatable implements Auditable
+use Tymon\JWTAuth\Contracts\JWTSubject;
+class User extends Authenticatable implements Auditable, JWTSubject
 {
     use AuditableTrait;
     use HasApiTokens;
@@ -107,5 +107,15 @@ class User extends Authenticatable implements Auditable
         });
 
         return in_array($permission, $permissionOfUser);
+    }
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }
