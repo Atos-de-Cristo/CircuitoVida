@@ -51,6 +51,7 @@
                         <x-icon-bell class="w-4 h-4" />
                         <span class="ml-2">Notificação</span>
                     </button>
+                    <livewire:copying-course-data :eventId='$eventId' :key="rand()">
                 </div>
             @endcan
             @can('monitorEvent', $eventId)

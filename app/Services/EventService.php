@@ -3,8 +3,11 @@ namespace App\Services;
 
 use App\Enums\EventStatus;
 use App\Models\Event;
+use App\Models\Module;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
+
 class EventService
 {
     protected $repository;
@@ -16,7 +19,15 @@ class EventService
 
     public function getAll(array $filter = []): Collection
     {
-        return $this->repository->with('inscriptions')->where($filter)->get();
+        return $this->repository
+                ->with('inscriptions')
+                ->when(array_key_exists('name', $filter), function ($query) use ($filter) {
+                    return $query->where('name', 'like', '%' . $filter['name'] . '%');
+                })
+                ->when(!array_key_exists('name', $filter), function ($query) use ($filter) {
+                    return $query->where($filter);
+                })
+                ->get();
     }
 
     public function getLessonsWithCounts(array $filter = []): Collection
@@ -47,6 +58,47 @@ class EventService
     public function find(string $id): Event
     {
         return $this->repository->with('inscriptions')->with('modules')->with('lessons')->find($id);
+    }
+
+    public function copyCourseData($data): bool
+    {
+        try {
+            $modules = Module::where('event_id', $data['course'])->get();
+
+            DB::beginTransaction();
+
+            foreach ($modules as $modulo) {
+                $newModulo = $modulo->replicate();
+                $newModulo->event_id = $data['event_id'];
+                $newModulo->save();
+
+                foreach ($modulo->lessons as $lesson) {
+                    $newLesson = $lesson->replicate();
+                    $newLesson->module_id = $newModulo->id;
+                    $newLesson->event_id = $data['event_id'];
+                    $newLesson->save();
+
+                    foreach ($lesson->activities as $activity) {
+                        $newActivity = $activity->replicate()->fill(['type', 'G']);
+                        $newActivity->lesson_id = $newLesson->id;
+                        $newActivity->save();
+
+                        foreach ($activity->questions as $question) {
+                            $newQuestion = $question->replicate();
+                            $newQuestion->activity_id = $newActivity->id;
+                            $newQuestion->save();
+                        }
+                    }
+                }
+            }
+
+            DB::commit();
+
+            return true;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return false;
+        }
     }
 
     public function store(array $data): Event | bool
