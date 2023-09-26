@@ -38,7 +38,6 @@ class CreateNewUser implements CreatesNewUsers
             ]), function (User $user) use ($input) {
                 $user->givePermissionTo('aluno');
                 if (isset($input['course']) && !empty($input['course'])) {
-                    dd($input['course']);
                     $this->inscription($user, $input['course']);
                 }
                 // $this->createTeam($user);
