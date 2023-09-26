@@ -25,7 +25,7 @@
 
                 <div class="min-h-screen h-full">
 
-                    <div class="w-full max-w-3xl mx-auto px-4 py-8">
+                    <div class="w-full max-w-3xl mx-auto">
                         {{ $slot }}
                     </div>
 

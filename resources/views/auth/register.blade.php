@@ -1,14 +1,13 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-
+            <x-icon-logo class="w-40 h-40 dark:text-white text-black"/>
         </x-slot>
 
         <x-validation-errors class="mb-4" />
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
-
             <div>
                 <x-label for="name" value="{{ __('Nome') }}" />
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
@@ -55,6 +54,7 @@
                     {{ __('Cadastrar') }}
                 </x-button>
             </div>
+            <input type="hidden" name="course" value="{{Request::get('course')}}">
         </form>
     </x-authentication-card>
 </x-guest-layout>

@@ -2,8 +2,10 @@
 
 namespace App\Actions\Fortify;
 
+use App\Enums\InscriptionStatus;
 use App\Models\Team;
 use App\Models\User;
+use App\Services\InscriptionService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -33,11 +35,27 @@ class CreateNewUser implements CreatesNewUsers
                 'name' => $input['name'],
                 'email' => $input['email'],
                 'password' => Hash::make($input['password']),
-            ]), function (User $user) {
+            ]), function (User $user) use ($input) {
                 $user->givePermissionTo('aluno');
+                if (isset($input['course']) && !empty($input['course'])) {
+                    dd($input['course']);
+                    $this->inscription($user, $input['course']);
+                }
                 // $this->createTeam($user);
             });
         });
+    }
+
+    protected function inscription(User $user, string $courseId): void
+    {
+        $inscriptionService = new InscriptionService();
+        $inscriptionService->create([
+            'user_id' => $user->id,
+            'event_id' => $courseId,
+            'amount' => 0,
+            'quantity' => 1,
+            'status' => InscriptionStatus::P->name
+        ]);
     }
 
     /**

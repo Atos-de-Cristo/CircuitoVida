@@ -11,12 +11,12 @@
                     <a href="{{ route('dashboard') }}" class="text-blue-500 hover:underline">Dashboard</a>
                 </li>
                 <span class="text-gray-500">/</span>
-                <li class="breadcrumb-item active">Cursos</li>
+                <li class="breadcrumb-item active">Inscrições</li>
             </ol>
         </div>
     </div>
     <div class="card-white p-4 flex flex-wrap">
-        @foreach($dataAll as $data)
+        @forelse ($dataAll as $data)
             <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-2">
                 <div class="bg-gray-100  max-w-sm  dark:bg-slate-800 overflow-hidden shadow rounded-lg flex flex-col ">
                     <div class="flex-shrink-0">
@@ -41,6 +41,8 @@
                     </div>
                 </div>
             </div>
-        @endforeach
+        @empty
+            <p class="text-gray-600 dark:text-gray-400">Nenhuma inscrição encontrada!</p>
+        @endforelse
     </div>
 </div>

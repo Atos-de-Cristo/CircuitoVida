@@ -42,6 +42,10 @@ class InscriptionService extends BaseService
             ])
             ->first();
 
+        if (!$req) {
+            return [];
+        }
+
         $lessonActivity = [];
         if ($req->event !== null && $req->event->modules !== null) {
             foreach ($req->event->modules as $mod) {
@@ -187,6 +191,10 @@ class InscriptionService extends BaseService
         // if (Auth::user()->profile === null) {
         //     throw new Error('Preencha seu perfil!');
         // }
+
+        if (!$data['event_id'] || empty($data['event_id'])) {
+            throw new Error('Informe o curso!');
+        }
 
         $getInsc = $this->repository
             ->where('user_id', $data['user_id'])
