@@ -1,12 +1,5 @@
 <div>
-    <iframe
-        id="{{ $playerId }}"
-        type="text/html"
-        width="100%"
-        height="600px"
-        src="http://www.youtube.com/embed/{{ $videoId }}?enablejsapi=1&origin=https://circuitovida.atosdecristo.com"
-        frameborder="0"
-    ></iframe>
+    <div id="{{ $playerId }}"></div>
 
     @push('scripts')
         <script>
@@ -15,6 +8,9 @@
             function onYouTubeIframeAPIReady() {
                 try {
                     player = new YT.Player('{{ $playerId }}', {
+                        height: '600px',
+                        width: '100%',
+                        videoId: '{{ $videoId }}',
                         events: {
                             'onReady': onPlayerReady,
                             'onStateChange': onPlayerStateChange
