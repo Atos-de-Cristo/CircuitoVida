@@ -4,7 +4,7 @@
         type="text/html"
         width="100%"
         height="600px"
-        src="http://www.youtube.com/embed/{{ $videoId }}?enablejsapi=1&origin=https://circuitovida.atosdecristo.com/event/1/classroom/1"
+        src="http://www.youtube.com/embed/{{ $videoId }}?enablejsapi=1&origin=https://circuitovida.atosdecristo.com"
         frameborder="0"
     ></iframe>
 
