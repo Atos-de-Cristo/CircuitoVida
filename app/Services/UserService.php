@@ -66,7 +66,11 @@ class UserService
 
     public function update(array $data, int $id): void
     {
-        $data['password'] = Hash::make($data['password']);
+        if (isset($data['password']) && !empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        }else{
+            unset($data['password']);
+        }
         $repo = $this->find($id);
         $repo->update($data);
         $repo->permissions()->sync($data['permissions']);
