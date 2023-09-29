@@ -28,7 +28,9 @@ class AuditService
             ->when( $filter['module'], function ($query) use ($filter) {
                 $query->where('auditable_type',  $filter['module']);
             })
-            ->paginate(10);
+            ->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ;
     }
 
     public static function getAuditableModels()
