@@ -2,11 +2,14 @@
 
 namespace App\Services;
 
+use App\Models\Permission;
 use App\Models\User;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Cache;
 
 class UserService
 {
@@ -66,14 +69,20 @@ class UserService
 
     public function update(array $data, int $id): void
     {
-        if (isset($data['password']) && !empty($data['password'])) {
-            $data['password'] = Hash::make($data['password']);
-        }else{
-            unset($data['password']);
+        try {
+            if (isset($data['password']) && !empty($data['password'])) {
+                $data['password'] = Hash::make($data['password']);
+            }else{
+                unset($data['password']);
+            }
+            $repo = $this->find($id);
+            $repo->update($data);
+            $repo->permissions()->sync($data['permissions']);
+
+            Cache::forget('permissions::of::user::'.$repo->id);
+        } catch (Exception $e) {
+            throw $e;
         }
-        $repo = $this->find($id);
-        $repo->update($data);
-        $repo->permissions()->sync($data['permissions']);
     }
 
     public function delete(string $id): void

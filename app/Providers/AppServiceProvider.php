@@ -26,7 +26,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Carbon::setLocale('pt_BR');
-        Permission::observe(Permission::class);
         Gate::before(function (User $user, $ability) {
             if (Permission::existsOnCache($ability)) {
                 return $user->hasPermissionTo($ability);
