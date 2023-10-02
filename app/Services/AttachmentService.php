@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Enums\InscriptionStatus;
 use App\Models\Attachment;
+use Error;
 use Illuminate\Database\Eloquent\Collection;
 
 class AttachmentService extends BaseService
@@ -89,6 +90,8 @@ class AttachmentService extends BaseService
 
     public function delete(string $id): void
     {
+        //TODO: travando delete até confirmacao de acao
+        throw new Error('Serviço indisponível!');
         $repo = $this->find($id);
         $repo->delete();
     }

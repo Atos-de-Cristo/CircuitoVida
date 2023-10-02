@@ -226,6 +226,8 @@ class InscriptionService extends BaseService
 
     public function delete(string $id): void
     {
+        //TODO: travando delete até confirmacao de acao
+        throw new Error('Serviço indisponível!');
         $repo = $this->find($id);
         $repo->delete();
     }
