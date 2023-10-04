@@ -47,63 +47,16 @@
             </div>
             <div class="flex flex-col  gap-2 p-5 ">
                 @if ($tab == 'curso')
-                @forelse ($this->user->inscriptions as $inscription)
-                <a
-                    href="{{ route('eventManager', $inscription->event->id) }}"
-                    class="flex flex-col bg-white dark:bg-slate-800 rounded-md sm:flex-row justify-start"
-                >
-                    <div  class="sm:w-40 w-full rouded-l-md">
-                        <img src="{{ asset(!empty($inscription->event->image) ? $inscription->event->image : 'images/curso.png') }}"
-                            alt="{{ $inscription->name }}"
-                            class="hover:scale-105  object-cover h-32 w-full sm:rounded-l-md rounded-t-md">
-                    </div>
-
-                    <div class=" p-3 ">
-                        <h2 class="hover:scale-105 font-bold text-xl">{{ $inscription->event->name }}</h2>
-                        <p class="nome">Status: {{getStatusInscription($inscription->status) }}</p>
-                        <div class="tags">
-                            <div class="flex flex-row justify-center items-center gap-2">
-                                <p class="status information text-sm font-semibold">Atividades:</p>
-                                <div class="w-full sm:w-64 bg-gray-200 rounded-full dark:bg-gray-700">
-                                    <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
-                                        style="width: {{ $this->activity[$inscription->event_id]['responseCount'] && $this->activity[$inscription->event_id]['activityCount'] ? ($this->activity[$inscription->event_id]['responseCount'] / $this->activity[$inscription->event_id]['activityCount'] * 100) : 0 }}%"> {{ $this->activity[$inscription->event_id]['responseCount'] &&
-                                        $this->activity[$inscription->event_id]['activityCount'] ?
-                                        ($this->activity[$inscription->event_id]['responseCount'] /
-                                        $this->activity[$inscription->event_id]['activityCount'] * 100) : 0 }}%
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-row justify-center items-center gap-2">
-                                <p class="status information text-sm font-semibold">Frequência:</p>
-                                <div class="w-full sm:w-64 bg-gray-200 rounded-full dark:bg-gray-700">
-                                    <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
-                                        style="width: {{ $inscription->frequencies->count() / $inscription->event->lessons->count() * 100  }}%">
-                                        {{round ($inscription->frequencies->count() / $inscription->event->lessons->count() * 100 ) }}%
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-
-                @empty
-                <span class="text-red-500">Nenhuma inscrição encontrada</span>
-                @endforelse
+                    <livewire:user-list-courses :user="$this->user" :activity="$this->activity" :key="rand()" />
                 @endif
                 @if ($tab === 'atividades')
-                <div class="">
                     <livewire:user-activity :user="$this->user->id" :key="rand()" />
-                </div>
                 @endif
                 @if ($tab === 'anexos')
-                <div class="px-5 py-5">
                     <livewire:user-attachments :user="$this->user->id" :key="rand()" />
-                </div>
                 @endif
                 @if ($tab === 'message')
-                <div class="px-5 py-5 w-full">
                     <livewire:user-message :user="$this->user->id" :key="rand()" />
-                </div>
                 @endif
             </div>
         </div>

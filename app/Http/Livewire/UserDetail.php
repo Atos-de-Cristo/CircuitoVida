@@ -10,6 +10,8 @@ class UserDetail extends Component
     public $tab = 'curso';
     public $userId;
 
+    protected $listeners = ['refreshUserDetail' => '$refresh'];
+
     public function getUserServiceProperty()
     {
         return new UserService;
