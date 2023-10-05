@@ -22,7 +22,10 @@
                 <x-icon-circle-play class="w-5 h-5" />
                <strong class="ml-2">{{ $lessonData->title }}</strong>
             </div>
-            @cannot('aluno')
+            @can('admin')
+                @livewire('event-frequency', [$eventId, $lessonId])
+            @endcan
+            @can('monitorEvent', $eventId)
                 @livewire('event-frequency', [$eventId, $lessonId])
             @endcan
         </div>
