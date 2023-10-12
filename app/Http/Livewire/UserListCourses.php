@@ -8,8 +8,9 @@ use App\Services\InscriptionService;
 
 class UserListCourses extends Base
 {
-    public $user, $activity, $courseId;
+    public $user, $activity, $courseId, $transferCourseId;
     public $isOpen = false;
+    public $isOpenTransf = false;
 
     public function getEventListProperty()
     {
@@ -44,5 +45,16 @@ class UserListCourses extends Base
 
         $this->emit('refreshUserDetail');
         $this->isOpen = false;
+    }
+
+    public function initTransfer($courseId)
+    {
+        $this->courseId = $courseId;
+        $this->isOpenTransf = true;
+    }
+
+    public function transfer()
+    {
+        dd($this->courseId, $this->transferCourseId);
     }
 }
