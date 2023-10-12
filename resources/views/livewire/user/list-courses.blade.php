@@ -23,11 +23,15 @@
                     <div class="flex flex-row justify-center items-center gap-2">
                         <p class="status information text-sm font-semibold">Atividades:</p>
                         <div class="w-full sm:w-64 bg-gray-200 rounded-full dark:bg-gray-700">
-                            <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
-                                style="width: {{ $this->activity[$inscription->event_id]['responseCount'] && $this->activity[$inscription->event_id]['activityCount'] ? ($this->activity[$inscription->event_id]['responseCount'] / $this->activity[$inscription->event_id]['activityCount'] * 100) : 0 }}%"> {{ $this->activity[$inscription->event_id]['responseCount'] &&
-                                $this->activity[$inscription->event_id]['activityCount'] ?
-                                ($this->activity[$inscription->event_id]['responseCount'] /
-                                $this->activity[$inscription->event_id]['activityCount'] * 100) : 0 }}%
+                            <div
+                                class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+                                style="width: {{ $this->activity[$inscription->event_id]['responseCount'] && $this->activity[$inscription->event_id]['activityCount'] ? ($this->activity[$inscription->event_id]['responseCount'] / $this->activity[$inscription->event_id]['activityCount'] * 100) : 0 }}%"
+                                >
+                                    {{
+                                        ($this->activity[$inscription->event_id]['responseCount'] && $this->activity[$inscription->event_id]['activityCount'])
+                                        ? number_format(($this->activity[$inscription->event_id]['responseCount'] / $this->activity[$inscription->event_id]['activityCount'] * 100), 2, '.', '')
+                                        : 0
+                                    }}%
                             </div>
                         </div>
                     </div>
