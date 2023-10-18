@@ -69,10 +69,10 @@ class EventModule extends Component
             }
         }
     }
-
+    protected $listeners = ['eventoExclusaoRealizada' => 'deleModule'];
     public function deleModule()
     {
-        $this->moduleService->delete($this->moduleId);
+        // $this->moduleService->delete($this->moduleId);
         $this->emit('refreshManage');
     }
 }

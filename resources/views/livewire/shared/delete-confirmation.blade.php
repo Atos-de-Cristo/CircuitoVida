@@ -1,5 +1,5 @@
 <div>
-    <button wire:click.prevent="openModal()" class="hover:scale-125">
+    <button wire:click.prevent="openModal()"  @click.stop class="btn-icon">
         <x-icon-trash class="w-5 h-5" />
     </button>
     @if ($isOpenDelete)

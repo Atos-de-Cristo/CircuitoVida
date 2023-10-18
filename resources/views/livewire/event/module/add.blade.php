@@ -6,14 +6,14 @@
         </button>
     @endEmpty
     @if ($moduleId)
-        <button wire:click.prevent="editModule()" class="mr-2 btn-icon"
-            @click.stop>
-            <x-icon-pencil class="w-5 h-5" />
-        </button>
-        <button wire:click.prevent="deleModule()" class="mr-5 btn-icon"
-            @click.stop>
-            <x-icon-trash class="w-5 h-5" />
-        </button>
+    <div class="flex flex-row space-x-2">
+        <button wire:click.prevent="editModule()" class="btn-icon"
+        @click.stop>
+        <x-icon-pencil class="w-5 h-5" />
+    </button>        
+        <livewire:delete-confirmation :itemId="$moduleId" :service="'ModuleService'" :key="rand().$moduleId"/>
+    </div>
+        
     @endif
     @if ($isOpenModule)
         <x-dialog-modal id="isOpenModule" wire:model="isOpenModule" maxWidth="lg" closeModal="closeModalModule()">

@@ -94,10 +94,10 @@ class EventActivityActions extends Component
         $this->title = '';
         $this->description = '';
     }
-
+    protected $listeners = ['eventoExclusaoRealizada' => 'dellActivity'];
     public function dellActivity(ActivityService $service)
     {
-        $service->delete($this->activityId);
+        // $service->delete($this->activityId);
         $this->emit('refreshClassroom');
         $this->emit('refreshActivityList');
     }
