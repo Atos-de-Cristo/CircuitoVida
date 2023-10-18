@@ -55,9 +55,7 @@
                                 <button wire:click.prevent="edit({{ $data->id }})" class="hover:scale-125">
                                     <x-icon-pencil class="w-5 h-5" />
                                 </button>
-                                <button wire:click.prevent="delete({{ $data->id }})" class="hover:scale-125">
-                                    <x-icon-trash class="w-5 h-5" />
-                                </button>
+                                <livewire:delete-confirmation :itemId="$data->id" :service="'EventService'" :key="rand().$data->id"/>
                             </div>
                         </div>
                     </div>

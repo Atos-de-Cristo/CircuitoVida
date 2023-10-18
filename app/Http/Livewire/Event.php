@@ -141,10 +141,9 @@ class Event extends Component
 
         $this->openModal();
     }
-
-    public function delete($id, EventService $service)
+    protected $listeners = ['eventoExclusaoRealizada' => 'delete'];
+    public function delete()
     {
-        $service->delete($id);
         session()->flash('message', [
             'text' => 'Evento deletado com sucesso.',
             'type' => 'success',
