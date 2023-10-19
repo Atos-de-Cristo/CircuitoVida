@@ -8,6 +8,7 @@ enum InscriptionStatus: string {
     case R = "Reprovado";
     case C = "Cancelado";
     case F = "Finalizado";
+    case T = "Transferido";
 
     public static function fromValue(string $status): string {
         foreach (self::cases() as $statusClass) {

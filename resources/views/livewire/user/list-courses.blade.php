@@ -47,10 +47,12 @@
                 </div>
                 <div class="flex justify-end mt-2">
                     @can('admin')
-                        <button wire:click.prevent="initTransfer({{$inscription->event->id}})" class="btn-primary mb-2" >
-                            <x-icon-plus/>
-                            <span class="ml-1">Transferência</span>
-                        </button>
+                        @if ($inscription->status == 'L')
+                            <button wire:click.prevent="initTransfer({{$inscription->id}})" class="btn-primary mb-2" >
+                                <x-icon-plus/>
+                                <span class="ml-1">Transferência</span>
+                            </button>
+                        @endif
                     @endCan
                 </div>
             </div>
