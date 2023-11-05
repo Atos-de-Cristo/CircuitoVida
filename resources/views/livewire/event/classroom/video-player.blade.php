@@ -4,16 +4,16 @@
         type="text/html"
         width="100%"
         height="600px"
-        src="http://www.youtube.com/embed/{{ $videoId }}?enablejsapi=1&origin=https://circuitovida.atosdecristo.com"
+        src="http://www.youtube.com/embed/{{ $videoId }}?enablejsapi=1&origin=http://atosdecristo.local:8888"
         frameborder="0"
     ></iframe>
 
-    @push('scripts')
+    @push('scripts2')
         <script>
             var player;
 
             function onYouTubeIframeAPIReady() {
-                try {
+                console.info('onYouTubeIframeAPIReady')
                     player = new YT.Player('{{ $playerId }}', {
                         events: {
                             'onReady': onPlayerReady,
@@ -25,26 +25,20 @@
                             rel: 0,
                             modestbranding: 1,
                             showinfo: 0,
-                            enablejsapi: 0,
                             iv_load_policy: 3,
                             disablekb: 0
                         },
                     });
-                } catch (e) {
-                    console.erro(e)
-                }
             }
 
             function onPlayerReady(event) {
-                try {
+                console.info('onPlayerReady')
                     window.livewire.emit('onPlayerReady', event.target.getDuration());
-                } catch (e) {
-                    console.error(e)
-                }
+
             }
 
             function onPlayerStateChange(event) {
-                try {
+                console.info('onPlayerStateChange')
                     switch (event.data) {
                         case YT.PlayerState.PLAYING:
                             window.livewire.emit('playerStateChanged', '01');
@@ -59,12 +53,11 @@
                             window.livewire.emit('playerStateChanged', '04');
                             break;
                     }
-                } catch (e) {
-                    console.error(e)
-                }
+
             }
 
             window.addEventListener('beforeunload', function (event) {
+                console.info('beforeunload')
                 try {
                     window.livewire.emit('playerStateChanged', '03');
                 } catch (e) {
