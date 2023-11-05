@@ -13,7 +13,6 @@
             var player;
 
             function onYouTubeIframeAPIReady() {
-                console.info('onYouTubeIframeAPIReady')
                     player = new YT.Player('{{ $playerId }}', {
                         events: {
                             'onReady': onPlayerReady,
@@ -32,37 +31,28 @@
             }
 
             function onPlayerReady(event) {
-                console.info('onPlayerReady')
-                    window.livewire.emit('onPlayerReady', event.target.getDuration());
-
+                window.livewire.emit('onPlayerReady', event.target.getDuration());
             }
 
             function onPlayerStateChange(event) {
-                console.info('onPlayerStateChange')
-                    switch (event.data) {
-                        case YT.PlayerState.PLAYING:
-                            window.livewire.emit('playerStateChanged', '01');
-                            break;
-                        case YT.PlayerState.PAUSED:
-                            window.livewire.emit('playerStateChanged', '02');
-                            break;
-                        case YT.PlayerState.ENDED:
-                            window.livewire.emit('playerStateChanged', '03');
-                            break;
-                        default:
-                            window.livewire.emit('playerStateChanged', '04');
-                            break;
-                    }
-
+                switch (event.data) {
+                    case YT.PlayerState.PLAYING:
+                        window.livewire.emit('playerStateChanged', '01');
+                        break;
+                    case YT.PlayerState.PAUSED:
+                        window.livewire.emit('playerStateChanged', '02');
+                        break;
+                    case YT.PlayerState.ENDED:
+                        window.livewire.emit('playerStateChanged', '03');
+                        break;
+                    default:
+                        window.livewire.emit('playerStateChanged', '04');
+                        break;
+                }
             }
 
             window.addEventListener('beforeunload', function (event) {
-                console.info('beforeunload')
-                try {
-                    window.livewire.emit('playerStateChanged', '03');
-                } catch (e) {
-                    console.error(e)
-                }
+                window.livewire.emit('playerStateChanged', '03');
             });
         </script>
     @endpush
