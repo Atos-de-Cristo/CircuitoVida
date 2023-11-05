@@ -4,7 +4,7 @@
         type="text/html"
         width="100%"
         height="600px"
-        src="http://www.youtube.com/embed/{{ $videoId }}?enablejsapi=1&origin=https://atosdecristo.wesleyteixeira.com.br/"
+        src="http://www.youtube.com/embed/{{ $videoId }}?enablejsapi=1&origin=https://atosdecristo.wesleyteixeira.com.br"
         frameborder="0"
     ></iframe>
 
