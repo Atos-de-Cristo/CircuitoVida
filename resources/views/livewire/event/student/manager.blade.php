@@ -23,6 +23,7 @@
                     @if (count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2)
                         <livewire:event-student-status
                             :inscriptionId="$aluno->id"
+                            :eventId="$event_id"
                             :student="$aluno->user"
                             :activityStatus="$aluno->user->activityStatus"
                             :absenceCount="$aluno->user->absenceCount"

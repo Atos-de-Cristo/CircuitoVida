@@ -14,6 +14,7 @@ class EventStudentStatus extends Base
     public $inscriptionId;
     public $activityStatus;
     public $absenceCount;
+    public $eventId;
     public $isCancelled = false;
 
     public function getServiceProperty()
@@ -26,12 +27,18 @@ class EventStudentStatus extends Base
         return new MessageService;
     }
 
-    public function mount($student, $activityStatus, $absenceCount, $inscriptionId)
+    public function mount($student, $activityStatus, $absenceCount, $inscriptionId, $eventId)
     {
         $this->user = $student;
         $this->activityStatus = $activityStatus;
         $this->absenceCount = $absenceCount;
         $this->inscriptionId = $inscriptionId;
+        $this->eventId = $eventId;
+    }
+
+    public function sendMessage($idSend)
+    {
+        $this->emit('openSendMessage', $idSend);
     }
 
     public function render()

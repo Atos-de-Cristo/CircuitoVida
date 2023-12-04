@@ -11,6 +11,19 @@
     <x-dialog-modal id="myModal" wire:model.defer="isOpen" maxWidth="2xl" closeModal="$set('isOpen', false)">
         <x-slot name="title">
             <div class="flex flex-row items-center">
+                @can('monitorEvent', $eventId)
+                <a
+                    class="flex"
+                    style="cursor: pointer"
+                    wire:click="sendMessage({{ $user->id }})"
+                    class="font-bold text-md text-blue-500 hover:underline ml-2 cursor-pointer {{ $user->id == Auth::user()->id ? 'pointer-events-none' : '' }}"
+                >
+                    <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset($user->profile_photo_url) }}"
+                    width="32" height="32" alt="{{ $user->name }}" />
+                    <span class="truncate mt-1 text-sm font-medium group-hover:text-slate-800">{{ $user->name
+                        }}</span>
+                </a>
+                @else
                 <a href="{{ route('userDetails', $user->id) }}" class="flex">
                     <img class="w-10 h-10 rounded-full" src="{{ asset($user->profile_photo_url) }}"
                         alt="{{ $user->name }}" />
@@ -18,6 +31,7 @@
                 <p class="ml-2 text-base font-semibold leading-none text-gray-900 dark:text-white">
                     <a href="{{ route('userDetails', $user->id) }}">{{ $user->name }}</a>
                 </p>
+                @endCan
             </div>
         </x-slot>
 
