@@ -40,6 +40,6 @@ class EventFrequency extends Component
 
         $frequencyService->create($request);
 
-         $this->isOpenFrequency = false;
+        $this->isOpenFrequency = false;
     }
 }

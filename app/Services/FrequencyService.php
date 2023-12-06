@@ -32,8 +32,7 @@ class FrequencyService extends BaseService
 
     public function create(array $data): bool
     {
-        $dataValidate = $this->validateForm($data);
-        return $this->repository->insert($dataValidate);
+        return $this->repository->insert($data);
     }
 
     public function update(array $data, int $id): bool
