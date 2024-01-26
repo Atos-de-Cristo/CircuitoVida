@@ -251,17 +251,20 @@
 
                         @if ($user->pending_answers > 0)
                         <div class="ml-3">
-
                             <button
                                 wire:click.prevent="correctAnswers({{$user->id}})" type="button"
                                 class="btn-primary">
                                 <x-icon-circle-check class="h-4 w-4 " /> <small class="pr-2 ml-1"> Corrigir</small>
                             </button>
-
                         </div>
                         @else
-                        <div class=" mt-1 md:mt-0">
-                            {{ ($user->status_correct) ? $user->correct_percentage : 'Pendente de correção' }}
+                        <div class="flex flex-col items-center gap-1">
+                            {{ ($user->status_correct) ? ceil($user->correct_percentage).'%' : 'Pendente de correção' }}
+                            <button
+                                wire:click.prevent="correctAnswers({{$user->id}})" type="button"
+                                class="btn-primary">
+                                <x-icon-circle-check class="h-4 w-4 " /> <small class="pr-2 ml-1"> Ver</small>
+                            </button>
                         </div>
                         @endif
                     </div>
