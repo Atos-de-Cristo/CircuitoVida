@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class EventActivityQuestion extends Component
 {
-    public $atvId, $title, $questionId;
+    public $atvId, $title, $questionId, $eventId;
     public $type = 'aberta';
     public $options = [];
     public $answers = [];
