@@ -27,7 +27,7 @@
                     <x-icon-person-chalkboard class="w-6 h-6" />
                     <span class="ml-2 font-bold">Monitores</span>
                 </div>
-                <div class="flex  items-center sm:flex-row mb-5">
+                <div class="flex flex-wrap gap-1 items-center sm:flex-row mb-5">
                     @forelse ($event->monitors as $monitor)
                     <div class="flex items-center ml-2">
                         <img class="w-8 h-8 bg-black rounded-full " src="{{ asset($monitor->profile_photo_url) }}"
