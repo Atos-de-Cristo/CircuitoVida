@@ -120,7 +120,7 @@ class EventActivityQuestion extends Component
 
                 if ($error) {
                     return session()->flash('message', [
-                        'text' => 'É necessário selecionar pelo menos uma opção correta!' ,
+                        'text' => 'É necessário selecionar pelo menos uma opção correta!',
                         'type' => 'error',
                     ]);
                 }
