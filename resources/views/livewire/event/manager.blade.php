@@ -96,7 +96,7 @@
                             @endcan
                         </div>
                         <div class="border-t border-gray-200 pb-2">
-                            @forelse ($module->lessons as $lesson)
+                            @forelse ($module->lessons->sortBy('title') as $lesson)
                             <div class="border-t border-gray-200 pb-2 py-2 flex items-center justify-between">
                                 <div class="flex items-center">
                                     <x-icon-circle-play class="w-5 h-5" />
