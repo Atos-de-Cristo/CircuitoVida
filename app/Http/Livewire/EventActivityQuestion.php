@@ -96,6 +96,7 @@ class EventActivityQuestion extends Component
                 'type' => 'required',
                 'title' => 'required',
                 'options.*.text' => 'required_if:type,multi',
+                'options.*.correct' => "required_if:type,multi",
             ]);
 
             $request = [
@@ -107,6 +108,22 @@ class EventActivityQuestion extends Component
 
             if ($this->questionId) {
                 $request['id'] = $this->questionId;
+            }
+
+            if ($request['type'] === 'multi') {
+                $error = true;
+                foreach ($request['options'] as $options) {
+                    if ($options['correct'] === true) {
+                        $error = false;
+                    }
+                }
+
+                if ($error) {
+                    return session()->flash('message', [
+                        'text' => 'É necessário selecionar pelo menos uma opção correta!' ,
+                        'type' => 'error',
+                    ]);
+                }
             }
 
             $this->service->store($request);

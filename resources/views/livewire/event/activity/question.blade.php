@@ -55,7 +55,7 @@
                         <input wire:model.lazy="options.{{ $index }}.text" type="text" class="input-form">
                         <label class="ml-2">
                             <input wire:model="options.{{ $index }}.correct" type="checkbox"
-                                class="mr-1 border-gray-400">
+                                class="mr-1 border-gray-400" wire:key="{{ $index }}">
                             <span class="text-sm">Correta</span>
                         </label>
                         <button type="button" wire:click="removeOption({{ $index }})"
