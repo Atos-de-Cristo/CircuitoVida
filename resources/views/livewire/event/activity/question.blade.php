@@ -162,7 +162,8 @@
                                                 name="question_{{ $question->id }}"
                                                 wire:model="answers.{{ $question->id }}"
                                                 value="{{ $option->text }}"
-                                                class="mr-2" {{ $question->response == $option->text ? 'checked' : '' }}
+                                                class="mr-2 {{ auth()->user()->hasPermissionTo('admin') && $option->correct ? 'bg-green-600' : '' }}"
+                                                {{ $question->response == $option->text ? 'checked' : '' }}
                                             >
                                             <span class="text-sm">{{ $option->text }}</span>
                                         </label>
