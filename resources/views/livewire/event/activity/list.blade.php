@@ -7,23 +7,23 @@
             @endif
         @endcan
     @endif
-        <div class="flex items-center justify-between">
-            <div class="flex justify-start items-baseline">
-                <x-icon-file-word />
+        <div class="flex justify-between items-baseline mb-2">
+            <x-icon-file-word class="pt-1" />
+            <div class="flex flex-1 justify-start -mt-1">
                 <a
                     href="{{ route('eventActivityQuestion', ['eventId' => $activity->lesson->event->id, 'id' => $activity->id]) }}"
-                    class="font-bold text-md text-blue-500 hover:underline  ml-2 flex flex-col"
+                    class="font-bold text-md text-blue-500 hover:underline  ml-2 flex flex-col mt-0"
                 >
+                    <p class="">{{ $activity->title }}</p>
                     @if ($activity->type == 'E')
                         @can('admin')
-                            <small>({{$activity->users->pluck('name')->implode(', ')}})</small>
+                            <p>({{$activity->users->pluck('name')->implode(', ')}})</p>
                         @endcan
                     @endif
-                    {{ $activity->title }}
                     <small>{{ $activity->description }}</small>
                 </a>
             </div>
-            <div class="flex items-center mr-2">
+            <div class="flex items-center mr-2 min-w-[56px]">
                 @can('admin')
                     <livewire:event-activity-actions :activityId="$activity->id" :lessonId="$lessonId" :key="rand().$activity->id" />
                 @endcan
