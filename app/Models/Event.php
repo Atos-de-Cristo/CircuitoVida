@@ -39,6 +39,10 @@ class Event extends Model implements Auditable
         return $this->hasMany(Lesson::class);
     }
 
+    public function attachments(): HasMany{
+        return $this->hasMany(Attachment::class);
+    }
+
     public function monitors(): BelongsToMany {
         return $this->belongsToMany(User::class);
     }

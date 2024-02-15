@@ -58,7 +58,7 @@ class EventService
 
     public function find(string $id): Event
     {
-        return $this->repository->with('inscriptions')->with('modules')->with('lessons')->find($id);
+        return $this->repository->with('inscriptions')->with('modules')->with('lessons')->with('attachments')->find($id);
     }
 
     public function copyCourseData($data): bool

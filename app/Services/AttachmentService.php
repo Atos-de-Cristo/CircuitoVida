@@ -12,8 +12,8 @@ class AttachmentService extends BaseService
     protected $messageService;
 
     protected $rules = [
-        'lesson_id' => 'numeric',
-        'event_id' => 'numeric',
+        'lesson_id' => ['nullable', 'numeric'],
+        'event_id' => ['nullable', 'numeric'],
         'user_id' => 'numeric',
         'type' => 'required|string',
         'name' => 'required|string',
@@ -29,7 +29,7 @@ class AttachmentService extends BaseService
 
     public function getAll(array $filter = []): Collection
     {
-        return $this->repository->with('lesson')->where($filter)->get();
+        return $this->repository->with('lesson')->with('event')->where($filter)->get();
     }
 
     public function getAllCourseActive(int $userId): Collection
@@ -65,14 +65,22 @@ class AttachmentService extends BaseService
     private function create(array $data): Attachment
     {
         $dataValidate = $this->validateForm($data);
-        $data = $this->repository->create($dataValidate);
+        $ret = $this->repository->create($dataValidate);
 
+        if (isset($ret->lesson)) {
+            $message = 'Novo anexo cadastrado em '.$ret->lesson->title;
+            $send = $ret->lesson->event->inscriptions->pluck('user_id');
+        }
+        if (isset($ret->event)) {
+            $message = 'Novo anexo cadastrado no curso '.$ret->event->name;
+            $send = $ret->event->inscriptions->pluck('user_id');
+        }
         $this->messageService->sendGroup([
-            'message' => 'Novo anexo cadastrado em '.$data->lesson->title,
-            'list_for' => $data->lesson->event->inscriptions->pluck('user_id')
+            'message' => $message,
+            'list_for' => $send
         ]);
 
-        return $data;
+        return $ret;
     }
 
     private function update(array $data, int $id): bool

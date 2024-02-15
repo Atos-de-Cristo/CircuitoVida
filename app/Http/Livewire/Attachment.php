@@ -13,16 +13,19 @@ class Attachment extends Base
     use WithFileUploads;
 
     public string | null $attachmentId;
-    public $attachment, $lessonId;
+    public string | null $lessonId = null;
+    public string | null $eventId = null;
+    public $attachment;
     public $isOpenAttachment = false;
 
     protected $listeners = [
         'refreshAttachment' => '$refresh'
     ];
 
-    public function mount($lessonId, $attachmentId, AttachmentService $service)
+    public function mount($attachmentId, AttachmentService $service, $lessonId = null, $eventId = null)
     {
         $this->lessonId = $lessonId;
+        $this->eventId = $eventId;
         $this->attachmentId = $attachmentId;
 
         if ($attachmentId) {
@@ -40,9 +43,8 @@ class Attachment extends Base
     public function store(AttachmentService $service)
     {
         try {
-            if ($this->lessonId) {
-                $this->form['lesson_id'] = $this->lessonId;
-            }
+            $this->form['lesson_id'] = $this->lessonId;
+            $this->form['event_id'] = $this->eventId;
 
             if (isset($this->attachmentId)) {
                 $this->form['id'] = $this->attachmentId;
@@ -56,8 +58,13 @@ class Attachment extends Base
 
             $service->store($this->form);
 
-            $this->emit('refreshClassroom');
             $this->emit('refreshAttachment');
+            if ($this->lessonId) {
+                $this->emit('refreshClassroom');
+            }
+            if ($this->eventId) {
+                $this->emit('refreshManage');
+            }
             $this->isOpenAttachment = false;
         } catch (ValidationException $e) {
             $this->setErrorMessages($e->validator->errors());

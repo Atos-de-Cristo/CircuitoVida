@@ -175,6 +175,39 @@
         </div>
         <div class="sm:col-span-2 md:col-span-1">
             <div class="text-xl font-bold mb-4 flex items-center justify-between">
+                <div class="flex items-center">
+                    <x-icon-cloud-arrow-up  />
+                    <span class="ml-2">Material de apoio do curso</span>
+                </div>
+                @cannot('aluno')
+                <livewire:attachment :eventId='$eventId' :attachmentId='null' :key="rand()" />
+                @endCan
+            </div>
+            <div
+                class="bg-white border-t-2 dark:border-indigo-900 dark:bg-slate-700 overflow-hidden shadow-xl rounded-md mt-2 mb-4">
+                <div class="h-32 overflow-auto px-4 py-4">
+                    @forelse ($event->attachments as $attachment)
+                    <div class="flex items-center justify-between ">
+                        <div class="flex items-center">
+                            <x-icon-paperclip  />
+                            <a href="{{ $attachment->path }}" target="_blank"
+                                class="font-bold text-md text-blue-500 hover:underline ml-2">
+                                {{ $attachment->name }}.{{ pathinfo($attachment->path, PATHINFO_EXTENSION) }}
+                            </a>
+                        </div>
+                        @can('admin')
+                        <div class="flex items-center mr-2">
+                            <livewire:attachment :eventId='$eventId' :attachmentId='$attachment->id'
+                                :key="rand().$attachment->id" />
+                        </div>
+                        @endcan
+                    </div>
+                    @empty
+                    <span class="text-red-500">Nenhum anexo cadastrado</span>
+                    @endforelse
+                </div>
+            </div>
+            <div class="text-xl font-bold mb-4 flex items-center justify-between">
                 <div class="flex">
                     <x-icon-graduation-cap class="w-8 h-8" />
                     <span class="ml-2">ALUNOS</span>
