@@ -120,7 +120,7 @@
                                             {{ $question->response_status == 'errado' ? 'bg-red-100 border-red-300 dark:border-red-700 dark:bg-red-900': '' }}
                                             {{ $question->response_status == 'pendente' ? 'bg-gray-100 border-gray-300 dark:border-gray-700 dark:bg-gray-900' : '' }}">
                             <div class="flex flex-row justify-between">
-                                <h3 class="text-lg font-semibold mb-4 mr-10">{{ $question->title }}</h3>
+                                <h3 class="text-lg font-semibold mb-4 mr-10 whitespace-pre-line">{{ $question->title }}</h3>
                                 @can('admin')
                                 <div class="flex flex-row gap-1">
                                     <button wire:click.prevent="edit({{ $question->id }})" class="mr-2 btn-icon">
