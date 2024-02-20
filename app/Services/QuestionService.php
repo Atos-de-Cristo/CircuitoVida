@@ -81,6 +81,10 @@ class QuestionService extends BaseService
         $totalAnswers = $answers_correct + $answers_wrong;
         $checkCorrect = ($totalAnswers > 0) ? round(($answers_correct / $totalAnswers) * 100, 2).'%' : 'Pendente correção!';
 
+        if ($answers_pending > 0) {
+            $checkCorrect = 'Pendente correção!';
+        }
+
         return [
             'data' => $results,
             'correct' => $checkCorrect,

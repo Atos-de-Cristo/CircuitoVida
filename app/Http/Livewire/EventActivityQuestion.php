@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
+use PHPUnit\Event\Emitter;
 
 class EventActivityQuestion extends Component
 {
@@ -162,19 +163,30 @@ class EventActivityQuestion extends Component
         ]);
 
         foreach ($this->answers as $questionId => $answer) {
+            $dataQuestion = $this->questions['data']->find($questionId);
+            $status = 'pendente';
+            if ($dataQuestion->type == 'multi') {
+                $options = json_decode($dataQuestion->options);
+                $opt = array_values(array_filter($options, function($value) use ($answer) {
+                    return $value->text == $answer;
+                }));
+                $itemStatus = array_shift($opt)->correct;
+                $status = $itemStatus ? 'correto' : 'errado';
+            }
             $this->serviceResponse->store([
                 'user_id' => Auth::user()->id,
                 'question_id' => $questionId,
                 'response' => $answer,
+                'status' => $status
             ]);
         }
 
-        $this->resetInputAnswers();
         session()->flash('message', [
             'text' => 'As respostas foram salvas com sucesso!' ,
             'type' => 'success',
         ]);
-
+        $this->resetInputAnswers();
+        $this->emit('refreshActivityQuestion');
     }
 
     public function resetInputAnswers()
