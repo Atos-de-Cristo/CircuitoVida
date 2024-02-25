@@ -5,7 +5,7 @@
     <div class="flex flex-col md:flex-row items-start   justify-between mb-2">
         <div class="flex items-start mb-2 md:mb-0">
             <div class="ml-2 text-xl font-bold">
-                Cursos Ativos
+                Ativos
             </div>
         </div>
         <div class="hidden md:inline">
@@ -68,16 +68,11 @@
         </x-slot>
     </x-card>
 
-    <div class="flex flex-col md:flex-row items-start   justify-between mb-2">
-        <div class="flex items-start mb-2 md:mb-0">
-            <div class="ml-2 text-xl font-bold">
-                Cursos Finalizados
-            </div>
-        </div>
-    </div>
     <x-card>
         <x-slot name="headerCard">
-            <x-search-form placeholder="Buscar eventos..."/>
+            <div class="ml-2 text-xl font-bold">
+                Finalizados
+            </div>
         </x-slot>
 
         <x-slot name="contentCard">
