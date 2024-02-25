@@ -31,7 +31,11 @@
                         </label>
                         <label>
                             <input wire:model="type" type="radio" value="multi" class="mr-1">
-                            <span class="text-sm">Múltipla Escolha</span>
+                            <span class="text-sm">Única Escolha</span>
+                        </label>
+                        <label>
+                            <input wire:model="type" type="radio" value="multiple" class="mr-1 ml-4">
+                            <span class="text-sm">Mulitpla Escolha</span>
                         </label>
                         @error('type')
                         <span class="text-red-500">{{ $message }}</span>
@@ -46,7 +50,7 @@
                     <span class="text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
-                @if ($type === 'multi')
+                @if ($type === 'multi' || $type === 'multiple')
                 <div class="mb-4">
                     <label class="label-input-form">Opções:</label>
                     @if (!is_null($options))
@@ -115,10 +119,16 @@
                     <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         @forelse ($this->questions['data'] as $question)
                         <div
-                            class="mb-4 border border-gray-300  dark:border-gray-700 rounded-md p-4
-                                            {{ $question->response_status == 'correto' ? 'bg-green-100 border-green-300 dark:border-green-800 dark:bg-green-900' : '' }}
-                                            {{ $question->response_status == 'errado' ? 'bg-red-100 border-red-300 dark:border-red-700 dark:bg-red-900': '' }}
-                                            {{ $question->response_status == 'pendente' ? 'bg-gray-100 border-gray-300 dark:border-gray-700 dark:bg-gray-900' : '' }}">
+                            class="
+                                mb-4
+                                border
+                                border-gray-300
+                                dark:border-gray-700
+                                rounded-md p-4
+                                {{ $question->response_status == 'correto' ? 'bg-green-100 border-green-300 dark:border-green-800 dark:bg-green-900' : '' }}
+                                {{ $question->response_status == 'errado' ? 'bg-red-100 border-red-300 dark:border-red-700 dark:bg-red-900': '' }}
+                                {{ $question->response_status == 'pendente' ? 'bg-gray-100 border-gray-300 dark:border-gray-700 dark:bg-gray-900' : '' }}"
+                            >
                             <div class="flex flex-row justify-between">
                                 <h3 class="text-lg font-semibold mb-4 mr-10 whitespace-pre-line">{{ $question->title }}</h3>
                                 @can('admin')
@@ -162,6 +172,33 @@
                                                 name="question_{{ $question->id }}"
                                                 wire:model="answers.{{ $question->id }}"
                                                 value="{{ $option->text }}"
+                                                class="mr-2 {{ auth()->user()->hasPermissionTo('admin') && $option->correct ? 'bg-green-600' : '' }}"
+                                                {{ $question->response == $option->text ? 'checked' : '' }}
+                                            >
+                                            <span class="text-sm">{{ $option->text }}</span>
+                                        </label>
+                                    @empty
+                                        <span class="text-red-500">Nenhuma opção cadastrada</span>
+                                    @endforelse
+                                @endif
+                                @error("answers.{$question->id}")
+                                    <span class="text-red-500">{{ $message }}</span>
+                                @enderror
+                            @elseif ($question->type === 'multiple')
+                                @if ($question->response)
+                                    <p>Resposta: {{ $question->response }}</p>
+                                    @if ($question->response_status == 'errado')
+                                        <small>Correta: {{ $this->getCorrectOption($question->options) }}</small>
+                                    @endif
+                                @else
+                                    @forelse (json_decode($question->options) as $index => $option)
+                                        <label class="flex items-center">
+                                            <input
+                                                {{ auth()->check() && auth()->user()->hasPermissionTo('admin') ? 'disabled' : '' }}
+                                                type="checkbox"
+                                                name="question_{{ $question->id }}.{{ $option->text }}"
+                                                wire:model="answers.{{ $question->id }}.{{ $option->text }}"
+                                                value="check"
                                                 class="mr-2 {{ auth()->user()->hasPermissionTo('admin') && $option->correct ? 'bg-green-600' : '' }}"
                                                 {{ $question->response == $option->text ? 'checked' : '' }}
                                             >

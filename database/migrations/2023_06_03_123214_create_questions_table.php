@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Activity::class);
-            $table->enum('type', ['aberta', 'multi']);
+            $table->enum('type', ['aberta', 'multi', 'multiple']);
             $table->text('title');
             $table->json('options')->nullable();
             $table->timestamps();

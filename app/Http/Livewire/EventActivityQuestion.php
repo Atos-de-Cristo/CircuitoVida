@@ -127,6 +127,22 @@ class EventActivityQuestion extends Component
                 }
             }
 
+            if ($request['type'] === 'multiple') {
+                $count = 0;
+                foreach ($request['options'] as $options) {
+                    if ($options['correct'] === true) {
+                        $count++;
+                    }
+                }
+
+                if ($count <= 1) {
+                    return session()->flash('message', [
+                        'text' => 'É necessário selecionar pelo menos duas opções corretas!',
+                        'type' => 'error',
+                    ]);
+                }
+            }
+
             $this->service->store($request);
 
             $this->resetInputCreate();
@@ -161,7 +177,6 @@ class EventActivityQuestion extends Component
         $this->validate([
             'answers.*' => 'required',
         ]);
-
         foreach ($this->answers as $questionId => $answer) {
             $dataQuestion = $this->questions['data']->find($questionId);
             $status = 'pendente';
@@ -173,12 +188,18 @@ class EventActivityQuestion extends Component
                 $itemStatus = array_shift($opt)->correct;
                 $status = $itemStatus ? 'correto' : 'errado';
             }
-            $this->serviceResponse->store([
-                'user_id' => Auth::user()->id,
-                'question_id' => $questionId,
-                'response' => $answer,
-                'status' => $status
-            ]);
+            if ($dataQuestion->type == 'multiple') {
+                $options = json_decode($dataQuestion->options);
+                $resultado = $this->verificarCorrespondencia($answer, $options);
+                dd($answer, $options, $resultado);
+                $status = $itemStatus ? 'correto' : 'errado';
+            }
+            // $this->serviceResponse->store([
+            //     'user_id' => Auth::user()->id,
+            //     'question_id' => $questionId,
+            //     'response' => $answer,
+            //     'status' => $status
+            // ]);
         }
 
         session()->flash('message', [
@@ -214,5 +235,23 @@ class EventActivityQuestion extends Component
         $data = json_decode($options);
         $correctOption = collect($data)->firstWhere('correct', true);
         return $correctOption ? $correctOption->text : '';
+    }
+
+    function verificarCorrespondencia($array01, $array02) {
+        // Verificar se todas as chaves marcadas como "check" correspondem aos textos em array02 com correct igual a true
+        foreach ($array01 as $key => $value) {
+            if ($value && !collect($array02)->contains('text', $key)) {
+                return false;
+            }
+        }
+
+        // Verificar se todos os itens em array02 com correct igual a true estão presentes em array01
+        foreach ($array02 as $item) {
+            if ($item->correct && !isset($array01[$item->text])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
