@@ -4,7 +4,7 @@ namespace App\Services;
 use App\Enums\EventStatus;
 use App\Models\Event;
 use App\Models\Module;
-use Error;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
@@ -48,10 +48,20 @@ class EventService
             ->get();
     }
 
+    public function paginateOld($search, $sortBy, $sortDirection): LengthAwarePaginator
+    {
+        return $this->repository
+            ->where('name', 'LIKE', '%' . $search . '%')
+            ->where('end_date', '<', Carbon::now())
+            ->orderBy($sortBy, $sortDirection)
+            ->paginate(12);
+    }
+
     public function paginate($search, $sortBy, $sortDirection): LengthAwarePaginator
     {
         return $this->repository
             ->where('name', 'LIKE', '%' . $search . '%')
+            ->where('end_date', '>', Carbon::now())
             ->orderBy($sortBy, $sortDirection)
             ->paginate(12);
     }

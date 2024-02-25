@@ -38,11 +38,12 @@ class Event extends Component
     public function render(EventService $service, UserService $userService, CategoryService $categoryService)
     {
         $dataAll = $service->paginate($this->search, $this->sortBy, $this->sortDirection);
+        $dataOld = $service->paginateOld($this->search, $this->sortBy, $this->sortDirection);
         $optMonitors = $userService->getMonitors();
         $typesList = EventType::cases();
         $statusList = EventStatus::cases();
         $categoryList = $categoryService->getAll();
-        return view('livewire.event.list', compact('dataAll', 'typesList', 'statusList', 'optMonitors', 'categoryList'));
+        return view('livewire.event.list', compact('dataAll', 'typesList', 'statusList', 'optMonitors', 'categoryList', 'dataOld'));
     }
 
     public function create()
