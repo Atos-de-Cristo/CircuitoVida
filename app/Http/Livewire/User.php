@@ -73,7 +73,7 @@ class User extends Component
         $request = [
             'name' => $this->name,
             'email' => $this->email,
-            'permissions' => $this->permissions,
+            'permissions' => array_filter($this->permissions),
             'password' => $this->password
         ];
 
