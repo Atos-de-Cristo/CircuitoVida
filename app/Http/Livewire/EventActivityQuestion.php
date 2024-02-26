@@ -239,8 +239,8 @@ class EventActivityQuestion extends Component
     public function getCorrectOption($options)
     {
         $data = json_decode($options);
-        $correctOption = collect($data)->firstWhere('correct', true);
-        return $correctOption ? $correctOption->text : '';
+        $correctOption = collect($data)->where('correct', true)->where('correct', true)->pluck('text')->implode(', ');
+        return $correctOption ?? '';
     }
 
     function verificationMultipleQuestions($optForm, $optBase) {
