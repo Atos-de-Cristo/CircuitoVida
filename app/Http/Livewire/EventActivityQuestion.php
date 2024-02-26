@@ -239,7 +239,7 @@ class EventActivityQuestion extends Component
     public function getCorrectOption($options)
     {
         $data = json_decode($options);
-        $correctOption = collect($data)->where('correct', true)->where('correct', true)->pluck('text')->implode(', ');
+        $correctOption = collect($data)->where('correct', true)->pluck('text')->implode(', ');
         return $correctOption ?? '';
     }
 
