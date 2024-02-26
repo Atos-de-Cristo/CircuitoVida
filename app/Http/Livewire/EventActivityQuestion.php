@@ -190,16 +190,22 @@ class EventActivityQuestion extends Component
             }
             if ($dataQuestion->type == 'multiple') {
                 $options = json_decode($dataQuestion->options);
-                $resultado = $this->verificarCorrespondencia($answer, $options);
-                dd($answer, $options, $resultado);
-                $status = $itemStatus ? 'correto' : 'errado';
+                $resultCheck = $this->verificationMultipleQuestions($answer, $options);
+                $status = $resultCheck ? 'correto' : 'errado';
+                $answer = implode(', ', array_keys($answer));;
             }
-            // $this->serviceResponse->store([
-            //     'user_id' => Auth::user()->id,
-            //     'question_id' => $questionId,
-            //     'response' => $answer,
-            //     'status' => $status
-            // ]);
+            $params = [
+                'user_id' => Auth::user()->id,
+                'question_id' => $questionId,
+                'response' => $answer,
+                'status' => $status
+            ];
+            $this->serviceResponse->store([
+                'user_id' => Auth::user()->id,
+                'question_id' => $questionId,
+                'response' => $answer,
+                'status' => $status
+            ]);
         }
 
         session()->flash('message', [
@@ -237,17 +243,20 @@ class EventActivityQuestion extends Component
         return $correctOption ? $correctOption->text : '';
     }
 
-    function verificarCorrespondencia($array01, $array02) {
-        // Verificar se todas as chaves marcadas como "check" correspondem aos textos em array02 com correct igual a true
-        foreach ($array01 as $key => $value) {
-            if ($value && !collect($array02)->contains('text', $key)) {
+    function verificationMultipleQuestions($optForm, $optBase) {
+        $optFormCheck = array_filter($optForm, function($value) {
+            return $value === "check";
+        });
+
+        foreach ($optFormCheck as $key => $value) {
+            $item = collect($optBase)->firstWhere('text', $key);
+            if (!$item || !$item->correct) {
                 return false;
             }
         }
 
-        // Verificar se todos os itens em array02 com correct igual a true estão presentes em array01
-        foreach ($array02 as $item) {
-            if ($item->correct && !isset($array01[$item->text])) {
+        foreach ($optBase as $item) {
+            if ($item->correct && (!isset($optForm[$item->text]) || $optForm[$item->text] != "check")) {
                 return false;
             }
         }
