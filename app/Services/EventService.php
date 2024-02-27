@@ -89,6 +89,12 @@ class EventService
                     $newLesson->event_id = $data['event_id'];
                     $newLesson->save();
 
+                    foreach ($lesson->attachments as $attachment) {
+                        $newAttachment = $attachment->replicate();
+                        $newAttachment->lesson_id = $newLesson->id;
+                        $newAttachment->save();
+                    }
+
                     foreach ($lesson->activities as $activity) {
                         $newActivity = $activity->replicate()->fill(['type', 'G']);
                         $newActivity->lesson_id = $newLesson->id;
