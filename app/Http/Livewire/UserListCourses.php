@@ -5,11 +5,10 @@ namespace App\Http\Livewire;
 use App\Enums\InscriptionStatus;
 use App\Services\EventService;
 use App\Services\InscriptionService;
-use Carbon\Exceptions\Exception;
 
 class UserListCourses extends Base
 {
-    public $user, $activity, $inscId, $transferCourseId;
+    public $user, $activity, $inscId, $transferCourseId, $courseId;
     public $isOpen = false;
     public $isOpenTransf = false;
 
