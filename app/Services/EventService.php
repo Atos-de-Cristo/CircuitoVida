@@ -45,6 +45,7 @@ class EventService
             ->with('inscriptions')
             ->where('status', '!=', EventStatus::P->name)
             ->where('status', '!=', EventStatus::F->name)
+            ->where('end_date', '>', Carbon::now())
             ->get();
     }
 
