@@ -94,7 +94,7 @@
             <form class="">
                 <div class="bg-white border-t-2 dark:border-indigo-900 dark:bg-slate-800 shadow-xl rounded-md ">
                     <div class="bg-gray-50 dark:bg-gray-700 text-center rounded-t-md">
-                        <div class="flex justify-center items-center h-full p-2">
+                        <div class="flex flex-col gap-4 justify-center items-center h-full p-2">
                             <div class="flex-grow">
                                 <h2 class="text-lg text-gray-800 dark:text-white font-bold ">
                                     Responder Questões
@@ -105,9 +105,9 @@
                             <div class="ml-auto mr-2">
                                 <h3 class="text-lg text-gray-800 dark:text-white font-bold">
                                     @if (strpos($this->questions['correct'], '%') !== false)
-                                    {{ $this->questions['correct'] }} Acertos
+                                    <span class="{{ $this->questions['correct'] >= 60 ? 'text-green-600' : 'text-red-600' }}">{{ $this->questions['correct'] }} Acertos</span>
                                     @else
-                                    {{ $this->questions['correct'] }}
+                                    <span class="text-red-600">{{ $this->questions['correct'] }}</span>
                                     @endif
                                 </h3>
                             </div>

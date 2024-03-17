@@ -47,7 +47,7 @@ class InscriptionService extends BaseService
         }
 
         $lessonActivity = [];
-        if ($req->event !== null && $req->event->modules !== null) {
+        if ($req->event !== null && $req->event->modules !== null && $req->event->end_date > Carbon::now()) {
             foreach ($req->event->modules as $mod) {
                 $lessonActivity[$mod->id]['event_id'] = $req->event->id;
                 $lessonActivity[$mod->id]['event'] = $req->event->name;
