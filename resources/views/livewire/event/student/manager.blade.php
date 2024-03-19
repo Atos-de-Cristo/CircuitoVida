@@ -38,25 +38,14 @@
                     >
                         <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset($aluno->user->profile_photo_url) }}"
                             width="32" height="32" alt="{{ $aluno->user->name }}" />
-                        @if (count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2)
-                            <livewire:event-student-status
-                                :inscriptionId="$aluno->id"
-                                :eventId="$event_id"
-                                :student="$aluno->user"
-                                :activityStatus="$aluno->user->activityStatus"
-                                :absenceCount="$aluno->user->absenceCount"
-                                :key="rand().$aluno->id"
-                            />
-                        @else
-                        <a class="font-bold text-md text-blue-500 hover:underline ml-2 cursor-pointer"
-                            href="{{route('userDetails', $aluno->user->id)}}">
-                            <span
-                                class="truncate ml-1 text-sm font-medium group-hover:text-slate-800
-                            {{ (count($aluno->user->activityStatus) > 0 || $aluno->user->absenceCount > 2) ? 'text-white' : '' }}">
-                                {{ $aluno->user->name }}
-                            </span>
-                        </a>
-                        @endif
+                        <livewire:event-student-status
+                            :inscriptionId="$aluno->id"
+                            :eventId="$event_id"
+                            :student="$aluno->user"
+                            :activityStatus="$aluno->user->activityStatus"
+                            :absenceCount="$aluno->user->absenceCount"
+                            :key="rand().$aluno->id"
+                        />
                     </div>
                 </div>
                 @endcan

@@ -246,8 +246,6 @@
                 <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     @forelse ($this->userQuestions as $user)
                     <div class="flex  flex-row justify-start items-start py-2 px-4 mb-2 {{$user->correct_percentage < 60 ? 'bg-infor' : ''}}">
-
-
                         <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset($user->profile_photo_url) }}"
                             width="32" height="32" alt="{{ $user->name }}" />
                         <span class="flex-1 truncate ml-2 text-sm font-medium group-hover:text-slate-800">
