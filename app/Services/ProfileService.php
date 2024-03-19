@@ -13,8 +13,6 @@ class ProfileService extends BaseService
         'sex'=> 'required',
         'birth'=> 'required',
         'marital_status'=> 'required',
-        'date_wedding'=> 'required',
-        'marital_status'=> 'required',
         'phone'=> 'required',
     ];
 
@@ -42,14 +40,14 @@ class ProfileService extends BaseService
 
     public function store(array $data): Profile | bool
     {
-        // $this->validateForm($data);
+        $this->validateForm($data, $data['userId']);
         $getData = $this->find();
-        if(isset($data['userId']) && $data['userId'] !== null){            
+        if(isset($data['userId']) && $data['userId'] !== null){
             $getData = $this->findUser($data['userId']);
            }
         if ($getData == null) {
             $data['user_id'] = Auth::user()->id;
-            if(isset($data['userId']) && $data['userId'] !== null){            
+            if(isset($data['userId']) && $data['userId'] !== null){
              $data['user_id'] = $data['userId'];
              unset($data['userId']);
             }

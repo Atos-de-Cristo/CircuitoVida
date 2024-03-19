@@ -9,7 +9,8 @@ use Livewire\Component;
 
 class Profile extends Component
 {
-    public $form, $userId;
+    public $cpf, $sex, $birth, $marital_status, $phone, $userId;
+    public $leader, $date_baptism, $church, $deficiency;
 
     public function getProfileServiceProperty()
     {
@@ -20,9 +21,20 @@ class Profile extends Component
     {
         $this->userId = $userId;
         if ($userId) {
-            $this->form = $this->profileService->findUser($userId);
+            $data = $this->profileService->findUser($userId);
         } else {
-            $this->form = $this->profileService->find();
+            $data = $this->profileService->find();
+        }
+        if ($data) {
+            $this->cpf = $data['cpf'];
+            $this->sex = $data['sex'];
+            $this->birth = $data['birth'];
+            $this->marital_status = $data['marital_status'];
+            $this->phone = $data['phone'];
+            $this->deficiency = $data['deficiency'];
+            $this->leader = $data['leader'];
+            $this->date_baptism = $data['date_baptism'];
+            $this->church = $data['church'];
         }
     }
     public function render()
@@ -53,11 +65,17 @@ class Profile extends Component
     public function store()
     {
         try {
-            if($this->userId != null)
-            {
-                $this->form['userId'] = $this->userId;
-            }
-            $this->profileService->store($this->form);
+            $request = [
+                'userId' => ($this->userId) ? $this->userId : null,
+                'cpf' => $this->cpf,
+                'sex' => $this->sex,
+                'birth' => $this->birth,
+                'marital_status' => $this->marital_status,
+                'phone' => $this->phone,
+                'deficiency' => $this->deficiency
+            ];
+
+            $this->profileService->store($request);
 
             session()->flash('message', [
                 'text' => 'Perfil atualizado com sucesso.' ,
@@ -65,7 +83,6 @@ class Profile extends Component
             ]);
         } catch (ValidationException $e) {
             $errors = $e->validator->errors();
-
             $this->resetErrorBag();
 
             foreach ($errors->messages() as $field => $fieldErrors) {

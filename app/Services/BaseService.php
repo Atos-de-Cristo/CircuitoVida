@@ -10,8 +10,12 @@ class BaseService
     protected $rules;
     protected $repository;
 
-    protected function validateForm(array $data): array
+    protected function validateForm(array $data, int $id = null): array
     {
+        if ($id) {
+            $this->rules['cpf'] = 'required|unique:profiles,cpf,' . $id;
+        }
+
         $validator = Validator::make($data, $this->rules);
 
         if ($validator->fails()) {
