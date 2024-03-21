@@ -8,7 +8,7 @@
         <div class="hidden md:inline">
             <ol class="flex items-center space-x-2 text-sm">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('dashboard') }}" class="text-blue-500 hover:underline">Dashboard</a>
+                    <a href="{{ route('dashboard') }}" class="text-blue-500 hover:underline">Home</a>
                 </li>
                 <span class="text-gray-500">/</span>
                 <li class="breadcrumb-item active">Inscrições</li>

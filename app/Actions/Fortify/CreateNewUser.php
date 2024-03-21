@@ -26,6 +26,11 @@ class CreateNewUser implements CreatesNewUsers
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'cpf' => ['required', 'string', 'unique:profiles'],
+            'sex' => ['required', 'string'],
+            'birth' => ['required'],
+            'marital_status' => ['required'],
+            'phone' => ['required', 'string', 'max:15'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
@@ -37,10 +42,11 @@ class CreateNewUser implements CreatesNewUsers
                 'password' => Hash::make($input['password']),
             ]), function (User $user) use ($input) {
                 $user->givePermissionTo('aluno');
-                if (isset($input['course']) && !empty($input['course'])) {
-                    $this->inscription($user, $input['course']);
-                }
+                // if (isset($input['course']) && !empty($input['course'])) {
+                //     $this->inscription($user, $input['course']);
+                // }
                 // $this->createTeam($user);
+                $this->createProfile($user, $input);
             });
         });
     }
@@ -67,5 +73,17 @@ class CreateNewUser implements CreatesNewUsers
             'name' => explode(' ', $user->name, 2)[0]."'s Team",
             'personal_team' => true,
         ]));
+    }
+
+    protected function createProfile(User $user, array $input): void
+    {
+        $user->profile()->create([
+            'userId' => $user->id,
+            'cpf' => $input['cpf'],
+            'sex' => $input['sex'],
+            'birth' => $input['birth'],
+            'marital_status' => $input['marital_status'],
+            'phone' => $input['phone'],
+        ]);
     }
 }

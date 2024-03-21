@@ -8,7 +8,7 @@
         <div class="hidden md:inline">
             <ol class="flex items-center space-x-2 text-sm">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('dashboard') }}" class="text-blue-500 hover:underline">Dashboard</a>
+                    <a href="{{ route('dashboard') }}" class="text-blue-500 hover:underline">Home</a>
                 </li>
                 <span class="text-gray-500">/</span>
                 <li class="breadcrumb-item active">Cursos</li>
@@ -17,7 +17,7 @@
     </div>
 
     <div class="card-white px-4 py-4 overflow-hidden shadow-xl sm:rounded-lg">
-        <div class="flex flex-wrap gap-4 sm:flex-row lg:flex-row mt-4">
+        <div class="flex flex-wrap gap-4 sm:flex-row lg:flex-row">
             @forelse ($eventAll as $item)
             @if (!($item->status != App\Enums\EventStatus::A->name && $item->inscriptions->where('user_id', Auth::user()->id)->count() <= 0))
                 <div
@@ -68,6 +68,8 @@
                         @endif
                     </div>
                 </div>
+            @else
+                <p class="text-gray-600 dark:text-gray-400">Nenhum curso liberado!</p>
             @endif
             @empty
             <p class="text-gray-600 dark:text-gray-400">Nenhum evento monitorado!</p>
