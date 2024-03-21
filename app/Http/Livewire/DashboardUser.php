@@ -25,13 +25,12 @@ class DashboardUser extends Component
 
     public function insc(string $idEvent, InscriptionService $service){
         try {
-            // TODO: desativado ate cad de perfil estar 100%
-            // if (Auth::user()->profile === null) {
-            //     return redirect()->route('profile.show')->with('message', [
-            //         'text' => 'Preecha seu Perfil completo' ,
-            //         'type' => 'error',
-            //     ]);
-            // }
+            if (Auth::user()->profile === null) {
+                return redirect()->route('profile.show')->with('message', [
+                    'text' => 'Preecha seu Perfil completo' ,
+                    'type' => 'error',
+                ]);
+            }
 
             $data = [
                 'user_id' => Auth::user()->id,

@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Services\{EventService, ModuleService};
 use Livewire\Component;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Livewire\WithFileUploads;
 
 class EventManager extends Component
@@ -22,6 +23,13 @@ class EventManager extends Component
     public function mount(Request $request)
     {
         $this->eventId = $request->eventId;
+        if (Auth::user()->profile === null) {
+            return redirect()->route('profile.show')->with('message', [
+                'text' => 'Preecha seu Perfil completo' ,
+                'type' => 'error',
+            ]);
+        }
+
     }
 
     public function render(EventService $eventService, ModuleService $moduleService)
