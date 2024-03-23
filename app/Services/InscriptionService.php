@@ -124,6 +124,7 @@ class InscriptionService extends BaseService
                         if ($notResponse == false) {
                             if ($totalPendent > 0) {
                                 $statusActivity[] = [
+                                    'module' => $lesson->module->name,
                                     'lesson' => $lesson->title,
                                     'activity' => $activity->title,
                                     'pendent' => $totalPendent,
@@ -138,6 +139,7 @@ class InscriptionService extends BaseService
                                     $percent = ($totalCorrect/$totalQuestions)*100;
                                     if ($percent <= 70) {
                                         $statusActivity[] = [
+                                            'module' => $lesson->module->name,
                                             'lesson' => $lesson->title,
                                             'activity' => $activity->title,
                                             'pendent' => $totalPendent,
@@ -152,6 +154,7 @@ class InscriptionService extends BaseService
                             }
                         }else{
                             $statusActivity[] = [
+                                'module' => $lesson->module->name,
                                 'lesson' => $lesson->title,
                                 'activity' => $activity->title,
                                 'pendent' => $totalPendent,
@@ -169,7 +172,9 @@ class InscriptionService extends BaseService
                 return $item;
             });
 
-        return $results;
+        return $results->sortBy(function ($inscription) {
+            return $inscription['user']['name'];
+        });
     }
 
     public function getFrequency(string $eventId): Collection

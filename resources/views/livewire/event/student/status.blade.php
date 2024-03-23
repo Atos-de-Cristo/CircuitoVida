@@ -69,7 +69,7 @@
                                 </svg>
                             </span>
                             <div class="ml-3">
-                                <h3 class="font-bold leading-tight">{{ $activityPendent['lesson'] }}</h3>
+                                <h3 class="font-bold leading-tight">{{ $activityPendent['module'] }} -> {{ $activityPendent['lesson'] }}</h3>
                                 <p class="text-sm font-semibold">{{ $activityPendent['activity'] }}</p>
                                 <p class="text-xs italic">{{ $activityPendent['status'] }}</p>
                             </div>
