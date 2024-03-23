@@ -15,8 +15,8 @@
 
         <x-slot name="content">
             <form>
-                <div class="max-h-96 bg-gray-50 dark:bg-slate-800">
-                    <div class="flex flex-col w-full">
+                <div class="max-h-96 bg-gray-50">
+                    <div class="flex flex-col w-full dark:bg-slate-800">
                         @foreach($inscriptions as $item)
                         <div class="flex items-center justify-between border-b px-2 py-2">
                             @isset($item->user->profile_photo_url)

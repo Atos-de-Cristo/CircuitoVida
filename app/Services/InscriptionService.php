@@ -180,8 +180,10 @@ class InscriptionService extends BaseService
     public function getFrequency(string $eventId): Collection
     {
         return $this->repository
-            ->with('event', 'user', 'frequencies')
+            ->with('event', 'frequencies')
+            ->join('users', 'users.id', '=', 'inscriptions.user_id')
             ->where('inscriptions.event_id', $eventId)
+            ->orderBy('users.name', 'asc')
             ->get();
     }
 
