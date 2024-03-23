@@ -24,4 +24,9 @@ class Attachment extends Model implements Auditable
     {
         return $this->belongsTo(Event::class);
     }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

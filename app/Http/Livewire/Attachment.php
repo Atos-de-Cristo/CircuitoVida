@@ -15,6 +15,7 @@ class Attachment extends Base
     public string | null $attachmentId;
     public string | null $lessonId = null;
     public string | null $eventId = null;
+    public string | null $userId = null;
     public $attachment;
     public $isOpenAttachment = false;
 
@@ -22,10 +23,11 @@ class Attachment extends Base
         'refreshAttachment' => '$refresh'
     ];
 
-    public function mount($attachmentId, AttachmentService $service, $lessonId = null, $eventId = null)
+    public function mount(AttachmentService $service, $attachmentId = null, $lessonId = null, $userId = null, $eventId = null)
     {
         $this->lessonId = $lessonId;
         $this->eventId = $eventId;
+        $this->userId = $userId;
         $this->attachmentId = $attachmentId;
 
         if ($attachmentId) {
@@ -45,6 +47,7 @@ class Attachment extends Base
         try {
             $this->form['lesson_id'] = $this->lessonId;
             $this->form['event_id'] = $this->eventId;
+            $this->form['user_id'] = $this->userId;
 
             if (isset($this->attachmentId)) {
                 $this->form['id'] = $this->attachmentId;
@@ -62,9 +65,7 @@ class Attachment extends Base
             if ($this->lessonId) {
                 $this->emit('refreshClassroom');
             }
-            if ($this->eventId) {
-                $this->emit('refreshManage');
-            }
+            $this->emit('refreshManage');
             $this->isOpenAttachment = false;
         } catch (ValidationException $e) {
             $this->setErrorMessages($e->validator->errors());

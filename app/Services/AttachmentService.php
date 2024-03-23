@@ -14,7 +14,7 @@ class AttachmentService extends BaseService
     protected $rules = [
         'lesson_id' => ['nullable', 'numeric'],
         'event_id' => ['nullable', 'numeric'],
-        'user_id' => 'numeric',
+        'user_id' => ['nullable', 'numeric'],
         'type' => 'required|string',
         'name' => 'required|string',
         'path' => 'required|string',
