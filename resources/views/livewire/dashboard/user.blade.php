@@ -68,8 +68,6 @@
                         @endif
                     </div>
                 </div>
-            @else
-                <p class="text-gray-600 dark:text-gray-400">Nenhum curso liberado!</p>
             @endif
             @empty
             <p class="text-gray-600 dark:text-gray-400">Nenhum evento monitorado!</p>
