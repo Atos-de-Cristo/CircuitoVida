@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Services\{QuestionService, ResponseService, UserService};
+use App\Services\{ActivityService, QuestionService, ResponseService, UserService};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -37,6 +37,11 @@ class EventActivityQuestion extends Component
     public function getServiceUserProperty()
     {
         return new UserService;
+    }
+
+    public function getActivityServiceProperty()
+    {
+        return new ActivityService;
     }
 
     public function getQuestionsProperty()
@@ -174,46 +179,50 @@ class EventActivityQuestion extends Component
 
     public function storeQuestion()
     {
-        $this->validate([
-            'answers.*' => 'required',
-        ]);
-        foreach ($this->answers as $questionId => $answer) {
-            $dataQuestion = $this->questions['data']->find($questionId);
-            $status = 'pendente';
-            if ($dataQuestion->type == 'multi') {
-                $options = json_decode($dataQuestion->options);
-                $opt = array_values(array_filter($options, function($value) use ($answer) {
-                    return $value->text == $answer;
-                }));
-                $itemStatus = array_shift($opt)->correct;
-                $status = $itemStatus ? 'correto' : 'errado';
+        try {
+            $activity = $this->activityService->find($this->atvId);
+            if (count($this->answers) != $activity->questions->count()) {
+                return session()->flash('message', [
+                    'text' => 'Precisa responder todas as questões!',
+                    'type' => 'error',
+                ]);
             }
-            if ($dataQuestion->type == 'multiple') {
-                $options = json_decode($dataQuestion->options);
-                $resultCheck = $this->verificationMultipleQuestions($answer, $options);
-                $status = $resultCheck ? 'correto' : 'errado';
-                $answer = implode(', ', array_keys($answer));;
+            foreach ($this->answers as $questionId => $answer) {
+                $dataQuestion = $this->questions['data']->find($questionId);
+                $status = 'pendente';
+                if ($dataQuestion->type == 'multi') {
+                    $options = json_decode($dataQuestion->options);
+                    $opt = array_values(array_filter($options, function($value) use ($answer) {
+                        return $value->text == $answer;
+                    }));
+                    $itemStatus = array_shift($opt)->correct;
+                    $status = $itemStatus ? 'correto' : 'errado';
+                }
+                if ($dataQuestion->type == 'multiple') {
+                    $options = json_decode($dataQuestion->options);
+                    $resultCheck = $this->verificationMultipleQuestions($answer, $options);
+                    $status = $resultCheck ? 'correto' : 'errado';
+                    $answer = implode(', ', array_keys($answer));;
+                }
+                $this->serviceResponse->store([
+                    'user_id' => Auth::user()->id,
+                    'question_id' => $questionId,
+                    'response' => $answer,
+                    'status' => $status
+                ]);
             }
-            $params = [
-                'user_id' => Auth::user()->id,
-                'question_id' => $questionId,
-                'response' => $answer,
-                'status' => $status
-            ];
-            $this->serviceResponse->store([
-                'user_id' => Auth::user()->id,
-                'question_id' => $questionId,
-                'response' => $answer,
-                'status' => $status
-            ]);
-        }
+            $this->resetInputAnswers();
+            $this->emit('refreshActivityQuestion');
+        } catch (ValidationException $e) {
+            $errors = $e->validator->errors();
+            $this->resetErrorBag();
 
-        session()->flash('message', [
-            'text' => 'As respostas foram salvas com sucesso!' ,
-            'type' => 'success',
-        ]);
-        $this->resetInputAnswers();
-        $this->emit('refreshActivityQuestion');
+            foreach ($errors->messages() as $field => $fieldErrors) {
+                foreach ($fieldErrors as $error) {
+                    $this->addError($field, $error);
+                }
+            }
+        }
     }
 
     public function resetInputAnswers()
