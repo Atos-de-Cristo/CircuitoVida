@@ -140,6 +140,7 @@ class UserService
                 $query->whereIn('question_id', $questions);
                 $query->where('status', 'errado');
             }])
+            ->orderBy('name', 'asc')
             ->get();
 
         return $results->map(function ($item) {
