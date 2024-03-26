@@ -42,6 +42,41 @@
                             @enderror
                         </div>
                         <div class="mb-4">
+                            <label for="campDataStart" class="label-input-form">
+                                Data Início
+                            </label>
+                            <input
+                                type="datetime-local"
+                                class="input-form"
+                                id="campDataStart"
+                                placeholder="Informe a data de início"
+                                min="{{$this->lessonService->start_date}}"
+                                max="{{$this->lessonService->end_date}}"
+                                wire:model.lazy="start_date"
+                            >
+                            @error('start_date')
+                                <span class="text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="mb-4">
+                            <label for="campDataEnd" class="label-input-form">
+                                Data Término:
+                            </label>
+                            <input
+                                type="datetime-local"
+                                class="input-form"
+                                id="campDataEnd"
+                                placeholder="Informe a data de término"
+                                min="{{$this->lessonService->start_date}}"
+                                max="{{$this->lessonService->end_date}}"
+                                wire:model.lazy="end_date"
+                            >
+                            @error('end_date')
+                                <span class="text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="mb-4">
+                            <label for="campDescription" class="label-input-form">Disponíbilidade:</label>
                             <label class="relative inline-flex items-center mr-5 cursor-pointer">
                                 <input type="checkbox" class="sr-only peer" wire:model.prevent="type">
                                 <div class="w-11 h-6 bg-gray-200 dark:bg-gray-700 rounded-full peer peer-focus:ring-4 peer-focus:ring-violet-300 dark:peer-focus:ring-violet-800 dark:bg-gray-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-violet-600"></div>

@@ -13,7 +13,7 @@ class Activity extends Model implements Auditable
     use AuditableTrait;
     use HasFactory;
 
-    protected $fillable = [ 'lesson_id', 'event_id', 'title', 'description', 'type' ];
+    protected $fillable = [ 'lesson_id', 'event_id', 'title', 'description', 'type', 'start_date', 'end_date' ];
 
     public function event(): BelongsTo
     {

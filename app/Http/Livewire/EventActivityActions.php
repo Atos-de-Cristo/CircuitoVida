@@ -14,12 +14,14 @@ class EventActivityActions extends Component
     private $service;
     public $lessonId, $activityId;
     public $title, $description;
+    public $start_date = null;
+    public $end_date = null;
     public $type = false;
     public $isOpenQuestions;
     public $userListActivity = [];
     public $inscriptions = [];
     public $isOpenActivity = false;
-    private $activity;
+    public $activity;
 
     public function getActivityServiceProperty()
     {
@@ -28,7 +30,8 @@ class EventActivityActions extends Component
 
     public function getLessonServiceProperty()
     {
-        return new LessonService;
+        $lessonService = new LessonService;
+        return $lessonService->find($this->lessonId);
     }
 
     public function mount($lessonId, $activityId)
@@ -47,10 +50,12 @@ class EventActivityActions extends Component
         if ($this->activityId) {
             $this->activity = $this->activityService->find($this->activityId);
             $this->title = $this->activity->title;
+            $this->start_date = $this->activity->start_date ? date('Y-m-d H:i:s', strtotime($this->activity->start_date)) : $this->lessonService->start_date;
+            $this->end_date = $this->activity->end_date ? date('Y-m-d H:i:s', strtotime($this->activity->end_date)) : $this->lessonService->end_date;
             $this->description = $this->activity->description;
             $this->type = $this->activity->type == 'G' ? false : true;
             if ($this->activity->type == 'E') {
-                $this->inscriptions = $this->lessonService->find($this->lessonId)->event->inscriptions;
+                $this->inscriptions = $this->lessonService->event->inscriptions;
                 $this->userListActivity = $this->activity->users->pluck('id')->toArray();
             }
         }
@@ -65,7 +70,7 @@ class EventActivityActions extends Component
     public function updated()
     {
         if ($this->type) {
-            $this->inscriptions = $this->lessonService->find($this->lessonId)->event->inscriptions;
+            $this->inscriptions = $this->lessonService->event->inscriptions;
         }
     }
 
@@ -73,13 +78,17 @@ class EventActivityActions extends Component
     {
         $this->validate([ 'title' => 'required' ]);
 
+        // dd($this->start_date, $this->end_date);
+
         $request = [
             'id' => $this->activityId,
             'lesson_id' => $this->lessonId,
             'title' => $this->title,
             'description' => $this->description,
             'type' => ($this->type) ? 'E' : 'G',
-            'userListActivity' => $this->userListActivity
+            'userListActivity' => $this->userListActivity,
+            'start_date' => ($this->start_date == '') ? $this->lessonService->start_date : $this->start_date,
+            'end_date' => ($this->end_date == '') ? $this->lessonService->end_date : $this->end_date,
         ];
 
         $service->store($request);
@@ -93,6 +102,8 @@ class EventActivityActions extends Component
     {
         $this->title = '';
         $this->description = '';
+        $this->start_date = '';
+        $this->end_date = '';
     }
     protected $listeners = ['eventoExclusaoRealizada' => 'dellActivity'];
     public function dellActivity(ActivityService $service)

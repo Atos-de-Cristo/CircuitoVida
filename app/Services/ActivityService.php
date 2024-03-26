@@ -67,10 +67,6 @@ class ActivityService
                 ]);
             }
         }
-        $this->messageService->send([
-            'message' => 'Atividade editada no seu perfil.',
-            'user_for' => $data['user_id']
-        ]);
         return true;
     }
 

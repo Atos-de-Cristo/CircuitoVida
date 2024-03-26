@@ -219,13 +219,27 @@
                     </div>
                     @can('aluno')
                         <div class="bg-gray-50 dark:bg-gray-700 px-4 rounded py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                            <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                                <button type="button" wire:click.prevent="storeQuestion()" {{
-                                    $this->questions['checkResponse']==true
-                                    ? 'disabled' : '' }} class="btn-submit {{ $this->questions['checkResponse']==true ?
-                                    'opacity-50' : '' }}" >
-                                    Salvar
-                                </button>
+                            <span class="flex w-full sm:ml-3 sm:w-auto">
+                                @can(['monitorEvent'], $eventId)
+                                    <p class="text-red-500">Selecione um aluno ao lado para corrigir.</p>
+                                @else
+                                    @if (
+                                        (isset($this->questions['activity']['start_date']) && Carbon\Carbon::parse($this->questions['activity']['start_date']) > Carbon\Carbon::parse(date('Y-m-d H:i:s')))
+                                        ||
+                                        (isset($this->questions['activity']['end_date']) && Carbon\Carbon::parse($this->questions['activity']['end_date']) < Carbon\Carbon::parse(date('Y-m-d H:i:s')))
+                                    )
+                                        <p class="text-red-500">Fora do prazo para envio da atividade.</p>
+                                    @else
+                                        <button
+                                            type="button"
+                                            wire:click.prevent="storeQuestion()"
+                                            class="btn-submit {{ $this->questions['checkResponse']==true ? 'opacity-50' : '' }}"
+                                            {{ $this->questions['checkResponse']==true ? 'disabled' : '' }}
+                                        >
+                                            Salvar
+                                        </button>
+                                    @endif
+                                @endcan
                             </span>
                         </div>
                     @endcan
