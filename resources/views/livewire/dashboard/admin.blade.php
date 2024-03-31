@@ -7,7 +7,7 @@
             </div>
             <div class="text-center mr-10">
                 <h3 class="text-5xl font-bold">{{$this->students}}</h3>
-                <p class="text-lg font-roboto">Alunos</p>
+                <p class="text-lg font-roboto">Alunos Ativos</p>
             </div>
         </div>
         <div class="dark:bg-slate-700 rounded-lg p-4 bg-white  flex justify-between items-center">
@@ -16,7 +16,7 @@
             </div>
             <div class="text-center mr-10">
                 <h3 class="text-5xl font-bold">{{$this->events}}</h3>
-                <p class="text-lg font-roboto">Cursos</p>
+                <p class="text-lg font-roboto">Cursos Ativos</p>
             </div>
         </div>
         <div class="dark:bg-slate-700 rounded-lg p-4  bg-white  flex justify-between items-center">
@@ -25,7 +25,7 @@
             </div>
             <div class="text-center mr-10">
                 <h3 class="text-5xl font-bold">{{$this->Lessons}}</h3>
-                <p class="text-lg font-roboto">Aulas</p>
+                <p class="text-lg font-roboto">Aulas Ativas</p>
             </div>
         </div>
         <div class="dark:bg-slate-700 rounded-lg p-4  bg-white  flex justify-between items-center">

@@ -31,6 +31,15 @@ class EventService
                 ->get();
     }
 
+    public function countActivityCourse(): int
+    {
+        return $this->repository
+                ->where('status', '!=', EventStatus::F->name)
+                ->where('start_date', '<=', Carbon::now())
+                ->where('end_date', '>', Carbon::now())
+                ->count();
+    }
+
     public function getLessonsWithCounts(array $filter = []): Collection
     {
         return $this->repository

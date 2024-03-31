@@ -1,7 +1,9 @@
 <?php
 namespace App\Services;
 
+use App\Enums\EventStatus;
 use App\Models\Lesson;
+use Carbon\Carbon;
 use Error;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -27,6 +29,17 @@ class LessonService extends BaseService
     public function getAll(array $filter = []): Collection
     {
         return $this->repository->with('event', 'module', 'activities', 'attachments')->where($filter)->get();
+    }
+
+    public function countTotalLessons(): int
+    {
+        return $this->repository->whereIn('event_id', function($query) {
+                $query->select('id')
+                    ->from('events')
+                    ->where('status', '!=', EventStatus::F->name)
+                    ->where('start_date', '<=', Carbon::now())
+                    ->where('end_date', '>', Carbon::now());
+            })->count();
     }
 
     public function find(string $id): Lesson

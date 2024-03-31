@@ -33,11 +33,16 @@ class UserService
         })->get();
     }
 
-    public function getStudents( ): Collection
+    public function countStudentsActive( ): int
     {
-        return $this->repository->whereHas('permissions', function (Builder $query) {
+        return $this->repository
+        ->whereHas('permissions', function (Builder $query) {
             $query->where('permission', 'aluno');
-        })->get();
+        })
+        ->whereHas('inscriptions', function (Builder $query) {
+            $query->where('status', 'L');
+        })
+        ->count();
     }
 
 

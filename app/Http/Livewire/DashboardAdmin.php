@@ -45,21 +45,17 @@ class DashboardAdmin extends Component
 
     public function getLessonsProperty()
     {
-        $lessons = $this->lessonService->getAll();
-
-        return $lessons->count();
+        return $this->lessonService->countTotalLessons();
     }
 
     public function getStudentsProperty()
     {
-        $students = $this->userService->getStudents();
-        return $students->count();
+        return $this->userService->countStudentsActive();
     }
 
     public function getEventsProperty()
     {
-        $events = $this->eventService->getAll();
-        return $events->count();
+        return $this->eventService->countActivityCourse();
     }
 
     public function render()
