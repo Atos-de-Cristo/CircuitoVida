@@ -211,7 +211,7 @@
             <div class="text-xl font-bold mb-4 flex items-center justify-between">
                 <div class="flex items-center">
                     <x-icon-cloud-arrow-up  />
-                    <span class="ml-2">Material de apoio do curso</span>
+                    <span class="ml-2">Material de apoio</span>
                 </div>
                 @cannot('aluno')
                 <livewire:attachment :eventId='$eventId' :attachmentId='null' :key="rand()" />
