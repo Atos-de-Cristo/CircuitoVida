@@ -87,7 +87,6 @@ class QuestionService extends BaseService
 
         return [
             'data' => $results,
-            'activity' => $result->activity->toArray(),
             'correct' => $checkCorrect,
             'checkResponse' => $checkResponse
         ];

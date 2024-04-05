@@ -224,9 +224,9 @@
                                     <p class="text-red-500">Selecione um aluno ao lado para corrigir.</p>
                                 @else
                                     @if (
-                                        (isset($this->questions['activity']['start_date']) && Carbon\Carbon::parse($this->questions['activity']['start_date']) > Carbon\Carbon::parse(date('Y-m-d H:i:s')))
+                                        (isset($this->questions['data'][0]->activity->start_date) && Carbon\Carbon::parse($this->questions['data'][0]->activity->start_date) >= Carbon\Carbon::parse(date('Y-m-d H:i:s')))
                                         ||
-                                        (isset($this->questions['activity']['end_date']) && Carbon\Carbon::parse($this->questions['activity']['end_date']) < Carbon\Carbon::parse(date('Y-m-d H:i:s')))
+                                        (isset($this->questions['data'][0]->activity->end_date) && Carbon\Carbon::parse($this->questions['data'][0]->activity->end_date) < Carbon\Carbon::parse(date('Y-m-d H:i:s')))
                                     )
                                         <p class="text-red-500">Fora do prazo para envio da atividade.</p>
                                     @else
