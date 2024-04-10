@@ -43,7 +43,12 @@ class EventService
     public function getLessonsWithCounts(array $filter = []): Collection
     {
         return $this->repository
-            ->withCount(['inscriptions', 'lessons'])
+            ->with('inscriptions')
+            ->with('lessons')
+            ->withCount('lessons')
+            ->withCount(['inscriptions' => function ($query) {
+                $query->where('status', 'L');
+            }, 'lessons'])
             ->where($filter)
             ->get();
     }

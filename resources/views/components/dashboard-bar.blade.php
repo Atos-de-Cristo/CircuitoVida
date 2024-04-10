@@ -1,5 +1,5 @@
-<div 
-    x-data="{ labels: @entangle('labels'), data: @entangle('data') }"
+<div
+    x-data="{ labels: @entangle($labels), data: @entangle($data) }"
     x-init="new Chart($refs.myChart, {
         type: '{{$type}}',
         data: {
@@ -18,9 +18,9 @@
             }],
         },
         options: {
-          
+
             scales: {
-              
+
                 y: {
                     beginAtZero: true
                 }
@@ -28,14 +28,14 @@
         }
     });"
 >
-  
+
         <canvas id="myChart" width="400" height="200" x-ref="myChart"></canvas>
-   
+
 </div>
 
 
 @push('scripts')
-   
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
- 
+
 @endpush

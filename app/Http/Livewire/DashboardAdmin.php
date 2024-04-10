@@ -10,7 +10,7 @@ use Livewire\Component;
 class DashboardAdmin extends Component
 {
     public array $labels =[];
-    public array $data =[];
+    public array $sumInscriptions =[];
     public array $lessons =[];
 
     public function getEventServiceProperty()
@@ -28,13 +28,18 @@ class DashboardAdmin extends Component
         return new LessonService;
     }
 
+    public function getSumInscriptionsProperty()
+    {
+        return $this->eventService->pluck('inscriptions_count')->toArray();
+    }
+
     public function mount()
     {
         $events = $this->eventService->getLessonsWithCounts();
 
         $this->labels = $events->pluck('name')->toArray();
-        $this->data = $events->pluck('inscriptions_count')->toArray();
-        $this->data = $events->pluck('lessons_count')->toArray();
+        $this->sumInscriptions = $events->pluck('inscriptions_count')->toArray();
+        // $this->data = $events->pluck('lessons_count')->toArray();
     }
 
     public function getMonitoresProperty()
