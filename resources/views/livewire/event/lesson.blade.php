@@ -1,11 +1,13 @@
 <div>
     @if ($lessonId)
-        <button wire:click.prevent="$set('isOpenLesson', true)" class="mr-5">
-            <x-icon-pencil class="w-5 h-5" />
-        </button>
-        <button wire:click.prevent="dellLesson()">
-            <x-icon-trash class="w-5 h-5" />
-        </button>
+        <div class="flex gap-2">
+            <button wire:click.prevent="$set('isOpenLesson', true)">
+                <x-icon-pencil class="w-5 h-5" />
+            </button>
+            <button wire:click.prevent="dellLesson()">
+                <x-icon-trash class="w-5 h-5" />
+            </button>
+        </div>
     @else
         <button wire:click.prevent="$set('isOpenLesson', true)"
             class="btn-primary text-xs flex items-center">
