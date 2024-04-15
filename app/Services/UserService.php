@@ -57,6 +57,7 @@ class UserService
     {
         return $this->repository
             ->where('name', 'LIKE', '%' . $search . '%')
+            ->orWhere('email', 'LIKE', '%' . $search . '%')
             ->paginate(12);
     }
 
