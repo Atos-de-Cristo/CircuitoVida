@@ -37,7 +37,7 @@ class DashboardAdmin extends Component
     {
         $events = $this->eventService->getLessonsWithCounts();
 
-        $this->labels = $events->pluck('name')->toArray();
+        $this->labels = $events->where('status', '!=', 'F')->pluck('name')->toArray();
         $this->sumInscriptions = $events->pluck('inscriptions_count')->toArray();
         // $this->data = $events->pluck('lessons_count')->toArray();
     }
