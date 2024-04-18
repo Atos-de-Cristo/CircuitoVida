@@ -42,9 +42,6 @@ class UserService
         ->whereHas('inscriptions', function (Builder $query) {
             $query->where('status', 'L');
         })
-        ->whereHas('events', function (Builder $query) {
-            $query->where('status', 'E');
-        })
         ->count();
     }
 
