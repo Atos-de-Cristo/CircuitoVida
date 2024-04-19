@@ -35,8 +35,6 @@ class EventService
     {
         return $this->repository
                 ->where('status', '!=', EventStatus::F->name)
-                ->where('start_date', '<=', Carbon::now())
-                ->where('end_date', '>', Carbon::now())
                 ->count();
     }
 
