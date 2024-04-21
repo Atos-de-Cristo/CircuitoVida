@@ -1,4 +1,7 @@
 <div >
+    @if (session()->has('message'))
+    <x-alert-message :message="session('message')['text']" :messageType="session('message')['type']" />
+    @endif
     <x-form-section submit="store">
         <x-slot name="title">
             {{ __('Perfil') }}
@@ -69,10 +72,6 @@
 
          </x-slot>
         <x-slot name="actions">
-            @if (session()->has('message'))
-            <x-alert-message :message="session('message')['text']" :messageType="session('message')['type']" />
-            @endif
-
             <x-button wire:click.prevent="store()">
                 {{ __('Save') }}
             </x-button>
