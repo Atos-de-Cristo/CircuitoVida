@@ -44,8 +44,8 @@
                     <div class="flex-grow p-4 flex flex-col justify-between">
                         <div class="mb-4">
                             <h3 class="text-lg font-medium text-gray-900 dark:text-white">{{ $data->name }}</h3>
-                            <p class="text-sm text-gray-500 dark:text-white border-y my-1 py-1 border-slate-900">{{ $data->local }}</p>
-                            <p class="text-sm text-gray-500 dark:text-white">{{ getStatusEvent($data->status) }}</p>
+                            <p class="text-sm text-gray-500 dark:text-white border-y my-1 py-1 border-slate-900">Local: {{ $data->local }}</p>
+                            <p class="text-sm text-gray-500 dark:text-white">Status do curso: {{ getStatusEvent($data->status) }}</p>
                         </div>
                         <div  class="dark:bg-slate-900 bg-slate-200 rounded-md py-3">
                             <div class="flex justify-between px-5 ">
@@ -88,8 +88,8 @@
                     <div class="flex-grow p-4 flex flex-col justify-between">
                         <div class="mb-4">
                             <h3 class="text-lg font-medium text-gray-900 dark:text-white">{{ $data->name }}</h3>
-                            <p class="text-sm text-gray-500 dark:text-white border-y my-1 py-1 border-slate-900">{{ $data->local }}</p>
-                            <p class="text-sm text-gray-500 dark:text-white">{{ getStatusEvent($data->status) }}</p>
+                            <p class="text-sm text-gray-500 dark:text-white border-y my-1 py-1 border-slate-900">Local: {{ $data->local }}</p>
+                            <p class="text-sm text-gray-500 dark:text-white">Status do curso: {{ getStatusEvent($data->status) }}</p>
                         </div>
                         <div  class="dark:bg-slate-900 bg-slate-200 rounded-md py-3">
                             <div class="flex justify-between px-5 ">

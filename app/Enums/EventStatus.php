@@ -3,9 +3,9 @@ namespace App\Enums;
 
 enum EventStatus: string {
     case P = "Pendente";
-    case A = "Aberto";
-    case E = "Encerrado";
-    case F = "Finalizada";
+    case A = "Inscrições Abertas";
+    case E = "Inscrições Encerradas";
+    case F = "Finalizado";
 
     public static function fromValue(string $status): string {
         foreach (self::cases() as $statusClass) {
