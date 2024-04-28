@@ -9,24 +9,24 @@
                     <h2>Aluno: {{ $this->questions->first()->user->name }}</h2>
                 </div>
                 @forelse ($this->questions as $item)
-                    <div class="flex mb-4 border border-gray-300 dark:border-gray-700 rounded-md p-4
-                        {{ (isset($checkResponse[$item->id]) && $checkResponse[$item->id] == 'correto') ? 'bg-green-100 border-green-300 dark:border-green-700 dark:bg-green-900' : '' }}
-                        {{ (isset($checkResponse[$item->id]) && $checkResponse[$item->id] == 'errado') ? 'bg-red-100 border-red-300 dark:border-red-700 dark:bg-red-900': '' }}
-                        {{ (isset($checkResponse[$item->id]) && $checkResponse[$item->id] == 'pendente') ? 'bg-gray-100 border-gray-300 dark:border-gray-700 dark:bg-gray-900' : '' }}"
+                    <div class="flex flex-col mb-4 border border-gray-300 dark:border-gray-700 rounded-md p-4
+                        {{ (isset($checkResponse[$item->id]) && $checkResponse[$item->id] == 'correto') && 'bg-green-100 border-green-300 dark:border-green-700 dark:bg-green-900' }}
+                        {{ (isset($checkResponse[$item->id]) && $checkResponse[$item->id] == 'errado') && 'bg-red-100 border-red-300 dark:border-red-700 dark:bg-red-900' }}
+                        {{ (isset($checkResponse[$item->id]) && $checkResponse[$item->id] == 'pendente') && 'bg-gray-100 border-gray-300 dark:border-gray-700 dark:bg-gray-900' }}"
                     >
-                        <div class="flex flex-col flex-1 justify-between">
-                            <h3 class="text-lg font-semibold mb-2 mr-5">{{ $item->question->title }}</h3>
-                            <small>{{ $item->response }}</small>
-                        </div>
-                        <div class="flex flex-col self-start space-y-2">
-                            <button wire:click.prevent="checkQuestion('correto', {{$item->id}})" class="btn-icon ">
-                                <x-icon-circle-check class="h-5 w-5"/>
-                            </button>
+                        <div class="flex flex-row justify-content-start gap-4">
+                            <h3 class="text-lg font-semibold mb-2 break-words max-w-full">{{ $item->question->title }}</h3>
+                            <div class="flex flex-col self-start space-y-2">
+                                <button wire:click.prevent="checkQuestion('correto', {{$item->id}})" class="btn-icon ">
+                                    <x-icon-circle-check class="h-5 w-5"/>
+                                </button>
 
-                            <button wire:click.prevent="checkQuestion('errado', {{$item->id}})" class="btn-icon">
-                                <x-icon-circle-xmark class="h-5 w-5"/>
-                            </button>
+                                <button wire:click.prevent="checkQuestion('errado', {{$item->id}})" class="btn-icon">
+                                    <x-icon-circle-xmark class="h-5 w-5"/>
+                                </button>
+                            </div>
                         </div>
+                        <small class="break-words max-w-full">{{ $item->response }}</small>
                     </div>
                 @empty
                     <span class="text-red-500">Nenhuma questão cadastrada</span>
