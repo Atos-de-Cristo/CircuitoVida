@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <label for="campDataEnd" class="label-input-form">Data Inicio</label>
+                        <label for="campDataEnd" class="label-input-form">Data Fim</label>
                         <input
                             type="datetime-local"
                             class="input-form"
