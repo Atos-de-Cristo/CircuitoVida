@@ -10,9 +10,9 @@
                 </div>
                 @forelse ($this->questions as $item)
                     <div class="flex flex-col mb-4 border border-gray-300 dark:border-gray-700 rounded-md p-4
-                        {{ (isset($checkResponse[$item->id]) && $checkResponse[$item->id] == 'correto') && 'bg-green-100 border-green-300 dark:border-green-700 dark:bg-green-900' }}
-                        {{ (isset($checkResponse[$item->id]) && $checkResponse[$item->id] == 'errado') && 'bg-red-100 border-red-300 dark:border-red-700 dark:bg-red-900' }}
-                        {{ (isset($checkResponse[$item->id]) && $checkResponse[$item->id] == 'pendente') && 'bg-gray-100 border-gray-300 dark:border-gray-700 dark:bg-gray-900' }}"
+                        {{ (isset($checkResponse[$item->id]) && $checkResponse[$item->id] == 'correto') ? 'bg-green-100 border-green-300 dark:border-green-700 dark:bg-green-900':'' }}
+                        {{ (isset($checkResponse[$item->id]) && $checkResponse[$item->id] == 'errado') ? 'bg-red-100 border-red-300 dark:border-red-700 dark:bg-red-900':'' }}
+                        {{ (isset($checkResponse[$item->id]) && $checkResponse[$item->id] == 'pendente') ? 'bg-gray-100 border-gray-300 dark:border-gray-700 dark:bg-gray-900':'' }}"
                     >
                         <div class="flex flex-row justify-content-start gap-4">
                             <h3 class="text-lg font-semibold mb-2 break-words max-w-full">{{ $item->question->title }}</h3>

@@ -133,28 +133,27 @@ class UserService
             ->whereHas('responses', function (Builder $query) use ($questions) {
                 $query->whereIn('question_id', $questions);
             })
-            ->with('responses')
-            ->withCount(['responses as pending_answers' => function ($query) use ($questions) {
-                $query->whereIn('question_id', $questions);
-                $query->where('status', 'pendente');
-            }])
-            ->withCount(['responses as correct_answers' => function ($query) use ($questions) {
-                $query->whereIn('question_id', $questions);
-                $query->where('status', 'correto');
-            }])
-            ->withCount(['responses as wrong_answers' => function ($query) use ($questions) {
-                $query->whereIn('question_id', $questions);
-                $query->where('status', 'errado');
-            }])
+            ->withCount([
+                'responses as all_answers' => function ($query) use ($questions) {
+                    $query->whereIn('question_id', $questions);
+                },
+                'responses as pending_answers' => function ($query) use ($questions) {
+                    $query->whereIn('question_id', $questions);
+                    $query->where('status', 'pendente');
+                },
+                'responses as correct_answers' => function ($query) use ($questions) {
+                    $query->whereIn('question_id', $questions);
+                    $query->where('status', 'correto');
+                    $query->selectRaw('count(*) as total_correct');
+                },
+                'responses as wrong_answers' => function ($query) use ($questions) {
+                    $query->whereIn('question_id', $questions);
+                    $query->where('status', 'errado');
+                },
+            ])
             ->orderBy('name', 'asc')
             ->get();
-
-        return $results->map(function ($item) {
-            $totalAnswers = $item->correct_answers + $item->wrong_answers;
-            $item->status_correct = $totalAnswers > 0;
-            $item->correct_percentage = $totalAnswers > 0 ? round(($item->correct_answers / $totalAnswers) * 100, 2) : null;
-            return $item;
-        });
+        return $results;
     }
 
     public function listIdsEvent($eventId)

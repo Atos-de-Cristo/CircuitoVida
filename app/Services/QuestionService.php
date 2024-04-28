@@ -43,6 +43,13 @@ class QuestionService extends BaseService
             ->get();
     }
 
+    public function getAllId(string $activityId)
+    {
+        return $this->repository
+            ->where('activity_id', $activityId)
+            ->pluck('id');
+    }
+
     public function getQuestionsCorrect(string $activityId, ?string $userId = null): array
     {
         if ($userId == null) {
@@ -63,25 +70,15 @@ class QuestionService extends BaseService
             )
             ->get();
 
-        $checkResponse = false;
-        $answers_correct = 0;
-        $answers_wrong = 0;
-        $answers_pending = 0;
+        $checkResponse = isset($results->first()->response_status);
+        $answersCorrect = $results->where('response_status', 'correto')->count();
+        $answersWrong = $results->where('response_status', 'errado')->count();
+        $answersPending = $results->where('response_status', 'pendente')->count();
 
-        foreach ($results as $result) {
-            if ($checkResponse == false && isset($result->response_status)) {
-                $checkResponse = true;
-            }
+        $totalAnswers = $answersCorrect + $answersWrong;
+        $checkCorrect = ($totalAnswers > 0) ? round(($answersCorrect / $totalAnswers) * 100, 2).'%' : 'Pendente correção!';
 
-            $answers_correct = ($result->response_status == 'correto') ? $answers_correct + 1 : $answers_correct;
-            $answers_wrong = ($result->response_status == 'errado') ? $answers_wrong + 1 : $answers_wrong;
-            $answers_pending = ($result->response_status == 'pendente') ? $answers_pending + 1 : $answers_pending;
-        }
-
-        $totalAnswers = $answers_correct + $answers_wrong;
-        $checkCorrect = ($totalAnswers > 0) ? round(($answers_correct / $totalAnswers) * 100, 2).'%' : 'Pendente correção!';
-
-        if ($answers_pending > 0) {
+        if ($answersPending > 0) {
             $checkCorrect = 'Pendente correção!';
         }
 
