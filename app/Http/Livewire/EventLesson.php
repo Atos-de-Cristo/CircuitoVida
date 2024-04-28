@@ -49,7 +49,9 @@ class EventLesson extends Component
     {
         try {
             $this->validate([
-                'title' => 'required'
+                'title' => 'required',
+                'start_date' => 'date',
+                'end_date' => 'date|after:start_date',
             ]);
 
             $request = [

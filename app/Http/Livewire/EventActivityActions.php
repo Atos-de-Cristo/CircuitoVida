@@ -23,6 +23,8 @@ class EventActivityActions extends Component
     public $isOpenActivity = false;
     public $activity;
 
+    protected $listeners = ['eventoExclusaoRealizada' => 'dellActivity'];
+
     public function getActivityServiceProperty()
     {
         return new ActivityService;
@@ -76,9 +78,11 @@ class EventActivityActions extends Component
 
     public function store(ActivityService $service)
     {
-        $this->validate([ 'title' => 'required' ]);
-
-        // dd($this->start_date, $this->end_date);
+        $this->validate([
+            'title' => 'required',
+            'start_date' => 'date',
+            'end_date' => 'date|after:start_date'
+        ]);
 
         $request = [
             'id' => $this->activityId,
@@ -105,10 +109,9 @@ class EventActivityActions extends Component
         $this->start_date = '';
         $this->end_date = '';
     }
-    protected $listeners = ['eventoExclusaoRealizada' => 'dellActivity'];
+
     public function dellActivity(ActivityService $service)
     {
-        // $service->delete($this->activityId);
         $this->emit('refreshClassroom');
         $this->emit('refreshActivityList');
     }
