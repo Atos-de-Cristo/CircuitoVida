@@ -8,7 +8,7 @@
         frameborder="0"
     ></iframe>
 
-    @push('scripts2')
+    {{-- @push('scripts2')
         <script>
             var player;
 
@@ -55,5 +55,5 @@
                 window.livewire.emit('playerStateChanged', '03');
             });
         </script>
-    @endpush
+    @endpush --}}
 </div>
