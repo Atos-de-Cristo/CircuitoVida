@@ -183,6 +183,7 @@ class InscriptionService extends BaseService
             ->with('event', 'frequencies')
             ->join('users', 'users.id', '=', 'inscriptions.user_id')
             ->where('inscriptions.event_id', $eventId)
+            ->where('inscriptions.status', InscriptionStatus::L->name)
             ->orderBy('users.name', 'asc')
             ->get();
     }
