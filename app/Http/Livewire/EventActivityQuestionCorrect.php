@@ -17,8 +17,7 @@ class EventActivityQuestionCorrect extends Component
 
     public function getQuestionsProperty()
     {
-        return [];
-        // return $this->serviceResponse->getUserQuestionResponse($this->userId, $this->atvId);
+        return $this->serviceResponse->getUserQuestionResponse($this->userId, $this->atvId);
     }
 
     public function mount($userId, $atvId)
@@ -26,17 +25,17 @@ class EventActivityQuestionCorrect extends Component
         $this->userId = $userId;
         $this->atvId = $atvId;
 
-        // foreach ($this->questions as $item) {
-        //     if ($item->question->type == 'multi') {
-        //         $options = json_decode($item->question->options);
-        //         $resp = $item->response;
-        //         $opt = array_values(array_filter($options, function($value) use ($resp) {
-        //             return $value->text == $resp;
-        //         }));
-        //         $itemStatus = array_shift($opt)->correct;
-        //         $this->checkResponse[$item->id] = $itemStatus ? 'correto' : 'errado';
-        //     }
-        // }
+        foreach ($this->questions as $item) {
+            if ($item->question->type == 'multi') {
+                $options = json_decode($item->question->options);
+                $resp = $item->response;
+                $opt = array_values(array_filter($options, function($value) use ($resp) {
+                    return $value->text == $resp;
+                }));
+                $itemStatus = array_shift($opt)->correct;
+                $this->checkResponse[$item->id] = $itemStatus ? 'correto' : 'errado';
+            }
+        }
     }
 
     public function render()
