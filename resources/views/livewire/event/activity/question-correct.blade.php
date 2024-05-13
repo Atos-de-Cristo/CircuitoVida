@@ -6,7 +6,7 @@
             </div>
             <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div class="ml-2 mb-3">
-                    <h2>Aluno: {{ $this->questions->first()->user->name }}</h2>
+                    <h2>Aluno: {{ $this->questions ? $this->questions->first()->user->name : '' }}</h2>
                 </div>
                 @forelse ($this->questions as $item)
                     <div class="flex flex-col mb-4 border border-gray-300 dark:border-gray-700 rounded-md p-4
