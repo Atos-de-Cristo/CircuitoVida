@@ -14,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('responses', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Question::class);
+            $table->foreignIdFor(User::class)->index();
+            $table->foreignIdFor(Question::class)->index();
             $table->text('response');
             $table->enum('status', ['pendente', 'correto', 'errado']);
             $table->timestamps();
