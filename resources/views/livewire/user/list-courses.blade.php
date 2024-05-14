@@ -18,6 +18,7 @@
 
             <div class=" p-3 ">
                 <h2 class="hover:scale-105 font-bold text-xl">{{ $inscription->event->name }}</h2>
+                <p class="nome">{{date('d/m/Y', strtotime($inscription->event->start_date))}} - {{date('d/m/Y', strtotime($inscription->event->end_date))}}</p>
                 <p class="nome">Status: {{getStatusInscription($inscription->status) }}</p>
                 <div class="tags">
                     <div class="flex flex-row justify-center items-center gap-3">
