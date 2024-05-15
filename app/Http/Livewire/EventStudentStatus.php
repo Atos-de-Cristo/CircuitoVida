@@ -15,7 +15,8 @@ class EventStudentStatus extends Base
     public $activityStatus;
     public $absenceCount;
     public $eventId;
-    public $isCancelled = false;
+    public $confirmHandleStatus = '';
+    public $cancellation_reason = '';
 
     public function getServiceProperty()
     {
@@ -46,20 +47,17 @@ class EventStudentStatus extends Base
         $key = rand();
         return view('livewire.event.student.status', compact('key'));
     }
-    public function toggleCancellation(){
-        $this->isCancelled = true;
-    }
 
-    public function handleShutdown()
+    public function toggleInscription()
     {
         $this->service->update([
-            'cancellation_reason' => $this->form['message'],
-            'status' => InscriptionStatus::C->name
+            'cancellation_reason' => $this->cancellation_reason,
+            'status' => $this->confirmHandleStatus
         ],
             $this->inscriptionId
         );
         $this->messageService->sendAdmin(
-            'Cancelado a inscrição do aluno '.$this->user->name. ', motivo: '.$this->form['message']
+            'Alteração de status do aluno '.$this->user->name. ', motivo: '.$this->cancellation_reason
         );
         $this->emit('refreshManage');
         $this->isOpen = false;

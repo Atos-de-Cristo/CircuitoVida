@@ -83,27 +83,48 @@
 
         </x-slot>
         <x-slot name="footer">
-            @if ($isCancelled)
-            <textarea id="messageTextarea" wire:model="form.message" rows="2" placeholder="Motivo do cancelamento"
-                class="m-0 w-full resize-none border-0 bg-gray-100 p-2  focus:ring-0 focus-visible:ring-0 dark:bg-gray-900 "
-                style="overflow-y: auto; resize: vertical; height: auto;"></textarea>
-            @endif
-            <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                <button wire:click="{{$isCancelled ? 'handleShutdown()' :'toggleCancellation()'}}" type="button"
-                    class="{{ $isCancelled ? 'btn-submit' : 'btn-danger' }}">
-                    @if ($isCancelled)
-                    Confirmar
+            <div class="flex w-full justify-between">
+                <div class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto gap-3">
+                    @if ($confirmHandleStatus == 'C')
+                    <textarea id="messageTextarea" wire:model.lazy="cancellation_reason" rows="2" placeholder="Motivo do cancelamento"
+                        class="m-0 w-full resize-none border-0 bg-gray-100 p-2  focus:ring-0 focus-visible:ring-0 dark:bg-gray-900 "
+                        style="overflow-y: auto; resize: vertical; height: auto;"></textarea>
+                    <button wire:click="toggleInscription('C')" class="btn-warning">
+                        Confirmar
+                    </button>
+                    @elseif($confirmHandleStatus == 'R')
+                    <textarea id="messageTextarea" wire:model.lazy="cancellation_reason" rows="2" placeholder="Motivo da reprovação"
+                        class="m-0 w-full resize-none border-0 bg-gray-100 p-2  focus:ring-0 focus-visible:ring-0 dark:bg-gray-900 "
+                        style="overflow-y: auto; resize: vertical; height: auto;"></textarea>
+                    <button wire:click="toggleInscription('C')" class="btn-danger">
+                        Confirmar
+                    </button>
+                    @elseif($confirmHandleStatus == 'A')
+                    <p>Confirma a aprovação do aluno? </p>
+                    <button wire:click="toggleInscription('A')" class="btn-primary">
+                        Confirmar
+                    </button>
                     @else
-                    Desligamento
+                    <button wire:click.prevent="$set('confirmHandleStatus', 'A')" class="btn-primary">
+                        <x-icon-plus/>
+                        <span class="ml-1">Aprovar</span>
+                    </button>
+                    <button wire:click.prevent="$set('confirmHandleStatus', 'R')" class="btn-danger">
+                        <x-icon-plus/>
+                        <span class="ml-1">Reprovar</span>
+                    </button>
+                    <button wire:click.prevent="$set('confirmHandleStatus', 'C')" class="btn-warning">
+                        <x-icon-plus/>
+                        <span class="ml-1">Cancelar</span>
+                    </button>
                     @endif
-                </button>
-            </span>
-
-            <span class="flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                <button wire:click="$set('isOpen', false)" type="button" class="btn-default">
-                    Fechar
-                </button>
-            </span>
+                </div>
+                <div class="flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
+                    <button wire:click="$set('isOpen', false)" type="button" class="btn-default">
+                        Fechar
+                    </button>
+                </div>
+            </div>
         </x-slot>
     </x-dialog-modal>
     @endif

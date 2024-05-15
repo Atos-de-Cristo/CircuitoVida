@@ -11,6 +11,9 @@ class UserListCourses extends Base
     public $user, $activity, $inscId, $transferCourseId, $courseId;
     public $isOpen = false;
     public $isOpenTransf = false;
+    public $isOpenConfirmApprove = false;
+    public $isOpenConfirmFail = false;
+    public $cancellation_reason = '';
 
     public function getEventListProperty()
     {
@@ -58,10 +61,34 @@ class UserListCourses extends Base
         $this->isOpenTransf = true;
     }
 
+    public function approveStudent($inscId)
+    {
+        $this->inscId = $inscId;
+        $this->isOpenConfirmApprove = true;
+    }
+
+    public function failStudent($inscId)
+    {
+        $this->inscId = $inscId;
+        $this->isOpenConfirmFail = true;
+    }
+
+    public function handleStatusInscription($status)
+    {
+        $this->inscriptionService->update([
+            'status' => $status,
+            'cancellation_reason' => $this->cancellation_reason
+        ], $this->inscId);
+
+        $this->emit('refreshUserDetail');
+        $this->isOpenConfirmApprove = false;
+        $this->isOpenConfirmFail = false;
+    }
+
     public function transfer()
     {
         $this->inscriptionService->update([
-            'status' => InscriptionStatus::T->name,
+            'status' => InscriptionStatus::T->name
         ], $this->inscId);
 
         $data = [
