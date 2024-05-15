@@ -23,6 +23,13 @@ class EventStudentStatus extends Base
         return new InscriptionService;
     }
 
+    public function closeModal()
+    {
+        $this->isOpen = false;
+        $this->confirmHandleStatus = '';
+        $this->cancellation_reason = '';
+    }
+
     public function getMessageServiceProperty()
     {
         return new MessageService;

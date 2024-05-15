@@ -8,7 +8,7 @@
         </span>
     </button>
     @if ($isOpen)
-    <x-dialog-modal id="myModal" wire:model.defer="isOpen" maxWidth="2xl" closeModal="$set('isOpen', false)">
+    <x-dialog-modal id="myModal" wire:model.defer="isOpen" maxWidth="2xl" closeModal="closeModal()">
         <x-slot name="title">
             <div class="flex flex-row items-center">
                 @can('monitorEvent', $eventId)
@@ -120,7 +120,7 @@
                     @endif
                 </div>
                 <div class="flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                    <button wire:click="$set('isOpen', false)" type="button" class="btn-default">
+                    <button wire:click="closeModal()" type="button" class="btn-default">
                         Fechar
                     </button>
                 </div>
