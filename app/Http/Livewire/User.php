@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Services\PermissionService;
 use App\Services\UserService;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -24,7 +25,7 @@ class User extends Component
 
     protected $rules = [
         'name' => 'required|min:5',
-        'email' => 'required|email',
+        'email' => 'required|email|unique:users,email',
     ];
 
     protected $messages = [
@@ -68,27 +69,39 @@ class User extends Component
 
     public function store(UserService $service)
     {
-        $this->validate();
+        try{
+            $this->validate();
 
-        $request = [
-            'name' => $this->name,
-            'email' => $this->email,
-            'permissions' => array_filter($this->permissions),
-            'password' => $this->password
-        ];
+            $request = [
+                'name' => $this->name,
+                'email' => $this->email,
+                'permissions' => array_filter($this->permissions),
+                'password' => $this->password
+            ];
 
-        if ($this->_id) {
-            $service->update($request, $this->_id);
-        }else{
-            $service->create($request);
+            if ($this->_id) {
+                $service->update($request, $this->_id);
+            }else{
+                $service->create($request);
+            }
+            session()->flash('message', [
+                'text' =>  $this->_id ? 'Usuário editado com sucesso.' : 'Usuário cadastrado com sucesso.',
+                'type' => 'success',
+            ]);
+
+            $this->isOpen = false;
+            $this->resetInputFields();
+        } catch (ValidationException $e) {
+            $errors = $e->validator->errors();
+
+            $this->resetErrorBag();
+
+            foreach ($errors->messages() as $field => $fieldErrors) {
+                foreach ($fieldErrors as $error) {
+                    $this->addError($field, $error);
+                }
+            }
         }
-        session()->flash('message', [
-            'text' =>  $this->_id ? 'Usuário editado com sucesso.' : 'Usuário cadastrado com sucesso.',
-            'type' => 'success',
-        ]);
-
-        $this->isOpen = false;
-        $this->resetInputFields();
     }
 
     public function edit($id, UserService $service)
