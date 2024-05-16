@@ -70,8 +70,6 @@ class User extends Component
     public function store(UserService $service)
     {
         try{
-            $this->validate();
-
             $request = [
                 'name' => $this->name,
                 'email' => $this->email,
@@ -82,6 +80,7 @@ class User extends Component
             if ($this->_id) {
                 $service->update($request, $this->_id);
             }else{
+                $this->validate();
                 $service->create($request);
             }
             session()->flash('message', [
