@@ -157,7 +157,15 @@
                     <div class="flex flex-col">
                         <div class="mb-4">
                             <label for="campName" class="label-input-form">Confirma aprovar aluno {{$user->name}} no curso {{$inscription->event->name}}</label>
-
+                            <textarea
+                                id="messageTextarea"
+                                wire:model="cancellation_reason"
+                                rows="2"
+                                required
+                                placeholder="Nota do aluno"
+                                class="m-0 w-full resize-none border-0 bg-gray-100 p-2  focus:ring-0 focus-visible:ring-0 dark:bg-gray-900 "
+                                style="overflow-y: auto; resize: vertical; height: auto;"
+                            ></textarea>
                             @error('name')
                                 <span class="text-red-500">{{ $message }}</span>
                             @enderror

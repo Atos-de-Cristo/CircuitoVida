@@ -100,8 +100,10 @@
                         Confirmar
                     </button>
                     @elseif($confirmHandleStatus == 'A')
-                    <p>Confirma a aprovação do aluno? </p>
-                    <button wire:click="toggleInscription('A')" class="btn-primary">
+                    <textarea id="messageTextarea" wire:model.lazy="cancellation_reason" rows="2" placeholder="Informe a nota"
+                        class="m-0 w-full resize-none border-0 bg-gray-100 p-2  focus:ring-0 focus-visible:ring-0 dark:bg-gray-900 "
+                        style="overflow-y: auto; resize: vertical; height: auto;"></textarea>
+                    <button wire:click="toggleInscription('A')" class="btn-danger">
                         Confirmar
                     </button>
                     @else
