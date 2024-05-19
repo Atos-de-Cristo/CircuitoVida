@@ -51,13 +51,12 @@
             </div>
             <div>
                 <!-- Footer -->
-                <div class="pt-5 mt-6 border-t border-slate-200">
+                {{-- <div class="pt-5 mt-6 border-t border-slate-200">
                     <div class="text-md">
                         {{ __('Você não tem uma conta?') }} <a class="font-medium text-indigo-500 hover:text-indigo-600"
                             href="{{ route('register') }}">{{ __('Inscrever-se') }}</a>
                     </div>
-
-                </div>
+                </div> --}}
         </form>
 
     </x-authentication-card>
