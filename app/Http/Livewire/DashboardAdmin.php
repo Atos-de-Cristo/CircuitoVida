@@ -2,17 +2,15 @@
 
 namespace App\Http\Livewire;
 
+use App\Enums\InscriptionStatus;
 use App\Services\EventService;
+use App\Services\InscriptionService;
 use App\Services\LessonService;
 use App\Services\UserService;
 use Livewire\Component;
 
 class DashboardAdmin extends Component
 {
-    public array $labels =[];
-    public array $sumInscriptions =[];
-    public array $lessons =[];
-
     public function getEventServiceProperty()
     {
         return new EventService;
@@ -28,18 +26,50 @@ class DashboardAdmin extends Component
         return new LessonService;
     }
 
-    public function getSumInscriptionsProperty()
+    public function getInscriptionServiceProperty()
     {
-        return $this->eventService->pluck('inscriptions_count')->toArray();
+        return new InscriptionService;
     }
 
-    public function mount()
+    public function getChartInscriptionsProperty()
     {
         $events = $this->eventService->getLessonsWithCounts();
+        $labels = $events->where('status', '!=', 'F')->pluck('name')->toArray();
+        $values = $events->where('status', '!=', 'F')->pluck('inscriptions_count')->toArray();
 
-        $this->labels = $events->where('status', '!=', 'F')->pluck('name')->toArray();
-        $this->sumInscriptions = $events->where('status', '!=', 'F')->pluck('inscriptions_count')->toArray();
-        // $this->data = $events->pluck('lessons_count')->toArray();
+        return [
+            "labels" => $labels,
+            "values" => $values
+        ];
+    }
+
+    public function getChartUserActiveProperty()
+    {
+        $studentActive = $this->userService->countStudentsActive();
+        $studentTotal = $this->userService->countStudents();
+
+        return [
+            "labels" => ['Alunos Ativos', 'Alunos Inativos'],
+            "values" => [$studentActive, $studentTotal]
+        ];
+    }
+
+    public function getChartInscriptionStatusProperty()
+    {
+        $statusCounts = $this->inscriptionService->sumInscriptions();
+
+        $labels = [];
+        $values = [];
+
+        foreach ($statusCounts as $statusCount) {
+            $labels[] = InscriptionStatus::fromValue($statusCount['status']);
+            $values[] = $statusCount['total'];
+        }
+
+        return [
+            "labels" => $labels,
+            "values" => $values
+        ];
     }
 
     public function getMonitoresProperty()

@@ -40,17 +40,15 @@
     </div>
 
     <div class="flex flex-col w-full mt-5 gap-4">
-        <div class="flex w-full">
-            <div class="rounded-lg p-4 w-full dark:bg-slate-700 bg-white">
-                <livewire:graph :code="rand()" type="bar" title="Inscritos por curso" :labels="$labels" :values="$sumInscriptions" />
-            </div>
+        <div class="rounded-lg p-4 dark:bg-slate-700 bg-white">
+            <livewire:graph :code="rand()" type="bar" title="Inscritos por curso" :labels="$this->chartInscriptions['labels']" :values="$this->chartInscriptions['values']" />
         </div>
         <div class="flex flex-row gap-4 w-full">
-            <div class="rounded-lg p-4 w-full dark:bg-slate-700 bg-white">
-                {{-- <livewire:graph :key="rand()" type="doughnut" title="Status do curso" :labels="$labels" :values="$sumInscriptions" /> --}}
+            <div class="flex-1 rounded-lg dark:bg-slate-700 bg-white">
+                <livewire:graph :code="rand()" type="doughnut" title="Alunos Ativos" :labels="$this->chartUserActive['labels']" :values="$this->chartUserActive['values']" />
             </div>
-            <div class="rounded-lg p-4 w-full dark:bg-slate-700 bg-white">
-                {{-- <livewire:graph :key="rand()" type="doughnut" title="Inscritos por curso 2" :labels="$labels" :values="$sumInscriptions" /> --}}
+            <div class="flex-1 rounded-lg dark:bg-slate-700 bg-white">
+                <livewire:graph :code="rand()" type="doughnut" title="Status Inscrição" :labels="$this->chartInscriptionStatus['labels']" :values="$this->chartInscriptionStatus['values']" />
             </div>
         </div>
     </div>

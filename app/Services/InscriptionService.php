@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Error;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class InscriptionService extends BaseService
 {
@@ -175,6 +176,17 @@ class InscriptionService extends BaseService
         return $results->sortBy(function ($inscription) {
             return $inscription['user']['name'];
         });
+    }
+
+    public function sumInscriptions()
+    {
+        $desiredStatuses = ['P', 'A', 'R', 'C'];
+
+        return $this->repository
+        ->select('status', DB::raw('COUNT(*) AS total'))
+        ->whereIn('status', $desiredStatuses)
+        ->groupBy('status')
+        ->get()->toArray();
     }
 
     public function getFrequency(string $eventId): Collection
