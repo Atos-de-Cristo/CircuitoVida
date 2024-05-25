@@ -43,11 +43,11 @@
         <div class="rounded-lg p-4 dark:bg-slate-700 bg-white">
             <livewire:graph :code="rand()" type="bar" title="Inscritos por curso" :labels="$this->chartInscriptions['labels']" :values="$this->chartInscriptions['values']" />
         </div>
-        <div class="flex flex-row gap-4 w-full">
-            <div class="flex-1 rounded-lg dark:bg-slate-700 bg-white">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div class="flex-1 rounded-lg dark:bg-slate-700 bg-white p-8">
                 <livewire:graph :code="rand()" type="doughnut" title="Alunos Ativos" :labels="$this->chartUserActive['labels']" :values="$this->chartUserActive['values']" />
             </div>
-            <div class="flex-1 rounded-lg dark:bg-slate-700 bg-white">
+            <div class="flex-1 rounded-lg dark:bg-slate-700 bg-white p-8">
                 <livewire:graph :code="rand()" type="doughnut" title="Status Inscrição" :labels="$this->chartInscriptionStatus['labels']" :values="$this->chartInscriptionStatus['values']" />
             </div>
         </div>

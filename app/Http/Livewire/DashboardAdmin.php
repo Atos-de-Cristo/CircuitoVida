@@ -49,8 +49,8 @@ class DashboardAdmin extends Component
         $studentTotal = $this->userService->countStudents();
 
         return [
-            "labels" => ['Alunos Ativos', 'Alunos Inativos'],
-            "values" => [$studentActive, $studentTotal]
+            "labels" => ['Alunos Inativos', 'Alunos Ativos'],
+            "values" => [$studentTotal, $studentActive]
         ];
     }
 

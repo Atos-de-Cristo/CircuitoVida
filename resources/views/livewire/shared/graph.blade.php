@@ -1,5 +1,6 @@
-<div>
-    <canvas id="myChart_{{$code}}" width="400" height="200"></canvas>
+<div class="text-center">
+    <h2 class="text-2xl font-bold">{{$title}}</h2>
+    <canvas id="myChart_{{$code}}"></canvas>
 </div>
 
 @push('scripts')
