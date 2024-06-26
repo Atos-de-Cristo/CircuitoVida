@@ -155,7 +155,7 @@ class InscriptionService extends BaseService
                             }
                         }else{
                             $statusActivity[] = [
-                                'module' => $lesson->module->name,
+                                'module' => $lesson->module->name ?? 'Nome do módulo não disponível',
                                 'lesson' => $lesson->title,
                                 'activity' => $activity->title,
                                 'pendent' => $totalPendent,
