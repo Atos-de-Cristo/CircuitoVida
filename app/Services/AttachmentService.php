@@ -76,7 +76,7 @@ class AttachmentService extends BaseService
             $send = $ret->event->inscriptions->pluck('user_id');
         }
         $this->messageService->sendGroup([
-            'message' => $message,
+            'message' => $message || 'Novo anexo enviado',
             'list_for' => $send
         ]);
 
