@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class Profile extends Component
 {
-    public $id, $cpf, $sex, $birth, $marital_status, $phone, $userId;
+    public $cpf, $sex, $birth, $marital_status, $phone, $userId;
     public $leader, $date_baptism, $member, $church, $deficiency;
 
     public function getProfileServiceProperty()
@@ -26,7 +26,6 @@ class Profile extends Component
             $data = $this->profileService->find();
         }
         if ($data) {
-            $this->id = $data['id'];
             $this->cpf = $data['cpf'];
             $this->sex = $data['sex'];
             $this->birth = $data['birth'];
@@ -68,7 +67,6 @@ class Profile extends Component
     {
         try {
             $request = [
-                'id' => ($this->id) ? $this->id : null,
                 'userId' => ($this->userId) ? $this->userId : null,
                 'cpf' => $this->cpf,
                 'sex' => $this->sex,
