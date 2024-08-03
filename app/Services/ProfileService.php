@@ -64,7 +64,7 @@ class ProfileService extends BaseService
 
             return $this->create($data);
         }
-        dd($data, $getData);
+
         return $this->update($data, $getData['id']);
     }
 
