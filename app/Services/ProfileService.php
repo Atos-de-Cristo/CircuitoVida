@@ -53,7 +53,8 @@ class ProfileService extends BaseService
             $this->rules['cpf'] = 'required|unique:profiles,cpf';
         }
 
-        $this->validateForm($data, $data['userId']);
+        // Valida os dados com as regras ajustadas
+        $this->validateForm($data, $data['userId'] ?? Auth::user()->id);
 
         if ($getData == null) {
             $data['user_id'] = Auth::user()->id;
