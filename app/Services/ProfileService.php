@@ -44,7 +44,7 @@ class ProfileService extends BaseService
         if(isset($data['userId']) && $data['userId'] !== null){
             $getData = $this->findUser($data['userId']);
         }
-        dd($getData);
+
         // Ajustar as regras de validação dinamicamente
         $rules = $this->rules;
         if ($getData != null) {
@@ -52,7 +52,7 @@ class ProfileService extends BaseService
         }
 
         $this->validateForm($data, $rules);
-
+        dd($getData);
         if ($getData == null) {
             $data['user_id'] = Auth::user()->id;
             if(isset($data['userId']) && $data['userId'] !== null){
