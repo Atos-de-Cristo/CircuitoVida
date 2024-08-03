@@ -22,6 +22,8 @@ class Profile extends Component
         $this->userId = $userId;
         if ($userId) {
             $data = $this->profileService->findUser($userId);
+        } else {
+            $data = $this->profileService->find();
         }
         if ($data) {
             $this->id = $data['id'];
