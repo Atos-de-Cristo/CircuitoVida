@@ -24,6 +24,7 @@ return new class extends Migration
             $table->date('birth');
             $table->enum('marital_status', array_column(MaritalStatus::cases(), 'name'));
             $table->date('date_baptism')->nullable();
+            $table->date('member')->nullable();
             $table->string('phone');
             $table->string('church')->nullable();
             $table->string('leader')->nullable();
