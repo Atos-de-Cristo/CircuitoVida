@@ -73,7 +73,11 @@ class Profile extends Component
                 'birth' => $this->birth,
                 'marital_status' => $this->marital_status,
                 'phone' => $this->phone,
-                'deficiency' => $this->deficiency
+                'deficiency' => $this->deficiency,
+                'leader' => $this->leader,
+                'date_baptism' => $this->date_baptism,
+                'member' => $this->member,
+                'church' => $this->church,
             ];
 
             $this->profileService->store($request);
