@@ -9,7 +9,7 @@ class ProfileService extends BaseService
     protected $repository;
 
     protected $rules = [
-        'cpf'=> 'required|unique:profiles,cpf',
+        'cpf'=> 'required',
         'sex'=> 'required',
         'birth'=> 'required',
         'marital_status'=> 'required',
@@ -40,27 +40,17 @@ class ProfileService extends BaseService
 
     public function store(array $data): Profile | bool
     {
-        // Verifica se o usuário já possui um perfil
+        dd($data, $data['userId']);
+        $this->validateForm($data, $data['userId']);
         $getData = $this->find();
         if(isset($data['userId']) && $data['userId'] !== null){
             $getData = $this->findUser($data['userId']);
-        }
-
-        // Ajusta a regra de validação para ignorar o CPF do registro atual
-        if ($getData) {
-            $this->rules['cpf'] = 'required|unique:profiles,cpf,' . $getData['id'];
-        } else {
-            $this->rules['cpf'] = 'required|unique:profiles,cpf';
-        }
-
-        // Valida os dados com as regras ajustadas
-        $this->validateForm($data, $data['userId'] ?? Auth::user()->id);
-
+           }
         if ($getData == null) {
             $data['user_id'] = Auth::user()->id;
             if(isset($data['userId']) && $data['userId'] !== null){
-                $data['user_id'] = $data['userId'];
-                unset($data['userId']);
+             $data['user_id'] = $data['userId'];
+             unset($data['userId']);
             }
 
             return $this->create($data);
