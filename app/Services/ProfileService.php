@@ -40,16 +40,24 @@ class ProfileService extends BaseService
 
     public function store(array $data): Profile | bool
     {
-        $this->validateForm($data, $data['userId']);
         $getData = $this->find();
         if(isset($data['userId']) && $data['userId'] !== null){
             $getData = $this->findUser($data['userId']);
-           }
+        }
+        dd($getData);
+        // Ajustar as regras de validação dinamicamente
+        $rules = $this->rules;
+        if ($getData != null) {
+            unset($rules['cpf']); // Remover a regra de unicidade para atualização
+        }
+
+        $this->validateForm($data, $rules);
+
         if ($getData == null) {
             $data['user_id'] = Auth::user()->id;
             if(isset($data['userId']) && $data['userId'] !== null){
-             $data['user_id'] = $data['userId'];
-             unset($data['userId']);
+                $data['user_id'] = $data['userId'];
+                unset($data['userId']);
             }
 
             return $this->create($data);
