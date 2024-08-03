@@ -9,7 +9,7 @@ class ProfileService extends BaseService
     protected $repository;
 
     protected $rules = [
-        'cpf'=> 'required',
+        'cpf'=> 'required|unique:profiles,cpf',
         'sex'=> 'required',
         'birth'=> 'required',
         'marital_status'=> 'required',
@@ -40,6 +40,8 @@ class ProfileService extends BaseService
 
     public function store(array $data): Profile | bool
     {
+        $this->rules['cpf'] = 'required|unique:profiles,cpf,' . ($data['userId'] ?? Auth::user()->id);
+
         $this->validateForm($data, $data['userId']);
         $getData = $this->find();
         if(isset($data['userId']) && $data['userId'] !== null){
