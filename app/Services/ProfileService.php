@@ -40,9 +40,9 @@ class ProfileService extends BaseService
 
     public function store(array $data): Profile | bool
     {
-        // $this->rules['cpf'] = 'required|unique:profiles,cpf,' . ($data['userId'] ?? Auth::user()->id);
+        $this->rules['cpf'] = 'required|unique:profiles,cpf,' . ($data['userId'] ?? Auth::user()->id);
 
-        // $this->validateForm($data, $data['userId']);
+        $this->validateForm($data, $data['userId']);
         $getData = $this->find();
         if(isset($data['userId']) && $data['userId'] !== null){
             $getData = $this->findUser($data['userId']);
