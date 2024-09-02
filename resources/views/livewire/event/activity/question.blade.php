@@ -257,7 +257,7 @@
                 <div class="relative ml-4 flex">
                     <x-search-form placeholder="Buscar aluno..." />
                 </div>
-                <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4 max-h-[350px] overflow-auto">
                     @forelse ($this->userQuestions as $user)
                     <div class="flex  flex-row justify-start items-start py-2 px-4 mb-2 {{round(($user->correct_answers / $user->all_answers) * 100, 1) < 60 ? 'bg-infor' : ''}}">
                         <span class="flex-1 truncate ml-2 text-sm font-medium group-hover:text-slate-800">
