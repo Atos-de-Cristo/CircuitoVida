@@ -308,6 +308,11 @@
                         @else
                         <div class="flex flex-col items-center gap-1">
                             {{ ($user->pending_answers <= 0) ? round(($user->correct_answers / $user->all_answers) * 100, 1).'%' : 'Pendente de correção' }}
+                            <button
+                                wire:click.prevent="correctAnswers({{$user->id}})" type="button"
+                                class="btn-primary">
+                                <x-icon-circle-check class="h-4 w-4 " /> <small class="pr-2 ml-1"> Ver</small>
+                            </button>
                         </div>
                         @endif
                     </div>
