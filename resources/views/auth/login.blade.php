@@ -2,7 +2,7 @@
     <x-authentication-card>
 
         <x-slot name="logo">
-            <x-icon-logo class="w-40 h-40 dark:text-white text-black"/>
+            <img src="{{ asset('images/logo.png') }}" class="w-80" />
         </x-slot>
 
         <x-validation-errors class="mb-2" />

@@ -19,27 +19,27 @@
             <livewire:profile />
         </div>
 
+        <x-section-border />
+
         @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))
             <div class="mt-10 sm:mt-0">
                 @livewire('profile.update-password-form')
             </div>
-
-            <x-section-border />
         @endif
 
         <x-section-border />
 
-        @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
+        {{-- @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
             <div class="mt-10 sm:mt-0">
                 @livewire('profile.two-factor-authentication-form')
             </div>
 
             <x-section-border />
-        @endif
+        @endif --}}
 
-        <div class="mt-10 sm:mt-0">
+        {{-- <div class="mt-10 sm:mt-0">
             @livewire('profile.logout-other-browser-sessions-form')
-        </div>
+        </div> --}}
 
 
     </div>
