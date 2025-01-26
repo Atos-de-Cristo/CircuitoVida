@@ -10,7 +10,7 @@ use Livewire\Component;
 class Profile extends Component
 {
     public $cpf, $sex, $birth, $marital_status, $phone, $userId;
-    public $leader, $date_baptism, $church, $deficiency;
+    public $leader, $date_baptism, $member, $church, $deficiency;
 
     public function getProfileServiceProperty()
     {
@@ -34,6 +34,7 @@ class Profile extends Component
             $this->deficiency = $data['deficiency'];
             $this->leader = $data['leader'];
             $this->date_baptism = $data['date_baptism'];
+            $this->member = $data['member'];
             $this->church = $data['church'];
         }
     }
@@ -72,7 +73,11 @@ class Profile extends Component
                 'birth' => $this->birth,
                 'marital_status' => $this->marital_status,
                 'phone' => $this->phone,
-                'deficiency' => $this->deficiency
+                'deficiency' => $this->deficiency,
+                'leader' => $this->leader,
+                'date_baptism' => $this->date_baptism,
+                'member' => $this->member,
+                'church' => $this->church,
             ];
 
             $this->profileService->store($request);

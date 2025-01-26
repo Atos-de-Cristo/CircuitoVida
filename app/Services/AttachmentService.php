@@ -67,6 +67,7 @@ class AttachmentService extends BaseService
         $dataValidate = $this->validateForm($data);
         $ret = $this->repository->create($dataValidate);
 
+        $message = 'Novo anexo enviado';
         if (isset($ret->lesson)) {
             $message = 'Novo anexo cadastrado em '.$ret->lesson->title;
             $send = $ret->lesson->event->inscriptions->pluck('user_id');
@@ -76,7 +77,7 @@ class AttachmentService extends BaseService
             $send = $ret->event->inscriptions->pluck('user_id');
         }
         $this->messageService->sendGroup([
-            'message' => $message || 'Novo anexo enviado',
+            'message' => $message,
             'list_for' => $send
         ]);
 
