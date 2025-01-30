@@ -54,7 +54,7 @@
             <div
                 class="bg-white border-t-2 dark:border-indigo-900 dark:bg-slate-700 overflow-hidden shadow-xl rounded-md  mt-2 mb-4">
                 <div class="h-48 overflow-auto px-4 py-4">
-                    @livewire('event-activity-list', ['lessonId' => $lessonId])
+                    @livewire('event-activity-list', ['lessonId' => $lessonId, 'eventId' => $eventId])
                 </div>
             </div>
         </div>

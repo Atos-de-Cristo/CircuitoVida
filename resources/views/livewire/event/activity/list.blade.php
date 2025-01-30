@@ -1,5 +1,6 @@
 <div class="overflow-auto ">
     @forelse ($activities as $activity)
+    @cannot(['monitorEvent'], $eventId)
     @if ($activity->type == 'E')
         @can('aluno')
             @if (!$activity->users->find(Auth::user()->id))
@@ -7,6 +8,7 @@
             @endif
         @endcan
     @endif
+    @endcannot
         <div class="flex justify-between items-baseline mb-2">
             <x-icon-file-word class="pt-1" />
             <div class="flex flex-1 justify-start -mt-1">
@@ -16,9 +18,9 @@
                 >
                     <p class="">{{ $activity->title }}</p>
                     @if ($activity->type == 'E')
-                        @can('admin')
+                        @cannot('aluno')
                             <p>({{$activity->users->pluck('name')->implode(', ')}})</p>
-                        @endcan
+                        @endcannot
                     @endif
                     <small>{{ $activity->description }}</small>
                 </a>

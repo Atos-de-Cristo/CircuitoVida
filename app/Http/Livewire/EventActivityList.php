@@ -14,7 +14,7 @@ class EventActivityList extends Component
     public $lessonId;
     public $isOpenQuestions = false;
     public $atvId;
-
+    public $eventId;
     protected $listeners = [
         'refreshActivityList' => '$refresh',
         'closeModalQuestions' => 'closeModalQuestions'
@@ -30,7 +30,8 @@ class EventActivityList extends Component
         $activities = $activityService->getAll([
             'lesson_id' => $this->lessonId
         ]);
-        return view('livewire.event.activity.list', compact('activities'));
+        $eventId = $this->eventId;
+        return view('livewire.event.activity.list', compact('activities', 'eventId'));
     }
 
     public function openModalQuestions($atvId)
