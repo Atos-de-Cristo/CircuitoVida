@@ -9,7 +9,7 @@
         <x-slot name="description"></x-slot>
         <x-slot name="form">
             <div class="col-span-6 sm:col-span-3">
-                <x-label for="cpf" value="{{ __('CPF') }}" />
+                <x-label for="cpf" value="{{ __('CPF') }} *" />
                 <x-input id="cpf" type="text" class="mt-1 block w-full" wire:model.defer="cpf" disabled="{{$cpf ? true : false}}" />
                 @error('cpf')
                     <span class="text-red-500">{{ $message }}</span>
@@ -17,7 +17,7 @@
             </div>
 
             <div class="col-span-6 sm:col-span-3">
-                <x-label for="sex" value="{{ __('Sexo') }}" />
+                <x-label for="sex" value="{{ __('Sexo') }} *" />
                 <select id="sex" wire:model.defer="sex"
                     class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
                     <option value="">Selecione</option>
@@ -27,13 +27,13 @@
                 <x-input-error for="sex" class="mt-2" />
             </div>
             <div class="col-span-6 sm:col-span-3">
-                <x-label for="birth" value="{{ __('Data de Nascimento') }}" />
+                <x-label for="birth" value="{{ __('Data de Nascimento') }} *" />
                 <input type="date" wire:model.defer="birth"
                     class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" />
                 <x-input-error for="birth" class="mt-2" />
             </div>
             <div class="col-span-6 sm:col-span-3">
-                <x-label for="marital_status" value="{{ __('Estado Civil') }}" />
+                <x-label for="marital_status" value="{{ __('Estado Civil') }} *" />
                 <select id="marital_status" wire:model.defer="marital_status"
                     class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
                     <option value="">Selecione</option>
@@ -44,7 +44,7 @@
                 <x-input-error for="marital_status" class="mt-2" />
             </div>
             <div class="col-span-6 sm:col-span-3">
-                <x-label for="phone" value="{{ __('Contato') }}" />
+                <x-label for="phone" value="{{ __('Contato') }} *" />
                 <x-input id="phone" type="text" class="mt-1 block w-full" wire:model.defer="phone" />
                 <x-input-error for="phone" class="mt-2" />
             </div>
