@@ -23,7 +23,7 @@ class EventManager extends Component
     public function mount(Request $request)
     {
         $this->eventId = $request->eventId;
-        if (Auth::user()->profile === null) {
+        if (Auth::user()->profile === null && Auth::user()->isAdmin === false) {
             return redirect()->route('profile.show')->with('message', [
                 'text' => 'Preecha seu Perfil completo' ,
                 'type' => 'error',

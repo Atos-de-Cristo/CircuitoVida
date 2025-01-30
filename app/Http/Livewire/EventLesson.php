@@ -6,6 +6,7 @@ use App\Services\LessonService;
 use Livewire\Component;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
 
 class EventLesson extends Component
 {
@@ -24,6 +25,12 @@ class EventLesson extends Component
     public function mount()
     {
         if ($this->lessonId) {
+            if (Auth::user()->profile === null && Auth::user()->isAdmin === false) {
+                return redirect()->route('profile.show')->with('message', [
+                    'text' => 'Preecha seu Perfil completo' ,
+                    'type' => 'error',
+                ]);
+            }
             $this->editLesson();
         }
     }

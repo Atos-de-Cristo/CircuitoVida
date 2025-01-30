@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Services\LessonService;
 use Illuminate\Http\Request;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 class Classroom extends Component
 {
@@ -24,6 +25,13 @@ class Classroom extends Component
     {
         $this->eventId = $request->eventId;
         $this->lessonId = $request->id;
+
+        if (Auth::user()->profile === null && Auth::user()->isAdmin === false) {
+            return redirect()->route('profile.show')->with('message', [
+                'text' => 'Preecha seu Perfil completo' ,
+                'type' => 'error',
+            ]);
+        }
     }
 
     public function render()
