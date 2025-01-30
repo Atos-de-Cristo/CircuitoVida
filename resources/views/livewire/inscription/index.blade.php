@@ -28,14 +28,12 @@
                     <div class="flex-grow p-4 flex flex-col justify-between">
                         <div class="mb-4">
                             <h3 class="text-lg font-medium text-gray-900 dark:text-white">{{ $data->event->name }}</h3>
-                            <p class="text-sm text-gray-500 dark:text-white">{{ getTypeEvent($data->event->type) }}</p>
-                            <p class="text-sm text-gray-500 dark:text-white">{{ getStatusInscription($data->status) }}</p>
+                            <p class="text-sm text-gray-500 dark:text-white">Situação: {{ getStatusInscription($data->status) }}</p>
                         </div>
                         <div>
                             <hr class="my-2 border-gray-300">
                             <div class="flex justify-center md:space-x-4 md:space-y-0 space-y-4 flex-col md:flex-row">
                                 <button wire:click="view({{ $data->event->id }})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ver</button>
-                                <button wire:click="cancel({{ $data->id }})" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancelar</button>
                             </div>
                         </div>
                     </div>
