@@ -24,7 +24,7 @@
                     class="max-w-xs w-full sm:w-auto  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <a href="#">
                         <img class=" rounded-t-lg w-80 h-40 sm:h-64"
-                            src="{{ asset(!empty($item->image)? $item->image : 'images/curso.png')}}" alt="" />
+                            src="{{ asset(!empty($item->image)? $item->image : 'images/curso_new.png')}}" alt="" />
                     </a>
                     <div class="p-3">
                         <a href="#">

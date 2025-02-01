@@ -11,7 +11,7 @@
             class="w-full mb-4 flex flex-col bg-white dark:bg-slate-800 rounded-md sm:flex-row justify-start"
         >
             <div  class="sm:w-40 w-full rouded-l-md">
-                <img src="{{ asset(!empty($inscription->event->image) ? $inscription->event->image : 'images/curso.png') }}"
+                <img src="{{ asset(!empty($inscription->event->image) ? $inscription->event->image : 'images/curso_new.png') }}"
                     alt="{{ $inscription->name }}"
                     class="hover:scale-105  object-cover h-32 w-full sm:rounded-l-md rounded-t-md">
             </div>

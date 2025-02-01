@@ -40,7 +40,7 @@
                             <img src="{{ asset($data->profile_photo_url) }}" alt="{{ $data->name }}"
                                 class="object-cover h-full w-full cursor-pointer" wire:click="manager({{ $data->id }})">
                             @else
-                            <img src="{{ asset('images/curso.png') }}" alt="Logo"
+                            <img src="{{ asset('images/curso_new.png') }}" alt="Logo"
                                 class="bg-slate-500 object-cover h-full w-full cursor-pointer"
                                 wire:click="manager({{ $data->id }})">
                             @endif

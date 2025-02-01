@@ -20,7 +20,7 @@
             <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-2">
                 <div class="bg-gray-100  max-w-sm  dark:bg-slate-800 overflow-hidden shadow rounded-lg flex flex-col ">
                     <div class="flex-shrink-0">
-                        <img src="{{ asset(!empty($data->event->image) ? $data->event->image : 'images/curso.png') }}"
+                        <img src="{{ asset(!empty($data->event->image) ? $data->event->image : 'images/curso_new.png') }}"
                             alt="Logo Evento {{ $data->event->name }}"
                             class="hover:scale-105 h-52 w-full object-cover rounded-t-lg cursor-pointer"
                             wire:click="manager({{ $data->id }})">
