@@ -68,6 +68,7 @@ class QuestionService extends BaseService
                 'responses.response AS response',
                 'responses.status AS response_status'
             )
+            ->orderBy('questions.title', 'asc')
             ->get();
 
         $checkResponse = isset($results->first()->response_status);
