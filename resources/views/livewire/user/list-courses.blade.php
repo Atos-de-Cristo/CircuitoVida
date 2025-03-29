@@ -39,10 +39,12 @@
                     <div class="flex flex-row items-center gap-3">
                         <p class="status information text-sm font-semibold">Frequência:</p>
                         <div class="w-full sm:w-64 bg-gray-200 rounded-full dark:bg-gray-700">
+                            @if($inscription->frequencies->count() > 0)
                             <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
                                 style="width: {{ $inscription->frequencies->count() / $inscription->event->lessons->count() * 100  }}%">
                                 {{round ($inscription->frequencies->count() / $inscription->event->lessons->count() * 100 ) }}%
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>
