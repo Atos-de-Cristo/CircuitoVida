@@ -68,7 +68,7 @@ class QuestionService extends BaseService
                 'responses.response AS response',
                 'responses.status AS response_status'
             )
-            ->orderBy('questions.title', 'asc')
+            ->orderByRaw('CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(questions.title, "Q", -1), " ", 1) AS UNSIGNED)')
             ->get();
 
         $checkResponse = isset($results->first()->response_status);
