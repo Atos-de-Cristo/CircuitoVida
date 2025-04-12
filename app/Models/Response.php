@@ -13,7 +13,7 @@ class Response extends Model implements Auditable
     use AuditableTrait;
     use HasFactory;
 
-    protected $fillable = [ 'user_id', 'question_id', 'response', 'status' ];
+    protected $fillable = [ 'user_id', 'question_id', 'response', 'status', 'feedback' ];
 
     public function user(): BelongsTo
     {

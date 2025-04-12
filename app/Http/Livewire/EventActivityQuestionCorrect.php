@@ -9,6 +9,7 @@ class EventActivityQuestionCorrect extends Component
 {
     public $userId, $atvId;
     public $checkResponse = [];
+    public $feedback = [];
 
     public function getServiceResponseProperty()
     {
@@ -35,6 +36,7 @@ class EventActivityQuestionCorrect extends Component
                 $itemStatus = array_shift($opt)->correct;
                 $this->checkResponse[$item->id] = $itemStatus ? 'correto' : 'errado';
             }
+            $this->feedback[$item->id] = $item->feedback;
         }
     }
 
@@ -58,9 +60,10 @@ class EventActivityQuestionCorrect extends Component
         foreach ($this->checkResponse as $id => $status) {
             $this->serviceResponse->store(array(
                 'id' => $id,
-                'status' => $status
+                'status' => $status,
+                'feedback' => $this->feedback[$id] ?? null
             ));
         }
-       $this->closeCorrectAnswers();
+        $this->closeCorrectAnswers();
     }
 }

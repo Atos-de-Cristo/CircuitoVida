@@ -97,7 +97,11 @@
                         <div class="flex flex-col gap-4 justify-center items-center h-full p-2">
                             <div class="flex-grow">
                                 <h2 class="text-lg text-gray-800 dark:text-white font-bold ">
-                                    Responder Questões
+                                    @if ($this->questions['checkResponse']==true)
+                                        Respostas
+                                    @else
+                                        Responder Questões
+                                    @endif
                                 </h2>
                             </div>
                             @can('aluno')
@@ -144,7 +148,29 @@
                             </div>
                             @if ($question->type === 'aberta')
                                 @if ($question->response)
-                                    {{ $question->response }}
+                                    <div class="space-y-4">
+                                        <div>
+                                            <p class="font-semibold mb-2">Sua resposta:</p>
+                                            <p class="break-words max-w-full p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">{{ $question->response }}</p>
+                                        </div>
+
+                                        @if ($question->response_status == 'errado')
+                                            <div class="mt-2 text-red-600 dark:text-red-400">
+                                                <p class="font-semibold">Resposta incorreta</p>
+                                            </div>
+                                        @elseif ($question->response_status == 'correto')
+                                            <div class="mt-2 text-green-600 dark:text-green-400">
+                                                <p class="font-semibold">Resposta correta</p>
+                                            </div>
+                                        @endif
+
+                                        @if ($question->feedback)
+                                            <div class="border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-900/10 p-4 pl-6 mt-4 rounded-r-lg">
+                                                <p class="font-semibold text-blue-700 dark:text-blue-400 mb-2">Feedback do avaliador:</p>
+                                                <p class="text-gray-700 dark:text-gray-300 italic">{{ $question->feedback }}</p>
+                                            </div>
+                                        @endif
+                                    </div>
                                 @else
                                     <textarea
                                         {{ auth()->check() && auth()->user()->hasPermissionTo('admin') ? 'disabled' : '' }}
@@ -159,24 +185,49 @@
                                 @enderror
                             @elseif ($question->type === 'multi')
                                 @if ($question->response)
-                                    <p>Resposta: {{ $question->response }}</p>
-                                    @if ($question->response_status == 'errado')
-                                        <small>Correta: {{ $this->getCorrectOption($question->options) }}</small>
-                                    @endif
+                                    <div class="space-y-4">
+                                        <div>
+                                            <p class="font-semibold mb-2">Sua resposta:</p>
+                                            <p class="break-words max-w-full p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">{{ $question->response }}</p>
+                                        </div>
+
+                                        @if ($question->response_status == 'errado')
+                                            <div class="mt-2 text-red-600 dark:text-red-400">
+                                                <p class="font-semibold">Resposta incorreta</p>
+                                                <p class="text-sm">Resposta correta: {{ $this->getCorrectOption($question->options) }}</p>
+                                            </div>
+                                        @elseif ($question->response_status == 'correto')
+                                            <div class="mt-2 text-green-600 dark:text-green-400">
+                                                <p class="font-semibold">Resposta correta</p>
+                                            </div>
+                                        @endif
+
+                                        @if ($question->feedback)
+                                            <div class="border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-900/10 p-4 pl-6 mt-4 rounded-r-lg">
+                                                <p class="font-semibold text-blue-700 dark:text-blue-400 mb-2">Feedback do avaliador:</p>
+                                                <p class="text-gray-700 dark:text-gray-300 italic">{{ $question->feedback }}</p>
+                                            </div>
+                                        @endif
+                                    </div>
                                 @else
                                     @forelse (json_decode($question->options) as $index => $option)
-                                        <label class="flex items-center">
-                                            <input
-                                                {{ auth()->check() && auth()->user()->hasPermissionTo('admin') ? 'disabled' : '' }}
-                                                type="radio"
-                                                name="question_{{ $question->id }}"
-                                                wire:model="answers.{{ $question->id }}"
-                                                value="{{ $option->text }}"
-                                                class="mr-2 {{ auth()->user()->hasPermissionTo('admin') && $option->correct ? 'bg-green-600' : '' }}"
-                                                {{ $question->response == $option->text ? 'checked' : '' }}
-                                            >
-                                            <span class="text-sm">{{ $option->text }}</span>
-                                        </label>
+                                        <div class="flex items-center py-1">
+                                            <div class="flex items-center">
+                                                <input
+                                                    {{ auth()->check() && auth()->user()->hasPermissionTo('admin') ? 'disabled' : '' }}
+                                                    type="radio"
+                                                    id="question_{{ $question->id }}_{{ $index }}"
+                                                    name="question_{{ $question->id }}"
+                                                    wire:model="answers.{{ $question->id }}"
+                                                    value="{{ $option->text }}"
+                                                    class="mr-2 {{ auth()->user()->hasPermissionTo('admin') && $option->correct ? 'bg-green-600' : '' }}"
+                                                    {{ $question->response == $option->text ? 'checked' : '' }}
+                                                >
+                                                <label for="question_{{ $question->id }}_{{ $index }}" class="text-sm cursor-pointer select-none">
+                                                    {{ $option->text }}
+                                                </label>
+                                            </div>
+                                        </div>
                                     @empty
                                         <span class="text-red-500">Nenhuma opção cadastrada</span>
                                     @endforelse
@@ -186,24 +237,49 @@
                                 @enderror
                             @elseif ($question->type === 'multiple')
                                 @if ($question->response)
-                                    <p>Resposta: {{ $question->response }}</p>
-                                    @if ($question->response_status == 'errado')
-                                        <small>Correta: {{ $this->getCorrectOption($question->options) }}</small>
-                                    @endif
+                                    <div class="space-y-4">
+                                        <div>
+                                            <p class="font-semibold mb-2">Sua resposta:</p>
+                                            <p class="break-words max-w-full p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">{{ $question->response }}</p>
+                                        </div>
+
+                                        @if ($question->response_status == 'errado')
+                                            <div class="mt-2 text-red-600 dark:text-red-400">
+                                                <p class="font-semibold">Resposta incorreta</p>
+                                                <p class="text-sm">Resposta correta: {{ $this->getCorrectOption($question->options) }}</p>
+                                            </div>
+                                        @elseif ($question->response_status == 'correto')
+                                            <div class="mt-2 text-green-600 dark:text-green-400">
+                                                <p class="font-semibold">Resposta correta</p>
+                                            </div>
+                                        @endif
+
+                                        @if ($question->feedback)
+                                            <div class="border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-900/10 p-4 pl-6 mt-4 rounded-r-lg">
+                                                <p class="font-semibold text-blue-700 dark:text-blue-400 mb-2">Feedback do avaliador:</p>
+                                                <p class="text-gray-700 dark:text-gray-300 italic">{{ $question->feedback }}</p>
+                                            </div>
+                                        @endif
+                                    </div>
                                 @else
                                     @forelse (json_decode($question->options) as $index => $option)
-                                        <label class="flex items-center">
-                                            <input
-                                                {{ auth()->check() && auth()->user()->hasPermissionTo('admin') ? 'disabled' : '' }}
-                                                type="checkbox"
-                                                name="question_{{ $question->id }}.{{ $option->text }}"
-                                                wire:model="answers.{{ $question->id }}.{{ $option->text }}"
-                                                value="check"
-                                                class="mr-2 {{ auth()->user()->hasPermissionTo('admin') && $option->correct ? 'bg-green-600' : '' }}"
-                                                {{ $question->response == $option->text ? 'checked' : '' }}
-                                            >
-                                            <span class="text-sm">{{ $option->text }}</span>
-                                        </label>
+                                        <div class="flex items-center py-1">
+                                            <div class="flex items-center">
+                                                <input
+                                                    {{ auth()->check() && auth()->user()->hasPermissionTo('admin') ? 'disabled' : '' }}
+                                                    type="checkbox"
+                                                    id="question_{{ $question->id }}_{{ $index }}"
+                                                    name="question_{{ $question->id }}.{{ $option->text }}"
+                                                    wire:model="answers.{{ $question->id }}.{{ $option->text }}"
+                                                    value="check"
+                                                    class="mr-2 {{ auth()->user()->hasPermissionTo('admin') && $option->correct ? 'bg-green-600' : '' }}"
+                                                    {{ $question->response == $option->text ? 'checked' : '' }}
+                                                >
+                                                <label for="question_{{ $question->id }}_{{ $index }}" class="text-sm cursor-pointer select-none">
+                                                    {{ $option->text }}
+                                                </label>
+                                            </div>
+                                        </div>
                                     @empty
                                         <span class="text-red-500">Nenhuma opção cadastrada</span>
                                     @endforelse

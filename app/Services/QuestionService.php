@@ -38,7 +38,8 @@ class QuestionService extends BaseService
             ->select(
                 'questions.*',
                 'responses.response AS response',
-                'responses.status AS response_status'
+                'responses.status AS response_status',
+                'responses.feedback AS feedback'
             )
             ->get();
     }
@@ -66,15 +67,17 @@ class QuestionService extends BaseService
             ->select(
                 'questions.*',
                 'responses.response AS response',
-                'responses.status AS response_status'
+                'responses.status AS response_status',
+                'responses.feedback AS feedback'
             )
+            ->orderBy('id')
             ->get();
             
         // Ordenar a coleção com base nos números contidos nos títulos
         $results = $results->sortBy(function($question) {
             // Extrai o número do título (assumindo formato como "1. Questão" ou "Q1 - Questão")
             preg_match('/(\d+)/', $question->title, $matches);
-            return isset($matches[1]) ? (int)$matches[1] : 0;
+            return isset($matches[1]) ? (int)$matches[1] : PHP_INT_MAX;  // Questões sem número vão para o final
         });
 
         $checkResponse = isset($results->first()->response_status);

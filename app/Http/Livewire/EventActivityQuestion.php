@@ -82,6 +82,7 @@ class EventActivityQuestion extends Component
     public function closeCorrectAnswers()
     {
         $this->viewCorrectAnswers = false;
+        $this->emit('refreshActivityQuestion');
     }
 
     public function addOption()

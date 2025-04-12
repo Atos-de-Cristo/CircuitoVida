@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(Question::class)->index();
             $table->text('response');
             $table->enum('status', ['pendente', 'correto', 'errado']);
+            $table->text('feedback')->nullable();
             $table->timestamps();
         });
     }

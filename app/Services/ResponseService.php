@@ -14,6 +14,7 @@ class ResponseService extends BaseService
         'question_id' => 'required|numeric',
         'response' => 'required|min:1',
         'status' => 'required',
+        'feedback' => 'nullable|string'
     ];
 
     public function __construct()

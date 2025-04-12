@@ -26,7 +26,21 @@
                                 </button>
                             </div>
                         </div>
-                        <small class="break-words max-w-full">{{ $item->response }}</small>
+                        <div class="mt-2">
+                            <p class="font-semibold mb-2">Resposta do aluno:</p>
+                            <p class="break-words max-w-full">{{ $item->response }}</p>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <label for="feedback_{{$item->id}}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Feedback para o aluno</label>
+                            <textarea
+                                id="feedback_{{$item->id}}"
+                                wire:model="feedback.{{$item->id}}"
+                                rows="3"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white sm:text-sm"
+                                placeholder="Digite seu feedback para esta resposta..."
+                            ></textarea>
+                        </div>
                     </div>
                 @empty
                     <span class="text-red-500">Nenhuma questão cadastrada</span>
