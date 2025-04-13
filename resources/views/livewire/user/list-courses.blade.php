@@ -20,6 +20,7 @@
                 <h2 class="hover:scale-105 font-bold text-xl">{{ $inscription->event->name }}</h2>
                 <p class="nome">{{date('d/m/Y', strtotime($inscription->event->start_date))}} - {{date('d/m/Y', strtotime($inscription->event->end_date))}}</p>
                 <p class="nome">Status: {{getStatusInscription($inscription->status) }}</p>
+                @if($inscription->cancellation_reason)<p class="nome">Observação: {{ $inscription->cancellation_reason }}</p>@endif
                 <div class="tags">
                     <div class="flex flex-row items-center gap-3">
                         <p class="status information text-sm font-semibold">Atividades:</p>
