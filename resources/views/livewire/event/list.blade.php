@@ -44,6 +44,9 @@
                     <div class="flex-grow p-4 flex flex-col justify-between">
                         <div class="mb-4">
                             <h3 class="text-lg font-medium text-gray-900 dark:text-white">{{ $data->name }}</h3>
+                            <p class="text-sm text-gray-500 dark:text-white border-t my-1 py-1 border-slate-900">
+                                Data: {{date('d/m/Y', strtotime($data->start_date))}} - {{date('d/m/Y', strtotime($data->end_date))}}
+                            </p>
                             <p class="text-sm text-gray-500 dark:text-white border-y my-1 py-1 border-slate-900">Local: {{ $data->local }}</p>
                             <p class="text-sm text-gray-500 dark:text-white">Status do curso: {{ getStatusEvent($data->status) }}</p>
                         </div>
@@ -88,6 +91,9 @@
                     <div class="flex-grow p-4 flex flex-col justify-between">
                         <div class="mb-4">
                             <h3 class="text-lg font-medium text-gray-900 dark:text-white">{{ $data->name }}</h3>
+                            <p class="text-sm text-gray-500 dark:text-white border-t my-1 py-1 border-slate-900">
+                                Data: {{date('d/m/Y', strtotime($data->start_date))}} - {{date('d/m/Y', strtotime($data->end_date))}}
+                            </p>
                             <p class="text-sm text-gray-500 dark:text-white border-y my-1 py-1 border-slate-900">Local: {{ $data->local }}</p>
                             <p class="text-sm text-gray-500 dark:text-white">Status do curso: {{ getStatusEvent($data->status) }}</p>
                         </div>

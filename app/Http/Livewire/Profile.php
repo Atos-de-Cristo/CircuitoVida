@@ -11,6 +11,7 @@ class Profile extends Component
 {
     public $cpf, $sex, $birth, $marital_status, $phone, $userId;
     public $leader, $date_baptism, $member, $church, $deficiency;
+    public $showAdminMessage = false;
 
     public function getProfileServiceProperty()
     {
@@ -66,6 +67,13 @@ class Profile extends Component
     public function store()
     {
         try {
+            // Verifica se o usuário está tentando alterar a data de membresia sem ser admin
+            if (!auth()->user()->can('admin') && $this->member !== $this->profileService->find()['member']) {
+                throw ValidationException::withMessages([
+                    'member' => 'A data de membresia só pode ser alterada pela administração da igreja.'
+                ]);
+            }
+
             $request = [
                 'userId' => ($this->userId) ? $this->userId : null,
                 'cpf' => $this->cpf,

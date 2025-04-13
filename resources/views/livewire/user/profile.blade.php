@@ -62,8 +62,14 @@
             <div class="col-span-6 sm:col-span-3">
                 <x-label for="member" value="{{ __('Data de Membresia') }}" />
                 <input type="date" wire:model.defer="member"
-                    class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" />
+                    class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                    @cannot('admin') wire:click="$set('showAdminMessage', true)" readonly @endcannot />
                 <x-input-error for="member" class="mt-2" />
+                @cannot('admin')
+                    @if($showAdminMessage ?? false)
+                        <p class="mt-1 text-sm text-gray-500">A data de membresia só pode ser alterada pela administração da igreja.</p>
+                    @endif
+                @endcannot
             </div>
             <div class="col-span-6 sm:col-span-3">
                 <x-label for="church" value="{{ __('Qual igreja você foi batizado?') }}" />
