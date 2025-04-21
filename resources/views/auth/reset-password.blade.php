@@ -32,7 +32,7 @@
                 </x-button>
             </div>
 
-            <div class="mt-12 justify-end text-center">
+            <div class="mt-10 justify-end text-center">
                 <h2 class="text-xl font-medium text-slate-200">
                     <p class="text-lg text-gray-600 dark:text-slate-300 mb-2">Problemas no login, contate nosso suporte.</p>
                     <a class="text-gray-600 dark:text-slate-300" target="_blank" href="https://wa.me/+5585992442426">
@@ -42,7 +42,7 @@
                         (85) 9 9244-2426
                     </a>
                 </h2>
-                <p class="text-sm text-gray-600 dark:text-slate-300">Suporte Tecnico<br />Circuito Vida</p>
+                <p class="text-sm text-gray-600 dark:text-slate-300">Suporte Técnico<br />Circuito Vida</p>
             </div>
         </form>
     </x-authentication-card>

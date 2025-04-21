@@ -227,7 +227,7 @@
                     (85) 9 9244-2426
                 </a>
             </h2>
-            <p class="text-sm text-slate-300">Suporte Tecnico<br />Circuito Vida</p>
+            <p class="text-sm text-slate-300">Suporte Técnico<br />Circuito Vida</p>
         </div>
         <div class="hidden lg:inline-flex 2xl:hidden justify-end mt-2">
             <div class="px-3 py-2">
