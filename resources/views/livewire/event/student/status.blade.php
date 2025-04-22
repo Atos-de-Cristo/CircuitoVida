@@ -79,6 +79,16 @@
                     @endforelse
                 </div>
             </div>
+            @else
+            <div class="flex items-center justify-center p-4">
+                <div class="text-center">
+                    <svg class="w-12 h-12 mx-auto text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <h3 class="mt-2 text-xl font-medium text-gray-900 dark:text-white">Tudo ok! Sem pendências.</h3>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Não há pendências para este aluno.</p>
+                </div>
+            </div>
             @endif
 
         </x-slot>

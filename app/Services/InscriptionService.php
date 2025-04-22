@@ -86,9 +86,7 @@ class InscriptionService extends BaseService
                 'user' => function ($query) use ($search) {
                     $query->where('name', 'LIKE', '%' . $search . '%');
                 },
-                'event.lessons' => function ($query) use ($today) {
-                    $query->where('end_date', '<=', $today);
-                },
+                'event.lessons',
                 'event.lessons.frequency',
                 'event.lessons.activities.questions.Response',
             ])
@@ -102,9 +100,17 @@ class InscriptionService extends BaseService
                 $totalLessons = $item->event->lessons->count();
                 $totalFrequency = 0;
                 $statusActivity = [];
-                $item->event->lessons->each(function ($lesson) use (&$item, &$totalFrequency, &$statusActivity) {
+                $now = Carbon::now();
+                
+                $item->event->lessons->each(function ($lesson) use (&$item, &$totalFrequency, &$statusActivity, $now) {
                     $totalFrequency += $lesson->frequency->where('user_id', $item->user_id)->count();
-                    $lesson->activities->each(function ($activity) use (&$item, &$statusActivity, &$lesson) {
+                    $lesson->activities->each(function ($activity) use (&$item, &$statusActivity, &$lesson, $now) {
+                        // Verificar se a atividade tem prazo encerrado
+                        $activityExpired = false;
+                        if ($activity->end_date && Carbon::parse($activity->end_date)->lt($now)) {
+                            $activityExpired = true;
+                        }
+                        
                         $totalPendent = 0;
                         $totalCorrect = 0;
                         $totalIncorrect = 0;
@@ -121,9 +127,22 @@ class InscriptionService extends BaseService
                             $totalCorrect += $question->response->where('user_id', $item->user_id)->where('status', 'correto')->count();
                             $totalIncorrect += $question->response->where('user_id', $item->user_id)->where('status', 'errado')->count();
                         });
-                        // TODO: melhorar ifs
-                        if ($notResponse == false) {
-                            if ($totalPendent > 0) {
+                        
+                        // Verifica pendências para atividades com prazo expirado ou aulas encerradas
+                        if ($activityExpired || Carbon::parse($lesson->end_date)->lt($now)) {
+                            if ($notResponse) {
+                                $statusActivity[] = [
+                                    'module' => $lesson->module->name ?? 'Nome do módulo não disponível',
+                                    'lesson' => $lesson->title,
+                                    'activity' => $activity->title,
+                                    'pendent' => $totalPendent,
+                                    'correct' => $totalCorrect,
+                                    'incorrect' => $totalIncorrect,
+                                    'percent' => 0,
+                                    'status' => 'Não respondido',
+                                    'totalQuestions' => $totalQuestions,
+                                ];
+                            } elseif ($totalPendent > 0) {
                                 $statusActivity[] = [
                                     'module' => $lesson->module->name,
                                     'lesson' => $lesson->title,
@@ -135,36 +154,22 @@ class InscriptionService extends BaseService
                                     'status' => 'Pendentes de correção',
                                     'totalQuestions' => $totalQuestions,
                                 ];
-                            }else{
-                                if ($totalCorrect > 0 && $totalQuestions > 0) {
-                                    $percent = ($totalCorrect/$totalQuestions)*100;
-                                    if ($percent <= 70) {
-                                        $statusActivity[] = [
-                                            'module' => $lesson->module->name,
-                                            'lesson' => $lesson->title,
-                                            'activity' => $activity->title,
-                                            'pendent' => $totalPendent,
-                                            'correct' => $totalCorrect,
-                                            'incorrect' => $totalIncorrect,
-                                            'percent' => number_format($percent, 2, '.', ''),
-                                            'status' => $totalPendent > 0 ? 'Pendentes de correção' : 'Reprovado',
-                                            'totalQuestions' => $totalQuestions,
-                                        ];
-                                    }
+                            } elseif ($totalCorrect > 0 && $totalQuestions > 0) {
+                                $percent = ($totalCorrect/$totalQuestions)*100;
+                                if ($percent <= 70) {
+                                    $statusActivity[] = [
+                                        'module' => $lesson->module->name,
+                                        'lesson' => $lesson->title,
+                                        'activity' => $activity->title,
+                                        'pendent' => $totalPendent,
+                                        'correct' => $totalCorrect,
+                                        'incorrect' => $totalIncorrect,
+                                        'percent' => number_format($percent, 2, '.', ''),
+                                        'status' => 'Reprovado',
+                                        'totalQuestions' => $totalQuestions,
+                                    ];
                                 }
                             }
-                        }else{
-                            $statusActivity[] = [
-                                'module' => $lesson->module->name ?? 'Nome do módulo não disponível',
-                                'lesson' => $lesson->title,
-                                'activity' => $activity->title,
-                                'pendent' => $totalPendent,
-                                'correct' => $totalCorrect,
-                                'incorrect' => $totalIncorrect,
-                                'percent' => 0,
-                                'status' => 'Não respondido',
-                                'totalQuestions' => $totalQuestions,
-                            ];
                         }
                     });
                 });
