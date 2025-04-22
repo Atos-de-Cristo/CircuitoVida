@@ -10,6 +10,7 @@ use App\Http\Livewire\{
     Classroom,
     EventActivityQuestion,
     EventCategory,
+    EventCourseFrequency,
     ListMessages,
     StudentActivities,
     StudentAttachments,
@@ -25,6 +26,7 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
         Route::get('/event/{eventId}/manager', EventManager::class)->name('eventManager');
         Route::get('/event/{eventId}/classroom/{id}', Classroom::class)->name('classroom');
         Route::get('/event/{eventId}/question/{id}', EventActivityQuestion::class)->name('eventActivityQuestion');
+        Route::get('/event/{eventId}/frequency', EventCourseFrequency::class)->name('courseFrequency');
     });
 
     Route::middleware('can:admin')->group(function () {

@@ -52,6 +52,10 @@
                         <span class="ml-2">Notificação</span>
                     </button>
                     <livewire:copying-course-data :eventId='$eventId' :key="rand()">
+                    <a href="{{ route('courseFrequency', ['eventId' => $eventId]) }}" class="btn-primary sm:px-2">
+                        <x-icon-check class="w-4 h-4" />
+                        <span class="ml-2">Frequência</span>
+                    </a>
                 </div>
             @endcan
             @can('monitorEvent', $eventId)
@@ -60,6 +64,10 @@
                         <x-icon-bell class="w-4 h-4" />
                         <span class="ml-2">Notificação</span>
                     </button>
+                    <a href="{{ route('courseFrequency', ['eventId' => $eventId]) }}" class="btn-primary sm:px-2">
+                        <x-icon-check class="w-4 h-4" />
+                        <span class="ml-2">Frequência</span>
+                    </a>
                 </div>
             @endcan
         </div>
