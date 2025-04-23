@@ -23,6 +23,8 @@ class EventCourseFrequency extends Component
     public $selectedUserId;
     public $selectedLessonId;
     public $selectedInscriptionId;
+    public $loadingPresence = [];
+    public $loadingJustification = false;
 
     protected $queryString = ['search', 'perPage'];
     
@@ -86,6 +88,9 @@ class EventCourseFrequency extends Component
 
     public function toggleFrequency($userId, $lessonId, $inscriptionId)
     {
+        $loadingKey = "{$userId}_{$lessonId}";
+        $this->loadingPresence[$loadingKey] = true;
+        
         $frequencyService = new FrequencyService();
         
         // Verificar se o aluno já tem frequência nesta aula
@@ -96,20 +101,24 @@ class EventCourseFrequency extends Component
         ]);
         
         if ($existingFrequencies->count() > 0) {
-            // Se já tem frequência, remove
+            // Se já tem frequência, atualiza o is_present
             foreach ($existingFrequencies as $frequency) {
-                $frequencyService->delete($frequency->id);
+                $frequencyService->update($frequency->id, [
+                    'is_present' => !$frequency->is_present
+                ]);
             }
         } else {
-            // Se não tem frequência, adiciona
+            // Se não tem frequência, adiciona com is_present = true
             $frequencyService->create([
                 'user_id' => $userId,
                 'lesson_id' => $lessonId,
                 'event_id' => $this->eventId,
-                'inscription_id' => $inscriptionId
+                'inscription_id' => $inscriptionId,
+                'is_present' => true
             ]);
         }
         
+        $this->loadingPresence[$loadingKey] = false;
         $this->emit('refreshFrequency');
     }
     
@@ -121,6 +130,8 @@ class EventCourseFrequency extends Component
 
     public function openJustificationModal($userId, $lessonId, $inscriptionId)
     {
+        $this->loadingJustification = true;
+        
         $this->selectedUserId = $userId;
         $this->selectedLessonId = $lessonId;
         $this->selectedInscriptionId = $inscriptionId;
@@ -134,6 +145,8 @@ class EventCourseFrequency extends Component
         ])->first();
         
         $this->currentJustification = $existingFrequency ? $existingFrequency->justification : '';
+        
+        $this->loadingJustification = false;
         $this->showJustificationModal = true;
     }
     
@@ -161,17 +174,19 @@ class EventCourseFrequency extends Component
             // Atualizar a justificativa existente
             $frequencyService->update($existingFrequency->id, [
                 'justification' => $this->currentJustification,
-                'is_justified' => !empty($this->currentJustification)
+                'is_justified' => !empty($this->currentJustification),
+                'is_present' => empty($this->currentJustification) ? $existingFrequency->is_present : false // Se tem justificativa, marca como falta (is_present = false)
             ]);
         } else {
-            // Criar nova frequência com justificativa
+            // Criar nova frequência com justificativa e marcar como falta
             $frequencyService->create([
                 'user_id' => $this->selectedUserId,
                 'lesson_id' => $this->selectedLessonId,
                 'event_id' => $this->eventId,
                 'inscription_id' => $this->selectedInscriptionId,
                 'justification' => $this->currentJustification,
-                'is_justified' => !empty($this->currentJustification)
+                'is_justified' => !empty($this->currentJustification),
+                'is_present' => false // Se está criando com justificativa, marca como falta (is_present = false)
             ]);
         }
         
