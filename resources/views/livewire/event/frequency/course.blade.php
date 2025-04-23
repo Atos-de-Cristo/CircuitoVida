@@ -69,7 +69,9 @@
                                     <div class="p-2">
                                         @foreach($paginatedInscriptions as $inscription)
                                             @php
-                                                $hasFrequency = $lesson->frequency->where('user_id', $inscription->user->id)->count() > 0;
+                                                $frequency = $lesson->frequency->where('user_id', $inscription->user->id)->first();
+                                                $hasFrequency = $frequency ? true : false;
+                                                $isJustified = $frequency && $frequency->is_justified;
                                             @endphp
                                             <div class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-slate-700 last:border-0">
                                                 <div class="flex items-center flex-grow mr-2">
@@ -81,14 +83,25 @@
                                                     @endisset
                                                     <div class="font-medium text-sm break-words">{{ $inscription->user->name ?? 'N/A' }}</div>
                                                 </div>
-                                                <label class="inline-flex items-center cursor-pointer">
-                                                    <input
-                                                        type="checkbox"
-                                                        class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                                        wire:click="toggleFrequency('{{ $inscription->user->id }}', '{{ $lesson->id }}', '{{ $inscription->id }}')"
-                                                        @if($hasFrequency) checked @endif
+                                                <div class="flex items-center space-x-2">
+                                                    <button 
+                                                        class="text-yellow-500 hover:text-yellow-700 dark:text-yellow-400 dark:hover:text-yellow-300"
+                                                        wire:click="openJustificationModal('{{ $inscription->user->id }}', '{{ $lesson->id }}', '{{ $inscription->id }}')"
+                                                        title="{{ $isJustified ? 'Falta justificada' : 'Justificar falta' }}"
                                                     >
-                                                </label>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 {{ $isJustified ? 'text-yellow-500 fill-yellow-500' : 'text-gray-400' }}" viewBox="0 0 20 20" fill="currentColor">
+                                                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                                        </svg>
+                                                    </button>
+                                                    <label class="inline-flex items-center cursor-pointer">
+                                                        <input
+                                                            type="checkbox"
+                                                            class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                                            wire:click="toggleFrequency('{{ $inscription->user->id }}', '{{ $lesson->id }}', '{{ $inscription->id }}')"
+                                                            @if($hasFrequency) checked @endif
+                                                        >
+                                                    </label>
+                                                </div>
                                             </div>
                                         @endforeach
                                     </div>
@@ -154,18 +167,31 @@
                         </td>
                         @foreach($lessonsByModule as $moduleId => $moduleLessons)
                             @foreach($moduleLessons->sortBy('title') as $lesson)
+                                @php
+                                    $frequency = $lesson->frequency->where('user_id', $inscription->user->id)->first();
+                                    $hasFrequency = $frequency ? true : false;
+                                    $isJustified = $frequency && $frequency->is_justified;
+                                @endphp
                                 <td class="py-2 px-3 border-b border-r border-gray-300 dark:border-slate-700 text-center">
-                                    @php
-                                        $hasFrequency = $lesson->frequency->where('user_id', $inscription->user->id)->count() > 0;
-                                    @endphp
-                                    <label class="inline-flex items-center cursor-pointer">
-                                        <input
-                                            type="checkbox"
-                                            class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                            wire:click="toggleFrequency('{{ $inscription->user->id }}', '{{ $lesson->id }}', '{{ $inscription->id }}')"
-                                            @if($hasFrequency) checked @endif
+                                    <div class="flex items-center justify-center space-x-4">
+                                        <label class="inline-flex items-center cursor-pointer">
+                                            <input
+                                                type="checkbox"
+                                                class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                                wire:click="toggleFrequency('{{ $inscription->user->id }}', '{{ $lesson->id }}', '{{ $inscription->id }}')"
+                                                @if($hasFrequency) checked @endif
+                                            >
+                                        </label>
+                                        <button 
+                                            class="text-yellow-500 hover:text-yellow-700 dark:text-yellow-400 dark:hover:text-yellow-300"
+                                            wire:click="openJustificationModal('{{ $inscription->user->id }}', '{{ $lesson->id }}', '{{ $inscription->id }}')"
+                                            title="{{ $isJustified ? 'Falta justificada: '.strip_tags($frequency->justification) : 'Justificar falta' }}"
                                         >
-                                    </label>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 {{ $isJustified ? 'text-yellow-500 fill-yellow-500' : 'text-gray-400' }}" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </td>
                             @endforeach
                         @endforeach
@@ -179,4 +205,52 @@
             {{ $paginatedInscriptions->links() }}
         </div>
     </div>
+
+    <!-- Modal de Justificativa -->
+    @if($showJustificationModal)
+    <div class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-bottom bg-white dark:bg-slate-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white dark:bg-slate-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100" id="modal-title">
+                                Justificativa de Falta
+                            </h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
+                                Aluno: {{ $inscription->user->name }} <br />
+                                Aula: {{ $lesson->title }}
+                            </p>
+                            <div class="mt-4 w-full">
+                                <textarea
+                                    wire:model="currentJustification"
+                                    class="w-full h-32 p-2 border border-gray-300 dark:border-slate-600 rounded-md text-sm dark:bg-slate-700 dark:text-white"
+                                    placeholder="Insira a justificativa da falta aqui..."
+                                ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 dark:bg-slate-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button 
+                        wire:click="saveJustification" 
+                        type="button" 
+                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    >
+                        Salvar
+                    </button>
+                    <button 
+                        wire:click="closeJustificationModal" 
+                        type="button" 
+                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm dark:bg-slate-600 dark:text-gray-100 dark:border-slate-500 dark:hover:bg-slate-500"
+                    >
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 </div> 

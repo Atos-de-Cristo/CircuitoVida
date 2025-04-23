@@ -18,6 +18,11 @@ class EventCourseFrequency extends Component
     public $search = '';
     public $frequencies = [];
     public $perPage = 10;
+    public $showJustificationModal = false;
+    public $currentJustification = '';
+    public $selectedUserId;
+    public $selectedLessonId;
+    public $selectedInscriptionId;
 
     protected $queryString = ['search', 'perPage'];
     
@@ -112,5 +117,65 @@ class EventCourseFrequency extends Component
     {
         $this->perPage = $value;
         $this->resetPage();
+    }
+
+    public function openJustificationModal($userId, $lessonId, $inscriptionId)
+    {
+        $this->selectedUserId = $userId;
+        $this->selectedLessonId = $lessonId;
+        $this->selectedInscriptionId = $inscriptionId;
+        
+        // Buscar justificativa existente, se houver
+        $frequencyService = new FrequencyService();
+        $existingFrequency = $frequencyService->getAll([
+            'user_id' => $userId,
+            'lesson_id' => $lessonId,
+            'event_id' => $this->eventId,
+        ])->first();
+        
+        $this->currentJustification = $existingFrequency ? $existingFrequency->justification : '';
+        $this->showJustificationModal = true;
+    }
+    
+    public function closeJustificationModal()
+    {
+        $this->showJustificationModal = false;
+        $this->currentJustification = '';
+        $this->selectedUserId = null;
+        $this->selectedLessonId = null;
+        $this->selectedInscriptionId = null;
+    }
+    
+    public function saveJustification()
+    {
+        $frequencyService = new FrequencyService();
+        
+        // Verificar se já existe frequência para esse aluno/aula
+        $existingFrequency = $frequencyService->getAll([
+            'user_id' => $this->selectedUserId,
+            'lesson_id' => $this->selectedLessonId,
+            'event_id' => $this->eventId,
+        ])->first();
+        
+        if ($existingFrequency) {
+            // Atualizar a justificativa existente
+            $frequencyService->update($existingFrequency->id, [
+                'justification' => $this->currentJustification,
+                'is_justified' => !empty($this->currentJustification)
+            ]);
+        } else {
+            // Criar nova frequência com justificativa
+            $frequencyService->create([
+                'user_id' => $this->selectedUserId,
+                'lesson_id' => $this->selectedLessonId,
+                'event_id' => $this->eventId,
+                'inscription_id' => $this->selectedInscriptionId,
+                'justification' => $this->currentJustification,
+                'is_justified' => !empty($this->currentJustification)
+            ]);
+        }
+        
+        $this->closeJustificationModal();
+        $this->emit('refreshFrequency');
     }
 } 
