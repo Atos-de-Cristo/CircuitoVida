@@ -16,7 +16,11 @@ class Frequency extends Model implements Auditable
     protected $fillable = [
         'event_id',
         'user_id',
-        'lesson_id'
+        'lesson_id',
+        'inscription_id',
+        'justification',
+        'is_justified',
+        'is_present'
     ];
 
     public function event(): BelongsTo

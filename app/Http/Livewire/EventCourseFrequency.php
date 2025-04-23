@@ -119,7 +119,7 @@ class EventCourseFrequency extends Component
         }
         
         // Pequeno atraso para garantir que o loading seja visível
-        usleep(300000); // 300ms
+        usleep(200000); // 300ms
         
         $this->loadingPresence[$loadingKey] = false;
         $this->emit('refreshFrequency');
@@ -193,7 +193,7 @@ class EventCourseFrequency extends Component
             ]);
         }
         
-        $this->closeJustificationModal();
         $this->emit('refreshFrequency');
+        $this->closeJustificationModal();
     }
 } 

@@ -30,16 +30,16 @@ class FrequencyService extends BaseService
         return $this->repository->with('event', 'lesson', 'user')->find($id);
     }
 
-    public function create(array $data): bool
+    public function create(array $data): Frequency
     {
-        return $this->repository->insert($data);
+        return $this->repository->create($data);
     }
 
-    public function update(array $data, int $id): bool
+    public function update(int $id, array $data): bool
     {
+
         $repo = $this->find($id);
-        $dataValidate = $data;
-        return $repo->update($dataValidate);
+        return $repo->update($data);
     }
 
     public function delete(string $id): void

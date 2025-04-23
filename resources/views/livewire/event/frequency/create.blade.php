@@ -18,6 +18,10 @@
                 <div class="max-h-96 bg-gray-50">
                     <div class="flex flex-col w-full dark:bg-slate-800">
                         @foreach($inscriptions as $item)
+                        @php
+                            $isPresent = $item->frequencies->where('user_id', $item->user->id)->where('lesson_id', $lessonId)->where('is_present', true)->count() >= 1;
+                            $loadingKey = $item->user->id . '_' . $lessonId;
+                        @endphp
                         <div class="flex items-center justify-between border-b px-2 py-2">
                             @isset($item->user->profile_photo_url)
                                 <img class="w-8 h-8 bg-black rounded-full mr-2"
@@ -26,21 +30,26 @@
                                 />
                             @endisset
                             @isset($item->user->name)
-                                <div class="w-2/3">{{ $item->user->name }}</div>
+                                <div class="flex-1">{{ $item->user->name }}</div>
                             @endisset
                             @isset($item->user->id)
-                                <div class="w-1/3">
-                                    @if ($item->frequencies->where('user_id', $item->user->id)->where('lesson_id', $lessonId)->count() >= 1)
-                                        Presente!
-                                    @else
-                                        <input
-                                            id="freq-{{ $item->user->id }}"
-                                            type="checkbox"
-                                            value="{{ $item }}"
-                                            wire:model.lazy="users"
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                        >
-                                    @endif
+                                <div class="mr-2">
+                                    <div wire:loading wire:target="toggleFrequency('{{ $item->user->id }}', '{{ $lessonId }}', '{{ $item->id }}')">
+                                        <svg class="animate-spin h-5 w-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                    </div>
+                                    <input
+                                        wire:loading.attr="disabled"
+                                        wire:loading.remove wire:target="toggleFrequency('{{$item->user->id }}', '{{ $lessonId }}', '{{ $item->id }}')"
+                                        id="freq-{{ $item->user->id }}"
+                                        type="checkbox"
+                                        value="{{ $item }}"
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                        wire:click="toggleFrequency('{{ $item->user->id }}', '{{ $lessonId }}', '{{ $item->id }}')"
+                                        @if($isPresent) checked @endif
+                                    >
                                 </div>
                             @endisset
                         </div>
@@ -52,14 +61,9 @@
         </x-slot>
 
         <x-slot name="footer">
-            <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                <button wire:click="storeFrequency()" type="button" class="btn-submit">
-                    Salvar
-                </button>
-            </span>
             <span class="flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
                 <button wire:click="$set('isOpenFrequency', false)" type="button" class="btn-default">
-                    Cancelar
+                    Fechar
                 </button>
             </span>
         </x-slot>
