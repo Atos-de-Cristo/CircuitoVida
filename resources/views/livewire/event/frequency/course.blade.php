@@ -172,9 +172,9 @@
                 </thead>
                 <tbody>
                     @foreach($paginatedInscriptions as $inscription)
-                    <tr class="hover:bg-gray-50 dark:hover:bg-slate-700">
+                    <tr>
                         <td class="py-2 px-3 border-b border-r border-gray-300 dark:border-slate-700 sticky left-0 min-w-[220px] max-w-[300px]">
-                            <div class="flex items-center hover:bg-gray-50 dark:hover:bg-slate-700">
+                            <div class="flex items-center">
                                 @isset($inscription->user->profile_photo_url)
                                     <img class="w-8 h-8 bg-black rounded-full mr-2 flex-shrink-0"
                                         src="{{ asset($inscription->user->profile_photo_url) }}" width="32" height="32"
@@ -291,4 +291,15 @@
         </div>
     </div>
     @endif
-</div> 
+</div>
+
+
+<style>
+tr:hover td {
+    background-color: #334155; /* Cor de fundo ao passar o mouse */
+}
+
+tr:hover td:first-child {
+    background-color: #334155; /* Cor diferente para a primeira coluna */
+}
+</style> 
