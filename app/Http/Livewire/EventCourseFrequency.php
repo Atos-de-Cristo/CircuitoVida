@@ -23,6 +23,7 @@ class EventCourseFrequency extends Component
     public $selectedUserId;
     public $selectedLessonId;
     public $selectedInscriptionId;
+    public $selectedUserName;
     public $loadingPresence = [];
     public $loadingJustification = false;
 
@@ -131,14 +132,14 @@ class EventCourseFrequency extends Component
         $this->resetPage();
     }
 
-    public function openJustificationModal($userId, $lessonId, $inscriptionId)
+    public function openJustificationModal($userId, $lessonId, $inscriptionId, $userName)
     {
         $this->loadingJustification = true;
         
         $this->selectedUserId = $userId;
         $this->selectedLessonId = $lessonId;
         $this->selectedInscriptionId = $inscriptionId;
-        
+        $this->selectedUserName = $userName;
         // Buscar justificativa existente, se houver
         $frequencyService = new FrequencyService();
         $existingFrequency = $frequencyService->getAll([
@@ -160,6 +161,7 @@ class EventCourseFrequency extends Component
         $this->selectedUserId = null;
         $this->selectedLessonId = null;
         $this->selectedInscriptionId = null;
+        $this->selectedUserName = null;
     }
     
     public function saveJustification()

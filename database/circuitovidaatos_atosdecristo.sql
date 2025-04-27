@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Tempo de geração: 30/01/2025 às 15:16
--- Versão do servidor: 8.0.41
--- Versão do PHP: 8.1.31
+-- Tempo de geração: 24/04/2025 às 00:08
+-- Versão do servidor: 8.0.42
+-- Versão do PHP: 8.1.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -183,6 +183,9 @@ CREATE TABLE `frequencies` (
   `lesson_id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
   `inscription_id` bigint UNSIGNED NOT NULL,
+  `is_present` tinyint(1) NOT NULL DEFAULT '1',
+  `justification` text COLLATE utf8mb4_unicode_ci,
+  `is_justified` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -376,6 +379,7 @@ CREATE TABLE `responses` (
   `question_id` bigint UNSIGNED NOT NULL,
   `response` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` enum('pendente','correto','errado') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `feedback` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

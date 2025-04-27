@@ -173,8 +173,8 @@
                 <tbody>
                     @foreach($paginatedInscriptions as $inscription)
                     <tr class="hover:bg-gray-50 dark:hover:bg-slate-700">
-                        <td class="py-2 px-3 border-b border-r border-gray-300 dark:border-slate-700 sticky left-0 z-10 bg-white dark:bg-slate-800 min-w-[220px] max-w-[300px]">
-                            <div class="flex items-center">
+                        <td class="py-2 px-3 border-b border-r border-gray-300 dark:border-slate-700 sticky left-0 min-w-[220px] max-w-[300px]">
+                            <div class="flex items-center hover:bg-gray-50 dark:hover:bg-slate-700">
                                 @isset($inscription->user->profile_photo_url)
                                     <img class="w-8 h-8 bg-black rounded-full mr-2 flex-shrink-0"
                                         src="{{ asset($inscription->user->profile_photo_url) }}" width="32" height="32"
@@ -213,7 +213,7 @@
                                         </label>
                                         <button 
                                             class="text-yellow-500 hover:text-yellow-700 dark:text-yellow-400 dark:hover:text-yellow-300"
-                                            wire:click="openJustificationModal('{{ $inscription->user->id }}', '{{ $lesson->id }}', '{{ $inscription->id }}')"
+                                            wire:click="openJustificationModal('{{ $inscription->user->id }}', '{{ $lesson->id }}', '{{ $inscription->id }}', '{{ $inscription->user->name }}')"
                                             wire:loading.attr="disabled"
                                             title="{{ $isJustified ? 'Falta justificada: '.strip_tags($frequency->justification) : 'Justificar falta' }}"
                                         >
@@ -258,7 +258,7 @@
                                 Justificativa de Falta
                             </h3>
                             <p class="text-sm text-gray-500 dark:text-gray-400">
-                                Aluno: {{ $inscription->user->name }} <br />
+                                Aluno: {{ $selectedUserName }} <br />
                                 Aula: {{ $lesson->title }}
                             </p>
                             <div class="mt-4 w-full">
