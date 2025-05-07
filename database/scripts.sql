@@ -121,7 +121,7 @@ SELECT DISTINCT
                 JOIN activities a ON q.activity_id = a.id
                 WHERE r2.user_id = r1.user_id 
                 AND r2.status = 'correto'
-                AND a.lesson_id = 625
+                AND a.lesson_id = 633
             ) / 5.0 < 0.5 AND r1.user_id IS NOT NULL THEN 'Aproveitamento Inferior a 50%; '
             ELSE ''
         END,
@@ -145,10 +145,10 @@ SELECT DISTINCT
         --         JOIN activities a ON q.activity_id = a.id
         --         WHERE r3.user_id = r2.user_id 
         --         AND r3.status = 'correto'
-        --         AND a.lesson_id = 634
+        --         AND a.lesson_id = 695
         --     ) / 5.0 < 0.5 AND r2.user_id IS NOT NULL THEN 'Aproveitamento Inferior a 50%; '
         --     ELSE ''
-        -- END
+        -- END,
         -- CASE 
         --     WHEN r2.user_id IS NULL THEN 'Não Respondeu a Atividade; '
         --     ELSE ''
@@ -161,23 +161,23 @@ JOIN
 LEFT JOIN 
     profiles p ON u.id = p.user_id
 LEFT JOIN 
-    frequencies f1 ON i.user_id = f1.user_id AND f1.lesson_id = 625
+    frequencies f1 ON i.user_id = f1.user_id AND f1.lesson_id = 633
 LEFT JOIN 
-    frequencies f2 ON i.user_id = f2.user_id AND f2.lesson_id = 634
+    frequencies f2 ON i.user_id = f2.user_id AND f2.lesson_id = 695
 LEFT JOIN 
     responses r1 ON i.user_id = r1.user_id AND r1.question_id IN (
         SELECT q.id FROM questions q
         JOIN activities a ON q.activity_id = a.id
-        WHERE a.lesson_id = 625
+        WHERE a.lesson_id = 633
     )
 LEFT JOIN 
     responses r2 ON i.user_id = r2.user_id AND r2.question_id IN (
         SELECT q.id FROM questions q
         JOIN activities a ON q.activity_id = a.id
-        WHERE a.lesson_id = 634
+        WHERE a.lesson_id = 695
     )
 WHERE 
-    i.event_id = 58 AND i.status = 'L'
+    i.event_id = 61 AND i.status = 'L'
 ORDER BY 
     u.name ASC;
 
