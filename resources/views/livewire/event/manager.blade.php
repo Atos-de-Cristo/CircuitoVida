@@ -290,7 +290,9 @@
                     <span class="ml-2">ALUNOS</span>
                 </div>
             </div>
-            <livewire:event-alunos :id="$event->id" :key="rand()" />
+            <div>
+                @livewire('event-alunos', ['id' => $event->id], key('alunos-' . $event->id))
+            </div>
         </div>
     </div>
 </div>

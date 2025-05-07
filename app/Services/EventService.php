@@ -81,7 +81,22 @@ class EventService
 
     public function find(string $id): Event
     {
-        return $this->repository->with('inscriptions')->with('modules')->with('lessons')->with('attachments')->find($id);
+        return $this->repository->with('monitors', 'modules.lessons.activities', 'attachments')->find($id);
+    }
+
+    public function findBasic(string $id): Event
+    {
+        return $this->repository
+            ->with([
+                'monitors', 
+                'modules' => function($query) {
+                    $query->orderBy('name');
+                },
+                'attachments' => function($query) {
+                    $query->orderBy('created_at', 'desc');
+                }
+            ])
+            ->find($id);
     }
 
     public function copyCourseData($data): bool

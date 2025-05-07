@@ -34,7 +34,7 @@ class EventManager extends Component
 
     public function render(EventService $eventService, ModuleService $moduleService)
     {
-        $event = $eventService->find($this->eventId);
+        $event = $eventService->findBasic($this->eventId);
         $modules = $moduleService->getAll(['event_id' => $this->eventId]);
         return view('livewire.event.manager', compact('event', 'modules'));
     }
