@@ -77,8 +77,13 @@
                         </button>
                     </div>
                     <div wire:loading wire:target="loadMore" class="py-2">
-                        <div class="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-blue-500 mx-auto mb-1"></div>
-                        <div class="text-gray-500 text-sm">Carregando mais alunos...</div>
+                        <button disabled class="btn-primary text-sm opacity-70 cursor-not-allowed flex items-center justify-center">
+                            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Carregando...
+                        </button>
                     </div>
                 </div>
             @elseif($reachedEnd && !$inscriptions->isEmpty())
@@ -90,19 +95,54 @@
     </div>
 
     <script>
+        // Flag global para controlar o carregamento
+        let isLoadingStudents = false;
+        
         document.addEventListener('DOMContentLoaded', function() {
             const container = document.getElementById('students-container');
             
             if (container) {
                 container.addEventListener('scroll', function() {
+                    // Se já estiver carregando, não dispara novamente
+                    if (isLoadingStudents) return;
+                    
                     const scrollPosition = container.scrollTop + container.clientHeight;
                     const scrollHeight = container.scrollHeight;
                     
-                    if (scrollPosition >= scrollHeight - 50) {
+                    // Quando chegar perto do final
+                    if (scrollPosition >= scrollHeight - 100) {
+                        isLoadingStudents = true;
+                        
+                        // Exibir manualmente o indicador de carregamento
+                        const loadingIndicator = document.querySelector('[wire\\:loading][wire\\:target="loadMore"]');
+                        const normalButton = document.querySelector('[wire\\:loading\\.remove][wire\\:target="loadMore"]');
+                        
+                        if (loadingIndicator && normalButton) {
+                            loadingIndicator.style.display = 'block';
+                            normalButton.style.display = 'none';
+                        }
+                        
+                        // Emitir o evento para carregar mais alunos
                         Livewire.emit('loadMore');
+                        
+                        // Resetar a flag após um tempo
+                        setTimeout(function() {
+                            isLoadingStudents = false;
+                            
+                            // Retornar o estado original dos elementos (Livewire já deve ter feito isso)
+                            if (loadingIndicator && normalButton) {
+                                loadingIndicator.style.removeProperty('display');
+                                normalButton.style.removeProperty('display');
+                            }
+                        }, 1500);
                     }
                 });
             }
+            
+            // Escutar eventos do Livewire
+            Livewire.hook('message.processed', (message, component) => {
+                isLoadingStudents = false;
+            });
         });
     </script>
 </div>

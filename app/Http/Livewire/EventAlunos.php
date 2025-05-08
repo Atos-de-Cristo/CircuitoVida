@@ -109,7 +109,12 @@ class EventAlunos extends Component
         }
         
         try {
+            // Definir loadingMore como true e notificar a UI
             $this->loadingMore = true;
+            
+            // Adicionar um pequeno atraso para garantir que o estado de carregamento seja visível
+            usleep(500000); // 500ms de atraso
+            
             // Aumentar o número de itens visíveis em 10
             $oldPerPage = $this->perPage;
             $this->perPage += 10;
@@ -125,6 +130,7 @@ class EventAlunos extends Component
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('Erro ao carregar mais alunos: ' . $e->getMessage());
         } finally {
+            // Garantir que loadingMore seja definido como false no final
             $this->loadingMore = false;
         }
     }
