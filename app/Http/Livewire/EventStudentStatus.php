@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class EventStudentStatus extends Base
 {
-    public $user;
+    protected $user;
     public $isOpen = false;
     public $inscriptionId;
     public $activityStatus;
@@ -17,6 +17,12 @@ class EventStudentStatus extends Base
     public $eventId;
     public $confirmHandleStatus = '';
     public $cancellation_reason = '';
+    public $inscriptionStatus = '';
+    public $inscriptionReason = '';
+    
+    public $userName = '';
+    public $userPhotoUrl = '';
+    public $userId = 0;
 
     public function getServiceProperty()
     {
@@ -38,10 +44,28 @@ class EventStudentStatus extends Base
     public function mount($student, $activityStatus, $absenceCount, $inscriptionId, $eventId)
     {
         $this->user = $student;
+        
+        if (is_object($student)) {
+            $this->userName = $student->name ?? '';
+            $this->userPhotoUrl = $student->profile_photo_url ?? 'images/avatar.svg';
+            $this->userId = $student->id ?? 0;
+        } elseif (is_array($student)) {
+            $this->userName = $student['name'] ?? '';
+            $this->userPhotoUrl = $student['profile_photo_url'] ?? 'images/avatar.svg';
+            $this->userId = $student['id'] ?? 0;
+        }
+        
         $this->activityStatus = $activityStatus;
         $this->absenceCount = $absenceCount;
         $this->inscriptionId = $inscriptionId;
         $this->eventId = $eventId;
+        
+        // Buscar o status e o motivo de cancelamento da inscrição
+        $inscription = $this->service->find($inscriptionId);
+        if ($inscription) {
+            $this->inscriptionStatus = $inscription->status;
+            $this->inscriptionReason = $inscription->cancellation_reason;
+        }
     }
 
     public function sendMessage($idSend)
@@ -64,7 +88,7 @@ class EventStudentStatus extends Base
             $this->inscriptionId
         );
         $this->messageService->sendAdmin(
-            'Alteração de status do aluno '.$this->user->name. ', motivo: '.$this->cancellation_reason
+            'Alteração de status do aluno '.$this->userName. ', motivo: '.$this->cancellation_reason
         );
         $this->emit('refreshManage');
         $this->isOpen = false;

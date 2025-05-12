@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Collection as SupportCollection;
 
 class InscriptionService extends BaseService
 {
@@ -77,7 +78,7 @@ class InscriptionService extends BaseService
         });
     }
 
-    public function getAllStudent($search, $eventId): Collection
+    public function getAllStudent($search, $eventId): SupportCollection
     {
         // Usar cache para reduzir consultas ao banco
         $cacheKey = "students_event_{$eventId}_search_" . md5($search);
@@ -86,11 +87,13 @@ class InscriptionService extends BaseService
         return \Illuminate\Support\Facades\Cache::remember($cacheKey, 120, function () use ($search, $eventId) {
             try {
                 // Carregar apenas o essencial inicialmente
-                $results = Inscription::where('event_id', $eventId)
-                    ->where('status', InscriptionStatus::L->name)
+                $results = $this->repository->where('event_id', $eventId)
+                    ->whereIn('status', ['L', 'A', 'R'])
                     ->with([
                         'user' => function ($query) use ($search) {
-                            $query->where('name', 'LIKE', '%' . $search . '%');
+                            if (!empty($search)) {
+                                $query->where('name', 'LIKE', '%' . $search . '%');
+                            }
                         }
                     ])
                     ->get();
@@ -102,14 +105,18 @@ class InscriptionService extends BaseService
                     
                 // Se não houver alunos, retorne coleção vazia
                 if ($results->isEmpty()) {
-                    return collect();
+                    return SupportCollection::make();
                 }
                 
                 // Pré-carregar lessons e frequencies apenas se necessário (e uma vez só)
                 $eventWithLessons = \App\Models\Event::with(['lessons.frequency', 'lessons.module'])
                     ->find($eventId);
                     
-                if (!$eventWithLessons || !$eventWithLessons->lessons) {
+                if (!$eventWithLessons) {
+                    return $results;
+                }
+                
+                if (!$eventWithLessons->lessons || $eventWithLessons->lessons->isEmpty()) {
                     return $results;
                 }
                 
@@ -117,111 +124,142 @@ class InscriptionService extends BaseService
                 
                 // Carregar activities e questions apenas se houver lições
                 if ($totalLessons > 0) {
-                    // Carregar atividades de uma vez só com eager loading
-                    $activities = \App\Models\Activity::whereHas('lesson', function ($query) use ($eventId) {
-                        $query->whereHas('event', function ($q) use ($eventId) {
-                            $q->where('id', $eventId);
-                        });
-                    })->with(['questions.Response'])->get();
-                    
-                    // Processar no máximo 30 alunos por vez para evitar timeouts
-                    $results = $results->take(100)->map(function ($item) use ($eventWithLessons, $totalLessons, $activities) {
-                        // Processar cada aluno
-                        $totalFrequency = 0;
-                        $statusActivity = [];
+                    try {
+                        // Carregar atividades de uma vez só com eager loading
+                        $activities = \App\Models\Activity::whereHas('lesson', function ($query) use ($eventId) {
+                            $query->whereHas('event', function ($q) use ($eventId) {
+                                $q->where('id', $eventId);
+                            });
+                        })->with(['questions.Response'])->get();
                         
-                        foreach ($eventWithLessons->lessons as $lesson) {
-                            $frequency = $lesson->frequency->where('user_id', $item->user->id)->first();
-                            if ($frequency) {
-                                $totalFrequency++;
+                        // Processar no máximo 100 alunos por vez para evitar timeouts
+                        $results = $results->take(100)->map(function ($item) use ($eventWithLessons, $totalLessons, $activities) {
+                            // Verificar se o usuário existe antes de processar
+                            if (!$item->user) {
+                                return $item;
                             }
                             
-                            // Apenas processe as atividades se o aluno estiver com frequência baixa
-                            if (($totalLessons - $totalFrequency) > 2) {
-                                // Filtrar atividades apenas para esta aula
-                                $lessonActivities = $activities->filter(function ($activity) use ($lesson) {
-                                    return $activity->lesson_id == $lesson->id;
-                                });
+                            // Processar cada aluno
+                            $totalFrequency = 0;
+                            $statusActivity = [];
+                            
+                            foreach ($eventWithLessons->lessons as $lesson) {
+                                // Verificar se frequency existe
+                                if (!$lesson->frequency) {
+                                    continue;
+                                }
                                 
-                                foreach ($lessonActivities as $activity) {
-                                    // Processar apenas atividades relevantes ao aluno
-                                    if ($activity->type == 'G' || ($activity->type == 'E' && $activity->users->contains('id', $item->user->id))) {
-                                        // Lógica de processamento simplificada
-                                        $totalQuestions = $activity->questions->count();
-                                        if ($totalQuestions > 0) {
-                                            $totalPendent = $totalQuestions;
-                                            $totalCorrect = 0;
-                                            $totalIncorrect = 0;
-                                            
-                                            foreach ($activity->questions as $question) {
-                                                $response = $question->Response->where('user_id', $item->user->id)->first();
-                                                if ($response) {
-                                                    $totalPendent--;
-                                                    if ($response->is_correct) {
-                                                        $totalCorrect++;
-                                                    } else {
-                                                        $totalIncorrect++;
+                                $frequency = $lesson->frequency->where('user_id', $item->user->id)->first();
+                                if ($frequency) {
+                                    $totalFrequency++;
+                                }
+                                
+                                // Apenas processe as atividades se o aluno estiver com frequência baixa
+                                if (($totalLessons - $totalFrequency) > 2) {
+                                    // Filtrar atividades apenas para esta aula
+                                    $lessonActivities = $activities->filter(function ($activity) use ($lesson) {
+                                        return $activity->lesson_id == $lesson->id;
+                                    });
+                                    
+                                    foreach ($lessonActivities as $activity) {
+                                        // Verificar se a atividade tem as propriedades necessárias
+                                        if (!isset($activity->type) || !isset($activity->questions)) {
+                                            continue;
+                                        }
+                                        
+                                        // Processar apenas atividades relevantes ao aluno
+                                        if ($activity->type == 'G' || 
+                                            ($activity->type == 'E' && isset($activity->users) && $activity->users->contains('id', $item->user->id))) {
+                                            // Lógica de processamento simplificada
+                                            $totalQuestions = $activity->questions->count();
+                                            if ($totalQuestions > 0) {
+                                                $totalPendent = $totalQuestions;
+                                                $totalCorrect = 0;
+                                                $totalIncorrect = 0;
+                                                
+                                                foreach ($activity->questions as $question) {
+                                                    if (!isset($question->Response)) {
+                                                        continue;
+                                                    }
+                                                    
+                                                    $response = $question->Response->where('user_id', $item->user->id)->first();
+                                                    if ($response) {
+                                                        $totalPendent--;
+                                                        if ($response->is_correct) {
+                                                            $totalCorrect++;
+                                                        } else {
+                                                            $totalIncorrect++;
+                                                        }
                                                     }
                                                 }
-                                            }
-                                            
-                                            // Adicionar aos resultados apenas se houver problemas ou atividades pendentes
-                                            if ($totalPendent > 0) {
-                                                $statusActivity[] = [
-                                                    'module' => $lesson->module->name,
-                                                    'lesson' => $lesson->title,
-                                                    'activity' => $activity->title,
-                                                    'pendent' => $totalPendent,
-                                                    'totalQuestions' => $totalQuestions,
-                                                    'status' => 'Pendente',
-                                                ];
-                                                // Apenas mostrar um status por aluno
-                                                break;
-                                            } elseif ($totalCorrect > 0 && $totalQuestions > 0) {
-                                                $percent = ($totalCorrect/$totalQuestions)*100;
-                                                if ($percent <= 70) {
+                                                
+                                                // Adicionar aos resultados apenas se houver problemas ou atividades pendentes
+                                                if ($totalPendent > 0) {
                                                     $statusActivity[] = [
-                                                        'module' => $lesson->module->name,
+                                                        'module' => $lesson->module ? $lesson->module->name : 'Sem módulo',
                                                         'lesson' => $lesson->title,
                                                         'activity' => $activity->title,
-                                                        'percent' => number_format($percent, 2, '.', ''),
-                                                        'status' => 'Reprovado',
+                                                        'pendent' => $totalPendent,
+                                                        'totalQuestions' => $totalQuestions,
+                                                        'status' => 'Pendente',
                                                     ];
                                                     // Apenas mostrar um status por aluno
                                                     break;
+                                                } elseif ($totalCorrect > 0 && $totalQuestions > 0) {
+                                                    $percent = ($totalCorrect/$totalQuestions)*100;
+                                                    if ($percent <= 70) {
+                                                        $statusActivity[] = [
+                                                            'module' => $lesson->module ? $lesson->module->name : 'Sem módulo',
+                                                            'lesson' => $lesson->title,
+                                                            'activity' => $activity->title,
+                                                            'percent' => number_format($percent, 2, '.', ''),
+                                                            'status' => 'Reprovado',
+                                                        ];
+                                                        // Apenas mostrar um status por aluno
+                                                        break;
+                                                    }
                                                 }
                                             }
                                         }
                                     }
-                                }
-                                // Se já encontrou problemas, não continua verificando
-                                if (count($statusActivity) > 0) {
-                                    break;
+                                    // Se já encontrou problemas, não continua verificando
+                                    if (count($statusActivity) > 0) {
+                                        break;
+                                    }
                                 }
                             }
-                        }
-                        
-                        $item->user->absenceCount = $totalLessons - $totalFrequency;
-                        $item->user->activityStatus = $statusActivity;
-                        return $item;
-                    });
+                            
+                            $item->user->absenceCount = $totalLessons - $totalFrequency;
+                            $item->user->activityStatus = $statusActivity;
+                            return $item;
+                        });
+                    } catch (\Exception $e) {
+                        // Silenciar erros mas continuar processamento
+                    }
                 }
         
                 // Garantir que toda inscrição tenha activityStatus como array
                 $results = $results->map(function ($item) {
-                    if (!isset($item->user->activityStatus) || !is_array($item->user->activityStatus)) {
+                    if ($item->user && (!isset($item->user->activityStatus) || !is_array($item->user->activityStatus))) {
                         $item->user->activityStatus = [];
                     }
                     return $item;
                 });
-        
-                return $results->sortBy(function ($inscription) {
-                    return $inscription['user']['name'];
+                
+                $sortedResults = $results->sortBy(function ($inscription) {
+                    return $inscription->user ? $inscription->user->name : '';
+                });
+                
+                // Garantir que todos os elementos da coleção sejam objetos, não arrays
+                return SupportCollection::make($sortedResults->values()->all())->map(function ($item) {
+                    if (is_array($item)) {
+                        return (object) $item;
+                    }
+                    return $item;
                 });
             } catch (\Exception $e) {
                 // Em caso de erro, retorna uma coleção vazia para não quebrar a UI
-                \Illuminate\Support\Facades\Log::error('Erro ao carregar alunos: ' . $e->getMessage());
-                return collect();
+                return SupportCollection::make();
             }
         });
     }

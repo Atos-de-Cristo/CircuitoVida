@@ -3,15 +3,47 @@
 
     <div class="overflow-auto" style="max-height: 400px;" id="students-container">
         @if(empty($inscriptions) || $inscriptions->isEmpty())
-            <div class="flex justify-center items-center py-6">
-                <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
-                <span class="ml-2 text-gray-500">Carregando alunos...</span>
-            </div>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    Livewire.emit('loadStudents');
-                });
-            </script>
+            @if(isset($showEmptyMessage) && $showEmptyMessage)
+                <div class="mt-5">
+                    <span class="text-red-500">Não há alunos inscritos com status Liberado, Aprovado ou Reprovado neste curso!</span>
+                    @can('admin')
+                    <div class="mt-3">
+                        <a href="{{ route('eventInscription', ['id' => $event_id]) }}" class="btn-primary text-sm">
+                            Inscrever alunos
+                        </a>
+                    </div>
+                    @endcan
+                </div>
+            @else
+                <div class="flex justify-center items-center py-6">
+                    <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+                    <span class="ml-2 text-gray-500">Carregando alunos...</span>
+                </div>
+                <script>
+                    // Verificamos se o evento já foi emitido
+                    document.addEventListener('DOMContentLoaded', function() {
+                        // Evita emitir várias vezes
+                        if (!window.studentsLoadTriggered) {
+                            window.studentsLoadTriggered = true;
+                            
+                            // Primeiro tentar limpar o cache se for um reload
+                            Livewire.emit('clearStudentsCache');
+                            
+                            // Em seguida, carregar os alunos
+                            setTimeout(function() {
+                                Livewire.emit('loadStudents');
+                            }, 1000);
+                            
+                            // Definir um timeout para recarregar se demorar muito
+                            setTimeout(function() {
+                                if (document.querySelector('#students-container .animate-spin')) {
+                                    Livewire.emit('refreshStudents');
+                                }
+                            }, 10000);
+                        }
+                    });
+                </script>
+            @endif
         @else
             @forelse ($inscriptions->take($perPage) as $key => $aluno)
                 @can('monitorEvent', $event_id)

@@ -4,7 +4,7 @@
         <span class="truncate font-medium font-sans text-sm group-hover:text-slate-800
             {{ (count($activityStatus) > 0 || $absenceCount > 2) ? 'text-gray-800  dark:text-white': '' }}
             ">
-            {{ $user->name }}
+            {{ $userName }}
         </span>
     </button>
     @if ($isOpen)
@@ -15,21 +15,20 @@
                 <a
                     class="flex"
                     style="cursor: pointer"
-                    wire:click="sendMessage({{ $user->id }})"
-                    class="font-bold text-md text-blue-500 hover:underline ml-2 cursor-pointer {{ $user->id == Auth::user()->id ? 'pointer-events-none' : '' }}"
+                    wire:click="sendMessage({{ $userId }})"
+                    class="font-bold text-md text-blue-500 hover:underline ml-2 cursor-pointer {{ $userId == Auth::user()->id ? 'pointer-events-none' : '' }}"
                 >
-                    <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset($user->profile_photo_url) }}"
-                    width="32" height="32" alt="{{ $user->name }}" />
-                    <span class="truncate mt-1 text-sm font-medium group-hover:text-slate-800">{{ $user->name
-                        }}</span>
+                    <img class="w-8 h-8 bg-black rounded-full mr-2" src="{{ asset($userPhotoUrl) }}"
+                    width="32" height="32" alt="{{ $userName }}" />
+                    <span class="truncate mt-1 text-sm font-medium group-hover:text-slate-800">{{ $userName }}</span>
                 </a>
                 @else
-                <a href="{{ route('userDetails', $user->id) }}" class="flex">
-                    <img class="w-10 h-10 rounded-full" src="{{ asset($user->profile_photo_url) }}"
-                        alt="{{ $user->name }}" />
+                <a href="{{ route('userDetails', $userId) }}" class="flex">
+                    <img class="w-10 h-10 rounded-full" src="{{ asset($userPhotoUrl) }}"
+                        alt="{{ $userName }}" />
                 </a>
                 <p class="ml-2 text-base font-semibold leading-none text-gray-900 dark:text-white">
-                    <a href="{{ route('userDetails', $user->id) }}">{{ $user->name }}</a>
+                    <a href="{{ route('userDetails', $userId) }}">{{ $userName }}</a>
                 </p>
                 @endCan
             </div>
@@ -117,18 +116,40 @@
                         Confirmar
                     </button>
                     @else
-                    <button wire:click.prevent="$set('confirmHandleStatus', 'A')" class="btn-primary">
-                        <x-icon-plus/>
-                        <span class="ml-1">Aprovar</span>
-                    </button>
-                    <button wire:click.prevent="$set('confirmHandleStatus', 'R')" class="btn-danger">
-                        <x-icon-plus/>
-                        <span class="ml-1">Reprovar</span>
-                    </button>
-                    <button wire:click.prevent="$set('confirmHandleStatus', 'C')" class="btn-warning">
-                        <x-icon-plus/>
-                        <span class="ml-1">Cancelar</span>
-                    </button>
+                        @if($inscriptionStatus == 'L')
+                            <button wire:click.prevent="$set('confirmHandleStatus', 'A')" class="btn-primary">
+                                <x-icon-plus/>
+                                <span class="ml-1">Aprovar</span>
+                            </button>
+                            <button wire:click.prevent="$set('confirmHandleStatus', 'R')" class="btn-danger">
+                                <x-icon-plus/>
+                                <span class="ml-1">Reprovar</span>
+                            </button>
+                            <button wire:click.prevent="$set('confirmHandleStatus', 'C')" class="btn-warning">
+                                <x-icon-plus/>
+                                <span class="ml-1">Cancelar</span>
+                            </button>
+                        @else
+                            <div class="flex flex-col">
+                                <div class="bg-gray-100 dark:bg-gray-700 rounded p-3">
+                                    <span class="font-bold">Status: </span>
+                                    <span class="p-1 rounded text-white
+                                        {{ $inscriptionStatus == 'A' ? 'bg-green-500' : 
+                                           ($inscriptionStatus == 'R' ? 'bg-red-500' : 
+                                            ($inscriptionStatus == 'C' ? 'bg-yellow-500' : 'bg-blue-500')) 
+                                        }}">
+                                        {{ \App\Enums\InscriptionStatus::fromValue($inscriptionStatus) }}
+                                    </span>
+                                    
+                                    @if(!empty($inscriptionReason))
+                                        <div class="mt-2">
+                                            <span class="font-bold">Observação:</span>
+                                            <p class="text-sm italic">{{ $inscriptionReason }}</p>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        @endif
                     @endif
                 </div>
                 <div class="flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">

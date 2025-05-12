@@ -42,6 +42,7 @@ class EventAlunos extends Component
         try {
             $this->loadingMore = true;
             $service = app(InscriptionService::class);
+            
             $this->inscriptions = $service->getAllStudent($this->search, $this->event_id);
             
             // Verificar se há mais alunos para mostrar além do valor atual de perPage
@@ -50,8 +51,7 @@ class EventAlunos extends Component
             
             $this->hasTriggeredInitialLoad = true;
         } catch (\Exception $e) {
-            // Log do erro
-            \Illuminate\Support\Facades\Log::error('Erro ao carregar alunos: ' . $e->getMessage());
+            // Silenciar erros para evitar quebrar a interface
         } finally {
             $this->loadingMore = false;
         }
@@ -59,10 +59,21 @@ class EventAlunos extends Component
 
     public function refreshData()
     {
-        $this->inscriptions = collect();
-        $this->perPage = 10;
-        $this->reachedEnd = false;
-        $this->loadInscriptions();
+        try {
+            // Limpar cache primeiro
+            $this->clearCache();
+            
+            // Resetar estado
+            $this->inscriptions = collect();
+            $this->perPage = 10;
+            $this->reachedEnd = false;
+            $this->hasTriggeredInitialLoad = false;
+            
+            // Carregar novamente
+            $this->loadInscriptions();
+        } catch (\Exception $e) {
+            // Silenciar erros
+        }
     }
 
     public function updatedSearch()
@@ -78,12 +89,31 @@ class EventAlunos extends Component
         // Garantir que activityStatus seja sempre um array (corrigindo o erro de contagem)
         if (!empty($this->inscriptions)) {
             $this->inscriptions = $this->inscriptions->map(function ($item) {
-                if ($item->user && !is_array($item->user->activityStatus)) {
+                // Verificar se é array ou objeto
+                if (is_array($item)) {
+                    // Converter para objeto se for array
+                    $item = (object) $item;
+                    
+                    // Garantir que user é um objeto
+                    if (isset($item->user) && is_array($item->user)) {
+                        $item->user = (object) $item->user;
+                    }
+                }
+                
+                // Verificar se o user existe antes de continuar
+                if (!isset($item->user)) {
+                    return $item;
+                }
+                
+                // Garantir que activityStatus seja um array
+                if (!isset($item->user->activityStatus) || !is_array($item->user->activityStatus)) {
                     $item->user->activityStatus = [];
                 }
                 
                 // Define uma imagem de fallback se não existir
-                if ($item->user && (!$item->user->profile_photo_url || str_contains($item->user->profile_photo_url, 'ui-avatars.com'))) {
+                if (!isset($item->user->profile_photo_url) || 
+                    empty($item->user->profile_photo_url) || 
+                    (is_string($item->user->profile_photo_url) && str_contains($item->user->profile_photo_url, 'ui-avatars.com'))) {
                     $item->user->profile_photo_url = 'images/avatar.svg';
                 }
                 
@@ -91,11 +121,16 @@ class EventAlunos extends Component
             });
         }
         
+        // Verificar se continua vazio depois de várias tentativas
+        $showEmptyMessage = $this->hasTriggeredInitialLoad && $this->inscriptions->isEmpty();
+        
         return view('livewire.event.student.manager', [
             'inscriptions' => $this->inscriptions,
             'loadMore' => $this->loadMore && !$this->reachedEnd,
             'loadingMore' => $this->loadingMore,
-            'reachedEnd' => $this->reachedEnd
+            'reachedEnd' => $this->reachedEnd,
+            'showEmptyMessage' => $showEmptyMessage,
+            'event_id' => $this->event_id
         ]);
     }
 
@@ -128,7 +163,7 @@ class EventAlunos extends Component
                 $this->loadMore = false;
             }
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('Erro ao carregar mais alunos: ' . $e->getMessage());
+            // Silenciar erros
         } finally {
             // Garantir que loadingMore seja definido como false no final
             $this->loadingMore = false;
@@ -144,6 +179,5 @@ class EventAlunos extends Component
     {
         $cacheKey = "students_event_{$this->event_id}_search_" . md5($this->search);
         \Illuminate\Support\Facades\Cache::forget($cacheKey);
-        $this->refreshData();
     }
 }
