@@ -34,7 +34,10 @@ class EventActivityQuestionCorrect extends Component
                     return $value->text == $resp;
                 }));
                 $itemStatus = array_shift($opt)->correct;
+                
                 $this->checkResponse[$item->id] = $itemStatus ? 'correto' : 'errado';
+            } else {
+                $this->checkResponse[$item->id] = $item->status ?? 'pendente';
             }
             $this->feedback[$item->id] = $item->feedback;
         }
