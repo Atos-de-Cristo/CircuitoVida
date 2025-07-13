@@ -275,15 +275,34 @@ class InscriptionService extends BaseService
         ->get()->toArray();
     }
 
-    public function getFrequency(string $eventId): Collection
+    public function getFrequency(string $eventId, string $lessonId = null): Collection
     {
-        return $this->repository
+        $inscriptions = $this->repository
             ->with('event', 'frequencies')
-            ->join('users', 'users.id', '=', 'inscriptions.user_id')
-            ->where('inscriptions.event_id', $eventId)
-            ->where('inscriptions.status', InscriptionStatus::L->name)
-            ->orderBy('users.name', 'asc')
+            ->where('event_id', $eventId)
+            ->where('status', InscriptionStatus::L->name)
             ->get();
+        
+        // Remover duplicatas baseado no user_id para evitar registros duplicados
+        $inscriptions = $inscriptions->unique('user_id');
+        
+        // Carregar o usuário para cada inscrição
+        $inscriptions->load('user');
+        
+        // Ordenar por nome do usuário
+        $inscriptions = $inscriptions->sortBy('user.name');
+        
+        // Se foi passado um lessonId, filtrar as frequências por essa aula específica
+        if ($lessonId !== null) {
+            return $inscriptions->map(function ($inscription) use ($lessonId) {
+                $inscription->frequencies = $inscription->frequencies->filter(function ($frequency) use ($lessonId) {
+                    return $frequency->lesson_id == (int) $lessonId;
+                });
+                return $inscription;
+            });
+        }
+        
+        return $inscriptions;
     }
 
     public function find(string $id): Inscription

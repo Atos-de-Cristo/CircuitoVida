@@ -12,12 +12,62 @@ class EventFrequency extends Component
     public array $users;
     public $isOpenFrequency = false;
     public $loadingPresence = [];
+    public $showJustificationFor = null; // ID do usuário que está editando justificativa
+    public $justificationText = '';
+    public $selectedUserId;
+    public $selectedInscriptionId;
+    public $selectedLessonId; // Armazena o lesson_id selecionado para justificativa
+    public $loadingJustification = false;
+    public $justificationActive = false; // Flag para prevenir fechamento do modal
+
+    protected $listeners = [
+        'refreshFrequency' => 'handleRefreshFrequency',
+        'modalClosing' => 'handleModalClosing'
+    ];
 
     public function mount($eventId, $lessonId)
     {
         $this->eventId = $eventId;
         $this->lessonId = $lessonId;
         $this->users = [];
+    }
+
+    public function handleRefreshFrequency()
+    {
+        // Só executar refresh se não estiver editando justificativa
+        if (!$this->justificationActive) {
+            $this->render(new InscriptionService());
+        }
+    }
+
+    public function closeFrequencyModal()
+    {
+        // Só fechar se não estiver editando justificativa
+        if (!$this->justificationActive) {
+            $this->isOpenFrequency = false;
+        }
+    }
+
+    public function refreshFrequencyData()
+    {
+        // Método para atualizar apenas os dados sem afetar o modal
+        // Não faz nada especial, apenas força o Livewire a re-renderizar
+    }
+
+    public function updatedIsOpenFrequency($value)
+    {
+        // Prevenir fechamento do modal durante edição de justificativa
+        if (!$value && $this->justificationActive) {
+            $this->isOpenFrequency = true;
+        }
+    }
+
+    public function handleModalClosing()
+    {
+        // Prevenir fechamento do modal se justificativa estiver ativa
+        if ($this->justificationActive) {
+            $this->isOpenFrequency = true;
+        }
     }
 
     public function render(InscriptionService $inscriptionService)
@@ -78,6 +128,76 @@ class EventFrequency extends Component
         usleep(200000); // 300ms
         
         $this->loadingPresence[$loadingKey] = false;
-        $this->emit('refreshFrequency');
+        // Removido emit('refreshFrequency') para evitar fechamento do modal
+    }
+
+    public function openJustificationModal($userId, $lessonId, $inscriptionId, $userName)
+    {
+        $this->justificationActive = true;
+        $this->selectedUserId = $userId;
+        $this->selectedInscriptionId = $inscriptionId;
+        $this->selectedLessonId = $lessonId; // Armazenar o lesson_id correto
+        
+        // Garantir que o modal permaneça aberto
+        $this->isOpenFrequency = true;
+        
+        // Buscar justificativa existente, se houver
+        $frequencyService = new FrequencyService();
+        $existingFrequency = $frequencyService->getAll([
+            'user_id' => $userId,
+            'lesson_id' => $lessonId, // Usar o parâmetro correto
+            'event_id' => $this->eventId,
+        ])->first();
+        
+        $this->justificationText = $existingFrequency ? $existingFrequency->justification : '';
+        $this->showJustificationFor = $userId;
+    }
+    
+    public function closeJustificationModal()
+    {
+        $this->showJustificationFor = null;
+        $this->justificationText = '';
+        $this->selectedUserId = null;
+        $this->selectedInscriptionId = null;
+        $this->selectedLessonId = null;
+        $this->justificationActive = false;
+    }
+    
+    public function saveJustification()
+    {
+        $frequencyService = new FrequencyService();
+        
+        // Verificar se já existe frequência para esse aluno/aula
+        $existingFrequency = $frequencyService->getAll([
+            'user_id' => $this->selectedUserId,
+            'lesson_id' => $this->selectedLessonId, // Usar o lesson_id correto
+            'event_id' => $this->eventId,
+        ])->first();
+        
+        if ($existingFrequency) {
+            // Atualizar a justificativa existente
+            $frequencyService->update($existingFrequency->id, [
+                'justification' => $this->justificationText,
+                'is_justified' => !empty($this->justificationText),
+                'is_present' => empty($this->justificationText) ? $existingFrequency->is_present : false
+            ]);
+        } else {
+            // Criar nova frequência com justificativa e marcar como falta
+            $frequencyService->create([
+                'user_id' => $this->selectedUserId,
+                'lesson_id' => $this->selectedLessonId, // Usar o lesson_id correto
+                'event_id' => $this->eventId,
+                'inscription_id' => $this->selectedInscriptionId,
+                'justification' => $this->justificationText,
+                'is_justified' => !empty($this->justificationText),
+                'is_present' => false
+            ]);
+        }
+        
+        // Fechar o campo de justificativa
+        $this->closeJustificationModal();
+        
+        // Atualizar apenas a view após um pequeno delay, sem fechar o modal
+        $this->dispatchBrowserEvent('justification-saved');
     }
 }

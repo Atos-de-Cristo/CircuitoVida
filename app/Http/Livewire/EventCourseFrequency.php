@@ -24,6 +24,7 @@ class EventCourseFrequency extends Component
     public $selectedLessonId;
     public $selectedInscriptionId;
     public $selectedUserName;
+    public $selectedLesson; // Armazenar a lição selecionada para o modal
     public $loadingPresence = [];
     public $loadingJustification = false;
 
@@ -81,8 +82,8 @@ class EventCourseFrequency extends Component
             ['path' => request()->url(), 'query' => request()->query()]
         );
         
-        // Buscar as aulas com seus módulos
-        $lessons = $this->lessonService->getAll(['event_id' => $this->eventId])->load('module');
+        // Buscar as aulas com seus módulos e frequências
+        $lessons = $this->lessonService->getAll(['event_id' => $this->eventId])->load('module', 'frequency');
         
         return view('livewire.event.frequency.course', compact('event', 'paginatedInscriptions', 'lessons'));
     }
@@ -140,6 +141,10 @@ class EventCourseFrequency extends Component
         $this->selectedLessonId = $lessonId;
         $this->selectedInscriptionId = $inscriptionId;
         $this->selectedUserName = $userName;
+        
+        // Buscar a lição selecionada
+        $this->selectedLesson = $this->lessonService->find($lessonId);
+        
         // Buscar justificativa existente, se houver
         $frequencyService = new FrequencyService();
         $existingFrequency = $frequencyService->getAll([
@@ -162,6 +167,7 @@ class EventCourseFrequency extends Component
         $this->selectedLessonId = null;
         $this->selectedInscriptionId = null;
         $this->selectedUserName = null;
+        $this->selectedLesson = null;
     }
     
     public function saveJustification()

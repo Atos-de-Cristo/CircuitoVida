@@ -28,7 +28,7 @@ class LessonService extends BaseService
 
     public function getAll(array $filter = []): Collection
     {
-        return $this->repository->with('event', 'module', 'activities', 'attachments')->where($filter)->get();
+        return $this->repository->with('event', 'module', 'activities', 'attachments', 'frequency')->where($filter)->get();
     }
 
     public function countTotalLessons(): int
