@@ -1,6 +1,6 @@
 
 
-<div>
+{{-- <div>
     <div class="mt-2 sm:mt-0 flex space-x-2">
         <button wire:click.prevent="$set('isOpenFrequency', true)" class="btn-primary">
             <x-icon-check class="w-4 h-4" />
@@ -122,7 +122,7 @@
     @endif
 
  
-</div>
+</div> --}}
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
