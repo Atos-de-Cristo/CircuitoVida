@@ -68,7 +68,7 @@ class Profile extends Component
     {
         try {
             // Verifica se o usuário está tentando alterar a data de membresia sem ser admin
-            if (!auth()->user()->can('admin') && $this->member !== $this->profileService->find()['member']) {
+            if (!auth()->user()->can('admin') && $this->member !== null && $this->member !== $this->profileService->find()['member']) {
                 throw ValidationException::withMessages([
                     'member' => 'A data de membresia só pode ser alterada pela administração da igreja.'
                 ]);

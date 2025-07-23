@@ -43,8 +43,8 @@ class ReportsService extends BaseService
             ->selectRaw('
                 COUNT(DISTINCT user_id) AS total_pessoas_participando,
                 COUNT(*) AS total_inscricoes_em_cursos,
-                SUM(CASE WHEN status = "A" THEN 1 ELSE 0 END) AS total_aprovados,
-                SUM(CASE WHEN status IN ("R", "C") THEN 1 ELSE 0 END) AS total_reprovados_desistentes
+                SUM(CASE WHEN status = "L" THEN 1 ELSE 0 END) AS total_aprovados,
+                SUM(CASE WHEN status = "P" THEN 1 ELSE 0 END) AS total_reprovados_desistentes
             ')
             ->first();
 
@@ -79,8 +79,8 @@ class ReportsService extends BaseService
                 events.type,
                 categories.name as category_name,
                 COUNT(*) AS inscritos,
-                SUM(CASE WHEN inscriptions.status = "A" THEN 1 ELSE 0 END) AS concluiram,
-                SUM(CASE WHEN inscriptions.status NOT IN ("T", "A") THEN 1 ELSE 0 END) AS rep_desist
+                SUM(CASE WHEN inscriptions.status = "L" THEN 1 ELSE 0 END) AS concluiram,
+                SUM(CASE WHEN inscriptions.status = "P" THEN 1 ELSE 0 END) AS rep_desist
             ')
             ->groupBy('inscriptions.event_id', 'events.name', 'events.start_date', 'events.end_date', 'events.type', 'categories.name')
             ->orderBy('inscriptions.event_id')
@@ -108,8 +108,8 @@ class ReportsService extends BaseService
                 categories.name as categoria,
                 COUNT(DISTINCT inscriptions.event_id) as total_cursos,
                 COUNT(*) AS total_inscritos,
-                SUM(CASE WHEN inscriptions.status = "A" THEN 1 ELSE 0 END) AS total_concluiram,
-                SUM(CASE WHEN inscriptions.status NOT IN ("T", "A") THEN 1 ELSE 0 END) AS total_rep_desist
+                SUM(CASE WHEN inscriptions.status = "L" THEN 1 ELSE 0 END) AS total_concluiram,
+                SUM(CASE WHEN inscriptions.status = "P" THEN 1 ELSE 0 END) AS total_rep_desist
             ')
             ->groupBy('categories.id', 'categories.name')
             ->orderBy('categories.name')
