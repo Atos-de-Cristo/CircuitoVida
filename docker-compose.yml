@@ -20,7 +20,7 @@ services:
         volumes:
             - '.:/var/www/html'
         networks:
-            - sail
+            - app_network
         depends_on:
             - mariadb
             # - redis
@@ -77,8 +77,9 @@ services:
     #         retries: 3
     #         timeout: 5s
 networks:
-    sail:
-        driver: bridge
+  app_network:
+    name: app_network
+    external: true
 volumes:
     sail-mariadb:
         driver: local
