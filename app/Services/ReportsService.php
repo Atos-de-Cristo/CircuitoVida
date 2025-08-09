@@ -10,12 +10,17 @@ class ReportsService extends BaseService
     /**
      * Busca eventos no período especificado
      */
-    public function getEventsByPeriod($startDate, $endDate)
+    public function getEventsByPeriod($startDate, $endDate, $status = null)
     {
-        $events = DB::table('events')
+        $query = DB::table('events')
             ->where('start_date', '>=', $startDate)
-            ->where('start_date', '<=', $endDate)
-            ->select('id', 'name', 'start_date', 'end_date', 'type', 'category_id', 'status')
+            ->where('start_date', '<=', $endDate);
+            
+        if (!empty($status)) {
+            $query->where('status', $status);
+        }
+            
+        $events = $query->select('id', 'name', 'start_date', 'end_date', 'type', 'category_id', 'status')
             ->orderBy('start_date')
             ->get();
         
@@ -25,9 +30,9 @@ class ReportsService extends BaseService
     /**
      * Gera panorama geral dos eventos no período
      */
-    public function getPanoramaGeral($startDate, $endDate)
+    public function getPanoramaGeral($startDate, $endDate, $status = null)
     {
-        $eventIds = $this->getEventsByPeriod($startDate, $endDate)->pluck('id')->toArray();
+        $eventIds = $this->getEventsByPeriod($startDate, $endDate, $status)->pluck('id')->toArray();
         
         if (empty($eventIds)) {
             return [
@@ -59,9 +64,9 @@ class ReportsService extends BaseService
     /**
      * Gera relatório detalhado por curso/evento
      */
-    public function getDetalhePorCurso($startDate, $endDate)
+    public function getDetalhePorCurso($startDate, $endDate, $status = null)
     {
-        $eventIds = $this->getEventsByPeriod($startDate, $endDate)->pluck('id')->toArray();
+        $eventIds = $this->getEventsByPeriod($startDate, $endDate, $status)->pluck('id')->toArray();
         
         if (empty($eventIds)) {
             return collect();
@@ -92,9 +97,9 @@ class ReportsService extends BaseService
     /**
      * Gera dados agrupados por categoria
      */
-    public function getDadosPorCategoria($startDate, $endDate)
+    public function getDadosPorCategoria($startDate, $endDate, $status = null)
     {
-        $eventIds = $this->getEventsByPeriod($startDate, $endDate)->pluck('id')->toArray();
+        $eventIds = $this->getEventsByPeriod($startDate, $endDate, $status)->pluck('id')->toArray();
         
         if (empty($eventIds)) {
             return collect();
@@ -129,14 +134,14 @@ class ReportsService extends BaseService
     /**
      * Gera dados completos para o relatório
      */
-    public function gerarRelatorio($startDate, $endDate)
+    public function gerarRelatorio($startDate, $endDate, $status = null)
     {
         return [
             'periodo' => $this->formatarPeriodo($startDate, $endDate),
-            'panorama_geral' => $this->getPanoramaGeral($startDate, $endDate),
-            'eventos' => $this->getEventsByPeriod($startDate, $endDate),
-            'detalhe_por_curso' => $this->getDetalhePorCurso($startDate, $endDate),
-            'dados_por_categoria' => $this->getDadosPorCategoria($startDate, $endDate),
+            'panorama_geral' => $this->getPanoramaGeral($startDate, $endDate, $status),
+            'eventos' => $this->getEventsByPeriod($startDate, $endDate, $status),
+            'detalhe_por_curso' => $this->getDetalhePorCurso($startDate, $endDate, $status),
+            'dados_por_categoria' => $this->getDadosPorCategoria($startDate, $endDate, $status),
             'data_geracao' => Carbon::now()->format('d/m/Y H:i:s')
         ];
     }

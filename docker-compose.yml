@@ -49,18 +49,18 @@ services:
             retries: 3
             timeout: 5s
 
-    # phpmyadmin:
-    #     image: phpmyadmin
-    #     restart: always
-    #     ports:
-    #         - ${DB_PORT_ADMIM:-8080}:80
-    #     environment:
-    #         - PMA_ARBITRARY=1
-    #         - PMA_HOST=mariadb
-    #     networks:
-    #         - sail
-    #     depends_on:
-    #         - mariadb
+    phpmyadmin:
+        image: phpmyadmin
+        restart: always
+        ports:
+            - ${DB_PORT_ADMIM:-8080}:80
+        environment:
+            - PMA_ARBITRARY=1
+            - PMA_HOST=mariadb
+        networks:
+            - app_network
+        depends_on:
+            - mariadb
     # redis:
     #     image: 'redis:alpine'
     #     ports:

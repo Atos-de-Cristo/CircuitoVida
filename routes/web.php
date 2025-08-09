@@ -43,13 +43,14 @@ Route::middleware([ 'auth:sanctum', config('jetstream.auth_session'), 'verified'
         Route::get('/download-report-pdf', function () {
             $startDate = request('start_date');
             $endDate = request('end_date');
+            $status = request('status');
             
             if (!$startDate || !$endDate) {
                 abort(400, 'Datas são obrigatórias');
             }
             
             $reportsService = new \App\Services\ReportsService();
-            $reportData = $reportsService->gerarRelatorio($startDate, $endDate);
+            $reportData = $reportsService->gerarRelatorio($startDate, $endDate, $status);
             
             $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('livewire.reports.pdf', compact('reportData'))
                 ->setPaper('a4', 'portrait')
