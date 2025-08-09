@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
             font-size: 12px;
             margin: 0;
-            padding: 20px;
+            padding: 12px;
             color: #333;
         }
         
@@ -134,7 +134,18 @@
     <!-- Cabeçalho -->
     <div class="header">
         <div class="logo">
-            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjUwIiB2aWV3Qm94PSIwIDAgMTAwIDUwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8dGV4dCB4PSI1MCIgeT0iMjUiIGZpbGw9IiNmZjZhMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJjZW50cmFsIj5BVE9TPC90ZXh0Pgo8dGV4dCB4PSI1MCIgeT0iNDAiIGZpbGw9IiNmZjZhMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5ERSBDUklTVE88L3RleHQ+Cjwvc3ZnPgo=" alt="Logo Atos de Cristo" style="max-height: 50px;">
+            @php
+                $logoPath = public_path('images/logo_laranja.png');
+                $logoBase64 = '';
+                if (file_exists($logoPath)) {
+                    $logoBase64 = 'data:image/png;base64,' . base64_encode(file_get_contents($logoPath));
+                }
+            @endphp
+            @if($logoBase64)
+                <img src="{{ $logoBase64 }}" alt="Logo Atos de Cristo" style="max-height: 60px; max-width: 200px;">
+            @else
+                <div style="font-size: 18px; font-weight: bold; color: #ff6a00;">ATOS DE CRISTO</div>
+            @endif
         </div>
         <div class="title">CIRCUITO VIDA</div>
         <div class="subtitle">RELATÓRIO – {{ date('Y') }}/1</div>
@@ -225,9 +236,10 @@
 
     <!-- Footer -->
     <div class="footer">
-        <p>{{ $reportData['periodo'] }}</p>
-        <p>Relatório gerado em: {{ $reportData['data_geracao'] }}</p>
-        <p>Sistema Circuito Vida - Atos de Cristo</p>
+        <p style="margin: 2px 0;">{{ $reportData['periodo'] }}</p>
+        <p style="margin: 2px 0;">Relatório gerado em: {{ $reportData['data_geracao'] }}</p>
+        <p style="margin: 2px 0;">Gerado por: {{ $reportData['usuario_gerador'] }}</p>
+        <p style="margin: 2px 0;">Sistema Circuito Vida - Atos de Cristo</p>
     </div>
 </body>
 </html> 

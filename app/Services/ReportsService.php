@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class ReportsService extends BaseService
@@ -136,13 +137,16 @@ class ReportsService extends BaseService
      */
     public function gerarRelatorio($startDate, $endDate, $status = null)
     {
+        $user = Auth::user();
+        
         return [
             'periodo' => $this->formatarPeriodo($startDate, $endDate),
             'panorama_geral' => $this->getPanoramaGeral($startDate, $endDate, $status),
             'eventos' => $this->getEventsByPeriod($startDate, $endDate, $status),
             'detalhe_por_curso' => $this->getDetalhePorCurso($startDate, $endDate, $status),
             'dados_por_categoria' => $this->getDadosPorCategoria($startDate, $endDate, $status),
-            'data_geracao' => Carbon::now()->format('d/m/Y H:i:s')
+            'data_geracao' => Carbon::now()->format('d/m/Y H:i:s'),
+            'usuario_gerador' => $user ? $user->name : 'Usuário não identificado'
         ];
     }
 } 

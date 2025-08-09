@@ -126,12 +126,6 @@ class Reports extends Component
                     'status' => $this->status
                 ]
             ]);
-
-            session()->flash('message', [
-                'text' => 'PDF gerado com sucesso! O download deve começar automaticamente.',
-                'type' => 'success',
-            ]);
-
         } catch (\Exception $e) {
             session()->flash('message', [
                 'text' => 'Erro ao gerar PDF: ' . $e->getMessage(),
