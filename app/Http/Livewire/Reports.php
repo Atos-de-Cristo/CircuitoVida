@@ -33,8 +33,8 @@ class Reports extends Component
     public function mount()
     {
         // Define um período que contenha dados de teste (2023)
-        $this->start_date = '2023-01-01';
-        $this->end_date = '2024-12-31';
+        $this->start_date = '';
+        $this->end_date = '';
         $this->status = ''; // Todos os status por padrão
         
         // Não gera preview automaticamente - deixa o usuário clicar

@@ -20,7 +20,7 @@
     </div>
     <x-card>
         <x-slot name="headerCard">
-            <div class="flex flex-1 flex-col md:flex-row gap-4 lg:gap-8 xl:gap-16 items-center justify-between">
+            <div class="flex flex-1 flex-col md:flex-row gap-4 lg:gap-8 xl:gap-16 items-baseline justify-between">
                 <div class="flex-1">
                     <label for="start_date" class="block text-sm font-semibold text-slate-700 dark:text-slate-300">
                         Data de Início
