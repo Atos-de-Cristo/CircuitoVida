@@ -411,7 +411,9 @@
                 <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4 max-h-[350px] overflow-auto">
                     @forelse ($this->userQuestions as $user)
                     <div class="flex  flex-row justify-start items-start py-2 px-4 mb-2 {{ $user->pending_answers > 0 ? 'bg-yellow-600' : (round(($user->correct_answers / $user->all_answers) * 100, 1) < 60 ? 'bg-infor' : '') }}">
-                        <span class="flex-1 truncate ml-2 text-sm font-medium text-white group-hover:text-slate-800">
+                        <span class="flex-1 truncate ml-2 text-sm font-medium text-white group-hover:text-slate-800
+                        {{ $user->pending_answers > 0 ? 'text-white' : (round(($user->correct_answers / $user->all_answers) * 100, 1) < 60 ? 'text-white' : '') }}
+                        ">
                             {{ $user->name }}
                             <div class="flex flex-row mt-1">
                                 <div class="flex items-center">
