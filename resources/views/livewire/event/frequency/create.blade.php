@@ -23,6 +23,9 @@
                             $isPresent = $frequency ? $frequency->is_present : false;
                             $isJustified = $frequency && $frequency->is_justified;
                             $loadingKey = $item->user->id . '_' . $lessonId;
+                            $now = now();
+                            $lesson = \App\Models\Lesson::find($lessonId);
+                            $lessonStarted = $lesson && $lesson->start_date && \Carbon\Carbon::parse($lesson->start_date)->startOfDay()->lte($now->startOfDay());
                         @endphp
                         <div class="flex flex-col w-full">
                             <div class="flex items-center justify-between border-b px-2 py-2">
@@ -59,9 +62,11 @@
                                             id="freq-{{ $item->user->id }}"
                                             type="checkbox"
                                             value="{{ $item }}"
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 {{ !$lessonStarted ? 'opacity-50 cursor-not-allowed' : '' }}"
                                             wire:click="toggleFrequency('{{ $item->user->id }}', '{{ $lessonId }}', '{{ $item->id }}')"
                                             @if($isPresent) checked @endif
+                                            {{ !$lessonStarted ? 'disabled' : '' }}
+                                            title="{{ !$lessonStarted ? 'Não é possível marcar presença em aulas que ainda não iniciaram' : 'Marcar presença' }}"
                                         >
                                     </div>
                                 @endisset

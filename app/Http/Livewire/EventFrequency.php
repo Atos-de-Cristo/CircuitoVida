@@ -4,6 +4,8 @@ namespace App\Http\Livewire;
 
 use App\Services\FrequencyService;
 use App\Services\InscriptionService;
+use App\Services\LessonService;
+use Carbon\Carbon;
 use Livewire\Component;
 
 class EventFrequency extends Component
@@ -98,34 +100,48 @@ class EventFrequency extends Component
         $this->loadingPresence[$loadingKey] = true;
         
         $frequencyService = new FrequencyService();
+        $lessonService = new LessonService();
         
-        // Verificar se o aluno já tem frequência nesta aula
-        $existingFrequencies = $frequencyService->getAll([
-            'user_id' => $userId,
-            'lesson_id' => $lessonId,
-            'event_id' => $this->eventId,
-        ]);
+        // Buscar a aula para verificar a data de início
+        $lesson = $lessonService->find($lessonId);
+        $now = now();
         
-        if ($existingFrequencies->count() > 0) {
-            // Se já tem frequência, atualiza o is_present
-            foreach ($existingFrequencies as $frequency) {
-                $frequencyService->update($frequency->id, [
-                    'is_present' => !$frequency->is_present
-                ]);
-            }
-        } else {
-            // Se não tem frequência, adiciona com is_present = true
-            $frequencyService->create([
+        // Verificar se a aula já iniciou (data de início é anterior ou igual à data atual)
+        if ($lesson && $lesson->start_date && Carbon::parse($lesson->start_date)->startOfDay()->lte($now->startOfDay())) {
+            // Verificar se o aluno já tem frequência nesta aula
+            $existingFrequencies = $frequencyService->getAll([
                 'user_id' => $userId,
                 'lesson_id' => $lessonId,
                 'event_id' => $this->eventId,
-                'inscription_id' => $inscriptionId,
-                'is_present' => true
+            ]);
+            
+            if ($existingFrequencies->count() > 0) {
+                // Se já tem frequência, atualiza o is_present
+                foreach ($existingFrequencies as $frequency) {
+                    $frequencyService->update($frequency->id, [
+                        'is_present' => !$frequency->is_present
+                    ]);
+                }
+            } else {
+                // Se não tem frequência, adiciona com is_present = true
+                $frequencyService->create([
+                    'user_id' => $userId,
+                    'lesson_id' => $lessonId,
+                    'event_id' => $this->eventId,
+                    'inscription_id' => $inscriptionId,
+                    'is_present' => true
+                ]);
+            }
+        } else {
+            // Aula ainda não iniciou, não permitir marcar presença
+            $this->dispatchBrowserEvent('show-message', [
+                'type' => 'error',
+                'message' => 'Não é possível marcar presença em aulas que ainda não iniciaram.'
             ]);
         }
         
         // Pequeno atraso para garantir que o loading seja visível
-        usleep(200000); // 300ms
+        usleep(200000); // 200ms
         
         $this->loadingPresence[$loadingKey] = false;
         // Removido emit('refreshFrequency') para evitar fechamento do modal

@@ -35,11 +35,11 @@
         </x-slot>
 
         <x-slot name="content">
-            @if (count($activityStatus) > 0 || $absenceCount > 2)
+            @if (count($activityStatus) > 0 || $absenceCount > 0)
             <div class="">
                 <strong class="font-roboto">Pendências:</strong>
                 <div class="overflow-auto h-80">
-                    @if ($absenceCount > 2)
+                    @if ($absenceCount > 0)
                     <div class="ml-2 mt-2 flex flex-row items-center">
                         <span
                             class="flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -left-4 ring-4 ring-white dark:ring-red-900 dark:bg-gray-700">

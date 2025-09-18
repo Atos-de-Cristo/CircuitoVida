@@ -192,6 +192,8 @@
                                     $isJustified = $frequency && $frequency->is_justified;
                                     $isPresent = $frequency ? $frequency->is_present : false;
                                     $loadingKey = $inscription->user->id . '_' . $lesson->id;
+                                    $now = now();
+                                    $lessonStarted = $lesson->start_date && \Carbon\Carbon::parse($lesson->start_date)->startOfDay()->lte($now->startOfDay());
                                 @endphp
                                 <td class="py-2 px-3 border-b border-r border-gray-300 dark:border-slate-700 text-center">
                                     <div class="flex items-center justify-center space-x-4">
@@ -206,9 +208,11 @@
                                                 wire:loading.attr="disabled"
                                                 wire:loading.remove wire:target="toggleFrequency('{{ $inscription->user->id }}', '{{ $lesson->id }}', '{{ $inscription->id }}')"
                                                 type="checkbox"
-                                                class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                                class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 {{ !$lessonStarted ? 'opacity-50 cursor-not-allowed' : '' }}"
                                                 wire:click="toggleFrequency('{{ $inscription->user->id }}', '{{ $lesson->id }}', '{{ $inscription->id }}')"
                                                 @if($isPresent) checked @endif
+                                                {{ !$lessonStarted ? 'disabled' : '' }}
+                                                title="{{ !$lessonStarted ? 'Não é possível marcar presença em aulas que ainda não iniciaram' : 'Marcar presença' }}"
                                             >
                                         </label>
                                         <button 
@@ -302,4 +306,4 @@ tr:hover td {
 tr:hover td:first-child {
     background-color: #334155; /* Cor diferente para a primeira coluna */
 }
-</style> 
+</style>

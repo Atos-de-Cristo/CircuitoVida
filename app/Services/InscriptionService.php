@@ -141,17 +141,38 @@ class InscriptionService extends BaseService
                             
                             // Processar cada aluno
                             $totalFrequency = 0;
+                            $lessonsPresent = 0; // Contador de lições em que o aluno esteve presente
                             $statusActivity = [];
                             
+                            // Contador para aulas que já ocorreram
+                            $pastLessonsCount = 0;
+                            
                             foreach ($eventWithLessons->lessons as $lesson) {
-                                // Verificar se frequency existe
-                                if (!$lesson->frequency) {
-                                    continue;
-                                }
+                                // Verificar se a aula já ocorreu (data de início é anterior à data atual)
+                                $lessonStartDate = \Carbon\Carbon::parse($lesson->start_date);
+                                $now = \Carbon\Carbon::now();
                                 
-                                $frequency = $lesson->frequency->where('user_id', $item->user->id)->first();
-                                if ($frequency) {
-                                    $totalFrequency++;
+                                // Só contar aulas que já começaram
+                                if ($lessonStartDate->lte($now)) {
+                                    $pastLessonsCount++;
+                                    
+                                    // Verificar se frequency existe
+                                    if (!$lesson->frequency) {
+                                        continue;
+                                    }
+                                    
+                                    // Verificar se existe registro de frequência para este aluno nesta aula
+                                    $frequencyRecord = $lesson->frequency->where('user_id', $item->user->id)->first();
+                                    
+                                    // Se existe um registro de frequência e o aluno está presente
+                                    if ($frequencyRecord && $frequencyRecord->is_present == 1) {
+                                        // Incrementar totalFrequency
+                                        $totalFrequency++;
+                                        // Incrementar o contador de lições em que o aluno esteve presente
+                                        $lessonsPresent++;
+                                    }
+                                    // Se não existe registro ou o aluno não está presente, não incrementa lessonsPresent
+                                    // Isso fará com que a diferença pastLessonsCount - lessonsPresent conte corretamente as faltas
                                 }
                                 
                                 // Apenas processe as atividades se o aluno estiver com frequência baixa
@@ -229,7 +250,8 @@ class InscriptionService extends BaseService
                                 }
                             }
                             
-                            $item->user->absenceCount = $totalLessons - $totalFrequency;
+                            // Calcular faltas apenas com base nas aulas que já ocorreram
+                            $item->user->absenceCount = $pastLessonsCount - $lessonsPresent;
                             $item->user->activityStatus = $statusActivity;
                             return $item;
                         });
