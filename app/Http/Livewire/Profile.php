@@ -11,6 +11,8 @@ class Profile extends Component
 {
     public $cpf, $sex, $birth, $marital_status, $phone, $userId;
     public $leader, $date_baptism, $member, $church, $deficiency;
+    public $trintaSemanas = false;
+    public $retiroInspiracao = false;
     public $showAdminMessage = false;
 
     public function getProfileServiceProperty()
@@ -37,6 +39,8 @@ class Profile extends Component
             $this->date_baptism = $data['date_baptism'];
             $this->member = $data['member'];
             $this->church = $data['church'];
+            $this->trintaSemanas = isset($data['trinta_semanas']) ? ($data['trinta_semanas'] ? '1' : '0') : '0';
+            $this->retiroInspiracao = isset($data['retiro_inspiracao']) ? ($data['retiro_inspiracao'] ? '1' : '0') : '0';
         }
     }
     public function render()
@@ -86,6 +90,8 @@ class Profile extends Component
                 'date_baptism' => $this->date_baptism,
                 'member' => $this->member,
                 'church' => $this->church,
+                'trinta_semanas' => (bool) ($this->trintaSemanas ?? false),
+                'retiro_inspiracao' => (bool) ($this->retiroInspiracao ?? false),
             ];
 
             $this->profileService->store($request);

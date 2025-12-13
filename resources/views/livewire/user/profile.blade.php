@@ -81,6 +81,26 @@
                 <x-input id="deficiency" type="text" class="mt-1 block w-full" wire:model.defer="deficiency" />
                 <x-input-error for="deficiency" class="mt-2" />
             </div>
+            <div class="col-span-6 sm:col-span-3">
+                <x-label for="trintaSemanas" value="{{ __('30 semanas') }}" />
+                <select id="trintaSemanas" wire:model.defer="trintaSemanas"
+                    class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                    <option value="">Selecione</option>
+                    <option value="0">Não</option>
+                    <option value="1">Sim</option>
+                </select>
+                <x-input-error for="trintaSemanas" class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+                <x-label for="retiroInspiracao" value="{{ __('Retiro Inspiração') }}" />
+                <select id="retiroInspiracao" wire:model.defer="retiroInspiracao"
+                    class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                    <option value="">Selecione</option>
+                    <option value="0">Não</option>
+                    <option value="1">Sim</option>
+                </select>
+                <x-input-error for="retiroInspiracao" class="mt-2" />
+            </div>
 
          </x-slot>
         <x-slot name="actions">
