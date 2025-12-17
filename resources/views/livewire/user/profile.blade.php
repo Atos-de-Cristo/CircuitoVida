@@ -83,23 +83,41 @@
             </div>
             <div class="col-span-6 sm:col-span-3">
                 <x-label for="trintaSemanas" value="{{ __('30 semanas') }}" />
-                <select id="trintaSemanas" wire:model.defer="trintaSemanas"
+                <select id="trintaSemanas" wire:model="trintaSemanas"
                     class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
                     <option value="">Selecione</option>
                     <option value="0">Não</option>
                     <option value="1">Sim</option>
                 </select>
                 <x-input-error for="trintaSemanas" class="mt-2" />
+
+                @if ($trintaSemanas === '1')
+                    <div class="mt-2">
+                        <x-label for="trintaSemanasData" value="{{ __('Data (30 semanas)') }} *" />
+                        <input type="date" wire:model.defer="trintaSemanasData"
+                            class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" />
+                        <x-input-error for="trintaSemanasData" class="mt-2" />
+                    </div>
+                @endif
             </div>
             <div class="col-span-6 sm:col-span-3">
                 <x-label for="retiroInspiracao" value="{{ __('Retiro Inspiração') }}" />
-                <select id="retiroInspiracao" wire:model.defer="retiroInspiracao"
+                <select id="retiroInspiracao" wire:model="retiroInspiracao"
                     class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
                     <option value="">Selecione</option>
                     <option value="0">Não</option>
                     <option value="1">Sim</option>
                 </select>
                 <x-input-error for="retiroInspiracao" class="mt-2" />
+
+                @if ($retiroInspiracao === '1')
+                    <div class="mt-2">
+                        <x-label for="retiroInspiracaoData" value="{{ __('Data (Retiro Inspiração)') }} *" />
+                        <input type="date" wire:model.defer="retiroInspiracaoData"
+                            class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm" />
+                        <x-input-error for="retiroInspiracaoData" class="mt-2" />
+                    </div>
+                @endif
             </div>
 
          </x-slot>
