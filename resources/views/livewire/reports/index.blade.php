@@ -239,7 +239,7 @@
                                             </div>
                                             <h6 class="text-xl font-bold text-slate-800 dark:text-slate-200">PANORAMA POR CATEGORIAS</h6>
                                         </div>
-                                        <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/50 overflow-hidden">
+                                        <div class="bg-white/80 dark:bg-slate-800/80 rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/50 overflow-hidden">
                                             <div class="overflow-x-auto">
                                                 <table class="min-w-full">
                                                     <thead class="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20">
@@ -304,7 +304,7 @@
                                             </div>
                                             <h6 class="text-xl font-bold text-slate-800 dark:text-slate-200">PANORAMA POR CURSOS</h6>
                                         </div>
-                                        <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/50 overflow-hidden">
+                                        <div class="bg-white/80 dark:bg-slate-800/80 rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/50 overflow-hidden">
                                             <div class="overflow-x-auto">
                                                 <table class="min-w-full">
                                                     <thead class="bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20">
@@ -383,7 +383,7 @@
                                                     $nomes = $reportData['concluintes_por_curso'][$eventId] ?? [];
                                                 @endphp
                                                 @if (count($nomes) > 0)
-                                                    <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/50">
+                                                    <div class="bg-white/80 dark:bg-slate-800/80 rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/50">
                                                         <div class="px-6 py-4 border-b border-slate-200/50 dark:border-slate-700/50 flex items-center justify-between">
                                                             <div class="flex items-center">
                                                                 <div class="bg-gradient-to-r from-emerald-500 to-teal-600 p-2 rounded-lg mr-3">
