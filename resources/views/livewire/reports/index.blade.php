@@ -364,6 +364,58 @@
                                         </div>
                                     </div>
                                 @endif
+                                
+                                <!-- Aprovados por Curso (Nomes) -->
+                                @if ((is_array($reportData['detalhe_por_curso']) ? count($reportData['detalhe_por_curso']) : $reportData['detalhe_por_curso']->count()) > 0)
+                                    <div class="mb-10">
+                                        <div class="flex items-center mb-8">
+                                            <div class="bg-gradient-to-r from-emerald-500 to-teal-600 p-2 rounded-lg mr-4">
+                                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 01-8 0M12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                                </svg>
+                                            </div>
+                                            <h6 class="text-xl font-bold text-slate-800 dark:text-slate-200">APROVADOS POR CURSO</h6>
+                                        </div>
+                                        <div class="space-y-6">
+                                            @foreach ($reportData['detalhe_por_curso'] as $curso)
+                                                @php
+                                                    $eventId = is_object($curso) ? $curso->event_id : $curso['event_id'];
+                                                    $nomes = $reportData['concluintes_por_curso'][$eventId] ?? [];
+                                                @endphp
+                                                @if (count($nomes) > 0)
+                                                    <div class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 dark:border-slate-700/50">
+                                                        <div class="px-6 py-4 border-b border-slate-200/50 dark:border-slate-700/50 flex items-center justify-between">
+                                                            <div class="flex items-center">
+                                                                <div class="bg-gradient-to-r from-emerald-500 to-teal-600 p-2 rounded-lg mr-3">
+                                                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                                                    </svg>
+                                                                </div>
+                                                                <div class="flex flex-col">
+                                                                    <span class="text-sm font-semibold text-slate-900 dark:text-slate-100">{{ is_object($curso) ? $curso->event_name : $curso['event_name'] }}</span>
+                                                                    <span class="text-xs text-slate-600 dark:text-slate-400">Período: {{ \Carbon\Carbon::parse(is_object($curso) ? $curso->start_date : $curso['start_date'])->format('d/m/Y') }} - {{ \Carbon\Carbon::parse(is_object($curso) ? $curso->end_date : $curso['end_date'])->format('d/m/Y') }}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-xs text-emerald-700 dark:text-emerald-300 font-semibold">
+                                                                Aprovados: {{ count($nomes) }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="px-6 py-4">
+                                                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                                                @foreach ($nomes as $nome)
+                                                                    <div class="flex items-center space-x-2">
+                                                                        <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                                                                        <span class="text-sm text-slate-700 dark:text-slate-300">{{ $nome }}</span>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                          @endif

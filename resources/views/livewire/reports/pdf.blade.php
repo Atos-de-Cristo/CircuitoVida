@@ -202,6 +202,30 @@
         <p>Nenhum curso encontrado para o período selecionado.</p>
     @endif
 
+    <!-- Lista de Aprovados por Curso -->
+    @if ((is_array($reportData['detalhe_por_curso']) ? count($reportData['detalhe_por_curso']) : $reportData['detalhe_por_curso']->count()) > 0)
+        <div class="section-title">LISTA DE APROVADOS POR CURSO</div>
+        @foreach ($reportData['detalhe_por_curso'] as $curso)
+            @php
+                $eventId = is_object($curso) ? $curso->event_id : $curso['event_id'];
+                $nomes = $reportData['concluintes_por_curso'][$eventId] ?? [];
+            @endphp
+            @if (count($nomes) > 0)
+                <div class="course-item">
+                    <strong>{{ is_object($curso) ? $curso->event_name : $curso['event_name'] }}</strong>
+                    <div class="period-info">
+                        - Período – {{ \Carbon\Carbon::parse(is_object($curso) ? $curso->start_date : $curso['start_date'])->format('d/m/Y') }} - {{ \Carbon\Carbon::parse(is_object($curso) ? $curso->end_date : $curso['end_date'])->format('d/m/Y') }}
+                    </div>
+                    <div class="course-list" style="font-size: 11px;">
+                        @foreach ($nomes as $nome)
+                            • {{ $nome }}<br>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+        @endforeach
+    @endif
+
     @if ((is_array($reportData['detalhe_por_curso']) ? count($reportData['detalhe_por_curso']) : $reportData['detalhe_por_curso']->count()) > 10)
         <!-- Quebra de página se houver muitos cursos -->
         <div class="page-break"></div>

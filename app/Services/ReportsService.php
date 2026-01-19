@@ -123,6 +123,51 @@ class ReportsService extends BaseService
     }
 
     /**
+     * Lista os nomes dos concluintes por curso (event_id)
+     */
+    public function getConcluintesPorCurso($startDate, $endDate, $status = null)
+    {
+        $eventIds = $this->getEventsByPeriod($startDate, $endDate, $status)->pluck('id')->toArray();
+        
+        if (empty($eventIds)) {
+            return [];
+        }
+
+        $rows = DB::table('inscriptions')
+            ->join('users', 'inscriptions.user_id', '=', 'users.id')
+            ->join('events', 'inscriptions.event_id', '=', 'events.id')
+            ->whereIn('inscriptions.event_id', $eventIds)
+            ->where('inscriptions.status', '=', 'A')
+            ->select([
+                'inscriptions.event_id',
+                'users.id as user_id',
+                'users.name as user_name',
+            ])
+            ->orderBy('inscriptions.event_id')
+            ->orderBy('users.name')
+            ->get();
+
+        $grouped = [];
+        foreach ($rows as $row) {
+            $eventId = $row->event_id;
+            if (!isset($grouped[$eventId])) {
+                $grouped[$eventId] = [];
+            }
+            // Evitar duplicidade por usuário
+            if (!isset($grouped[$eventId][$row->user_id])) {
+                $grouped[$eventId][$row->user_id] = $row->user_name;
+            }
+        }
+
+        // Converter mapa de user_id => name para lista de nomes
+        foreach ($grouped as $eventId => $usersMap) {
+            $grouped[$eventId] = array_values($usersMap);
+        }
+
+        return $grouped;
+    }
+
+    /**
      * Formata período para exibição
      */
     public function formatarPeriodo($startDate, $endDate)
@@ -145,6 +190,7 @@ class ReportsService extends BaseService
             'eventos' => $this->getEventsByPeriod($startDate, $endDate, $status),
             'detalhe_por_curso' => $this->getDetalhePorCurso($startDate, $endDate, $status),
             'dados_por_categoria' => $this->getDadosPorCategoria($startDate, $endDate, $status),
+            'concluintes_por_curso' => $this->getConcluintesPorCurso($startDate, $endDate, $status),
             'data_geracao' => Carbon::now()->format('d/m/Y H:i:s'),
             'usuario_gerador' => $user ? $user->name : 'Usuário não identificado'
         ];
